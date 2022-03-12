@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>DF0A9F54-21A2-4F2D-9271-13EE4A7788D0</title>
+    <g id="aimedis" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI---Patient---Journal-(Graphs)" transform="translate(-1065.000000, -256.000000)">
+            <g id="download" transform="translate(1065.000000, 256.000000)">
+                <g id="Frame_-_24px">
+                    <rect id="Rectangle" x="0" y="0" width="24" height="24"></rect>
+                </g>
+                <g id="Line_Icons" transform="translate(4.000000, 2.000000)" fill="#BFC1C1" fill-rule="nonzero">
+                    <g id="Group">
+                        <polygon id="Path" points="13.707 8.708 12.293 7.294 9 10.587 9 0.001 7 0.001 7 10.587 3.707 7.294 2.293 8.708 8 14.415"></polygon>
+                        <path d="M14,16.001 L14,18.001 L2,18.001 L2,16.001 L0,16.001 L0,18.001 C0,19.103 0.896,20.001 2,20.001 L14,20.001 C15.104,20.001 16,19.103 16,18.001 L16,16.001 L14,16.001 Z" id="Path"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

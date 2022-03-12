@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>237CB1C0-3D5E-4E80-8B2D-F4917F199031</title>
+    <g id="aimedis" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI---Components" transform="translate(-859.000000, -6150.000000)">
+            <g id="Group-18" transform="translate(64.000000, 3477.000000)">
+                <g id="files-upload-radiology" transform="translate(795.000000, 2673.000000)">
+                    <circle id="Oval" fill="#CCE8FF" cx="12" cy="12" r="12"></circle>
+                    <g id="file-upload-1" transform="translate(4.000000, 4.000000)">
+                        <g id="Frame_-_24px">
+                            <rect id="Rectangle" x="0" y="0" width="16" height="16"></rect>
+                        </g>
+                        <g id="Filled_Icons" transform="translate(2.000000, 0.666667)" fill="#0076DB">
+                            <path d="M8.94266667,0 L1.33333333,0 C0.598,0 0,0.598666667 0,1.33333333 L0,13.3333333 C0,14.0686667 0.598,14.6666667 1.33333333,14.6666667 L10.6666667,14.6666667 C11.402,14.6666667 12,14.0686667 12,13.3333333 L12,3.05733333 L8.94266667,0 Z M6.66666667,8.66666667 L6.66666667,12 L5.33333333,12 L5.33333333,8.66666667 L3.33333333,8.66666667 L6,6 L8.66666667,8.66666667 L6.66666667,8.66666667 Z M8,4 L8,0.666666667 L11.3333333,4 L8,4 Z" id="Shape"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

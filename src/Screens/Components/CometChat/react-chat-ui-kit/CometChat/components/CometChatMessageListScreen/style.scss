@@ -1,0 +1,42 @@
+@import '../../resources/mixins';
+@import '../../resources/colors';
+
+.cc1-chat-win-header {
+    padding:14px 16px;
+    width:100%;
+    background-color: $light-background;
+    z-index:1;
+    border-bottom: 1px solid $light-background-border;
+}
+
+.cc1-chat-win-conver-wrap {
+    padding:5px 16px;
+    height:calc(100vh - 132px);
+    overflow-y:auto;
+    background-color: $light-background;
+    z-index:1;
+    position:relative;
+}
+
+.cc1-chat-win-inpt-ext-wrap {
+    padding: 14px 0;
+    width: 100%;
+    background-color: $light-background;
+    z-index: 1;
+}
+
+.dark {
+
+    .cc1-chat-win-header {
+        background-color: $dark-background;
+        border-bottom: 1px solid $dark-background-border;
+    }
+
+    .cc1-chat-win-conver-wrap {
+        background-color: $dark-background;
+    }
+
+    .cc1-chat-win-inpt-ext-wrap {
+        background-color: $dark-background;
+    }
+}

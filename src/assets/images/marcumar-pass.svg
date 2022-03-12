@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>16C1101D-86CA-47A0-ADF1-1A9F4F8FAE9E</title>
+    <g id="aimedis" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI---Components" transform="translate(-88.000000, -6329.000000)">
+            <g id="Group-18" transform="translate(64.000000, 3477.000000)">
+                <g id="marcumar-pass" transform="translate(24.000000, 2852.000000)">
+                    <circle id="Oval" fill="#B4ECF8" cx="12" cy="12" r="12"></circle>
+                    <g id="health-blood-drop" transform="translate(4.000000, 4.000000)">
+                        <g id="Frame_-_24px">
+                            <rect id="Rectangle" x="0" y="0.000666666667" width="16" height="16.0006667"></rect>
+                        </g>
+                        <g id="Filled_Icons" transform="translate(3.333333, 1.333333)" fill="#00B0DB" fill-rule="nonzero">
+                            <path d="M5.224,0.301333333 C4.964,-0.0953333333 4.384,-0.1 4.11866667,0.288 L4.11866667,0.288 C3.69666667,0.898 0,6.31733333 0,8.66666667 C0,11.24 2.094,13.3333333 4.66666667,13.3333333 C7.23933333,13.3333333 9.33333333,11.24 9.33333333,8.66666667 C9.33333333,6.48266667 6.2,1.72866667 5.224,0.301333333 Z M4,10 L4,11.3333333 C2.89733333,11.3333333 2,10.436 2,9.33333333 C2,8.50133333 3.07666667,6.33866667 3.40666667,5.696 L4.59266667,6.30466667 C3.99,7.48 3.33933333,8.97733333 3.33266667,9.334 C3.33333333,9.70066667 3.63266667,10 4,10 Z" id="Shape"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

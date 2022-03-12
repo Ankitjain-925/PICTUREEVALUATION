@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>C4B8336E-4290-4B64-B76A-053458527D9A</title>
+    <g id="aimedis" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI---Components" transform="translate(-345.000000, -6329.000000)">
+            <g id="Group-18" transform="translate(64.000000, 3477.000000)">
+                <g id="vaccination" transform="translate(281.000000, 2852.000000)">
+                    <circle id="Oval" fill="#FBD4D4" cx="12" cy="12" r="12"></circle>
+                    <g id="health-syringe" transform="translate(4.000000, 4.000000)">
+                        <g id="Frame_-_24px">
+                            <rect id="Rectangle" x="0" y="0.000666666667" width="16" height="16.0006667"></rect>
+                        </g>
+                        <g id="Filled_Icons" transform="translate(4.000000, 2.000000)" fill="#EE5253" fill-rule="nonzero">
+                            <g id="Group">
+                                <path d="M8,2.66666667 L0,2.66666667 L0,4 L1.33333333,4 L1.33333333,5.33333333 L4,5.33333333 L4,6 L1.33333333,6 L1.33333333,7.33333333 L4,7.33333333 L4,8 L1.33333333,8 C1.33333333,9.23866667 2.186,10.274 3.33333333,10.572 L3.33333333,12.6666667 L4.66666667,12.6666667 L4.66666667,10.572 C5.814,10.2733333 6.66666667,9.23866667 6.66666667,8 L6.66666667,4 L8,4 L8,2.66666667 Z" id="Path"></path>
+                                <polygon id="Path" points="3.33333333 2 4.66666667 2 4.66666667 1.33333333 6 1.33333333 6 0 2 0 2 1.33333333 3.33333333 1.33333333"></polygon>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>579990BF-0C4E-4127-B278-6229EE544A70</title>
+    <g id="aimedis" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI---Components" transform="translate(-1199.000000, -1672.000000)">
+            <g id="Group-11" transform="translate(1175.000000, 1648.000000)">
+                <g id="edit" transform="translate(24.000000, 24.000000)">
+                    <g id="Frame_-_24px">
+                        <rect id="Rectangle" x="0" y="0" width="16" height="16"></rect>
+                    </g>
+                    <g id="Filled_Icons" transform="translate(1.333333, 1.333333)" fill="#BFC1C1" fill-rule="nonzero">
+                        <g id="Group">
+                            <polygon id="Rectangle" transform="translate(6.372628, 6.959939) rotate(-45.008103) translate(-6.372628, -6.959939) " points="2.33299983 4.27663144 10.4122558 4.27663144 10.4122558 9.64324669 2.33299983 9.64324669"></polygon>
+                            <path d="M12.0693333,5.06 L12.5493333,4.58066667 C13.5953333,3.53466667 13.5953333,1.832 12.5493333,0.785333333 C11.5033333,-0.260666667 9.8,-0.260666667 8.754,0.785333333 L8.27466667,1.26533333 L12.0693333,5.06 Z" id="Path"></path>
+                            <path d="M4.26666667,12.4533333 L0.829333333,13.312 C0.602,13.368 0.361333333,13.302 0.196,13.1366667 C0.0306666667,12.9713333 -0.036,12.7306667 0.0206666667,12.504 L0.88,9.06666667 L4.26666667,12.4533333 Z" id="Path"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

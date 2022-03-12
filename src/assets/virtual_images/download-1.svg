@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>9BDA5BA6-5619-4C48-972C-D2E1378EE443</title>
+    <g id="Virtual-Hospital" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Components-AVH" transform="translate(-562.000000, -2574.000000)">
+            <g id="Group-32" transform="translate(64.000000, 2423.000000)">
+                <g id="Group-11-Copy-10" transform="translate(474.000000, 95.000000)">
+                    <g id="download" transform="translate(24.000000, 56.000000)">
+                        <g id="Frame_-_24px">
+                            <rect id="Rectangle" x="0" y="0" width="16" height="16"></rect>
+                        </g>
+                        <g id="Line_Icons" transform="translate(2.666667, 1.333333)" fill="#BFC1C1" fill-rule="nonzero">
+                            <g id="Group">
+                                <polygon id="Path" points="9.138 5.80533333 8.19533333 4.86266667 6 7.058 6 0.000666666667 4.66666667 0.000666666667 4.66666667 7.058 2.47133333 4.86266667 1.52866667 5.80533333 5.33333333 9.61"></polygon>
+                                <path d="M9.33333333,10.6673333 L9.33333333,12.0006667 L1.33333333,12.0006667 L1.33333333,10.6673333 L0,10.6673333 L0,12.0006667 C0,12.7353333 0.597333333,13.334 1.33333333,13.334 L9.33333333,13.334 C10.0693333,13.334 10.6666667,12.7353333 10.6666667,12.0006667 L10.6666667,10.6673333 L9.33333333,10.6673333 Z" id="Path"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

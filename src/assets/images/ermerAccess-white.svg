@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>FF8576B8-2971-424B-ABEF-DD65F70F07CD</title>
+    <g id="aimedis" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI---Components" transform="translate(-371.000000, -5871.000000)">
+            <g id="Group-18" transform="translate(64.000000, 3477.000000)">
+                <g id="Nav-Trackers/Inactive" transform="translate(287.000000, 2386.000000)">
+                    <g id="nav-emergency-access-active" transform="translate(20.000000, 8.000000)">
+                        <g id="Frame_-_24px">
+                            <rect id="Rectangle" x="-0.001" y="0" width="24.001" height="24.001"></rect>
+                        </g>
+                        <g id="Filled_Icons" transform="translate(2.000000, 3.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                            <g id="Group">
+                                <path d="M12,0 C10.896,0 10,0.895 10,2 L14,2 C14,0.895 13.104,0 12,0 Z" id="Path"></path>
+                                <path d="M7,14.184 L7,7 C7,6.448 6.553,6 6,6 L4,6 C3.734,6 3.481,6.106 3.293,6.293 L0.293,9.293 C0.105,9.481 0,9.735 0,10 L0,16 C0,16.552 0.447,17 1,17 L3,17 C3,15.343 4.344,14 6,14 C6.352,14 6.686,14.073 7,14.184 Z M5,11 L3,11 L3,9 L5,9 L5,11 Z" id="Shape"></path>
+                                <circle id="Oval" cx="6" cy="17" r="2"></circle>
+                                <path d="M18,3 L10,3 C8.896,3 8,3.898 8,5 L8,14.778 C8.609,15.327 9,16.115 9,17 L12,17 C12,15.343 13.344,14 15,14 C16.657,14 18,15.343 18,17 L19,17 C19.553,17 20,16.552 20,16 L20,5 C20,3.898 19.104,3 18,3 Z M17,10 L15,10 L15,12 L13,12 L13,10 L11,10 L11,8 L13,8 L13,6 L15,6 L15,8 L17,8 L17,10 Z" id="Shape"></path>
+                                <circle id="Oval" cx="15" cy="17" r="2"></circle>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

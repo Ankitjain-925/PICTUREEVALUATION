@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>D3FFC496-3CCB-4037-B78D-32FEAEA82B2B</title>
+    <g id="Virtual-Hospital" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI---AVH---Tasks-(Open-Task)" transform="translate(-637.000000, -758.000000)">
+            <g id="Group-35" transform="translate(423.000000, 80.000000)">
+                <g id="Group-41" transform="translate(0.000000, 612.000000)">
+                    <g id="Group-31" transform="translate(32.000000, 0.000000)">
+                        <g id="Group-24-Copy-5" transform="translate(0.000000, 42.000000)">
+                            <g id="upload-file" transform="translate(182.000000, 24.000000)">
+                                <g id="Frame_-_24px">
+                                    <rect id="Rectangle" x="0" y="0.001" width="24" height="24"></rect>
+                                </g>
+                                <g id="Line_Icons" transform="translate(2.000000, 2.000000)" fill="#BFC1C1" fill-rule="nonzero">
+                                    <g id="Group">
+                                        <path d="M13,0.001 C10.141,0.001 7.642,1.7 6.562,4.255 C6.061,4.087 5.533,4.001 5,4.001 C2.243,4.001 0,6.244 0,9.001 C0,11.415 1.721,13.436 4,13.899 L4,11.816 C2.838,11.402 2,10.302 2,9.001 C2,7.347 3.346,6.001 5,6.001 C5.57,6.001 6.131,6.167 6.618,6.481 C6.893,6.659 7.235,6.69 7.535,6.568 C7.838,6.446 8.06,6.184 8.135,5.868 C8.662,3.591 10.663,2.001 13,2.001 C15.757,2.001 18,4.244 18,7.001 C18,8.628 17.207,10.062 16,10.976 L16,13.316 C18.361,12.19 20,9.787 20,7.002 C20,3.142 16.859,0.001 13,0.001 Z" id="Path"></path>
+                                        <polygon id="Path" points="14.707 12.294 10 7.587 5.293 12.294 6.707 13.708 9 11.415 9 20.001 11 20.001 11 11.415 13.293 13.708"></polygon>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

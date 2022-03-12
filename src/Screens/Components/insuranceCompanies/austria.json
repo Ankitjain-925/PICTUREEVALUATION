@@ -1,0 +1,21 @@
+{
+    "austria":
+     [
+        "Wiener Gebietskrankenkasse (WGKK):",
+        "Niederösterreichische Gebietskrankenkasse (NÖGKK):",
+        "Burgenländische Gebietskrankenkasse (BGKK):",
+        "Oberösterreichische Gebietskrankenkasse (OÖGKK):",
+        "Steiermärkische Gebietskrankenkasse (STGKK):",
+        "Kärntner Gebietskrankenkasse (KGKK):",
+        "Salzburger Gebietskrankenkasse (SGKK):",
+        "Tiroler Gebietskrankenkasse (TGKK):",
+        "Vorarlberger Gebietskrankenkasse (VGKK):",
+
+        "Betriebskrankenkasse Austria Tabak:",
+        "Betriebskrankenkasse der Wiener Verkehrsbetriebe:",
+        "Betriebskrankenkasse Mondi:",
+        "Betriebskrankenkasse voestalpine Bahnsysteme:",
+        "Betriebskrankenkasse Zeltweg:",
+        "Betriebskrankenkasse Kapfenberg:"
+    ]
+}

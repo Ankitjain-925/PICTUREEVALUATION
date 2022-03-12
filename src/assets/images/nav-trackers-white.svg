@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>EAEF60FB-14E6-4725-ACBC-BA6710320FFA</title>
+    <g id="aimedis" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI---Components" transform="translate(-1027.000000, -5763.000000)">
+            <g id="Group-18" transform="translate(64.000000, 3477.000000)">
+                <g id="Nav-Trackers/Inactive" transform="translate(943.000000, 2278.000000)">
+                    <g id="nav-trackers-active" transform="translate(20.000000, 8.000000)">
+                        <g id="Frame_-_24px">
+                            <rect id="Rectangle" x="0" y="-0.001" width="24" height="24"></rect>
+                        </g>
+                        <g id="Filled_Icons" transform="translate(4.000000, 0.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                            <g id="Group">
+                                <path d="M8,16.0009909 C8,16.0009909 12,13.671 12,11.204 C12,8.861 8.869,7.844 8,10.919 C7.131,7.844 4,8.861 4,11.204 C4,13.671 8,16.0009909 8,16.0009909 Z" id="Path"></path>
+                                <path d="M12.318,5.273 L11,0.001 L5,0.001 L3.682,5.273 C1.469,6.696 0,9.175 0,12.001 C0,14.827 1.469,17.306 3.682,18.728 L5,24.001 L11,24.001 L12.318,18.729 C14.531,17.306 16,14.827 16,12.001 C16,9.175 14.531,6.696 12.318,5.273 Z M8,18.001 C4.686,18.001 2,15.314 2,12.001 C2,8.687 4.686,6.001 8,6.001 C11.314,6.001 14,8.688 14,12.001 C14,15.314 11.314,18.001 8,18.001 Z" id="Shape"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

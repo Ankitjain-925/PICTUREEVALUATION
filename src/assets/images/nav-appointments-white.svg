@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>C109F63A-5268-446B-957F-03EDE2C21F60</title>
+    <g id="aimedis" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI---Components" transform="translate(-576.000000, -5763.000000)">
+            <g id="Group-18" transform="translate(64.000000, 3477.000000)">
+                <g id="Nav-Appointments/Inactive" transform="translate(483.000000, 2278.000000)">
+                    <g id="Group-Copy" transform="translate(21.000000, 0.000000)">
+                        <g id="nav-appointments-active" transform="translate(8.000000, 8.000000)">
+                            <g id="Frame_-_24px">
+                                <rect id="Rectangle" x="0" y="0" width="24" height="24"></rect>
+                            </g>
+                            <g id="Filled_Icons" transform="translate(1.000000, 1.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                                <path d="M20,2 L18,2 L18,0 L16,0 L16,5 L14,5 L14,2 L8,2 L8,0 L6,0 L6,5 L4,5 L4,2 L2,2 C0.897,2 0,2.898 0,4 L0,19 C0,20.102 0.897,21 2,21 L20,21 C21.103,21 22,20.102 22,19 L22,4 C22,2.897 21.103,2 20,2 Z M7,18 L3,18 L3,14 L7,14 L7,18 Z M7,12 L3,12 L3,8 L7,8 L7,12 Z M13,18 L9,18 L9,14 L13,14 L13,18 Z M13,12 L9,12 L9,8 L13,8 L13,12 Z M19,12 L15,12 L15,8 L19,8 L19,12 Z" id="Shape"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

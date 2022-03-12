@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>C2FA06C3-892F-4859-8215-EB77E7C9D520</title>
+    <g id="Virtual-Hospital" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI---AVH---Tasks" transform="translate(-971.000000, -299.000000)">
+            <g id="Group-6" transform="translate(432.000000, 270.000000)">
+                <g id="Group-4" transform="translate(60.000000, 14.000000)">
+                    <g id="Group-8" transform="translate(479.000000, 9.000000)">
+                        <g id="paragraph-normal" transform="translate(0.000000, 6.000000)">
+                            <g id="Frame_-_24px">
+                                <rect id="Rectangle" x="0" y="0" width="16" height="16"></rect>
+                            </g>
+                            <g id="Line_Icons" transform="translate(1.333333, 1.333333)" fill="#7F8383" fill-rule="nonzero">
+                                <g id="Group">
+                                    <path d="M12,0 L1.33333333,0 C0.598,0 0,0.598 0,1.33333333 L0,12 C0,12.7353333 0.598,13.3333333 1.33333333,13.3333333 L12,13.3333333 C12.7353333,13.3333333 13.3333333,12.7353333 13.3333333,12 L13.3333333,1.33333333 C13.3333333,0.598 12.7353333,0 12,0 Z M11.998,12 L1.33333333,12 L1.33333333,1.33333333 L12,1.33333333 L11.998,12 Z" id="Shape"></path>
+                                    <rect id="Rectangle" x="2.66666667" y="3.33333333" width="8" height="1.33333333"></rect>
+                                    <rect id="Rectangle" x="2.66666667" y="6" width="8" height="1.33333333"></rect>
+                                    <rect id="Rectangle" x="2.66666667" y="8.66666667" width="6" height="1.33333333"></rect>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

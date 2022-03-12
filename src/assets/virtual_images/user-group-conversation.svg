@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>AA9C9FC3-D82B-49B5-8445-6F66AED8A04B</title>
+    <g id="Virtual-Hospital" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI---AVH---Statistics" transform="translate(-534.000000, -156.000000)">
+            <g id="Group-13" transform="translate(232.000000, 120.000000)">
+                <g id="Patient-Card-Copy-14" transform="translate(258.000000, 0.000000)">
+                    <g id="Group-3" transform="translate(32.000000, 24.000000)">
+                        <g id="user-group-conversation" transform="translate(12.000000, 12.000000)">
+                            <g id="Frame_-_24px">
+                                <rect id="Rectangle" x="0" y="0" width="24" height="24"></rect>
+                            </g>
+                            <g id="Filled_Icons" transform="translate(0.000000, 6.000000)" fill="#00ABAF" fill-rule="nonzero">
+                                <g id="Group">
+                                    <path d="M4.001,11 C4.001,10.298 4.128,9.627 4.351,9 L3.335,9 C1.494,9 0.001,10.159 0.001,12 L0.001,13 L4.001,13 L4.001,11 Z" id="Path"></path>
+                                    <path d="M7.593,5.509 C7.593,5.506 7.594,5.503 7.594,5.5 C7.594,4.119 6.474,3 5.093,3 C3.713,3 2.594,4.119 2.594,5.5 C2.594,6.791 3.575,7.84 4.829,7.974 C5.467,6.888 6.433,6.02 7.593,5.509 Z" id="Path"></path>
+                                    <path d="M19.093,3 C17.713,3 16.594,4.119 16.594,5.5 C16.594,5.535 16.603,5.568 16.604,5.603 C17.684,6.125 18.582,6.959 19.184,7.992 C20.522,7.943 21.594,6.85 21.594,5.501 C21.594,4.119 20.474,3 19.093,3 Z" id="Path"></path>
+                                    <path d="M20.667,9 L19.651,9 C19.874,9.627 20.001,10.298 20.001,11 L20.001,13 L24.001,13 L24.001,12 C24.001,10.159 22.508,9 20.667,9 Z" id="Path"></path>
+                                    <path d="M6.001,13 L18.001,13 L18.001,11 C18.001,9.084 16.652,7.487 14.854,7.096 C14.043,7.662 13.062,8 12.001,8 C10.94,8 9.958,7.662 9.148,7.096 C7.35,7.487 6.001,9.084 6.001,11 L6.001,13 Z" id="Path"></path>
+                                    <circle id="Oval" cx="12.001" cy="3" r="3"></circle>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>6F1DF68D-BB93-4565-80D5-2B9FB83F64D4</title>
+    <g id="UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Register" transform="translate(-1118.000000, -580.000000)">
+            <g id="Group" transform="translate(732.000000, 287.000000)">
+                <g id="Group-4-Copy-2" transform="translate(32.000000, 248.000000)">
+                    <g id="show" transform="translate(354.000000, 45.000000)">
+                        <polygon id="Path" points="0 0 22 0 22 22 0 22"></polygon>
+                        <g id="Group" transform="translate(2.000000, 5.000000)" fill="#00B0DB" fill-rule="nonzero">
+                            <path d="M9,0 C3.80290909,0 0,5.72727273 0,5.72727273 C0,5.72727273 3.80290909,11.4545455 9,11.4545455 C14.1970909,11.4545455 18,5.72727273 18,5.72727273 C18,5.72727273 14.1970909,0 9,0 Z M9,9 C7.19263636,9 5.72727273,7.53545455 5.72727273,5.72727273 C5.72727273,3.91909091 7.19263636,2.45454545 9,2.45454545 C10.8073636,2.45454545 12.2727273,3.91909091 12.2727273,5.72727273 C12.2727273,7.53545455 10.8073636,9 9,9 Z" id="Shape"></path>
+                            <circle id="Oval" cx="9" cy="5.72727273" r="1.63636364"></circle>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

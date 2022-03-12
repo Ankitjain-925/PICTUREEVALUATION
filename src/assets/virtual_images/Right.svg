@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>5F4E3EAE-E936-410E-9F41-EA7FC599F3F3</title>
+    <g id="Virtual-Hospital" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI---AVH---Patient-Flow-(Patient---Room)" transform="translate(-769.000000, -230.000000)">
+            <g id="Group-37" transform="translate(670.000000, 206.000000)">
+                <g id="Group-4" transform="translate(24.000000, 24.000000)">
+                    <g id="Button/Right" transform="translate(75.000000, 0.000000)">
+                        <g id="Frame">
+                            <rect id="Rectangle" x="0" y="0" width="16" height="16"></rect>
+                        </g>
+                        <g id="Line_Icons" transform="translate(8.000000, 8.000000) rotate(-90.000000) translate(-8.000000, -8.000000) translate(3.333333, 5.333333)" fill="#BFC1C1" fill-rule="nonzero">
+                            <path d="M4.66666667,5.334 C4.496,5.334 4.32533333,5.26866667 4.19533333,5.13866667 L0.195333333,1.13866667 L1.138,0.196 L4.66666667,3.72466667 L8.19533333,0.196 L9.138,1.13866667 L5.138,5.13866667 C5.008,5.26866667 4.83733333,5.334 4.66666667,5.334 Z" id="Path"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

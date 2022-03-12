@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>9E81776B-7811-45AF-B791-FDA5BCD1CE28</title>
+    <g id="aimedis" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI---Components" transform="translate(-1199.000000, -1704.000000)">
+            <g id="Group-11" transform="translate(1175.000000, 1648.000000)">
+                <g id="archive" transform="translate(24.000000, 56.000000)">
+                    <g id="Frame_-_24px">
+                        <rect id="Rectangle" x="0" y="0.000666666667" width="16" height="16"></rect>
+                    </g>
+                    <g id="Filled_Icons" transform="translate(1.333333, 2.666667)" fill="#BFC1C1" fill-rule="nonzero">
+                        <g id="Group">
+                            <path d="M12,0.000666666667 L1.33333333,0.000666666667 C0.598,0.000666666667 0,0.599333333 0,1.334 L0,3.334 L13.3333333,3.334 L13.3333333,1.334 C13.3333333,0.599333333 12.736,0.000666666667 12,0.000666666667 Z" id="Path"></path>
+                            <path d="M0.666666667,4.00066667 L0.666666667,10.0006667 C0.666666667,10.736 1.26466667,11.334 2,11.334 L11.3333333,11.334 C12.0693333,11.334 12.6666667,10.736 12.6666667,10.0006667 L12.6666667,4.00066667 L0.666666667,4.00066667 Z M8.66666667,6.66733333 L4.66666667,6.66733333 L4.66666667,5.334 L8.66666667,5.334 L8.66666667,6.66733333 Z" id="Shape"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

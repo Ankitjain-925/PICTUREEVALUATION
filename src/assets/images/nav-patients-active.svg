@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>7F1DBE1E-3D9B-45B9-82C9-08782767C23C</title>
+    <g id="aimedis" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI---Components" transform="translate(-179.000000, -5871.000000)">
+            <g id="Group-18" transform="translate(64.000000, 3477.000000)">
+                <g id="Nav-Appointments/Inactive" transform="translate(103.000000, 2386.000000)">
+                    <g id="Group-Copy" transform="translate(4.000000, 0.000000)">
+                        <g id="nav-patients-active" transform="translate(8.000000, 8.000000)">
+                            <g id="Frame_-_24px">
+                                <rect id="Rectangle" x="0" y="0" width="24" height="24"></rect>
+                            </g>
+                            <g id="Filled_Icons" transform="translate(2.000000, 2.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                                <g id="Group">
+                                    <path d="M7.359,13.5 C7.359,14.881 6.239,16 4.859,16 C3.478,16 2.359,14.881 2.359,13.5 C2.359,12.119 3.478,11 4.859,11 C6.239,11 7.359,12.119 7.359,13.5" id="Path"></path>
+                                    <path d="M9.718,20 C9.272,18.278 7.721,17 5.86,17 L3.86,17 C1.998,17 0.447,18.278 0.001,20 L9.718,20 Z" id="Path"></path>
+                                    <path d="M17.643,13.5 C17.643,14.881 16.523,16 15.143,16 C13.762,16 12.643,14.881 12.643,13.5 C12.643,12.119 13.762,11 15.143,11 C16.522,11 17.643,12.119 17.643,13.5" id="Path"></path>
+                                    <path d="M20.001,20 C19.555,18.278 18.004,17 16.143,17 L14.143,17 C12.281,17 10.73,18.278 10.284,20 L20.001,20 Z" id="Path"></path>
+                                    <path d="M12.501,2.5 C12.501,3.881 11.381,5 10.001,5 C8.62,5 7.501,3.881 7.501,2.5 C7.501,1.119 8.62,0 10.001,0 C11.381,0 12.501,1.119 12.501,2.5" id="Path"></path>
+                                    <path d="M14.859,9 C14.413,7.278 12.862,6 11.001,6 L9.001,6 C7.139,6 5.588,7.278 5.142,9 L14.859,9 Z" id="Path"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

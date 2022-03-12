@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>13B8DF8F-D06E-4108-AB9F-EA06DD532A9A</title>
+    <g id="aimedis" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI---Doctor---Patients-(Personal-info)" transform="translate(-542.000000, -253.000000)">
+            <g id="location-pin" transform="translate(542.000000, 253.000000)">
+                <g id="Frame_-_24px">
+                    <rect id="Rectangle" x="0.000666666667" y="0.000666666667" width="16" height="16.0006667"></rect>
+                </g>
+                <g id="Filled_Icons" transform="translate(3.333333, 1.333333)" fill="#7F8383" fill-rule="nonzero">
+                    <path d="M4.66666667,0 C2.08933333,0 0,2.08933333 0,4.66666667 C0,8 4.66666667,13.3333333 4.66666667,13.3333333 C4.66666667,13.3333333 9.33333333,8 9.33333333,4.66666667 C9.33333333,2.08933333 7.244,0 4.66666667,0 Z M4.66666667,6.33333333 C3.74666667,6.33333333 3,5.58733333 3,4.66666667 C3,3.746 3.74666667,3 4.66666667,3 C5.58733333,3 6.33333333,3.746 6.33333333,4.66666667 C6.33333333,5.58733333 5.58733333,6.33333333 4.66666667,6.33333333 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
