@@ -14174,3 +14174,15 @@ display: block;}
 .cnfrmDiaMain .fillDia .errChrMsg{
 color: #FF0000!important;
 }
+
+.fillDiaSection{
+    margin-top:15px;
+}
+
+.cnfrmDiaMain1{
+    background-color: #FFFFFF;
+    border-radius: 8px;
+}
+.fillDiaAll label{
+    display: contents;
+}
