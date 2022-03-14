@@ -11,6 +11,7 @@ import NotFound from "Screens/Components/NotFound";
 import PatientProfile from "Screens/Patient/Profile/index";
 import PatientPE from "Screens/Patient/PictureEvaluation/index";
 import RegSuccuss from "Screens/Components/RegSuccess/index";
+import Form from "Screens/Patient/Form/index.js";
 import FeedBack from "Screens/Patient/SubmitFeedback/index";
 
 class Routermain extends Component {
@@ -58,6 +59,11 @@ class Routermain extends Component {
               render={(props) => <RegSuccuss {...props} />}
             />
           
+            <Route
+              exact
+              path="/patient/picture-evaluation-form"
+              render={(props) => <Form {...props} />}
+            />
             {/* <Route
               path="/virtualhospital/assign"
               exact={true}

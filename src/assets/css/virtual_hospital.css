@@ -14052,3 +14052,125 @@ border-style: solid;
 .darkTheme .stepchange-input{
 background-color: #404646;
 } 
+
+
+.darkTheme .forBackgroundClr{
+    background-color: #00ABAF;
+    border-radius: 8px;
+}
+
+.questionNew{
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 10px;
+
+}
+
+.fatiqueQues1{
+    margin-top: 20px;
+    background-color: white;
+    margin-left: 20px;
+}
+
+.attchForms1 label {
+    color: #404646;
+    font-family: Muli;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 12px;
+    line-break: anywhere!important;
+}
+
+.dateSet label{
+    margin-right: 70px;
+}
+
+.textFieldArea{
+    outline: none;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #BFC1C1;
+    margin-top: 10px;
+}
+
+.textFieldArea1 input{
+    margin-bottom: 5px;
+    height: 35px;
+    outline: none;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #BFC1C1;
+    margin-top: 10px;
+}
+
+.fatiqueQuess1{
+    margin-top: 10px;
+}
+
+.fillDia .attchImg {
+  text-align: center!important;
+}
+
+.newrole{
+    display:flex;
+    align-items: center;
+    justify-content:space-between;
+}
+/* .newrole1 label{
+    display: block;
+} */
+label.newrole{
+display: block;}
+.newrole p{
+    margin-left: 100px;
+}
+.newrole input{
+    margin: 10px;
+    border: 1px solid #BFC1C1;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    width: 40%;
+    padding: 6px 12px;
+    outline: none;
+    margin-right:30px ;
+}
+
+.newrole label{
+    font-size:18px;
+}
+
+.headsize{
+    font-size:20px;
+}
+.heading p{
+    font-size:15px ;
+}
+
+.selectEntry{
+    margin: 10px;
+    width: 100%;
+}
+
+.line{
+    flex-flow: column nowrap;
+}
+
+.inputBorField input{
+    border: 1px solid #BFC1C1;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    /* width: 96.5%; */
+    width: 100%;
+    font-family: Muli;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0;
+    padding: 12px 12px;
+    box-sizing: border-box !important;
+    min-height: 44px;
+}
+
+.cnfrmDiaMain .fillDia .errChrMsg{
+color: #FF0000!important;
+}
