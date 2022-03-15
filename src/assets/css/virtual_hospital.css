@@ -14186,3 +14186,12 @@ color: #FF0000!important;
 .fillDiaAll label{
     display: contents;
 }
+
+.stripePromiseClss{
+margin-left: 70px;
+}
+
+.bloodpreLb label{
+    font-size: 15px;
+    font-weight: 700;
+}
