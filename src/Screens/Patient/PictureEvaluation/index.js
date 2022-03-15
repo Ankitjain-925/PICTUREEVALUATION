@@ -14,7 +14,6 @@ import ReactTooltip from "react-tooltip";
 import sitedata, { data } from 'sitedata';
 import axios from 'axios';
 import { withRouter } from "react-router-dom";
-import Radio from '@material-ui/core/Radio';
 import { connect } from "react-redux";
 import { authy } from 'Screens/Login/authy.js';
 import { LoginReducerAim } from 'Screens/Login/actions';
@@ -25,7 +24,6 @@ import LeftMenuMobile from 'Screens/Components/Menus/PatientLeftMenu/mobile';
 import { LanguageFetchReducer } from 'Screens/actions';
 import Loader from 'Screens/Components/Loader/index';
 import { Redirect, Route } from 'react-router-dom';
-import { AddFavDoc, ConsoleCustom } from 'Screens/Components/BasicMethod/index';
 import { getLanguage } from "translations/index"
 import { commonHeader } from 'component/CommonHeader/index';
 import PainIntensity from "Screens/Components/PainIntansity/index";
@@ -35,7 +33,6 @@ import DateFormat from "Screens/Components/DateFormat/index";
 import MMHG from "Screens/Components/mmHgField/index";
 import npmCountryList from "react-select-country-list";
 import FileUploader from "Screens/Components/JournalFileUploader/index";
-import StripeCheckout from "react-stripe-checkout";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { getPublishableKey } from "Screens/Components/CardInput/getPriceId"
 import HomePage from 'Screens/Components/CardInput/PayforSubscription';
@@ -72,6 +69,7 @@ class Index extends Component {
             picEval: false,
             show2: false,
             show1: false,
+            Housesoptions: {}
         };
     }
 
@@ -79,6 +77,7 @@ class Index extends Component {
     componentDidMount() {
         var npmCountry = npmCountryList().getData();
         this.setState({ selectCountry: npmCountry });
+        this.getallGroups();
     }
 
     CancelClick = () => {
@@ -156,9 +155,8 @@ class Index extends Component {
     //For validate the character length is correct or not
     validateChar = (event, value) => {
         var a = event && event?.length
-        if (value === "allergies" || "family_history" || "treatment_so_far" || "medical_precondition" || "premedication") {
-            console.log("fgghgh")
-            if (a > 400) {
+        if (value === "allergies" || value === "family_history" || value === "treatment_so_far" || value === "medical_precondition" || value === "premedication") {
+            if (a > 11) {
                 return false
             } else {
                 this.setState({ errorChrMsg: '' })
@@ -166,7 +164,7 @@ class Index extends Component {
             }
         }
         else {
-            if (a > 100) {
+            if (a > 20) {
                 return false
             } else {
                 this.setState({ errorChrMsg: '' })
@@ -177,7 +175,6 @@ class Index extends Component {
 
     //For validate the blood pressure is correct or not
     validateBp = (elementValue) => {
-        console.log(elementValue)
         var bpPattern = /^[0-9]+$/;
         return bpPattern.test(elementValue);
     };
@@ -202,32 +199,22 @@ class Index extends Component {
         if (value == 1) {
             if (this.validateBp(data.rr_systolic)) {
                 if (this.validateBp(data.rr_diastolic)) {
-                    console.log("0")
 
                     if (this.validateChar(data.allergies, "allergies")) {
-                        console.log("1")
 
                         if (this.validateChar(data.family_history, "family_history")) {
-                            console.log("2")
 
                             if (this.validateChar(data.treatment_so_far, "treatment_so_far")) {
-                                console.log("3")
 
                                 if (this.validateChar(data.race, "race")) {
-                                    console.log("4")
 
                                     if (this.validateChar(data.history_month, "history_month")) {
-                                        console.log("5")
 
                                         if (this.validateChar(data.medical_precondition, "medical_precondition")) {
-                                            console.log("6")
 
                                             if (this.validateChar(data.premedication, "premedication")) {
-                                                console.log("7")
-
                                                 console.log("this.state.updateEvaluate", data)
                                                 this.setState({ mod1Open: true, picEval: true })
-
                                             } else {
                                                 this.setState({ errorChrMsg: "Max Words limit exceeds in Premedication" })
                                             }
@@ -260,8 +247,37 @@ class Index extends Component {
             console.log("this.state.updateEvaluate", data)
             this.setState({ mod1Open: false })
         }
-        // this.setState({ updateEvaluate: {} })
     }
+
+    getallGroups = () => {
+        this.setState({ loaderImage: true });
+        axios
+            .get(
+                sitedata.data.path +
+                `/admin/GetHintinstitute`,
+                commonHeader(this.props.stateLoginValueAim.token)
+            )
+            .then((responce) => {
+                if (responce.data.hassuccessed && responce.data.data) {
+                    var Housesoptions = [];
+                    responce.data.data.map((data) => {
+                        if (data?.institute_groups && data?.institute_groups?.length > 0) {
+                            data.institute_groups.map((data1) => {
+                                data1.houses.map((data2) => {
+                                    Housesoptions.push({
+                                        group_name: data2.house_name,
+                                        label: data2.house_name,
+                                        value: data2._id
+                                    })
+                                })
+                            })
+                        }
+                    })
+                    this.setState({ Housesoptions: Housesoptions });
+                }
+                this.setState({ loaderImage: false });
+            });
+    };
 
     render() {
         const { value } = this.state;
@@ -276,11 +292,6 @@ class Index extends Component {
             male,
             female,
             other,
-            ok,
-            pay_with_stripe,
-            paymnt_err,
-            paymnt_processed,
-
         } = translate;
         return (
             <Grid className={this.props.settings && this.props.settings.setting && this.props.settings.setting.mode && this.props.settings.setting.mode === 'dark' ? "homeBg homeBgDrk" : "homeBg"}>
@@ -360,8 +371,8 @@ class Index extends Component {
                                                                     </Grid>
                                                                 </Grid>
                                                                 <Grid className="bloodpreLb">
-                                                                <label>Blood Pressure</label>
-                                                            </Grid>
+                                                                    <label>Blood Pressure</label>
+                                                                </Grid>
                                                                 <Grid className="fillDia">
                                                                     <MMHG
                                                                         name="rr_systolic"
@@ -503,6 +514,21 @@ class Index extends Component {
                                                                     isMulti={true}
                                                                     fileUpload={this.FileAttachMulti}
                                                                 />
+                                                            </Grid>
+                                                            <Grid item xs={12} md={12}>
+                                                                <label>Hospital</label>
+                                                                <Grid className="cntryDropTop">
+
+                                                                    <Select
+                                                                        value={this.state.updateEvaluate?.hospital}
+                                                                        onChange={(e) => this.updateEntryState1(e, "hospital")}
+                                                                        options={this.state.Housesoptions}
+                                                                        placeholder=""
+                                                                        isSearchable={true}
+                                                                        name="hospital"
+                                                                        className="cntryDrop"
+                                                                    />
+                                                                </Grid>
                                                             </Grid>
                                                             <Grid className="fatiqueQues fatiqueQuess1">
                                                                 <Grid className="dateSet">
