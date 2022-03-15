@@ -71,7 +71,7 @@ class Index extends Component {
 
   //For Second opinion link
   feedBack = () => {
-    this.props.history.push("/patient/feedback");
+    this.props.history.push("/patient/evaluation-list");
   };
   
 
@@ -172,7 +172,7 @@ class Index extends Component {
                     title=""
                   />
                 )}
-                <span>{"Submit FeedBack"}</span>
+                <span>{"Evaluation Request"}</span>
               </a>
             </li>
         

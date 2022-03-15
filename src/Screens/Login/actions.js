@@ -63,7 +63,16 @@ export const LoginReducerAim = (email, password, logintoken, SendCallback = () =
           };
           dispatch({ type: GET_LOGIN_SUCCESS, payload: tmp });
           SendCallback();
-        } else {
+        } else if(response.data?.user?.type !=='patient'){
+          let tmp = {
+            token: response.data.token,
+            permission : false
+          };
+          dispatch({ type: GET_LOGIN_SUCCESS, payload: tmp });
+          SendCallback();
+          
+        } 
+        else {
           tmp = {
             token: response.data.token,
             user: response.data.user,
