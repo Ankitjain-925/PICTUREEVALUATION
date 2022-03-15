@@ -117,7 +117,7 @@ class Index extends Component {
                       );
                     axios
                       .post(sitedata.data.path + "/UserProfile/AddUser/", {
-                        type: this.state.selectedOption,
+                        type: 'patient',
                         email: this.state.userDetails.email,
                         password: this.state.userDetails.password,
                         country_code: country_code,
@@ -941,129 +941,7 @@ class Index extends Component {
                         </div>
                       </Grid>
                     )}
-                  <Grid className="registerRow accountTyp">
-                    <Grid>
-                      <label>{Register_Accounttype}</label>
-                    </Grid>
-                    <Grid className="acPatient">
-                      <Grid
-                        container
-                        direction="row"
-                        justify="center"
-                        alignItems="center"
-                      >
-                        <Grid item xs={11} sm={6} md={6}>
-                          <Grid
-                            className={
-                              this.state.selectedOption === "patient"
-                                ? "acPatientIner"
-                                : "acPatientIner onProfessional"
-                            }
-                          >
-                            <a
-                              onClick={() => {
-                                this.setState({ selectedOption: "patient" });
-                              }}
-                            >
-                              {capab_Patients}
-                            </a>
-                          </Grid>
-                        </Grid>
-                        <Grid item xs={11} sm={6} md={6}>
-                          <Grid
-                            className={
-                              this.state.selectedOption === "patient"
-                                ? "acType"
-                                : "acType ProfSelect"
-                            }
-                          >
-                            <UncontrolledDropdown nav inNavbar>
-                              <DropdownToggle nav caret>
-                                {this.state.dropDownValue1}
-                              </DropdownToggle>
-                              {/* 
-                                                en => English
-                                                de => German  
-
-                                            */}
-                              <DropdownMenu className="langInerFooter">
-                                <DropdownItem
-                                  onClick={() => {
-                                    this.changeValue1("Professional");
-                                  }}
-                                >
-                                  <NavLink>Professional</NavLink>
-                                </DropdownItem>
-                                <DropdownItem
-                                  onClick={() => {
-                                    this.changeValue1("doctor");
-                                  }}
-                                >
-                                  <NavLink>Doctor</NavLink>
-                                </DropdownItem>
-                                <DropdownItem
-                                  onClick={() => {
-                                    this.changeValue1("nurse");
-                                  }}
-                                >
-                                  <NavLink>Nurse</NavLink>
-                                </DropdownItem>
-                                <DropdownItem
-                                  onClick={() => {
-                                    this.changeValue1("pharmacy");
-                                  }}
-                                >
-                                  <NavLink>Pharmacist</NavLink>
-                                </DropdownItem>
-                                {/* <DropdownItem
-                                onClick={() => {
-                                  this.changeValue("sp", "Spanish");
-                                }}
-                              >
-                                <NavLink>Spanish</NavLink>
-                              </DropdownItem>
-                              <DropdownItem
-                                onClick={() => {
-                                  this.changeValue("rs", "Russian");
-                                }}
-                              >
-                                <NavLink>Russian</NavLink>
-                              </DropdownItem>
-                              <DropdownItem
-                                onClick={() => {
-                                  this.changeValue("sw", "Swahili");
-                                }}
-                              >
-                                <NavLink>Swahili</NavLink>
-                              </DropdownItem>
-                              <DropdownItem
-                                onClick={() => {
-                                  this.changeValue("fr", "French");
-                                }}
-                              >
-                                <NavLink>French</NavLink>
-                              </DropdownItem>
-                              <DropdownItem
-                                onClick={() => {
-                                  this.changeValue("ar", "Arabic");
-                                }}
-                              >
-                                <NavLink>Arabic</NavLink>
-                              </DropdownItem>
-                              <DropdownItem
-                                onClick={() => {
-                                  this.changeValue("tr", "Turkish");
-                                }}
-                              >
-                                <NavLink>Turkish</NavLink>
-                              </DropdownItem> */}
-                              </DropdownMenu>
-                            </UncontrolledDropdown>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Grid>
+                 
                   <Grid className="registerRow">
                     <FormControlLabel
                       className="regMob"
@@ -1090,21 +968,7 @@ class Index extends Component {
                       label={Register_Clicking_box}
                     />
                   </Grid>
-                  {this.state.selectedOption !== "patient" && (
-                    <Grid className="registerRow">
-                      <FormControlLabel
-                        className="regMob"
-                        control={
-                          <Checkbox
-                            value="checkedA"
-                            onChange={this.handleChange}
-                            name="license_of_practice"
-                          />
-                        }
-                        label={Register_clickingbox}
-                      />
-                    </Grid>
-                  )}
+               
                   <ReCAPTCHA
                     sitekey={"6Lfgib4cAAAAAKWDXLFxlUQ8o4zb529nqkP0k1b3"}
                     onChange={this.onChangeRec}
