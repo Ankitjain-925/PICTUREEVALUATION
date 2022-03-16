@@ -9930,6 +9930,32 @@ button.crdoLghtBlu2 {
     border-bottom: none;
 }
 /* Added by Ankita */
+.docsOpinion.docsOpinion12 {
+    padding: 0px !important;
+    margin: 0px!important;
+}
+.docsOpinion label {
+    padding: 0px !important;
+    margin: 0px!important;
+}
+.cnfrmDiaMain1{
+    padding: 22px 24px 35px 24px !important;
+}
+.homeBgDrk .payment_sec_extra_ser1 label {
+    color: #BFC1C1 !important;
+}
+.homeBgDrk .payment_sec_extra_ser1 p{
+color: #BFC1C1 !important;
+}
+
+.payment_sec_extra_ser1 {
+    background: #fff;
+    padding-bottom: 30px;
+    width: 100%;
+}
+.homeBgDrk .payment_sec_extra_ser1 {
+    background: #404646;
+}
 @media (max-width: 959px){
     .vh-section .prfilHghtLft p span, .vh-section .prfilHghtRght p span{
         display: block;
@@ -14102,6 +14128,10 @@ background-color: #404646;
     border-radius: 5px;
     border: 1px solid #BFC1C1;
     margin-top: 10px;
+}
+
+ .homeBgDrk .textFieldArea1 input{
+    background-color: transparent !important;   
 }
 
 .fatiqueQuess1{

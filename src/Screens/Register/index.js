@@ -98,10 +98,8 @@ class Index extends Component {
             this.state.userDetails.mobile &&
             this.state.userDetails.mobile !== ""
           ) {
-            if (this.state.selectedOption !== "") {
               if (this.state.userDetails.terms_and_conditions) {
                 if (this.state.recaptcha) {
-                  if (this.state.selectedOption == "patient") {
                     this.setState({ loaderImage: true });
                     if (this.state.userDetails.country_code) {
                       var country_code = this.state.userDetails.country_code;
@@ -166,94 +164,14 @@ class Index extends Component {
                         }
                       })
                       .catch((err) => { });
-                  }
-                  if (
-                    this.state.selectedOption == "pharmacy" ||
-                    this.state.selectedOption == "nurse" ||
-                    this.state.selectedOption == "doctor"
-                  ) {
-                    this.setState({ loaderImage: true });
-                    if (this.state.userDetails.country_code) {
-                      var country_code = this.state.userDetails.country_code;
-                    } else {
-                      var country_code = "de";
-                    }
-                    var getBucket =
-                      contry &&
-                      contry.length > 0 &&
-                      contry.filter(
-                        (value, key) =>
-                          value.code === country_code.toUpperCase()
-                      );
-                    if (
-                      this.state.selectedOption == "doctor" ||
-                      this.state.selectedOption == "nurse" ||
-                      this.state.selectedOption == "pharmacy"
-                    ) {
-                      this.saveDoctor(country_code);
-                    } else {
-                      axios
-                        .post(sitedata.data.path + "/UserProfile/AddUser/", {
-                          type: this.state.selectedOption,
-                          email: this.state.userDetails.email,
-                          password: this.state.userDetails.password,
-                          country_code: country_code,
-                          mobile: this.state.userDetails.mobile,
-                          is2fa: this.state.userDetails.is2fa,
-                          lan: this.props.stateLanguageType,
-                          first_name: this.state.userDetails.first_name,
-                          last_name: this.state.userDetails.last_name,
-                          bucket: getBucket[0].bucket,
-                          token: this.state.recaptcha,
-                        })
-                        .then((responce) => {
-                          this.setState({ loaderImage: false });
-                          if (responce.data.hassuccessed === true) {
-                            if (this.state.selectedOption == "nurse") {
-                              axios
-                                .post(
-                                  "https://api-eu.cometchat.io/v2.0/users",
-                                  {
-                                    uid: responce.data.data.profile_id,
-                                    name:
-                                      responce.data.data.first_name +
-                                      " " +
-                                      responce.data.data.last_name,
-                                  },
-                                  commonCometHeader()
-                                )
-                                .then((res) => {
-                                  updateCometUser({
-                                    uid: responce.data.data.profile_id.toLowerCase(),
-                                    name:
-                                      responce.data.data.first_name +
-                                      " " +
-                                      responce.data.data.last_name,
-                                    role: "default",
-                                  });
-                                });
-                            }
-                            this.setState({ successfull: true });
-                            this.setState({
-                              registerMessage:
-                                "You are registered successfully, Please check your email for verification.",
-                            });
-                          } else {
-                            this.setState({ successfull: false });
-                            this.setState({ error_msg: responce.data.message });
-                          }
-                        });
-                    }
-                  }
+             
                 } else {
                   this.setState({ regisError0: fillreptcha });
                 }
               } else {
                 this.setState({ regisError0: plz_accept_term_condition });
               }
-            } else {
-              this.setState({ regisError0: select_user_type });
-            }
+           
           } else {
             this.setState({ regisError0: plz_fill_mob_number });
           }
