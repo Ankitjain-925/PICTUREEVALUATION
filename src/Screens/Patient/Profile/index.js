@@ -20,13 +20,6 @@ import Tab from "@material-ui/core/Tab";
 import { authy } from "Screens/Login/authy.js";
 import Typography from "@material-ui/core/Typography";
 import ProfileSection from "./Components/profileUpdate";
-import SecuritySection from "Screens/Components/CommonProfileSec/security";
-import DoctorSection from "./Components/mydoctors";
-import OrganSection from "./Components/orgnaDonar";
-import ManagementSection from "./Components/rightManagement";
-import KycSection from "Screens/Components/CommonProfileSec/kyc";
-import DateTimeSection from "Screens/Components/CommonProfileSec/DateTime";
-import DeleteAccountSection from "Screens/Components/CommonProfileSec/DeleteAccount";
 import Timezone from "timezon.json";
 import Notification from "Screens/Components/CometChat/react-chat-ui-kit/CometChat/components/Notifications";
 import { GetLanguageDropdown } from "Screens/Components/GetMetaData/index.js";
@@ -175,107 +168,28 @@ class Index extends Component {
                 <Grid item xs={12} md={10} lg={8}>
                   <Grid className="profilePkg ">
                     <Grid className="profilePkgIner1">
-                      {/* Tabs  */}
-                      <AppBar position="static" className="profileTabsUpr">
-                        <Tabs
-                          value={value}
-                          onChange={this.handleChangeTabs}
-                          className="profileTabs">
-                          <Tab label={my_profile} className="aboutTabsIner" />
-                          <Tab label={Security} className="aboutTabsIner" />
-                          <Tab label={my_drs} className="aboutTabsIner" />
-                          <Tab label={organ_donar} className="aboutTabsIner" />
-                          <Tab
-                            label={right_management}
-                            className="aboutTabsIner"
-                          />
-                          <Tab label={kyc} className="aboutTabsIner" />
-                          <Tab label={date_time} className="aboutTabsIner" />
-                          <Tab label={delete_account} className="aboutTabsIner" />
-                        </Tabs>
-                      </AppBar>
+                    <Grid className="docsOpinion">
+                      <Grid container direction="row" className="docsOpinLbl">
+                                  <Grid item xs={12} md={6}><label>{"Profile Setting"}</label></Grid>
+                                  
+                              </Grid>
+                     </Grid>
+                    
                     </Grid>
+                 
                     <Grid className="profilePkgIner2">
+                    <ProfileSection />
                       {/* Start of MyProfile */}
-                      {value === 0 && (
-                        <TabContainer>
-                          <ProfileSection />
-                        </TabContainer>
-                      )}
+                      {/* {value === 0 && (
+                        <TabContainer> */}
+                          {/* <ProfileSection /> */}
+                        {/* </TabContainer>
+                      )} */}
                       {/* End of MyProfile */}
 
-                      {/* Start of Security */}
-                      {value === 1 && (
-                        <TabContainer>
-                          <SecuritySection
-                            user_token={this.props.stateLoginValueAim.token}
-                            LoggedInUser={this.state.LoggedInUser}
-                            getUserData={this.getUserData}
-                          />
-                        </TabContainer>
-                      )}
-                      {/* End of Security */}
-
-                      {/* Start of MyDoctor */}
-                      {value === 2 && (
-                        <TabContainer>
-                          <DoctorSection />
-                        </TabContainer>
-                      )}
-                      {/* End of MyDoctor */}
-
-                      {/* Start of Organ Donor  */}
-                      {value === 3 && (
-                        <TabContainer>
-                          <OrganSection
-                            tissue={this.state.tissue && this.state.tissue}
-                          />
-                        </TabContainer>
-                      )}
-                      {/* End of Organ Donor */}
-
-                      {/* Start of Right Management */}
-                      {value === 4 && (
-                        <TabContainer>
-                          <ManagementSection />
-                        </TabContainer>
-                      )}
-                      {/* End of Right Management */}
-
-                      {/* Start of KYC */}
-                      {value === 5 && (
-                        <TabContainer>
-                          <KycSection comesFrom="pateint"/>
-                        </TabContainer>
-                      )}
-                      {/* End of KYC */}
-
-                      {/* Start of DateTime */}
-                      {value === 6 && (
-                        <TabContainer>
-                          <DateTimeSection
-                            timezones={this.state.timezones}
-                            times={this.state.times && this.state.times}
-                            dates={this.state.dates && this.state.dates}
-                            user_token={this.props.stateLoginValueAim.token}
-                            LoggedInUser={this.state.LoggedInUser}
-                            getUserData={this.getUserData}
-                          />
-                        </TabContainer>
-                      )}
-                      {/* End of DateTime */}
-                      {/* Start of Delete */}
-                      {value === 7 && (
-                        <TabContainer>
-                          <DeleteAccountSection
-                            user_token={this.props.stateLoginValueAim.token}
-                            LoggedInUser={this.state.LoggedInUser}
-                            getUserData={this.getUserData}
-                          />
-                        </TabContainer>
-                      )}
-                      {/* End of Delete */}
+                      
                     </Grid>
+                 
                     {/* End of Tabs */}
                   </Grid>
                 </Grid>

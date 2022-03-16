@@ -139,10 +139,11 @@ class Index extends Component {
         if(this.state.logintoken != '' && this.state.logintoken != undefined){
           logintoken = this.state.logintoken
         }
+        this.setState({otherUser: false})
         this.props.LoginReducerAim(email, password,logintoken, () => {
           this.setState({ myLogin: true });
           this.setState({ loaderImage: false });
-          if (
+        if (
             this.props.stateLoginValueAim &&
             this.props.stateLoginValueAim?.user &&
             !this.props.stateLoginValueAim?.user?.is2fa
@@ -405,6 +406,8 @@ class Index extends Component {
                         ? password_cant_empty 
                         : stateLoginValueAim.isVerified == false 
                         ? verifyAccount
+                        : stateLoginValueAim.permission == false 
+                        ? 'User is not able to login from here, Only patient have right to login'
                         : stateLoginValueAim.isBlocked == true 
                         ? stateLoginValueAim.type === 'patient' ? user_is_blocked : needUnblock
                         : this.state.loginError === false &&

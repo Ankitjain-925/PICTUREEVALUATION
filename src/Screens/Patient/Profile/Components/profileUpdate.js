@@ -19,8 +19,7 @@ import { GetShowLabel1 } from 'Screens/Components/GetMetaData/index.js';
 import DateFormat from 'Screens/Components/DateFormat/index'
 import { getLanguage } from "translations/index";
 import _ from 'lodash';
-import { updateFLAG, updateMOBILE } from './odapi';
-import { getUserData, contact_partnerState, getMetadata, handleChange_multi, saveUserData1, saveUserData, firstLoginUpdate, onChange, updateEntryState1, updateEntryState11, copyText, updateflags,
+import { updateFLAG, updateMOBILE, getUserData, contact_partnerState, getMetadata, handleChange_multi, saveUserData1, saveUserData, firstLoginUpdate, onChange, updateEntryState1, updateEntryState11, copyText, updateflags,
     updateEntryState, Upsaterhesus, EntryValueName , GetLanguageMetadata, filterCountry, filterCountry1, toggle, filterList, updatesinsurances, changeAlies, changePin, ChangeIDPIN, updatesinsurancesCountry ,removeInsurance,  } from './puapi';
 
 class Index extends Component {
@@ -498,7 +497,6 @@ class Index extends Component {
                                                 className="Mobile_extra"
                                                 placeholder={mobile}
                                                 name="mobile"
-                                                type="text"
                                                 onChange={(e)=> updateEntryState1(e, this)}
                                                 value={this.state.UpDataDetails.mobile && updateMOBILE(this.state.UpDataDetails.mobile)}
                                             />

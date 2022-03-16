@@ -49,10 +49,9 @@ class Routermain extends Component {
             />
                <Route
               exact
-              path="/patient/feedback"
+              path="/patient/evaluation-list"
               render={(props) => <FeedBack {...props} />}
             />
-
             <Route
               exact
               path="/register-successfull"
