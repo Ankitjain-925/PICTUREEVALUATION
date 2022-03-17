@@ -168,7 +168,7 @@ class Index extends Component {
                 <Grid item xs={12} md={10} lg={8}>
                   <Grid className="profilePkg ">
                     <Grid className="profilePkgIner1">
-                    <Grid className="docsOpinion">
+                    <Grid className="docsOpinion docsOpinion12">
                       <Grid container direction="row" className="docsOpinLbl">
                                   <Grid item xs={12} md={6}><label>{"Profile Setting"}</label></Grid>
                                   

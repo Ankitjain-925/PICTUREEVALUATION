@@ -93,8 +93,8 @@ function HomePage(props) {
   return (
     <Grid container direction="row" spacing="3">
         {showError}
-    <Grid item xs={12} md={6}>
-        {(props.show1 || props.show2 ) && <div className="payment_sec_extra_ser">
+    {/* <Grid item xs={12} md={6}> */}
+        {(props.show1 || props.show2 ) && <div className="payment_sec_extra_ser1">
         <TextField
           label={recEmp_Emailaddress}
           id='outlined-email-input'
@@ -134,7 +134,7 @@ function HomePage(props) {
             </button>
           </div>
         </ div>}
-      </Grid>
+      {/* </Grid> */}
     </Grid>
   );
 }

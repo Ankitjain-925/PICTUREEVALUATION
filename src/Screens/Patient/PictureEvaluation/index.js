@@ -473,7 +473,14 @@ class Index extends Component {
             until,
         } = translate;
         return (
-            <Grid className={this.props.settings && this.props.settings.setting && this.props.settings.setting.mode && this.props.settings.setting.mode === 'dark' ? "homeBg homeBgDrk" : "homeBg"}>
+            <Grid   className={
+                this.props.settings &&
+                this.props.settings.setting &&
+                this.props.settings.setting.mode &&
+                this.props.settings.setting.mode === "dark"
+                  ? "homeBg darkTheme homeBgDrk"
+                  : "homeBg"
+              } >
                 {this.state.loaderImage && <Loader />}
                 <Grid className="homeBgIner">
                     <Grid container direction="row" justify="center">
@@ -490,8 +497,9 @@ class Index extends Component {
                                                 <a onClick={this.handlePicEval}>+ {New} {"Picture Evaluation"}</a>
                                             </Grid> */}
                                         </Grid>
+                                    </Grid>
                                         <Grid item xs={12} sm={12} md={8}>
-                                            <Grid className="cnfrmDiaMain cnfrmDiaMain1">
+                                            <Grid className="cnfrmDiaMain profilePkg cnfrmDiaMain1">
                                                 <div className="err_message">{this.state.errorChrMsg}</div>
                                                 {!this.state.show2 && (<Grid >
                                                     {!this.state.picEval === true ? (
@@ -929,14 +937,17 @@ class Index extends Component {
                                                         </Grid>
                                                     )}
                                                 </Grid>)}
+                                                <Elements stripe={stripePromise}>
+                                                    <HomePage languageType={this.props.stateLanguageType} show1={this.state.show1} show2={this.state.show2} CancelClick={this.CancelClick} onToken={this.onToken} />
+                                                </Elements>
                                             </Grid>
+                                         
+                                           
                                         </Grid>
-                                    </Grid>
-                                    <Grid className="stripePromiseClss">
-                                        <Elements stripe={stripePromise}>
-                                            <HomePage languageType={this.props.stateLanguageType} show1={this.state.show1} show2={this.state.show2} CancelClick={this.CancelClick} onToken={this.onToken} />
-                                        </Elements>
-                                    </Grid>
+                                    
+                                    {/* <Grid className="stripePromiseClss"> */}
+                                      
+                                    {/* </Grid> */}
                                 </Grid>
                             </Grid>
                         </Grid>

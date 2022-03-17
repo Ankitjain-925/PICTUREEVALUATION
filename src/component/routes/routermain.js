@@ -17,7 +17,7 @@ import FeedBack from "Screens/Patient/SubmitFeedback/index";
 class Routermain extends Component {
   render() {
     return (
-      <Router basename={"/"}>
+      <Router basename={"/sys-n-eval"}>
         <Grid>
           <Switch>
             {/* Added by Ankita */}
