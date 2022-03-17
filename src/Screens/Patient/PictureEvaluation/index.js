@@ -42,22 +42,14 @@ import { GetShowLabel1 } from "Screens/Components/GetMetaData/index.js";
 import TimeFormat from "Screens/Components/TimeFormat/index";
 import SelectByTwo from "Screens/Components/SelectbyTwo/index";
 import SelectField from "Screens/Components/Select/index";
+import { GetLanguageDropdown } from "Screens/Components/GetMetaData/index.js";
+import { OptionList } from "Screens/Login/metadataaction";
 
 const STRIPE_PUBLISHABLE = getPublishableKey()
 const stripePromise = loadStripe(STRIPE_PUBLISHABLE);
 
 const options = [{ label: "POSTPRANDIAL", value: "stress" },
 { label: "EMPTY STOMACH", value: "relaxed" }];
-
-const options1 = [{ label: "Chews tobacco", value: "Chews_tobacco" },
-{ label: "Cigar smoker", value: "Cigar_smoker" },
-{ label: "Former smoker", value: "Former_smoker" },
-{ label: "Never smoked", value: "Never_smoked" },
-{ label: "Passive smoker", value: "Passive_smoker" },
-{ label: "Smoker, current status unknown", value: "unknown" },
-{ label: "Smoking daily", value: "Smoking_daily" },
-{ label: "Snuff user", value: "Snuff_user" },
-{ label: "Unknown if ever smoked", value: "Unknown_if_ever_smoked" }];
 
 function TabContainer(props) {
     return (
@@ -88,7 +80,8 @@ class Index extends Component {
             show1: false,
             Housesoptions: {},
             options: options,
-            options1: options1
+            Allsituation: [],
+            Allsmoking_status: []
         };
     }
 
@@ -96,7 +89,37 @@ class Index extends Component {
         var npmCountry = npmCountryList().getData();
         this.setState({ selectCountry: npmCountry });
         this.getallGroups();
+        this.getMetadata();
     }
+
+    //Get All information Related to Metadata
+    getMetadata() {
+        this.setState({ allMetadata: this.props.metadata }, () => {
+            this.GetLanguageMetadata();
+        });
+    }
+
+    GetLanguageMetadata = () => {
+        if (this.state.allMetadata) {
+            var Allsituation = GetLanguageDropdown(
+                this.state.allMetadata &&
+                this.state.allMetadata.situation &&
+                this.state.allMetadata.situation,
+                this.props.stateLanguageType
+            );
+            var Allsmoking_status = GetLanguageDropdown(
+                this.state.allMetadata &&
+                this.state.allMetadata.smoking_status &&
+                this.state.allMetadata.smoking_status,
+                this.props.stateLanguageType
+            );
+
+            this.setState({
+                Allsituation: Allsituation,
+                Allsmoking_status: Allsmoking_status,
+            });
+        }
+    };
 
     CancelClick = () => {
         this.setState({ show1: false, show2: false })
@@ -273,80 +296,84 @@ class Index extends Component {
                                                         if (this.validateBp(data.Hba1c)) {
                                                             if (this.validateRangeBp(data.Hba1c, "Hba1c")) {
                                                                 if (data.situation) {
-                                                                    if (data.allergies) {
-                                                                        if (this.validateChar(data.allergies, "allergies")) {
-                                                                            if (data.family_history) {
-                                                                                if (this.validateChar(data.family_history, "family_history")) {
-                                                                                    if (data.treatment_so_far) {
-                                                                                        if (this.validateChar(data.treatment_so_far, "treatment_so_far")) {
-                                                                                            if (data.birth) {
-                                                                                                if (data.residence) {
-                                                                                                    if (data.race) {
-                                                                                                        if (this.validateChar(data.race, "race")) {
-                                                                                                            if (data.history_month) {
-                                                                                                                if (this.validateChar(data.history_month, "history_month")) {
-                                                                                                                    if (data.medical_precondition) {
-                                                                                                                        if (this.validateChar(data.medical_precondition, "medical_precondition")) {
-                                                                                                                            if (data.medical_precondition) {
-                                                                                                                                if (this.validateChar(data.premedication, "premedication")) {
+                                                                    if (data.select_status) {
+                                                                        if (data.allergies) {
+                                                                            if (this.validateChar(data.allergies, "allergies")) {
+                                                                                if (data.family_history) {
+                                                                                    if (this.validateChar(data.family_history, "family_history")) {
+                                                                                        if (data.treatment_so_far) {
+                                                                                            if (this.validateChar(data.treatment_so_far, "treatment_so_far")) {
+                                                                                                if (data.birth) {
+                                                                                                    if (data.residence) {
+                                                                                                        if (data.race) {
+                                                                                                            if (this.validateChar(data.race, "race")) {
+                                                                                                                if (data.history_month) {
+                                                                                                                    if (this.validateChar(data.history_month, "history_month")) {
+                                                                                                                        if (data.medical_precondition) {
+                                                                                                                            if (this.validateChar(data.medical_precondition, "medical_precondition")) {
+                                                                                                                                if (data.premedication) {
+                                                                                                                                    if (this.validateChar(data.premedication, "premedication")) {
 
 
-                                                                                                                                    console.log("this.state.updateEvaluate", data)
-                                                                                                                                    this.setState({ mod1Open: true, picEval: true })
+                                                                                                                                        console.log("this.state.updateEvaluate", data)
+                                                                                                                                        this.setState({ mod1Open: true, picEval: true })
 
+                                                                                                                                    } else {
+                                                                                                                                        this.setState({ errorChrMsg: "Max Words limit exceeds in Premedication" })
+                                                                                                                                    }
                                                                                                                                 } else {
-                                                                                                                                    this.setState({ errorChrMsg: "Max Words limit exceeds in Premedication" })
+                                                                                                                                    this.setState({ errorChrMsg: "Please enter Premedication" })
                                                                                                                                 }
                                                                                                                             } else {
-                                                                                                                                this.setState({ errorChrMsg: "Please enter Premedication" })
+                                                                                                                                this.setState({ errorChrMsg: "Max Words limit exceeds in Medical precondition" })
                                                                                                                             }
                                                                                                                         } else {
-                                                                                                                            this.setState({ errorChrMsg: "Max Words limit exceeds in Medical precondition" })
+                                                                                                                            this.setState({ errorChrMsg: "Please enter Medical precondition" })
                                                                                                                         }
                                                                                                                     } else {
-                                                                                                                        this.setState({ errorChrMsg: "Please enter Medical precondition" })
+                                                                                                                        this.setState({ errorChrMsg: "Max Words limit exceeds in History month" })
                                                                                                                     }
                                                                                                                 } else {
-                                                                                                                    this.setState({ errorChrMsg: "Max Words limit exceeds in History month" })
+                                                                                                                    this.setState({ errorChrMsg: "Please enter History month" })
                                                                                                                 }
                                                                                                             } else {
-                                                                                                                this.setState({ errorChrMsg: "Please enter History month" })
+                                                                                                                this.setState({ errorChrMsg: "Max Words limit exceeds in Race" })
                                                                                                             }
                                                                                                         } else {
-                                                                                                            this.setState({ errorChrMsg: "Max Words limit exceeds in Race" })
+                                                                                                            this.setState({ errorChrMsg: "Please enter Race" })
                                                                                                         }
                                                                                                     } else {
-                                                                                                        this.setState({ errorChrMsg: "Please enter Race" })
+                                                                                                        this.setState({ errorChrMsg: "Please select Place of residence" })
                                                                                                     }
                                                                                                 } else {
-                                                                                                    this.setState({ errorChrMsg: "Please select Place of residence" })
+                                                                                                    this.setState({ errorChrMsg: "Please select Place of birth" })
                                                                                                 }
                                                                                             } else {
-                                                                                                this.setState({ errorChrMsg: "Please select Place of birth" })
+                                                                                                this.setState({ errorChrMsg: "Max Words limit exceeds in Treatment so far" })
                                                                                             }
                                                                                         } else {
-                                                                                            this.setState({ errorChrMsg: "Max Words limit exceeds in Treatment so far" })
+                                                                                            this.setState({ errorChrMsg: "Please enter Treatment so far" })
                                                                                         }
                                                                                     } else {
-                                                                                        this.setState({ errorChrMsg: "Please enter Treatment so far" })
+                                                                                        this.setState({ errorChrMsg: "Max Words limit exceeds in family history" })
                                                                                     }
                                                                                 } else {
-                                                                                    this.setState({ errorChrMsg: "Max Words limit exceeds in family history" })
+                                                                                    this.setState({ errorChrMsg: "Please enter family history" })
                                                                                 }
                                                                             } else {
-                                                                                this.setState({ errorChrMsg: "Please enter family history" })
+                                                                                this.setState({ errorChrMsg: "Max Words limit exceeds in allergies" })
                                                                             }
                                                                         } else {
-                                                                            this.setState({ errorChrMsg: "Max Words limit exceeds in allergies" })
+                                                                            this.setState({ errorChrMsg: "Please enter allergies" })
                                                                         }
                                                                     } else {
-                                                                        this.setState({ errorChrMsg: "Please enter allergies" })
+                                                                        this.setState({ errorChrMsg: "Please select smoking status" })
                                                                     }
                                                                 } else {
                                                                     this.setState({ errorChrMsg: "Please enter situation for Diabetes" })
                                                                 }
                                                             } else {
-                                                                this.setState({ errorChrMsg: "Hemoglobin A1c levels should be between 5.7 % and 6.4 %" })
+                                                                this.setState({ errorChrMsg: "Hemoglobin A1c levels should be between 57 % and 64 %" })
                                                             }
                                                         } else {
                                                             this.setState({ errorChrMsg: "Hemoglobin A1c should be in number" })
@@ -480,6 +507,7 @@ class Index extends Component {
                                                                             new Date(this.state.updateEvaluate?.date) :
                                                                             new Date()
                                                                         }
+                                                                        max={new Date()}
                                                                         onChange={(e) => this.updateEntryState1(e, "date")}
                                                                         date_format={this.props.settings &&
                                                                             this.props.settings.setting &&
@@ -608,13 +636,13 @@ class Index extends Component {
                                                                     <SelectByTwo
                                                                         name="situation"
                                                                         label={situation}
-                                                                        options={this.state.options}
+                                                                        options={this.state.Allsituation}
                                                                         onChange={(e) => this.updateEntryState1(e, "situation")}
                                                                         value={GetShowLabel1(
-                                                                            this.state.options,
-                                                                            this.state.updateEvaluate &&
-                                                                            this.state.updateEvaluate?.situation &&
-                                                                            this.state.updateEvaluate?.situation?.value,
+                                                                            this.state.Allsituation,
+                                                                            this.state.updateTrack &&
+                                                                            this.state.updateTrack.situation &&
+                                                                            this.state.updateTrack.situation.value,
                                                                             this.props.stateLanguageType
                                                                         )}
                                                                     />
@@ -628,10 +656,10 @@ class Index extends Component {
                                                                         isSearchable={true}
                                                                         name="select_status"
                                                                         label="Select Status"
-                                                                        option={this.state.options1}
+                                                                        option={this.state.Allsmoking_status}
                                                                         onChange={(e) => this.updateEntryState1(e, "select_status")}
                                                                         value={GetShowLabel1(
-                                                                            this.state.options1,
+                                                                            this.state.Allsmoking_status,
                                                                             this.state.updateEvaluate &&
                                                                             this.state.updateEvaluate?.select_status &&
                                                                             this.state.updateEvaluate?.select_status?.value,
@@ -923,12 +951,14 @@ const mapStateToProps = (state) => {
     const { stateLanguageType } = state.LanguageReducer;
     const { settings } = state.Settings;
     const { verifyCode } = state.authy;
+    const { metadata } = state.OptionList;
     return {
         stateLanguageType,
         stateLoginValueAim,
         loadingaIndicatoranswerdetail,
         settings,
         verifyCode,
+        metadata,
     }
 };
-export default withRouter(connect(mapStateToProps, { LoginReducerAim, LanguageFetchReducer, Settings, authy })(Index));
+export default withRouter(connect(mapStateToProps, { LoginReducerAim, LanguageFetchReducer, Settings, authy, OptionList })(Index));
