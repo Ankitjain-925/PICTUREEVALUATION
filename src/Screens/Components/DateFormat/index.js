@@ -54,6 +54,13 @@ class Date extends Component {
             }
             disabled={this.props.disabled}
             format={dateFormatList[0]}
+            disabledDate={(current) => {
+              return (
+                current &&
+                (current > moment()) && this.props.NotFutureDate
+                 
+              );
+            }}
              dropdownClassName = {this.props.settings &&
                     this.props.settings.setting &&
                     this.props.settings.setting.mode &&
@@ -72,6 +79,13 @@ class Date extends Component {
                 : ""
             }
             disabled={this.props.disabled}
+            disabledDate={(current) => {
+              return (
+                current &&
+                (current > moment()) && this.props.NotFutureDate
+                 
+              );
+            }}
             format={dateFormatList[0]}
              dropdownClassName = {this.props.settings &&
                     this.props.settings.setting &&
@@ -90,6 +104,13 @@ class Date extends Component {
                 ? moment(this.state.value, dateFormatList[2])
                 : ""
             }
+            disabledDate={(current) => {
+              return (
+                current &&
+                (current > moment()) && this.props.NotFutureDate
+                 
+              );
+            }}
             disabled={this.props.disabled}
             format={dateFormatList[2]}
              dropdownClassName = {this.props.settings &&
@@ -109,6 +130,13 @@ class Date extends Component {
                 ? moment(this.state.value, dateFormatList[1])
                 : ""
             }
+            disabledDate={(current) => {
+              return (
+                current &&
+                (current > moment()) && this.props.NotFutureDate
+                 
+              );
+            }}
             disabled={this.props.disabled}
             format={dateFormatList[1]}
              dropdownClassName = {this.props.settings &&

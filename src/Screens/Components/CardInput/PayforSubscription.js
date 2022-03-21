@@ -6,36 +6,35 @@ import Grid from "@material-ui/core/Grid";
 // stripe
 import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
 // Util imports
-import {makeStyles} from '@material-ui/core/styles';
 // Custom Components
 import CardInput from './CardInput';
 import sitedata from "sitedata";
 import { getPriceId } from "./getPriceId";
 import { getLanguage } from "translations/index"
 
-const useStyles = makeStyles({
-  root: {
-    maxWidth: 500,
-    margin: '35vh auto',
-  },
-  content: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignContent: 'flex-start',
-  },
-  div: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignContent: 'flex-start',
-    justifyContent: 'space-between',
-  },
-  button: {
-    margin: '2em auto 1em',
-  },
-});
+// const useStyles = makeStyles({
+//   root: {
+//     maxWidth: 500,
+//     margin: '35vh auto',
+//   },
+//   content: {
+//     display: 'flex',
+//     flexDirection: 'column',
+//     alignContent: 'flex-start',
+//   },
+//   div: {
+//     display: 'flex',
+//     flexDirection: 'row',
+//     alignContent: 'flex-start',
+//     justifyContent: 'space-between',
+//   },
+//   button: {
+//     margin: '2em auto 1em',
+//   },
+// });
 
 function HomePage(props) {
-  const classes = useStyles();
+  // const classes = useStyles();
   // State
   let translate = getLanguage(props.languageType)
   let { done, cancel, recEmp_Emailaddress, email_rcv_update_reciept, something_wrong} = translate;

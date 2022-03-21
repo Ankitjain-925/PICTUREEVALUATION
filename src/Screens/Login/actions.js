@@ -10,7 +10,6 @@ import { COMETCHAT_CONSTANTS } from "../Components//CometChat/consts";
 import * as Docarray from "./doctorarray";
 import { commonNoTokentHeader } from "component/CommonHeader/index";
 const path = sitedata.data.path + "/UserProfile";
-const path1 = sitedata.data.path + "/User";
 
 export const createUser = ({ uid, name }) => {
   let user = new CometChat.User(uid);
@@ -97,7 +96,7 @@ export const LoginReducerAim = (email, password, logintoken, SendCallback = () =
                 SendCallback();
               },
               (error) => {
-                if (error && error.code == "ERR_UID_NOT_FOUND") {
+                if (error && error.code === "ERR_UID_NOT_FOUND") {
                   createUser({
                     uid: response.data.user.profile_id,
                     name: `${response.data.user.first_name} ${response.data.user.last_name}`,

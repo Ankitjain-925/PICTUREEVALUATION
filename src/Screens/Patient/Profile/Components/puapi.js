@@ -17,7 +17,7 @@ var datas = [];
 export const updateFLAG = (str) => {
     var mob = str && str.split("-")
     if (mob && mob.length > 0) {
-        if (mob[0] && mob[0].length == 2) {
+        if (mob[0] && mob[0].length === 2) {
             return mob[0]
         }
         else { return 'DE' }
@@ -173,12 +173,12 @@ export const updateflags = (e, name, current) => {
  //For change the language and the Speciality
 export const  handleChange_multi = (event, name, current) => {
     const state = current.state.UpDataDetails;
-    if (name == "languages") {
+    if (name === "languages") {
         current.setState({ name_multi: event });
         state['language'] = event && (Array.prototype.map.call(event, s => s.value))
 
     }
-    if (name == "speciality") {
+    if (name === "speciality") {
         current.setState({ speciality_multi: event });
     }
     current.setState({ UpDataDetails: state })
@@ -344,7 +344,7 @@ export const saveUserData = (current) => {
     current.setState({ regisError2: "" })
     const user_token = current.props.stateLoginValueAim.token;
     current.setState({ insuranceDetails: { insurance: '', insurance_number: '', insurance_country: '' } })
-    var parent_id = current.state.UpDataDetails.parent_id ? current.state.UpDataDetails.parent_id : '0';
+    // var parent_id = current.state.UpDataDetails.parent_id ? current.state.UpDataDetails.parent_id : '0';
 
     axios.put(sitedata.data.path + '/UserProfile/Users/update', {
         type: 'patient',
@@ -391,7 +391,7 @@ export const saveUserData = (current) => {
             },
             commonCometHeader())
                 .then((res) => {
-                    var data = update_CometUser(current.props?.stateLoginValueAim?.user?.profile_id.toLowerCase() , res.data.data)
+                     update_CometUser(current.props?.stateLoginValueAim?.user?.profile_id.toLowerCase() , res.data.data)
                  })
         }
         else {
@@ -502,7 +502,7 @@ export const handleAddInsurance = (current) => {
 //To add Insurance
 export const insuranceForm = (e, current) => {
     const state = current.state.insuranceDetails;
-    if (e.target.name == 'insurance') {
+    if (e.target.name === 'insurance') {
         const q = e.target.value.toLowerCase();
         current.setState({ q }, () => filterList(current.state.insuranceDetails.insurance_country, current));
     }
@@ -556,10 +556,10 @@ export const filterList = (data, current)=> {
     let q = current.state.q;
     iCompany = iCompany && iCompany.length > 0 && iCompany.filter(function (company) {
         const companyLower = company.toLowerCase()
-        return companyLower.indexOf(q) != -1;
+        return companyLower.indexOf(q) !== -1;
     })
     current.setState({ filteredCompany: iCompany });
-    if (current.state.q == '') {
+    if (current.state.q === '') {
         current.setState({ filteredCompany: [] });
     }
 }
@@ -580,7 +580,7 @@ export const filterCountry = (i, current) => {
     let countryList = current.state.selectCountry
     let name
     name = countryList.filter(value => {
-        if (value.value == i) {
+        if (value.value === i) {
             return value.label
         }
     })
@@ -592,7 +592,7 @@ export const filterCountry1 = (i, current) => {
     let countryList = current.state.selectCountry
     let name
     name = countryList.filter(value => {
-        if (value.value == i) {
+        if (value.value === i) {
             return value.label
         }
     })

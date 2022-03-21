@@ -14,9 +14,6 @@ import LeftMenuMobile from "Screens/Components/Menus/PatientLeftMenu/mobile";
 import { LanguageFetchReducer } from "Screens/actions";
 import { OptionList } from "Screens/Login/metadataaction";
 import PropTypes from "prop-types";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
 import { authy } from "Screens/Login/authy.js";
 import Typography from "@material-ui/core/Typography";
 import ProfileSection from "./Components/profileUpdate";
@@ -136,14 +133,7 @@ class Index extends Component {
     }
     let translate = getLanguage(this.props.stateLanguageType)
     let {
-      my_drs,
-      my_profile,
-      Security,
-      organ_donar,
-      right_management,
-      date_time,
-      kyc,
-      delete_account
+    
     } = translate;
 
     return (

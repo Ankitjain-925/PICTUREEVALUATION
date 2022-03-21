@@ -18,7 +18,7 @@ export function GetLanguageDropdown(Metadatas, language, name = "") {
       }
     });
 
-    if (name == "subspeciality" || name =="speciality") {
+    if (name === "subspeciality" || name === "speciality") {
       var lan = SortSubSpeciality(Metadatas, language)
       Metadatas = lan
     }

@@ -5,22 +5,12 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { LoginReducerAim } from "Screens/Login/actions";
 import { Settings } from "Screens/Login/setting";
-import axios from "axios";
 import { LanguageFetchReducer } from "Screens/actions";
-import sitedata from "sitedata";
-import Modal from "@material-ui/core/Modal";
-import Radio from "@material-ui/core/Radio";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { confirmAlert } from "react-confirm-alert"; // Import
 import LeftMenu from 'Screens/Components/Menus/PatientLeftMenu/index';
 import LeftMenuMobile from 'Screens/Components/Menus/PatientLeftMenu/mobile';
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import Loader from "Screens/Components/Loader/index";
-import { getDate, getImage } from "Screens/Components/BasicMethod/index";
-import {
-    getLanguage
-} from "translations/index"
-import { commonHeader } from "component/CommonHeader/index";
+import { getLanguage } from "translations/index"
 import Pagination from "Screens/Components/Pagination/index";
 
 class Index extends Component {

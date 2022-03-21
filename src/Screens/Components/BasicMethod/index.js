@@ -1,6 +1,6 @@
 import axios from "axios";
 import sitedata from "sitedata";
-import React, { Component } from "react";
+import React from "react";
 import { speciality } from "speciality";
 import Resizer from 'react-image-file-resizer';
 import { commonHeader } from "component/CommonHeader/index"
@@ -132,7 +132,7 @@ export function AddFavDoc(doctor_id, profile_id, user_token, user_profile_id) {
       },
       commonHeader(user_token))
     .then((responce) => {
-      if (responce.data.hassuccessed == true) {
+      if (responce.data.hassuccessed === true) {
         axios
           .post(
             sitedata.data.path + "/UserProfile/AddtoPatientList/" + doctor_id,
@@ -155,7 +155,7 @@ export function AddFavDoc2(doctor_id, profile_id, user_token, user_profile_id) {
       },
       commonHeader(user_token))
     .then((responce) => {
-      if (responce.data.hassuccessed == true) {
+      if (responce.data.hassuccessed === true) {
         axios
           .post(
             sitedata.data.path + "/UserProfile/AddtoPatientList/" + doctor_id,
@@ -199,7 +199,7 @@ export function getSpec(value, lang) {
     const valarray =
       value &&
       value.map((_it) =>
-        typeof _it == "string"
+        typeof _it === "string"
           ? _it && _it.toLowerCase().replace(/\s/g, "_")
           : _it.value && _it.value.toLowerCase().replace(/\s/g, "_")
       );
@@ -218,7 +218,7 @@ export function getSpec(value, lang) {
       .map((item) => item["label_" + lang])
       .join(", ")
       .replace(/_/g, " ");
-  } else if (typeof value == "object") {
+  } else if (typeof value === "object") {
     return value["label_" + lang] ? value["label_" + lang] : value.label;
   } else {
     return "";
@@ -362,9 +362,9 @@ export const isLessThanToday = (someDate) => {
 export const isToday = (someDate) => {
   const today = new Date()
   someDate = new Date(someDate)
-  return someDate.getDate() == today.getDate() &&
-    someDate.getMonth() == today.getMonth() &&
-    someDate.getFullYear() == today.getFullYear()
+  return someDate.getDate() === today.getDate() &&
+    someDate.getMonth() === today.getMonth() &&
+    someDate.getFullYear() === today.getFullYear()
 }
 export const filterPatient = (taskForSelectedHouse) => {
   const patientForFilterArr = _.uniqBy(

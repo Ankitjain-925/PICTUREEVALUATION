@@ -114,24 +114,11 @@ class Index extends Component {
   render() {
     let translate = getLanguage(this.props.stateLanguageType)
     let {
-      appointments,
-      chat_vdocall,
-      more,
-      my_doc,
       my_profile,
-      extra_srvc,
-      online_course,
       profile_setting,
       Language,
       DarkMode,
       logout,
-      journal,
-      Patientjourney,
-      trackers,
-      self_data,
-      emrgancy_patient_data,
-      blockchain_access_log,
-      jrnl_archive,
     } = translate;
     return (
       <Grid

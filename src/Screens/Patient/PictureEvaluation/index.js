@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
-import Modal from '@material-ui/core/Modal';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Select from 'react-select';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
-import ReactTooltip from "react-tooltip";
-import sitedata, { data } from 'sitedata';
+import sitedata from 'sitedata';
 import axios from 'axios';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -39,9 +32,9 @@ import HomePage from 'Screens/Components/CardInput/PayforSubscription';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { GetShowLabel1 } from "Screens/Components/GetMetaData/index.js";
-import TimeFormat from "Screens/Components/TimeFormat/index";
 import SelectByTwo from "Screens/Components/SelectbyTwo/index";
 import SelectField from "Screens/Components/Select/index";
+import { handleEvalSubmit, FileAttachMulti, getallGroups} from "./api"
 
 const STRIPE_PUBLISHABLE = getPublishableKey()
 const stripePromise = loadStripe(STRIPE_PUBLISHABLE);
@@ -95,7 +88,7 @@ class Index extends Component {
     componentDidMount() {
         var npmCountry = npmCountryList().getData();
         this.setState({ selectCountry: npmCountry });
-        this.getallGroups();
+        getallGroups(this);
     }
 
     CancelClick = () => {
@@ -110,15 +103,6 @@ class Index extends Component {
     // Close picture evluation form
     handleClosePicEval = () => {
         this.setState({ addEval: false });
-    }
-
-    // For upload images
-    FileAttachMulti = (Fileadd) => {
-        this.setState({
-            isfileuploadmulti: true,
-            fileattach: Fileadd,
-            fileupods: true,
-        });
     }
 
     //Other API with no payment setting for Activate services
@@ -169,78 +153,6 @@ class Index extends Component {
         this.getUserData();
     };
 
-
-    //For validate the character length is correct or not
-    validateChar = (event, value) => {
-        var a = event && event?.length
-        if (value === "allergies" || value === "family_history" || value === "treatment_so_far" || value === "medical_precondition" || value === "premedication") {
-            if (a > 400) {
-                return false
-            } else {
-                this.setState({ errorChrMsg: '' })
-                return true
-            }
-        }
-        else {
-            if (a > 100) {
-                return false
-            } else {
-                this.setState({ errorChrMsg: '' })
-                return true
-            }
-        }
-    }
-
-    //For validate the blood pressure is correct or not
-    validateBp = (elementValue) => {
-        var bpPattern = /^[0-9]+$/;
-        return bpPattern.test(elementValue);
-    };
-
-    //For validate the blood pressure level and diabetes levels is correct or not
-    validateRangeBp = (value, item) => {
-        if (item === "systolic") {
-            if (value < 120) {
-                return false;
-            } else if (value > 140) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        } else if (item === "diastolic") {
-            if (value < 80) {
-                return false;
-            } else if (value > 90) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        } else if (item === "blood_sugar") {
-            if (value < 160) {
-                return false;
-            } else if (value > 240) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        } else if (item === "Hba1c") {
-            let calHba1c = value / 10;
-            if (calHba1c < (57 / 10)) {
-                return false;
-            } else if (calHba1c > (64 / 10)) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        } else {
-            return false;
-        }
-    }
-
     updateEntryState2 = (event) => {
         var state = this.state.updateEvaluate;
         state[event.target.name] = event.target.value;
@@ -251,178 +163,6 @@ class Index extends Component {
         var state = this.state.updateEvaluate;
         state[name] = value;
         this.setState({ updateEvaluate: state });
-    };
-
-    // Submit form data
-    handleEvalSubmit = (value) => {
-        this.setState({ errorChrMsg: '' })
-        let data = {};
-        data = this.state.updateEvaluate;
-        if (value == 1) {
-            if (data.sex) {
-                if (data.rr_systolic) {
-                    if (this.validateBp(data.rr_systolic)) {
-                        if (this.validateRangeBp(data.rr_systolic, "systolic")) {
-                            if (data.rr_diastolic) {
-                                if (this.validateBp(data.rr_diastolic)) {
-                                    if (this.validateRangeBp(data.rr_diastolic, "diastolic")) {
-                                        if (data.blood_sugar) {
-                                            if (this.validateBp(data.blood_sugar)) {
-                                                if (this.validateRangeBp(data.blood_sugar, "blood_sugar")) {
-                                                    if (data.Hba1c) {
-                                                        if (this.validateBp(data.Hba1c)) {
-                                                            if (this.validateRangeBp(data.Hba1c, "Hba1c")) {
-                                                                if (data.situation) {
-                                                                    if (data.allergies) {
-                                                                        if (this.validateChar(data.allergies, "allergies")) {
-                                                                            if (data.family_history) {
-                                                                                if (this.validateChar(data.family_history, "family_history")) {
-                                                                                    if (data.treatment_so_far) {
-                                                                                        if (this.validateChar(data.treatment_so_far, "treatment_so_far")) {
-                                                                                            if (data.birth) {
-                                                                                                if (data.residence) {
-                                                                                                    if (data.race) {
-                                                                                                        if (this.validateChar(data.race, "race")) {
-                                                                                                            if (data.history_month) {
-                                                                                                                if (this.validateChar(data.history_month, "history_month")) {
-                                                                                                                    if (data.medical_precondition) {
-                                                                                                                        if (this.validateChar(data.medical_precondition, "medical_precondition")) {
-                                                                                                                            if (data.medical_precondition) {
-                                                                                                                                if (this.validateChar(data.premedication, "premedication")) {
-
-
-                                                                                                                                    console.log("this.state.updateEvaluate", data)
-                                                                                                                                    this.setState({ mod1Open: true, picEval: true })
-
-                                                                                                                                } else {
-                                                                                                                                    this.setState({ errorChrMsg: "Max Words limit exceeds in Premedication" })
-                                                                                                                                }
-                                                                                                                            } else {
-                                                                                                                                this.setState({ errorChrMsg: "Please enter Premedication" })
-                                                                                                                            }
-                                                                                                                        } else {
-                                                                                                                            this.setState({ errorChrMsg: "Max Words limit exceeds in Medical precondition" })
-                                                                                                                        }
-                                                                                                                    } else {
-                                                                                                                        this.setState({ errorChrMsg: "Please enter Medical precondition" })
-                                                                                                                    }
-                                                                                                                } else {
-                                                                                                                    this.setState({ errorChrMsg: "Max Words limit exceeds in History month" })
-                                                                                                                }
-                                                                                                            } else {
-                                                                                                                this.setState({ errorChrMsg: "Please enter History month" })
-                                                                                                            }
-                                                                                                        } else {
-                                                                                                            this.setState({ errorChrMsg: "Max Words limit exceeds in Race" })
-                                                                                                        }
-                                                                                                    } else {
-                                                                                                        this.setState({ errorChrMsg: "Please enter Race" })
-                                                                                                    }
-                                                                                                } else {
-                                                                                                    this.setState({ errorChrMsg: "Please select Place of residence" })
-                                                                                                }
-                                                                                            } else {
-                                                                                                this.setState({ errorChrMsg: "Please select Place of birth" })
-                                                                                            }
-                                                                                        } else {
-                                                                                            this.setState({ errorChrMsg: "Max Words limit exceeds in Treatment so far" })
-                                                                                        }
-                                                                                    } else {
-                                                                                        this.setState({ errorChrMsg: "Please enter Treatment so far" })
-                                                                                    }
-                                                                                } else {
-                                                                                    this.setState({ errorChrMsg: "Max Words limit exceeds in family history" })
-                                                                                }
-                                                                            } else {
-                                                                                this.setState({ errorChrMsg: "Please enter family history" })
-                                                                            }
-                                                                        } else {
-                                                                            this.setState({ errorChrMsg: "Max Words limit exceeds in allergies" })
-                                                                        }
-                                                                    } else {
-                                                                        this.setState({ errorChrMsg: "Please enter allergies" })
-                                                                    }
-                                                                } else {
-                                                                    this.setState({ errorChrMsg: "Please enter situation for Diabetes" })
-                                                                }
-                                                            } else {
-                                                                this.setState({ errorChrMsg: "Hemoglobin A1c levels should be between 5.7 % and 6.4 %" })
-                                                            }
-                                                        } else {
-                                                            this.setState({ errorChrMsg: "Hemoglobin A1c should be in number" })
-                                                        }
-                                                    } else {
-                                                        this.setState({ errorChrMsg: "Please enter Hemoglobin A1c" })
-                                                    }
-                                                } else {
-                                                    this.setState({ errorChrMsg: "Blood Sugar should be between 160 to 240 mg / dL" })
-                                                }
-                                            } else {
-                                                this.setState({ errorChrMsg: "Blood Sugar should be in number" })
-                                            }
-                                        } else {
-                                            this.setState({ errorChrMsg: "Please enter Blood Sugar" })
-                                        }
-                                    } else {
-                                        this.setState({ errorChrMsg: "Please select diastolic bp value between 80-90" })
-                                    }
-                                } else {
-                                    this.setState({ errorChrMsg: "Diastolic bp should be in number" })
-                                }
-                            } else {
-                                this.setState({ errorChrMsg: "Please enter Diastolic value" })
-                            }
-                        } else {
-                            this.setState({ errorChrMsg: "Please select systolic bp value between 120-140" })
-                        }
-                    } else {
-                        this.setState({ errorChrMsg: "Systolic bp should be in number" })
-                    }
-                } else {
-                    this.setState({ errorChrMsg: "Please enter Systolic value" })
-                }
-            } else {
-                this.setState({ errorChrMsg: "Please enter Gender" })
-            }
-        } else {
-            data.fileattach = this.state.fileattach
-            if (data.fileattach && data.fileattach.length > 0) {
-                console.log("this.state.updateEvaluate", data)
-                this.setState({ mod1Open: false, show2: true, show1: false })
-            } else {
-                this.setState({ errorChrMsg: "First upload image for evaluation" })
-            }
-        }
-    }
-
-    getallGroups = () => {
-        this.setState({ loaderImage: true });
-        axios
-            .get(
-                sitedata.data.path +
-                `/admin/GetHintinstitute`,
-                commonHeader(this.props.stateLoginValueAim.token)
-            )
-            .then((responce) => {
-                if (responce.data.hassuccessed && responce.data.data) {
-                    var Housesoptions = [];
-                    responce.data.data.map((data) => {
-                        if (data?.institute_groups && data?.institute_groups?.length > 0) {
-                            data.institute_groups.map((data1) => {
-                                data1.houses.map((data2) => {
-                                    Housesoptions.push({
-                                        group_name: data2.house_name,
-                                        label: data2.house_name,
-                                        value: data2._id
-                                    })
-                                })
-                            })
-                        }
-                    })
-                    this.setState({ Housesoptions: Housesoptions });
-                }
-                this.setState({ loaderImage: false });
-            });
     };
 
     render() {
@@ -484,11 +224,12 @@ class Index extends Component {
                                                                 <Grid>
                                                                     <DateFormat
                                                                         name="date"
-                                                                        value={this.state.updateEvaluate?.date ?
-                                                                            new Date(this.state.updateEvaluate?.date) :
+                                                                        value={this.state.updateEvaluate?.dob ?
+                                                                            new Date(this.state.updateEvaluate?.dob) :
                                                                             new Date()
                                                                         }
-                                                                        onChange={(e) => this.updateEntryState1(e, "date")}
+                                                                        NotFutureDate={true}
+                                                                        onChange={(e) => this.updateEntryState1(e, "dob")}
                                                                         date_format={this.props.settings &&
                                                                             this.props.settings.setting &&
                                                                             this.props.settings.setting.date_format}
@@ -637,21 +378,21 @@ class Index extends Component {
                                                                         name="select_status"
                                                                         label="Select Status"
                                                                         option={this.state.options1}
-                                                                        onChange={(e) => this.updateEntryState1(e, "select_status")}
+                                                                        onChange={(e) => this.updateEntryState1(e, "smoking_status")}
                                                                         value={GetShowLabel1(
                                                                             this.state.options1,
                                                                             this.state.updateEvaluate &&
-                                                                            this.state.updateEvaluate?.select_status &&
-                                                                            this.state.updateEvaluate?.select_status?.value,
+                                                                            this.state.updateEvaluate?.smoking_status &&
+                                                                            this.state.updateEvaluate?.smoking_status?.value,
                                                                             this.props.stateLanguageType,
                                                                             false,
                                                                             "anamnesis"
                                                                         )}
                                                                     />
                                                                 </Grid>
-                                                                {(!this.state.updateEvaluate?.select_status ||
-                                                                    (this.state.updateEvaluate?.select_status &&
-                                                                        this.state.updateEvaluate?.select_status?.value !==
+                                                                {(!this.state.updateEvaluate?.smoking_status ||
+                                                                    (this.state.updateEvaluate?.smoking_status &&
+                                                                        this.state.updateEvaluate?.smoking_status?.value !==
                                                                         "Never_smoked")) && (
                                                                         <div>
                                                                             <Grid className="fillDia">
@@ -668,6 +409,7 @@ class Index extends Component {
                                                                                                 ? new Date(this.state.updateEvaluate?.from_when)
                                                                                                 : new Date()
                                                                                         }
+                                                                                        NotFutureDate={true}
                                                                                         date_format={this.props.settings &&
                                                                                             this.props.settings.setting &&
                                                                                             this.props.settings.setting.date_format}
@@ -726,12 +468,12 @@ class Index extends Component {
                                                                     <label>Place of Birth</label>
                                                                     <Grid className="cntryDropTop">
                                                                         <Select
-                                                                            value={this.state.updateEvaluate?.birth}
-                                                                            onChange={(e) => this.updateEntryState1(e, "birth")}
+                                                                            value={this.state.updateEvaluate?.country}
+                                                                            onChange={(e) => this.updateEntryState1(e, "country")}
                                                                             options={this.state.selectCountry}
                                                                             placeholder=""
                                                                             isSearchable={true}
-                                                                            name="birth"
+                                                                            name="country"
                                                                             className="cntryDrop"
                                                                         />
                                                                     </Grid>
@@ -741,12 +483,12 @@ class Index extends Component {
                                                                         <label>Place of residence</label>
                                                                         <Grid className="cntryDropTop">
                                                                             <Select
-                                                                                value={this.state.updateEvaluate?.residence}
-                                                                                onChange={(e) => this.updateEntryState1(e, "residence")}
+                                                                                value={this.state.updateEvaluate?.residenceCountry}
+                                                                                onChange={(e) => this.updateEntryState1(e, "residenceCountry")}
                                                                                 options={this.state.selectCountry}
                                                                                 placeholder=""
                                                                                 isSearchable={true}
-                                                                                name="residence"
+                                                                                name="residenceCountry"
                                                                                 className="cntryDrop"
                                                                             />
                                                                         </Grid>
@@ -790,7 +532,7 @@ class Index extends Component {
                                                                     <input
                                                                         type="submit"
                                                                         value="Submit"
-                                                                        onClick={() => this.handleEvalSubmit(1)}
+                                                                        onClick={() => handleEvalSubmit(1, this)}
                                                                     >
                                                                     </input>
                                                                 </Grid>
@@ -813,7 +555,7 @@ class Index extends Component {
                                                                     name="UploadTrackImageMulti"
                                                                     comesFrom="journal"
                                                                     isMulti={true}
-                                                                    fileUpload={this.FileAttachMulti}
+                                                                    fileUpload={(data)=>FileAttachMulti(data, this)}
                                                                 />
                                                             </Grid>
                                                             <Grid item xs={12} md={12}>
@@ -836,14 +578,15 @@ class Index extends Component {
                                                                     <label>When did it start?</label>
                                                                     <DateFormat
                                                                         name="date"
-                                                                        value={this.state.updateEvaluate?.date ?
-                                                                            new Date(this.state.updateEvaluate?.date) :
+                                                                        value={this.state.updateEvaluate?.start_date ?
+                                                                            new Date(this.state.updateEvaluate?.start_date) :
                                                                             new Date()
                                                                         }
-                                                                        onChange={(e) => this.updateEntryState1(e, "date")}
+                                                                        onChange={(e) => this.updateEntryState1(e, "start_date")}
                                                                         date_format={this.props.settings &&
                                                                             this.props.settings.setting &&
                                                                             this.props.settings.setting.date_format}
+                                                                            
                                                                     />
                                                                 </Grid>
                                                                 <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'warm')} label="Warm?" value={this.state.updateEvaluate?.warm} />
@@ -901,7 +644,7 @@ class Index extends Component {
                                                                         type="submit"
                                                                         value="Submit"
                                                                         onClick={() =>
-                                                                            this.handleEvalSubmit()}
+                                                                            handleEvalSubmit(0, this)}
                                                                     >
                                                                     </input>
                                                                 </Grid>

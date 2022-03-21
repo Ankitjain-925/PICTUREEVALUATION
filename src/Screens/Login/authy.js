@@ -1,6 +1,4 @@
 import {
-  GET_CODE_REQUEST,
-  GET_CODE_FAIL,
   GET_CODE_SUCCESS,
 } from "../../actiontypes";
 

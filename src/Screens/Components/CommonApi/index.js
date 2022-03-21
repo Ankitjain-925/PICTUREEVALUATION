@@ -70,7 +70,7 @@ export const getPatientData = async (user_token, house_id, comesFrom) => {
     if (response.data.hassuccessed) {
         var patientArray = [], PatientList1 = [];
         for (let i = 0; i < response.data?.data?.length; i++) {
-            var find = response.data?.data[i].patient?.image;
+            // var find = response.data?.data[i].patient?.image;
             var name = '';
             if (response.data?.data[i]?.patient?.first_name && response.data?.data[i]?.patient?.last_name) {
                 name = response.data?.data[i]?.patient?.first_name + ' ' + response.data?.data[i]?.patient?.last_name
@@ -163,13 +163,13 @@ export const download_track = async (data, stateLoginValueAim) => {
     if (data.emergency_by_temp) {
         data["emergency_by"] = data.emergency_by_temp;
     }
-    if ((data?.type == "medication")) {
+    if ((data?.type === "medication")) {
         let timeArray = [], timeArray1 = [];
         if (data?.reminder_time_taken && data?.reminder_time_taken.length > 0) {
             data.reminder_time_taken.map((time_taken, i) => {
                 let dateTime = moment(time_taken.value)
                 let time = dateTime.format("HH:MM")
-                let date = dateTime.format("DD-MM-YYYY")
+                // let date = dateTime.format("DD-MM-YYYY")
                 let data1 = `${time}`
                 timeArray.push(data1)
             })
@@ -193,7 +193,7 @@ export const download_track = async (data, stateLoginValueAim) => {
         data["reminder_time"] = indexTime
         data["consumed_at"] = indexTime1
     }
-    if ((data?.type == "vaccination") && data?.reminder_time_taken && data?.reminder_time_taken.length > 0) {
+    if ((data?.type === "vaccination") && data?.reminder_time_taken && data?.reminder_time_taken.length > 0) {
         let timeArray = []
         data.reminder_time_taken.map((time_taken, i) => {
             let dateTime = moment(time_taken.value)

@@ -3,20 +3,20 @@ import { connect } from 'react-redux';
 import { CometChat } from "@cometchat-pro/chat";
 import * as actions from '../../../../../../../store/action';
 import { CometChatManager } from "../../util/controller";
-import CallScreen from "../CallScreen";
+// import CallScreen from "../CallScreen";
 import CancelIcon from '@material-ui/icons/Cancel';
 import * as enums from '../../util/enums.js';
 import { withRouter } from "react-router-dom";
 import { getLanguage } from "translations/index"
 // import { CometChatUnified } from '../react-chat-ui-kit/CometChat'; 
-var NewM = false
+// var NewM = false
 class Notification extends React.Component {
     
     constructor(props) {
 		super(props);
-	}
+	
   
-  state = {
+  this.state = {
     item: {},
     type: "user",
     outgoingCall: null,
@@ -25,6 +25,7 @@ class Notification extends React.Component {
     NewM : false,
     ShowTime1: false,
   }
+}
     
     componentDidMount()
     {
