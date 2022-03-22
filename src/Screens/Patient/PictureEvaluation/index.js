@@ -34,11 +34,11 @@ import { loadStripe } from '@stripe/stripe-js';
 import { GetShowLabel1 } from "Screens/Components/GetMetaData/index.js";
 import SelectByTwo from "Screens/Components/SelectbyTwo/index";
 import SelectField from "Screens/Components/Select/index";
-import { handleEvalSubmit, FileAttachMulti, getallGroups} from "./api"
+import { handleEvalSubmit, FileAttachMulti, getallGroups } from "./api"
 import { confirmAlert } from "react-confirm-alert"; // Import
 import { OptionList } from "Screens/Login/metadataaction";
 import {
-  GetLanguageDropdown,
+    GetLanguageDropdown,
 } from "Screens/Components/GetMetaData/index.js";
 const CURRENCY = "USD";
 const STRIPE_PUBLISHABLE = getPublishableKey()
@@ -146,7 +146,12 @@ class Index extends Component {
 
     updateEntryState1 = (value, name) => {
         var state = this.state.updateEvaluate;
-        state[name] = value;
+        if (name == "house_id") {
+            state[name] = value.value;
+            console.log("state",state)
+        }else{
+            state[name] = value;
+        }
         this.setState({ updateEvaluate: state });
     };
 
@@ -551,18 +556,18 @@ class Index extends Component {
                                                             <Grid className="cntryDropTop">
 
                                                                 <Select
-                                                                    value={this.state.updateEvaluate?.hospital}
-                                                                    onChange={(e) => this.updateEntryState1(e, "hospital")}
+                                                                    value={this.state.updateEvaluate?.house_id}
+                                                                    onChange={(e) => this.updateEntryState1(e, "house_id")}
                                                                     options={this.state.Housesoptions}
                                                                     placeholder=""
                                                                     isSearchable={true}
-                                                                    name="hospital"
+                                                                    name="house_id"
                                                                     className="cntryDrop"
                                                                 />
                                                             </Grid>
                                                         </Grid>
-                                                        <Grid className="fatiqueQues fatiqueQuess1">
-                                                            <Grid className="dateSet">
+                                                        {/* <Grid className="fatiqueQues fatiqueQuess1"> */}
+                                                        {/* <Grid className="dateSet">
                                                                 <label>When did it start?</label>
                                                                 <DateFormat
                                                                     name="date"
@@ -575,12 +580,41 @@ class Index extends Component {
                                                                         this.props.settings.setting &&
                                                                         this.props.settings.setting.date_format}
                                                                 />
+                                                            </Grid> */}
+                                                        {/* <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'warm')} label="Warm?" value={this.state.updateEvaluate?.warm} />
+                                                            <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'size_progress')} label="Size progress? " value={this.state.updateEvaluate?.size_progress} />
+                                                            <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'itch')} label="Itch?" value={this.state.updateEvaluate?.itch} />
+                                                            <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'pain')} label="Pain?" value={this.state.updateEvaluate?.pain} /> */}
+                                                        {/* <Grid>
+                                                                <label>Pain level?</label>
+                                                                <PainIntensity
+                                                                    name="pain_intensity"
+                                                                    onChange={(e) => this.updateEntryState2(e)}
+                                                                    value={Math.round(this.state.updateEvaluate?.pain_intensity)}
+                                                                    comesFrom="Evalute"
+                                                                />
+                                                            </Grid> */}
+                                                        <Grid className="fatiqueQues fatiqueQuess1">
+                                                            <Grid className="dateSet">
+                                                                <label>When did it start?</label>
+                                                                <DateFormat
+                                                                    name="date"
+                                                                    value={this.state.updateEvaluate?.start_date ?
+                                                                        new Date(this.state.updateEvaluate?.start_date) :
+                                                                        new Date()
+                                                                    }
+                                                                    onChange={(e) => this.updateEntryState1(e, "start_date")}
+                                                                    date_format={this.props.settings &&
+                                                                        this.props.settings.setting &&
+                                                                        this.props.settings.setting.date_format}
+
+                                                                />
                                                             </Grid>
                                                             <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'warm')} label="Warm?" value={this.state.updateEvaluate?.warm} />
                                                             <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'size_progress')} label="Size progress? " value={this.state.updateEvaluate?.size_progress} />
                                                             <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'itch')} label="Itch?" value={this.state.updateEvaluate?.itch} />
                                                             <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'pain')} label="Pain?" value={this.state.updateEvaluate?.pain} />
-                                                            <Grid>
+                                                            <Grid className="setDividerPic-eval">
                                                                 <label>Pain level?</label>
                                                                 <PainIntensity
                                                                     name="pain_intensity"
@@ -589,82 +623,53 @@ class Index extends Component {
                                                                     comesFrom="Evalute"
                                                                 />
                                                             </Grid>
-                                                            <Grid className="fatiqueQues fatiqueQuess1">
-                                                                <Grid className="dateSet">
-                                                                    <label>When did it start?</label>
-                                                                    <DateFormat
-                                                                        name="date"
-                                                                        value={this.state.updateEvaluate?.start_date ?
-                                                                            new Date(this.state.updateEvaluate?.start_date) :
-                                                                            new Date()
-                                                                        }
-                                                                        onChange={(e) => this.updateEntryState1(e, "start_date")}
-                                                                        date_format={this.props.settings &&
-                                                                            this.props.settings.setting &&
-                                                                            this.props.settings.setting.date_format}
-                                                                            
-                                                                    />
-                                                                </Grid>
-                                                                <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'warm')} label="Warm?" value={this.state.updateEvaluate?.warm} />
-                                                                <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'size_progress')} label="Size progress? " value={this.state.updateEvaluate?.size_progress} />
-                                                                <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'itch')} label="Itch?" value={this.state.updateEvaluate?.itch} />
-                                                                <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'pain')} label="Pain?" value={this.state.updateEvaluate?.pain} />
-                                                                <Grid className="setDividerPic-eval">
-                                                                    <label>Pain level?</label>
-                                                                    <PainIntensity
-                                                                        name="pain_intensity"
-                                                                        onChange={(e) => this.updateEntryState2(e)}
-                                                                        value={Math.round(this.state.updateEvaluate?.pain_intensity)}
-                                                                        comesFrom="Evalute"
-                                                                    />
-                                                                </Grid>
-                                                                <Grid className="textFieldArea1">
-                                                                    <label>If you have Fever what is your Body Temp? (Temp in degree Fahrenheit)</label>
-                                                                    <input type="number"
-                                                                        placeholder="97"
-                                                                        name="body_temp"
-                                                                        onChange={(e) => this.updateEntryState2(e)}
-                                                                        className={this.state.forError ? "setRedColor" : ""}
-                                                                    >
-                                                                    </input>
-                                                                </Grid>
-                                                                <Grid className="textFieldArea1">
-                                                                    <label>Have you been in the sun before, How long </label>
-                                                                    <input type="number"
-                                                                        placeholder="0"
-                                                                        name="sun_before"
-                                                                        onChange={(e) => this.updateEntryState2(e)}
-                                                                    >
-                                                                    </input>
-                                                                </Grid>
-                                                                <Grid className="textFieldArea1">
-                                                                    <label>Have you been in the Cold (lower then -5C), how long?</label>
-                                                                    <input type="number"
-                                                                        placeholder="0"
-                                                                        name="cold"
-                                                                        onChange={(e) => this.updateEntryState2(e)}
-                                                                    >
-                                                                    </input>
-                                                                </Grid>
-                                                                <Grid className="fillDiaAll">
-                                                                    <label>Did you had Sexual Activities before?</label>
-                                                                    <NotesEditor
-                                                                        name="sexual_active"
-                                                                        onChange={(e) => this.updateEntryState1(e, "sexual_active")}
-                                                                        value={this.state.updateEvaluate.sexual_active}
-                                                                    />
-                                                                </Grid>
-                                                                <Grid className="infoShwSave3">
-                                                                    <input
-                                                                        type="submit"
-                                                                        value="Submit"
-                                                                        onClick={() =>
-                                                                            handleEvalSubmit(0, this)}
-                                                                    >
-                                                                    </input>
-                                                                </Grid>
+                                                            <Grid className="textFieldArea1">
+                                                                <label>If you have Fever what is your Body Temp? (Temp in degree Fahrenheit)</label>
+                                                                <input type="number"
+                                                                    placeholder="97"
+                                                                    name="body_temp"
+                                                                    onChange={(e) => this.updateEntryState2(e)}
+                                                                    className={this.state.forError ? "setRedColor" : ""}
+                                                                >
+                                                                </input>
+                                                            </Grid>
+                                                            <Grid className="textFieldArea1">
+                                                                <label>Have you been in the sun before, How long </label>
+                                                                <input type="number"
+                                                                    placeholder="0"
+                                                                    name="sun_before"
+                                                                    onChange={(e) => this.updateEntryState2(e)}
+                                                                >
+                                                                </input>
+                                                            </Grid>
+                                                            <Grid className="textFieldArea1">
+                                                                <label>Have you been in the Cold (lower then -5C), how long?</label>
+                                                                <input type="number"
+                                                                    placeholder="0"
+                                                                    name="cold"
+                                                                    onChange={(e) => this.updateEntryState2(e)}
+                                                                >
+                                                                </input>
+                                                            </Grid>
+                                                            <Grid className="fillDiaAll">
+                                                                <label>Did you had Sexual Activities before?</label>
+                                                                <NotesEditor
+                                                                    name="sexual_active"
+                                                                    onChange={(e) => this.updateEntryState1(e, "sexual_active")}
+                                                                    value={this.state.updateEvaluate.sexual_active}
+                                                                />
+                                                            </Grid>
+                                                            <Grid className="infoShwSave3">
+                                                                <input
+                                                                    type="submit"
+                                                                    value="Submit"
+                                                                    onClick={() =>
+                                                                        handleEvalSubmit(0, this)}
+                                                                >
+                                                                </input>
                                                             </Grid>
                                                         </Grid>
+                                                        {/* </Grid> */}
                                                     </Grid>
                                                 )}
                                             </Grid>)}
