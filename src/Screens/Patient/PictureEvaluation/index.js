@@ -674,7 +674,7 @@ class Index extends Component {
                                                 )}
                                             </Grid>)}
                                             <Elements stripe={stripePromise}>
-                                                <Payment redirectTolist={()=>{this.redirectTolist}} languageType={this.props.stateLanguageType} show1={this.state.show1} show2={this.state.show2} CancelClick={this.CancelClick} onToken={onToken}
+                                                <Payment redirectTolist={()=>{this.redirectTolist()}} languageType={this.props.stateLanguageType} show1={this.state.show1} show2={this.state.show2} CancelClick={this.CancelClick}
                                                 />
                                             </Elements>
                                         </Grid>

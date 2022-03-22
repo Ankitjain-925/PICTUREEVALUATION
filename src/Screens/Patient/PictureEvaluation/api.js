@@ -3,6 +3,8 @@ import sitedata from "sitedata";
 import { commonHeader, commonCometHeader } from "component/CommonHeader/index";
 
 export const handleEvalSubmit = (value, current) => {
+    let data = {};
+    data = current.state.updateEvaluate;
     if (value == 1) {
     // current.setState({ mod1Open: true, picEval: true })
     if (data.dob && new Date(new Date() - new Date(data.dob)).getFullYear() - 1970 <= 130) {
@@ -63,8 +65,6 @@ export const handleEvalSubmit = (value, current) => {
                                 if (validateBpAndSugar1(data.body_temp, 'body_temp', current)) {
                                     if (validateBpAndSugar1(data.sexual_active, 'sexual_active', current)) {
                                         current.setState({ errorChrMsg: '' })
-                                        let data = {};
-                                        data = current.state.updateEvaluate;
                                         var patient = {
                                             'first_name': current.props.stateLoginValueAim.user.first_name,
                                             'last_name': current.props.stateLoginValueAim.user.last_name,
