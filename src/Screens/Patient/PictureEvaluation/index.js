@@ -165,134 +165,134 @@ class Index extends Component {
         let data = {};
         data = this.state.updateEvaluate;
         if (value == 1) {
-            if (data.sex) {
-                if (data.rr_systolic) {
-                    if (this.validateBp(data.rr_systolic)) {
-                        if (this.validateRangeBp(data.rr_systolic, "systolic")) {
-                            if (data.rr_diastolic) {
-                                if (this.validateBp(data.rr_diastolic)) {
-                                    if (this.validateRangeBp(data.rr_diastolic, "diastolic")) {
-                                        if (data.blood_sugar) {
-                                            if (this.validateBp(data.blood_sugar)) {
-                                                if (this.validateRangeBp(data.blood_sugar, "blood_sugar")) {
-                                                    if (data.Hba1c) {
-                                                        if (this.validateBp(data.Hba1c)) {
-                                                            if (this.validateRangeBp(data.Hba1c, "Hba1c")) {
-                                                                if (data.situation) {
-                                                                    if (data.select_status) {
-                                                                        if (data.allergies) {
-                                                                            if (this.validateChar(data.allergies, "allergies")) {
-                                                                                if (data.family_history) {
-                                                                                    if (this.validateChar(data.family_history, "family_history")) {
-                                                                                        if (data.treatment_so_far) {
-                                                                                            if (this.validateChar(data.treatment_so_far, "treatment_so_far")) {
-                                                                                                if (data.birth) {
-                                                                                                    if (data.residence) {
-                                                                                                        if (data.race) {
-                                                                                                            if (this.validateChar(data.race, "race")) {
-                                                                                                                if (data.history_month) {
-                                                                                                                    if (this.validateChar(data.history_month, "history_month")) {
-                                                                                                                        if (data.medical_precondition) {
-                                                                                                                            if (this.validateChar(data.medical_precondition, "medical_precondition")) {
-                                                                                                                                if (data.premedication) {
-                                                                                                                                    if (this.validateChar(data.premedication, "premedication")) {
+            // if (data.sex) {
+            //     if (data.rr_systolic) {
+            //         if (this.validateBp(data.rr_systolic)) {
+            //             if (this.validateRangeBp(data.rr_systolic, "systolic")) {
+            //                 if (data.rr_diastolic) {
+            //                     if (this.validateBp(data.rr_diastolic)) {
+            //                         if (this.validateRangeBp(data.rr_diastolic, "diastolic")) {
+            //                             if (data.blood_sugar) {
+            //                                 if (this.validateBp(data.blood_sugar)) {
+            //                                     if (this.validateRangeBp(data.blood_sugar, "blood_sugar")) {
+            //                                         if (data.Hba1c) {
+            //                                             if (this.validateBp(data.Hba1c)) {
+            //                                                 if (this.validateRangeBp(data.Hba1c, "Hba1c")) {
+            //                                                     if (data.situation) {
+            //                                                         if (data.select_status) {
+            //                                                             if (data.allergies) {
+            //                                                                 if (this.validateChar(data.allergies, "allergies")) {
+            //                                                                     if (data.family_history) {
+            //                                                                         if (this.validateChar(data.family_history, "family_history")) {
+            //                                                                             if (data.treatment_so_far) {
+            //                                                                                 if (this.validateChar(data.treatment_so_far, "treatment_so_far")) {
+            //                                                                                     if (data.birth) {
+            //                                                                                         if (data.residence) {
+            //                                                                                             if (data.race) {
+            //                                                                                                 if (this.validateChar(data.race, "race")) {
+            //                                                                                                     if (data.history_month) {
+            //                                                                                                         if (this.validateChar(data.history_month, "history_month")) {
+            //                                                                                                             if (data.medical_precondition) {
+            //                                                                                                                 if (this.validateChar(data.medical_precondition, "medical_precondition")) {
+            //                                                                                                                     if (data.premedication) {
+            //                                                                                                                         if (this.validateChar(data.premedication, "premedication")) {
 
-                                                                                                                                        console.log("this.state.updateEvaluate", data)
-                                                                                                                                        this.setState({ mod1Open: true, picEval: true })
+            //                                                                                                                             console.log("this.state.updateEvaluate", data)
+            //                                                                                                                             this.setState({ mod1Open: true, picEval: true })
 
-                                                                                                                                    } else {
-                                                                                                                                        this.setState({ errorChrMsg: "Max Words limit exceeds in Premedication" })
-                                                                                                                                    }
-                                                                                                                                } else {
-                                                                                                                                    this.setState({ errorChrMsg: "Please enter Premedication" })
-                                                                                                                                }
-                                                                                                                            } else {
-                                                                                                                                this.setState({ errorChrMsg: "Max Words limit exceeds in Medical precondition" })
-                                                                                                                            }
-                                                                                                                        } else {
-                                                                                                                            this.setState({ errorChrMsg: "Please enter Medical precondition" })
-                                                                                                                        }
-                                                                                                                    } else {
-                                                                                                                        this.setState({ errorChrMsg: "Max Words limit exceeds in History month" })
-                                                                                                                    }
-                                                                                                                } else {
-                                                                                                                    this.setState({ errorChrMsg: "Please enter History month" })
-                                                                                                                }
-                                                                                                            } else {
-                                                                                                                this.setState({ errorChrMsg: "Max Words limit exceeds in Race" })
-                                                                                                            }
-                                                                                                        } else {
-                                                                                                            this.setState({ errorChrMsg: "Please enter Race" })
-                                                                                                        }
-                                                                                                    } else {
-                                                                                                        this.setState({ errorChrMsg: "Please select Place of residence" })
-                                                                                                    }
-                                                                                                } else {
-                                                                                                    this.setState({ errorChrMsg: "Please select Place of birth" })
-                                                                                                }
-                                                                                            } else {
-                                                                                                this.setState({ errorChrMsg: "Max Words limit exceeds in Treatment so far" })
-                                                                                            }
-                                                                                        } else {
-                                                                                            this.setState({ errorChrMsg: "Please enter Treatment so far" })
-                                                                                        }
-                                                                                    } else {
-                                                                                        this.setState({ errorChrMsg: "Max Words limit exceeds in family history" })
-                                                                                    }
-                                                                                } else {
-                                                                                    this.setState({ errorChrMsg: "Please enter family history" })
-                                                                                }
-                                                                            } else {
-                                                                                this.setState({ errorChrMsg: "Max Words limit exceeds in allergies" })
-                                                                            }
-                                                                        } else {
-                                                                            this.setState({ errorChrMsg: "Please enter allergies" })
-                                                                        }
-                                                                    } else {
-                                                                        this.setState({ errorChrMsg: "Please select smoking status" })
-                                                                    }
-                                                                } else {
-                                                                    this.setState({ errorChrMsg: "Please enter situation for Diabetes" })
-                                                                }
-                                                            } else {
-                                                                this.setState({ errorChrMsg: "Hemoglobin A1c levels should be between 57 % and 64 %" })
-                                                            }
-                                                        } else {
-                                                            this.setState({ errorChrMsg: "Hemoglobin A1c should be in number" })
-                                                        }
-                                                    } else {
-                                                        this.setState({ errorChrMsg: "Please enter Hemoglobin A1c" })
-                                                    }
-                                                } else {
-                                                    this.setState({ errorChrMsg: "Blood Sugar should be between 160 to 240 mg / dL" })
-                                                }
-                                            } else {
-                                                this.setState({ errorChrMsg: "Blood Sugar should be in number" })
-                                            }
-                                        } else {
-                                            this.setState({ errorChrMsg: "Please enter Blood Sugar" })
-                                        }
-                                    } else {
-                                        this.setState({ errorChrMsg: "Please select diastolic bp value between 80-90" })
-                                    }
-                                } else {
-                                    this.setState({ errorChrMsg: "Diastolic bp should be in number" })
-                                }
-                            } else {
-                                this.setState({ errorChrMsg: "Please enter Diastolic value" })
-                            }
-                        } else {
-                            this.setState({ errorChrMsg: "Please select systolic bp value between 120-140" })
-                        }
-                    } else {
-                        this.setState({ errorChrMsg: "Systolic bp should be in number" })
-                    }
-                } else {
-                    this.setState({ errorChrMsg: "Please enter Systolic value" })
-                }
-            } else {
-                this.setState({ errorChrMsg: "Please enter Gender" })
-            }
+            //                                                                                                                         } else {
+            //                                                                                                                             this.setState({ errorChrMsg: "Max Words limit exceeds in Premedication" })
+            //                                                                                                                         }
+            //                                                                                                                     } else {
+            //                                                                                                                         this.setState({ errorChrMsg: "Please enter Premedication" })
+            //                                                                                                                     }
+            //                                                                                                                 } else {
+            //                                                                                                                     this.setState({ errorChrMsg: "Max Words limit exceeds in Medical precondition" })
+            //                                                                                                                 }
+            //                                                                                                             } else {
+            //                                                                                                                 this.setState({ errorChrMsg: "Please enter Medical precondition" })
+            //                                                                                                             }
+            //                                                                                                         } else {
+            //                                                                                                             this.setState({ errorChrMsg: "Max Words limit exceeds in History month" })
+            //                                                                                                         }
+            //                                                                                                     } else {
+            //                                                                                                         this.setState({ errorChrMsg: "Please enter History month" })
+            //                                                                                                     }
+            //                                                                                                 } else {
+            //                                                                                                     this.setState({ errorChrMsg: "Max Words limit exceeds in Race" })
+            //                                                                                                 }
+            //                                                                                             } else {
+            //                                                                                                 this.setState({ errorChrMsg: "Please enter Race" })
+            //                                                                                             }
+            //                                                                                         } else {
+            //                                                                                             this.setState({ errorChrMsg: "Please select Place of residence" })
+            //                                                                                         }
+            //                                                                                     } else {
+            //                                                                                         this.setState({ errorChrMsg: "Please select Place of birth" })
+            //                                                                                     }
+            //                                                                                 } else {
+            //                                                                                     this.setState({ errorChrMsg: "Max Words limit exceeds in Treatment so far" })
+            //                                                                                 }
+            //                                                                             } else {
+            //                                                                                 this.setState({ errorChrMsg: "Please enter Treatment so far" })
+            //                                                                             }
+            //                                                                         } else {
+            //                                                                             this.setState({ errorChrMsg: "Max Words limit exceeds in family history" })
+            //                                                                         }
+            //                                                                     } else {
+            //                                                                         this.setState({ errorChrMsg: "Please enter family history" })
+            //                                                                     }
+            //                                                                 } else {
+            //                                                                     this.setState({ errorChrMsg: "Max Words limit exceeds in allergies" })
+            //                                                                 }
+            //                                                             } else {
+            //                                                                 this.setState({ errorChrMsg: "Please enter allergies" })
+            //                                                             }
+            //                                                         } else {
+            //                                                             this.setState({ errorChrMsg: "Please select smoking status" })
+            //                                                         }
+            //                                                     } else {
+            //                                                         this.setState({ errorChrMsg: "Please enter situation for Diabetes" })
+            //                                                     }
+            //                                                 } else {
+            //                                                     this.setState({ errorChrMsg: "Hemoglobin A1c levels should be between 57 % and 64 %" })
+            //                                                 }
+            //                                             } else {
+            //                                                 this.setState({ errorChrMsg: "Hemoglobin A1c should be in number" })
+            //                                             }
+            //                                         } else {
+            //                                             this.setState({ errorChrMsg: "Please enter Hemoglobin A1c" })
+            //                                         }
+            //                                     } else {
+            //                                         this.setState({ errorChrMsg: "Blood Sugar should be between 160 to 240 mg / dL" })
+            //                                     }
+            //                                 } else {
+            //                                     this.setState({ errorChrMsg: "Blood Sugar should be in number" })
+            //                                 }
+            //                             } else {
+            //                                 this.setState({ errorChrMsg: "Please enter Blood Sugar" })
+            //                             }
+            //                         } else {
+            //                             this.setState({ errorChrMsg: "Please select diastolic bp value between 80-90" })
+            //                         }
+            //                     } else {
+            //                         this.setState({ errorChrMsg: "Diastolic bp should be in number" })
+            //                     }
+            //                 } else {
+            //                     this.setState({ errorChrMsg: "Please enter Diastolic value" })
+            //                 }
+            //             } else {
+            //                 this.setState({ errorChrMsg: "Please select systolic bp value between 120-140" })
+            //             }
+            //         } else {
+            //             this.setState({ errorChrMsg: "Systolic bp should be in number" })
+            //         }
+            //     } else {
+            //         this.setState({ errorChrMsg: "Please enter Systolic value" })
+            //     }
+            // } else {
+            //     this.setState({ errorChrMsg: "Please enter Gender" })
+            // }
         } else {
             data.fileattach = this.state.fileattach
             if (data.fileattach && data.fileattach.length > 0) {
