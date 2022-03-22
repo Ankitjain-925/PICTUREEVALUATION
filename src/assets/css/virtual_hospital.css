@@ -9930,6 +9930,16 @@ button.crdoLghtBlu2 {
     border-bottom: none;
 }
 /* Added by Ankita */
+.ElementsApp, .ElementsApp .InputElement{
+    color: #00abaf;
+}
+.setDividerPic-eval {
+    border-top: 1px solid #cfcfcf;
+    padding-top: 20px;
+}
+.darkTheme .textFieldArea1 input {
+    color: #cfcfcf;
+}
 .docsOpinion.docsOpinion12 {
     padding: 0px !important;
     margin: 0px!important;

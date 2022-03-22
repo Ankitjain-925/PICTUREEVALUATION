@@ -121,7 +121,7 @@ export const validateBpAndSugar1 = (value, item, current) => {
     }
     else if(item === 'sexual_active'){
         if (!value) {
-            current.setState({ errorChrMsg: "Please Enter valid body temprature" })
+            current.setState({ errorChrMsg: "Please Enter sexual activities" })
             MoveTop();
             return false; 
         }

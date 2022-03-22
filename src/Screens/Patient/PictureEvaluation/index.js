@@ -593,7 +593,7 @@ class Index extends Component {
                                                                 <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'size_progress')} label="Size progress? " value={this.state.updateEvaluate?.size_progress} />
                                                                 <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'itch')} label="Itch?" value={this.state.updateEvaluate?.itch} />
                                                                 <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'pain')} label="Pain?" value={this.state.updateEvaluate?.pain} />
-                                                                <Grid>
+                                                                <Grid className="setDividerPic-eval">
                                                                     <label>Pain level?</label>
                                                                     <PainIntensity
                                                                         name="pain_intensity"
@@ -603,11 +603,10 @@ class Index extends Component {
                                                                     />
                                                                 </Grid>
                                                                 <Grid className="textFieldArea1">
-                                                                    <label>If you have Fever what is your Body Temp?</label>
+                                                                    <label>If you have Fever what is your Body Temp? (Temp in degree Fahrenheit)</label>
                                                                     <input type="number"
-                                                                        placeholder="35"
+                                                                        placeholder="97"
                                                                         name="body_temp"
-                                                                        min="35" max="42"
                                                                         onChange={(e) => this.updateEntryState2(e)}
                                                                         className={this.state.forError ? "setRedColor" : ""}
                                                                     >
