@@ -34,11 +34,11 @@ import { loadStripe } from '@stripe/stripe-js';
 import { GetShowLabel1 } from "Screens/Components/GetMetaData/index.js";
 import SelectByTwo from "Screens/Components/SelectbyTwo/index";
 import SelectField from "Screens/Components/Select/index";
-import { handleEvalSubmit, FileAttachMulti, getallGroups} from "./api"
+import { handleEvalSubmit, FileAttachMulti, getallGroups } from "./api"
 import { confirmAlert } from "react-confirm-alert"; // Import
 import { OptionList } from "Screens/Login/metadataaction";
 import {
-  GetLanguageDropdown,
+    GetLanguageDropdown,
 } from "Screens/Components/GetMetaData/index.js";
 const CURRENCY = "USD";
 const STRIPE_PUBLISHABLE = getPublishableKey()
@@ -86,7 +86,7 @@ class Index extends Component {
     componentDidMount() {
         var npmCountry = npmCountryList().getData();
         this.setState({ selectCountry: npmCountry });
-        this.getallGroups();
+        getallGroups(this);
         this.getMetadata();
     }
 
@@ -133,15 +133,6 @@ class Index extends Component {
         this.setState({ addEval: false });
     }
 
-    // For upload images
-    FileAttachMulti = (Fileadd) => {
-        this.setState({
-            isfileuploadmulti: true,
-            fileattach: Fileadd,
-            fileupods: true,
-        });
-    }
-
     //Not need yet this for the payment
     fromDollarToCent = (amount) => {
         return parseInt(amount * 100);
@@ -155,183 +146,13 @@ class Index extends Component {
 
     updateEntryState1 = (value, name) => {
         var state = this.state.updateEvaluate;
-        state[name] = value;
-        this.setState({ updateEvaluate: state });
-    };
-
-    // Submit form data
-    handleEvalSubmit = (value) => {
-        this.setState({ errorChrMsg: '' })
-        let data = {};
-        data = this.state.updateEvaluate;
-        if (value == 1) {
-            // if (data.sex) {
-            //     if (data.rr_systolic) {
-            //         if (this.validateBp(data.rr_systolic)) {
-            //             if (this.validateRangeBp(data.rr_systolic, "systolic")) {
-            //                 if (data.rr_diastolic) {
-            //                     if (this.validateBp(data.rr_diastolic)) {
-            //                         if (this.validateRangeBp(data.rr_diastolic, "diastolic")) {
-            //                             if (data.blood_sugar) {
-            //                                 if (this.validateBp(data.blood_sugar)) {
-            //                                     if (this.validateRangeBp(data.blood_sugar, "blood_sugar")) {
-            //                                         if (data.Hba1c) {
-            //                                             if (this.validateBp(data.Hba1c)) {
-            //                                                 if (this.validateRangeBp(data.Hba1c, "Hba1c")) {
-            //                                                     if (data.situation) {
-            //                                                         if (data.select_status) {
-            //                                                             if (data.allergies) {
-            //                                                                 if (this.validateChar(data.allergies, "allergies")) {
-            //                                                                     if (data.family_history) {
-            //                                                                         if (this.validateChar(data.family_history, "family_history")) {
-            //                                                                             if (data.treatment_so_far) {
-            //                                                                                 if (this.validateChar(data.treatment_so_far, "treatment_so_far")) {
-            //                                                                                     if (data.birth) {
-            //                                                                                         if (data.residence) {
-            //                                                                                             if (data.race) {
-            //                                                                                                 if (this.validateChar(data.race, "race")) {
-            //                                                                                                     if (data.history_month) {
-            //                                                                                                         if (this.validateChar(data.history_month, "history_month")) {
-            //                                                                                                             if (data.medical_precondition) {
-            //                                                                                                                 if (this.validateChar(data.medical_precondition, "medical_precondition")) {
-            //                                                                                                                     if (data.premedication) {
-            //                                                                                                                         if (this.validateChar(data.premedication, "premedication")) {
-
-            //                                                                                                                             console.log("this.state.updateEvaluate", data)
-            //                                                                                                                             this.setState({ mod1Open: true, picEval: true })
-
-            //                                                                                                                         } else {
-            //                                                                                                                             this.setState({ errorChrMsg: "Max Words limit exceeds in Premedication" })
-            //                                                                                                                         }
-            //                                                                                                                     } else {
-            //                                                                                                                         this.setState({ errorChrMsg: "Please enter Premedication" })
-            //                                                                                                                     }
-            //                                                                                                                 } else {
-            //                                                                                                                     this.setState({ errorChrMsg: "Max Words limit exceeds in Medical precondition" })
-            //                                                                                                                 }
-            //                                                                                                             } else {
-            //                                                                                                                 this.setState({ errorChrMsg: "Please enter Medical precondition" })
-            //                                                                                                             }
-            //                                                                                                         } else {
-            //                                                                                                             this.setState({ errorChrMsg: "Max Words limit exceeds in History month" })
-            //                                                                                                         }
-            //                                                                                                     } else {
-            //                                                                                                         this.setState({ errorChrMsg: "Please enter History month" })
-            //                                                                                                     }
-            //                                                                                                 } else {
-            //                                                                                                     this.setState({ errorChrMsg: "Max Words limit exceeds in Race" })
-            //                                                                                                 }
-            //                                                                                             } else {
-            //                                                                                                 this.setState({ errorChrMsg: "Please enter Race" })
-            //                                                                                             }
-            //                                                                                         } else {
-            //                                                                                             this.setState({ errorChrMsg: "Please select Place of residence" })
-            //                                                                                         }
-            //                                                                                     } else {
-            //                                                                                         this.setState({ errorChrMsg: "Please select Place of birth" })
-            //                                                                                     }
-            //                                                                                 } else {
-            //                                                                                     this.setState({ errorChrMsg: "Max Words limit exceeds in Treatment so far" })
-            //                                                                                 }
-            //                                                                             } else {
-            //                                                                                 this.setState({ errorChrMsg: "Please enter Treatment so far" })
-            //                                                                             }
-            //                                                                         } else {
-            //                                                                             this.setState({ errorChrMsg: "Max Words limit exceeds in family history" })
-            //                                                                         }
-            //                                                                     } else {
-            //                                                                         this.setState({ errorChrMsg: "Please enter family history" })
-            //                                                                     }
-            //                                                                 } else {
-            //                                                                     this.setState({ errorChrMsg: "Max Words limit exceeds in allergies" })
-            //                                                                 }
-            //                                                             } else {
-            //                                                                 this.setState({ errorChrMsg: "Please enter allergies" })
-            //                                                             }
-            //                                                         } else {
-            //                                                             this.setState({ errorChrMsg: "Please select smoking status" })
-            //                                                         }
-            //                                                     } else {
-            //                                                         this.setState({ errorChrMsg: "Please enter situation for Diabetes" })
-            //                                                     }
-            //                                                 } else {
-            //                                                     this.setState({ errorChrMsg: "Hemoglobin A1c levels should be between 57 % and 64 %" })
-            //                                                 }
-            //                                             } else {
-            //                                                 this.setState({ errorChrMsg: "Hemoglobin A1c should be in number" })
-            //                                             }
-            //                                         } else {
-            //                                             this.setState({ errorChrMsg: "Please enter Hemoglobin A1c" })
-            //                                         }
-            //                                     } else {
-            //                                         this.setState({ errorChrMsg: "Blood Sugar should be between 160 to 240 mg / dL" })
-            //                                     }
-            //                                 } else {
-            //                                     this.setState({ errorChrMsg: "Blood Sugar should be in number" })
-            //                                 }
-            //                             } else {
-            //                                 this.setState({ errorChrMsg: "Please enter Blood Sugar" })
-            //                             }
-            //                         } else {
-            //                             this.setState({ errorChrMsg: "Please select diastolic bp value between 80-90" })
-            //                         }
-            //                     } else {
-            //                         this.setState({ errorChrMsg: "Diastolic bp should be in number" })
-            //                     }
-            //                 } else {
-            //                     this.setState({ errorChrMsg: "Please enter Diastolic value" })
-            //                 }
-            //             } else {
-            //                 this.setState({ errorChrMsg: "Please select systolic bp value between 120-140" })
-            //             }
-            //         } else {
-            //             this.setState({ errorChrMsg: "Systolic bp should be in number" })
-            //         }
-            //     } else {
-            //         this.setState({ errorChrMsg: "Please enter Systolic value" })
-            //     }
-            // } else {
-            //     this.setState({ errorChrMsg: "Please enter Gender" })
-            // }
-        } else {
-            data.fileattach = this.state.fileattach
-            if (data.fileattach && data.fileattach.length > 0) {
-                console.log("this.state.updateEvaluate", data)
-                this.setState({ mod1Open: false, show2: true, show1: false })
-            } else {
-                this.setState({ errorChrMsg: "First upload image for evaluation" })
-            }
+        if (name == "house_id") {
+            state[name] = value.value;
+            console.log("state",state)
+        }else{
+            state[name] = value;
         }
-    }
-
-    getallGroups = () => {
-        this.setState({ loaderImage: true });
-        axios
-            .get(
-                sitedata.data.path +
-                `/admin/GetHintinstitute`,
-                commonHeader(this.props.stateLoginValueAim.token)
-            )
-            .then((responce) => {
-                if (responce.data.hassuccessed && responce.data.data) {
-                    var Housesoptions = [];
-                    responce.data.data.map((data) => {
-                        if (data?.institute_groups && data?.institute_groups?.length > 0) {
-                            data.institute_groups.map((data1) => {
-                                data1.houses.map((data2) => {
-                                    Housesoptions.push({
-                                        group_name: data2.house_name,
-                                        label: data2.house_name,
-                                        value: data2._id
-                                    })
-                                })
-                            })
-                        }
-                    })
-                    this.setState({ Housesoptions: Housesoptions });
-                }
-                this.setState({ loaderImage: false });
-            });
+        this.setState({ updateEvaluate: state });
     };
 
     render() {
@@ -799,7 +620,7 @@ class Index extends Component {
                                                                 <input
                                                                     type="submit"
                                                                     value="Submit"
-                                                                    onClick={() => this.handleEvalSubmit(1)}
+                                                                    onClick={() => handleEvalSubmit(1, this)}
                                                                 >
                                                                 </input>
                                                             </Grid>
@@ -822,7 +643,7 @@ class Index extends Component {
                                                                 name="UploadTrackImageMulti"
                                                                 comesFrom="journal"
                                                                 isMulti={true}
-                                                                fileUpload={this.FileAttachMulti}
+                                                                fileUpload={(e) => FileAttachMulti(e, this)}
                                                             />
                                                         </Grid>
                                                         <Grid item xs={12} md={12}>
@@ -830,18 +651,18 @@ class Index extends Component {
                                                             <Grid className="cntryDropTop">
 
                                                                 <Select
-                                                                    value={this.state.updateEvaluate?.hospital}
-                                                                    onChange={(e) => this.updateEntryState1(e, "hospital")}
+                                                                    value={this.state.updateEvaluate?.house_id}
+                                                                    onChange={(e) => this.updateEntryState1(e, "house_id")}
                                                                     options={this.state.Housesoptions}
                                                                     placeholder=""
                                                                     isSearchable={true}
-                                                                    name="hospital"
+                                                                    name="house_id"
                                                                     className="cntryDrop"
                                                                 />
                                                             </Grid>
                                                         </Grid>
-                                                        <Grid className="fatiqueQues fatiqueQuess1">
-                                                            <Grid className="dateSet">
+                                                        {/* <Grid className="fatiqueQues fatiqueQuess1"> */}
+                                                        {/* <Grid className="dateSet">
                                                                 <label>When did it start?</label>
                                                                 <DateFormat
                                                                     name="date"
@@ -854,12 +675,41 @@ class Index extends Component {
                                                                         this.props.settings.setting &&
                                                                         this.props.settings.setting.date_format}
                                                                 />
+                                                            </Grid> */}
+                                                        {/* <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'warm')} label="Warm?" value={this.state.updateEvaluate?.warm} />
+                                                            <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'size_progress')} label="Size progress? " value={this.state.updateEvaluate?.size_progress} />
+                                                            <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'itch')} label="Itch?" value={this.state.updateEvaluate?.itch} />
+                                                            <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'pain')} label="Pain?" value={this.state.updateEvaluate?.pain} /> */}
+                                                        {/* <Grid>
+                                                                <label>Pain level?</label>
+                                                                <PainIntensity
+                                                                    name="pain_intensity"
+                                                                    onChange={(e) => this.updateEntryState2(e)}
+                                                                    value={Math.round(this.state.updateEvaluate?.pain_intensity)}
+                                                                    comesFrom="Evalute"
+                                                                />
+                                                            </Grid> */}
+                                                        <Grid className="fatiqueQues fatiqueQuess1">
+                                                            <Grid className="dateSet">
+                                                                <label>When did it start?</label>
+                                                                <DateFormat
+                                                                    name="date"
+                                                                    value={this.state.updateEvaluate?.start_date ?
+                                                                        new Date(this.state.updateEvaluate?.start_date) :
+                                                                        new Date()
+                                                                    }
+                                                                    onChange={(e) => this.updateEntryState1(e, "start_date")}
+                                                                    date_format={this.props.settings &&
+                                                                        this.props.settings.setting &&
+                                                                        this.props.settings.setting.date_format}
+
+                                                                />
                                                             </Grid>
                                                             <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'warm')} label="Warm?" value={this.state.updateEvaluate?.warm} />
                                                             <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'size_progress')} label="Size progress? " value={this.state.updateEvaluate?.size_progress} />
                                                             <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'itch')} label="Itch?" value={this.state.updateEvaluate?.itch} />
                                                             <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'pain')} label="Pain?" value={this.state.updateEvaluate?.pain} />
-                                                            <Grid>
+                                                            <Grid className="setDividerPic-eval">
                                                                 <label>Pain level?</label>
                                                                 <PainIntensity
                                                                     name="pain_intensity"
@@ -869,11 +719,10 @@ class Index extends Component {
                                                                 />
                                                             </Grid>
                                                             <Grid className="textFieldArea1">
-                                                                <label>If you have Fever what is your Body Temp?</label>
+                                                                <label>If you have Fever what is your Body Temp? (Temp in degree Fahrenheit)</label>
                                                                 <input type="number"
-                                                                    placeholder="35"
+                                                                    placeholder="97"
                                                                     name="body_temp"
-                                                                    min="35" max="42"
                                                                     onChange={(e) => this.updateEntryState2(e)}
                                                                     className={this.state.forError ? "setRedColor" : ""}
                                                                 >
@@ -910,11 +759,12 @@ class Index extends Component {
                                                                     type="submit"
                                                                     value="Submit"
                                                                     onClick={() =>
-                                                                        this.handleEvalSubmit()}
+                                                                        handleEvalSubmit(0, this)}
                                                                 >
                                                                 </input>
                                                             </Grid>
                                                         </Grid>
+                                                        {/* </Grid> */}
                                                     </Grid>
                                                 )}
                                             </Grid>)}
