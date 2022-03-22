@@ -110,7 +110,7 @@ export const validateBpAndSugar1 = (value, item, current) => {
             MoveTop();
             return false; 
         }
-        else if(value < 96 && value > 105){
+        else if(value > 96 && value < 105){
             current.setState({ errorChrMsg: "Please Enter valid body temprature" })
             MoveTop();
             return false; 
