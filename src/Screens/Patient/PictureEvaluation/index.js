@@ -35,7 +35,12 @@ import { GetShowLabel1 } from "Screens/Components/GetMetaData/index.js";
 import SelectByTwo from "Screens/Components/SelectbyTwo/index";
 import SelectField from "Screens/Components/Select/index";
 import { handleEvalSubmit, FileAttachMulti, getallGroups} from "./api"
-
+import { confirmAlert } from "react-confirm-alert"; // Import
+import { OptionList } from "Screens/Login/metadataaction";
+import {
+  GetLanguageDropdown,
+} from "Screens/Components/GetMetaData/index.js";
+const CURRENCY = "USD";
 const STRIPE_PUBLISHABLE = getPublishableKey()
 const stripePromise = loadStripe(STRIPE_PUBLISHABLE);
 
