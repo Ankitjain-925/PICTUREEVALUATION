@@ -23,7 +23,7 @@ class Index extends Component {
         this.setState({currentPage: event.target.value})
         this.props.onChangePage(event.target.value)
       }
-      else if(event.target.value ==''){
+      else if(event.target.value === ''){
         this.setState({currentPage: event.target.value})
       }
       else{
@@ -51,7 +51,7 @@ class Index extends Component {
         <>
             {this.state.totalPage > 1 && <Grid className="prevNxtpag">
                 <div className="movetoPage">
-                  {this.state.currentPage != 1 && <a className="prevpag" onClick={() => { this.props.onChangePage(this.state.currentPage - 1) }}>{previous}</a>}
+                  {this.state.currentPage !== 1 && <a className="prevpag" onClick={() => { this.props.onChangePage(this.state.currentPage - 1) }}>{previous}</a>}
                   {this.props.from && this.props.from === 'userlist' ? 
                   <><DebounceInput
                       name="currentPage"
@@ -67,7 +67,7 @@ class Index extends Component {
                      / {this.state.totalPage}</>
                      :
                   <> <input type="number" className={this.state.forError ? "setRedColor" : ""} onChange={(event) => this.writePage(event)} value={this.state.currentPage}/> / {this.state.totalPage}</>}
-                  {this.state.currentPage != this.state.totalPage && <a className="nxtpag" onClick={() => { this.props.onChangePage(this.state.currentPage + 1) }}>{next}</a>}
+                  {this.state.currentPage !== this.state.totalPage && <a className="nxtpag" onClick={() => { this.props.onChangePage(this.state.currentPage + 1) }}>{next}</a>}
                 </div>
                 
             </Grid>}

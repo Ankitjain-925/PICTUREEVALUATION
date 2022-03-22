@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import { LanguageFetchReducer } from "Screens/actions";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
 import { LoginReducerAim } from "Screens/Login/actions";
@@ -48,7 +48,6 @@ class Index extends Component {
       registerMessage: "",
       error_msg: "",
       uploadLicence: {},
-      hidden: true,
       hidden_confirm: true,
       fileupods: false,
       FilesUp: [],
@@ -77,7 +76,7 @@ class Index extends Component {
   //For save data of user
   saveUserData() {
     let translate = getLanguage(this.props.stateLanguageType);
-    let { plz_accept_term_condition, fillreptcha, select_user_type,
+    let { plz_accept_term_condition, fillreptcha, 
       plz_fill_mob_number, email_not_valid, pswd_not_valid, plz_fill_fullname_user } = translate;
     this.setState({ regisError: "", regisError1: "", regisError2: "", regisError3: "", regisError0: "", error_msg: "", });
     if (
@@ -280,7 +279,7 @@ class Index extends Component {
 
             var returnData = response.data.data.returnData;
             var signedRequest = returnData.signedRequest;
-            var url = returnData.url;
+            // var url = returnData.url;
             if (fileType === "pdf") {
               fileType = "application/pdf";
             }

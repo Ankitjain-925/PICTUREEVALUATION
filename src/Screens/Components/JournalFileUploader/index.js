@@ -5,7 +5,7 @@ import { Input } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { pure } from "recompose";
-import sitedata, { data } from "sitedata";
+import sitedata from "sitedata";
 import axios from "axios";
 import Loader from "./../Loader/index";
 import { LanguageFetchReducer } from "Screens/actions";
@@ -79,7 +79,7 @@ class ImageUploderView extends Component {
   //Rmove file functionality
   delindex = (file) => {
     var data = [];
-    var data =
+    data =
       this.state.attachfile &&
       this.state.attachfile.length > 0 &&
       this.state.attachfile.filter((item) => item.filename !== file);
@@ -125,7 +125,7 @@ class ImageUploderView extends Component {
                 }, 3000);
                 let returnData = response.data.data.returnData;
                 let signedRequest = returnData.signedRequest;
-                let url = returnData.url;
+                
                 if (fileType === "pdf") {
                   fileType = "application/pdf";
                 }
@@ -197,7 +197,6 @@ class ImageUploderView extends Component {
       suported_file_type_jpg_png_dcm,
       less_than_err,
       err_file_formart,
-      BodySchemeNotes,
       or_drag_here,
     } = translate;
     return (

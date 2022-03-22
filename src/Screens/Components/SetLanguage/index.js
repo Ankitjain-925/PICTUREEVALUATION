@@ -83,8 +83,7 @@ class Index extends Component {
       save_change,
       select_Language,
       language_not_selected,
-      select,
-      Language,
+   
     } = translate;
     return (
       <div>
@@ -137,7 +136,7 @@ class Index extends Component {
                       name="language"
                       type="radio"
                       checked={
-                        this.state.languageValue == "ar" ? "checked" : ""
+                        this.state.languageValue ==="ar" ? "checked" : ""
                       }
                     />
                     <label>
@@ -156,7 +155,7 @@ class Index extends Component {
                       name="language"
                       type="radio"
                       checked={
-                        this.state.languageValue == "ch" ? "checked" : ""
+                        this.state.languageValue ==="ch" ? "checked" : ""
                       }
                     />
                     <label>
@@ -175,7 +174,7 @@ class Index extends Component {
                       name="language"
                       type="radio"
                       checked={
-                        this.state.languageValue == "nl" ? "checked" : ""
+                        this.state.languageValue ==="nl" ? "checked" : ""
                       }
                     />
                     <label>
@@ -194,7 +193,7 @@ class Index extends Component {
                       name="language"
                       type="radio"
                       checked={
-                        this.state.languageValue == "en" ? "checked" : ""
+                        this.state.languageValue ==="en" ? "checked" : ""
                       }
                     />
                     <label>
@@ -213,7 +212,7 @@ class Index extends Component {
                       name="language"
                       type="radio"
                       checked={
-                        this.state.languageValue == "fr" ? "checked" : ""
+                        this.state.languageValue ==="fr" ? "checked" : ""
                       }
                     />
                     <label>
@@ -232,7 +231,7 @@ class Index extends Component {
                       name="language"
                       type="radio"
                       checked={
-                        this.state.languageValue == "de" ? "checked" : ""
+                        this.state.languageValue ==="de" ? "checked" : ""
                       }
                     />
                     <label>
@@ -253,7 +252,7 @@ class Index extends Component {
                       name="language"
                       type="radio"
                       checked={
-                        this.state.languageValue == "pt" ? "checked" : ""
+                        this.state.languageValue ==="pt" ? "checked" : ""
                       }
                     />
                     <label>
@@ -272,7 +271,7 @@ class Index extends Component {
                       name="language"
                       type="radio"
                       checked={
-                        this.state.languageValue == "rs" ? "checked" : ""
+                        this.state.languageValue ==="rs" ? "checked" : ""
                       }
                     />
                     <label>
@@ -291,7 +290,7 @@ class Index extends Component {
                       name="language"
                       type="radio"
                       checked={
-                        this.state.languageValue == "sp" ? "checked" : ""
+                        this.state.languageValue ==="sp" ? "checked" : ""
                       }
                     />
                     <label>
@@ -310,7 +309,7 @@ class Index extends Component {
                       name="language"
                       type="radio"
                       checked={
-                        this.state.languageValue == "sw" ? "checked" : ""
+                        this.state.languageValue ==="sw" ? "checked" : ""
                       }
                     />
                     <label>
@@ -329,7 +328,7 @@ class Index extends Component {
                       name="language"
                       type="radio"
                       checked={
-                        this.state.languageValue == "tr" ? "checked" : ""
+                        this.state.languageValue ==="tr" ? "checked" : ""
                       }
                     />
                     <label>

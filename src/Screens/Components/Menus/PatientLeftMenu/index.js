@@ -7,7 +7,6 @@ import { withRouter } from "react-router-dom";
 import { LanguageFetchReducer } from "Screens/actions";
 import LogOut from "Screens/Components/LogOut/index";
 import Timer from "Screens/Components/TimeLogOut/index";
-import { update_CometUser } from "Screens/Components/CommonApi/index";
 import Mode from "Screens/Components/ThemeMode/index.js";
 import SetLanguage from "Screens/Components/SetLanguage/index.js";
 import Loader from "Screens/Components/Loader/index";
@@ -78,24 +77,11 @@ class Index extends Component {
   render() {
     let translate = getLanguage(this.props.stateLanguageType)
     let {
-      appointments,
-      chat_vdocall,
-      more,
       my_profile,
-      my_doc,
-      extra_srvc,
-      online_course,
       profile_setting,
       Language,
       DarkMode,
       logout,
-      journal,
-      Patientjourney,
-      trackers,
-      self_data,
-      emrgancy_patient_data,
-      blockchain_access_log,
-      jrnl_archive,
     } = translate;
     return (
       <Grid

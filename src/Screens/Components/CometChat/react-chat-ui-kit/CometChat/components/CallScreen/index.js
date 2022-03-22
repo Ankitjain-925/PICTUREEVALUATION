@@ -4,7 +4,7 @@ import "assets/css/style.css"
 import { CometChat } from "@cometchat-pro/chat";
 import Draggable from "react-draggable";
 import { CometChatManager } from "../../util/controller";
-import { Resizable, ResizableBox } from 'react-resizable';
+import { ResizableBox } from 'react-resizable';
 import "react-resizable/css/styles.css";
 import { getLanguage } from "translations/index"
 import { CallScreenManager } from "./controller";

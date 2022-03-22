@@ -1,4 +1,4 @@
-import { GET_LANGUAGE_TYPE, GET_LANGUAGE_TYPE_FAIL } from "../actiontypes";
+import { GET_LANGUAGE_TYPE } from "../actiontypes";
 // import { ToastActionsCreators } from 'react-native-redux-toast';
 export const LanguageFetchReducer = (selectedLanguage) => {
   return (dispatch) => {

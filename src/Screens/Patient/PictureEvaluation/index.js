@@ -4,7 +4,7 @@ import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import Select from 'react-select';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
-import sitedata, { data } from 'sitedata';
+import sitedata from 'sitedata';
 import axios from 'axios';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -34,10 +34,8 @@ import { loadStripe } from '@stripe/stripe-js';
 import { GetShowLabel1 } from "Screens/Components/GetMetaData/index.js";
 import SelectByTwo from "Screens/Components/SelectbyTwo/index";
 import SelectField from "Screens/Components/Select/index";
-import { GetLanguageDropdown } from "Screens/Components/GetMetaData/index.js";
-import { OptionList } from "Screens/Login/metadataaction";
-import { confirmAlert } from "react-confirm-alert";
-const CURRENCY = "USD";
+import { handleEvalSubmit, FileAttachMulti, getallGroups} from "./api"
+
 const STRIPE_PUBLISHABLE = getPublishableKey()
 const stripePromise = loadStripe(STRIPE_PUBLISHABLE);
 
@@ -143,78 +141,6 @@ class Index extends Component {
     fromDollarToCent = (amount) => {
         return parseInt(amount * 100);
     };
-
-
-    //For validate the character length is correct or not
-    validateChar = (event, value) => {
-        var a = event && event?.length
-        if (value === "allergies" || value === "family_history" || value === "treatment_so_far" || value === "medical_precondition" || value === "premedication") {
-            if (a > 400) {
-                return false
-            } else {
-                this.setState({ errorChrMsg: '' })
-                return true
-            }
-        }
-        else {
-            if (a > 100) {
-                return false
-            } else {
-                this.setState({ errorChrMsg: '' })
-                return true
-            }
-        }
-    }
-
-    //For validate the blood pressure is correct or not
-    validateBp = (elementValue) => {
-        var bpPattern = /^[0-9]+$/;
-        return bpPattern.test(elementValue);
-    };
-
-    //For validate the blood pressure level and diabetes levels is correct or not
-    validateRangeBp = (value, item) => {
-        if (item === "systolic") {
-            if (value < 120) {
-                return false;
-            } else if (value > 140) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        } else if (item === "diastolic") {
-            if (value < 80) {
-                return false;
-            } else if (value > 90) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        } else if (item === "blood_sugar") {
-            if (value < 160) {
-                return false;
-            } else if (value > 240) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        } else if (item === "Hba1c") {
-            let calHba1c = value / 10;
-            if (calHba1c < (57 / 10)) {
-                return false;
-            } else if (calHba1c > (64 / 10)) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        } else {
-            return false;
-        }
-    }
 
     updateEntryState2 = (event) => {
         var state = this.state.updateEvaluate;
