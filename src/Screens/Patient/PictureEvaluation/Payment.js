@@ -8,13 +8,30 @@ import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
 // Util imports
 import {makeStyles} from '@material-ui/core/styles';
 // Custom Components
-import CardInput from '../../Components/CardInput/CardInput';
 import sitedata from "sitedata";
-import { getPriceId } from "../../Components/CardInput/getPriceId";
 import { getLanguage } from "translations/index"
 import { confirmAlert } from "react-confirm-alert";
 import { commonHeader } from 'component/CommonHeader/index';
 const CURRENCY = "USD";
+
+const CARD_ELEMENT_OPTIONS = {
+  style: {
+    base: {
+      'color': '#32325d',
+      'fontFamily': '"Helvetica Neue", Helvetica, sans-serif',
+      'fontSmoothing': 'antialiased',
+      'fontSize': '16px',
+      '::placeholder': {
+        color: '#aab7c4',
+      },
+    },
+    invalid: {
+      color: '#fa755a',
+      iconColor: '#fa755a',
+    },
+  },
+};
+
 const useStyles = makeStyles({
   root: {
     maxWidth: 500,
@@ -48,57 +65,125 @@ function HomePage(props) {
   const stripe = useStripe();
   const elements = useElements();
 
+  const fromEuroToCent = (amount) => parseInt(amount * 100);
 
-  // const handleSubmitSub = async (event, type) => {
-  //   if (!stripe || !elements) {
-  //     // Stripe.js has not yet loaded.
-  //     // Make sure to disable form submission until Stripe.js has loaded.
-  //     return;
-  //   }
+  const handleSubmitSub = async (event) => {
+    if (!stripe || !elements) {
+      // Stripe.js has not yet loaded.
+      // Make sure to disable form submission until Stripe.js has loaded.
+      return;
+    }
 
-  //   const result = await stripe.createPaymentMethod({
-  //     type: 'card',
-  //     card: elements.getElement(CardElement),
-  //     billing_details: {
-  //       email: email,
-  //     },
-  //   });
+    const result = await stripe.createPaymentMethod({
+      type: 'card',
+      card: elements.getElement(CardElement),
+      billing_details: {
+        email: email,
+      },
+    });
 
-  //   if (result.error) {
+    if (result.error) {
     
-  //   } else {
-  //   var price_id = getPriceId(type);
-  //   // var price_id = 'price_1IiFEJH4UyTD79BwEEdzAZe1'
-  //     const res = await axios.post(sitedata.data.path + "/stripeCheckout/sub", {
-  //         payment_method: result.paymentMethod.id, email: email,
-  //       price_id: price_id});
-  //     // eslint-disable-next-line camelcase
-  //     const {client_secret, status} = res?.data?.data?.latest_invoice?.payment_intent;
-
-  //     if (status === 'requires_action') {
-  //       stripe.confirmCardPayment(client_secret).then(function(result1) {
-  //         if (result1.error) {
-  //           setshowError(something_wrong);
-  //           // Display error message in your UI.
-  //           // The card was declined (i.e. insufficient funds, card has expired, etc)
-  //         } else {
-  //           props.onToken(type, res?.data?.data)
-  //           // Show a success message to your customer
-  //         }
-  //       });
-  //     } else {
-  //       props.onToken(type, res?.data?.data)
-  //       // No additional information was needed
-  //       // Show a success message to your customer
-  //     }
-  //   }
-  // };
+    } else {
+      const res = await axios.post(sitedata.data.path + "/lms_stripeCheckout/intent", {
+        currency: CURRENCY, amount: fromEuroToCent(99), payment_method_types: ['card']});
+      // eslint-disable-next-line camelcase
+      console.log('res', res)
+      const client_secret = res?.data?.data;
+      const PaymentIntent = await stripe
+      .confirmCardPayment(client_secret, {
+        payment_method: {
+          card:  elements.getElement(CardElement),
+        },
+      })
+      if(PaymentIntent.paymentIntent.id === "succeeded"){
+        confirmAlert({
+          customUI: ({ onClose }) => {
+            return (
+              <div
+                className={
+                  this.props.settings &&
+                    this.props.settings.setting &&
+                    this.props.settings.setting.mode === "dark"
+                    ? "dark-confirm react-confirm-alert-body"
+                    : "react-confirm-alert-body"
+                }
+              >
+                <h1>{paymnt_processed}</h1>
+                <div className="react-confirm-alert-button-group">
+                  <button
+                    onClick={() => {
+                      onClose();
+                    }}
+                  >
+                    {ok}
+                  </button>
+                </div>
+              </div>
+            );
+          },
+        });
+  
+        // let user_token = this.props.stateLoginValueAim.token;
+        // axios
+        //   .post(
+        //     sitedata.data.path + "/lms_stripeCheckout/saveData",
+        //     {
+        //       user_id: this.props.stateLoginValueAim.user._id,
+        //       userName:
+        //         this.props.stateLoginValueAim.user.first_name + ' ' +
+        //         this.props.stateLoginValueAim.user.last_name,
+        //       userType: this.props.stateLoginValueAim.user.type,
+        //       paymentData: data,
+        //       orderlist: this.state.AllCart,
+        //     },
+        //     commonHeader(user_token)
+        //   )
+        //   .then((res) => {
+        //     props.redirectTolist();
+        //   })
+        //   .catch((err) => { });
+      }
+      else{
+        let translate = getLanguage(props.languageType)
+        let { ok,  paymnt_err,} = translate;
+        confirmAlert({
+          customUI: ({ onClose }) => {
+            return (
+              <div
+                className={
+                  this.props.settings &&
+                    this.props.settings.setting &&
+                    this.props.settings.setting.mode === "dark"
+                    ? "dark-confirm react-confirm-alert-body"
+                    : "react-confirm-alert-body"
+                }
+              >
+                <h1>{paymnt_err}</h1>
+                <div className="react-confirm-alert-button-group">
+                  <button
+                    onClick={() => {
+                      onClose();
+                    }}
+                  >
+                    {ok}
+                  </button>
+                </div>
+              </div>
+            );
+          },
+        });
+      }
+     
+    
+    }
+  };
     
   return (
     <Grid container direction="row" spacing="3">
         {showError}
     {/* <Grid item xs={12} md={6}> */}
-        {(props.show1 || props.show2 ) && <div className="payment_sec_extra_ser1">
+    {(props.show2 ) && <div className="payment_sec_extra_ser1">
         <TextField
           label={recEmp_Emailaddress}
           id='outlined-email-input'
@@ -111,24 +196,17 @@ function HomePage(props) {
           onChange={(e) => setEmail(e.target.value)}
           fullWidth
         />
-          <CardInput />
+           <CardElement options={CARD_ELEMENT_OPTIONS} />
           <div className="sbu_button">
-          {props.show1 && 
+          
             <button
               onClick={(e) => {
-                this.props.onToken(e)
+                handleSubmitSub(e)
               }}
             >
               {done}
-            </button>}
-          {props.show2 && 
-          <button
-            onClick={(e) => {
-              this.props.onToken(e, "Data services")
-            }}
-          >
-            {done}
-          </button>}&nbsp;&nbsp;
+            </button>
+         
             <button
               onClick={() => {
                 props.CancelClick()
