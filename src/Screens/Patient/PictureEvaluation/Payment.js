@@ -85,33 +85,97 @@ function HomePage(props) {
     if (result.error) {
     
     } else {
-    // var price_id = getPriceId(type);
-    // var price_id = 'price_1IiFEJH4UyTD79BwEEdzAZe1'
-    console.log('result', result)
-      const res = await axios.post(sitedata.data.path + "/lms_stripeCheckout", {
-        source:  result.paymentMethod.id, currency: CURRENCY, amount: fromEuroToCent(99)});
+      const res = await axios.post(sitedata.data.path + "/lms_stripeCheckout/intent", {
+        currency: CURRENCY, amount: fromEuroToCent(99), payment_method_types: ['card']});
       // eslint-disable-next-line camelcase
       console.log('res', res)
-      const {client_secret, status} = res?.data?.data?.latest_invoice?.payment_intent;
-
-      if (status === 'requires_action') {
-        stripe.confirmCardPayment(client_secret).then(function(result1) {
-          if (result1.error) {
-            setshowError(something_wrong);
-            // Display error message in your UI.
-            // The card was declined (i.e. insufficient funds, card has expired, etc)
-          } else {
-            console.log('res?.data?.data', res?.data?.data)
-            // props.onToken(type, res?.data?.data)
-            // Show a success message to your customer
-          }
+      const client_secret = res?.data?.data;
+      const PaymentIntent = await stripe
+      .confirmCardPayment(client_secret, {
+        payment_method: {
+          card:  elements.getElement(CardElement),
+        },
+      })
+      if(PaymentIntent.paymentIntent.id === "succeeded"){
+        confirmAlert({
+          customUI: ({ onClose }) => {
+            return (
+              <div
+                className={
+                  this.props.settings &&
+                    this.props.settings.setting &&
+                    this.props.settings.setting.mode === "dark"
+                    ? "dark-confirm react-confirm-alert-body"
+                    : "react-confirm-alert-body"
+                }
+              >
+                <h1>{paymnt_processed}</h1>
+                <div className="react-confirm-alert-button-group">
+                  <button
+                    onClick={() => {
+                      onClose();
+                    }}
+                  >
+                    {ok}
+                  </button>
+                </div>
+              </div>
+            );
+          },
         });
-      } else {
-        console.log('res?.data?.data1111', res?.data?.data)
-        // props.onToken(type, res?.data?.data)
-        // No additional information was needed
-        // Show a success message to your customer
+  
+        // let user_token = this.props.stateLoginValueAim.token;
+        // axios
+        //   .post(
+        //     sitedata.data.path + "/lms_stripeCheckout/saveData",
+        //     {
+        //       user_id: this.props.stateLoginValueAim.user._id,
+        //       userName:
+        //         this.props.stateLoginValueAim.user.first_name + ' ' +
+        //         this.props.stateLoginValueAim.user.last_name,
+        //       userType: this.props.stateLoginValueAim.user.type,
+        //       paymentData: data,
+        //       orderlist: this.state.AllCart,
+        //     },
+        //     commonHeader(user_token)
+        //   )
+        //   .then((res) => {
+        //     props.redirectTolist();
+        //   })
+        //   .catch((err) => { });
       }
+      else{
+        let translate = getLanguage(props.languageType)
+        let { ok,  paymnt_err,} = translate;
+        confirmAlert({
+          customUI: ({ onClose }) => {
+            return (
+              <div
+                className={
+                  this.props.settings &&
+                    this.props.settings.setting &&
+                    this.props.settings.setting.mode === "dark"
+                    ? "dark-confirm react-confirm-alert-body"
+                    : "react-confirm-alert-body"
+                }
+              >
+                <h1>{paymnt_err}</h1>
+                <div className="react-confirm-alert-button-group">
+                  <button
+                    onClick={() => {
+                      onClose();
+                    }}
+                  >
+                    {ok}
+                  </button>
+                </div>
+              </div>
+            );
+          },
+        });
+      }
+     
+    
     }
   };
     

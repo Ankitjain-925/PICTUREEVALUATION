@@ -174,105 +174,10 @@ class Index extends Component {
             from,
             when,
             until,
-            paymnt_processed,
-            ok,
-            paymnt_err,
         } = translate;
         //Success payment alert after payment is success
 
-        const successPayment = (data) => {
-            confirmAlert({
-                customUI: ({ onClose }) => {
-                    return (
-                        <div
-                            className={
-                                this.props.settings &&
-                                    this.props.settings.setting &&
-                                    this.props.settings.setting.mode === "dark"
-                                    ? "dark-confirm react-confirm-alert-body"
-                                    : "react-confirm-alert-body"
-                            }
-                        >
-                            <h1>{paymnt_processed}</h1>
-                            <div className="react-confirm-alert-button-group">
-                                <button
-                                    onClick={() => {
-                                        onClose();
-                                    }}
-                                >
-                                    {ok}
-                                </button>
-                            </div>
-                        </div>
-                    );
-                },
-            });
-
-            let user_token = this.props.stateLoginValueAim.token;
-            axios
-                .post(
-                    sitedata.data.path + "/lms_stripeCheckout/saveData",
-                    {
-                        user_id: this.props.stateLoginValueAim.user._id,
-                        userName:
-                            this.props.stateLoginValueAim.user.first_name + ' ' +
-                            this.props.stateLoginValueAim.user.last_name,
-                        userType: this.props.stateLoginValueAim.user.type,
-                        paymentData: data,
-                        orderlist: this.state.AllCart,
-                    },
-                    commonHeader(user_token)
-                )
-                .then((res) => {
-                    this.getAllCart();
-                })
-                .catch((err) => { });
-        };
-
-        //Alert of the Error payment
-        const errorPayment = (data) => {
-            confirmAlert({
-                customUI: ({ onClose }) => {
-                    return (
-                        <div
-                            className={
-                                this.props.settings &&
-                                    this.props.settings.setting &&
-                                    this.props.settings.setting.mode === "dark"
-                                    ? "dark-confirm react-confirm-alert-body"
-                                    : "react-confirm-alert-body"
-                            }
-                        >
-                            <h1>{paymnt_err}</h1>
-                            <div className="react-confirm-alert-button-group">
-                                <button
-                                    onClick={() => {
-                                        onClose();
-                                    }}
-                                >
-                                    {ok}
-                                </button>
-                            </div>
-                        </div>
-                    );
-                },
-            });
-        };
-
-        //For convert EuroToCent
-        const fromEuroToCent = (amount) => parseInt(amount * 100);
-        //For payment
-        const onToken = (token) =>
-            axios
-                .post(sitedata.data.path + "/lms_stripeCheckout", {
-                    source: token.id,
-                    currency: CURRENCY,
-                    amount: fromEuroToCent(this.state.amount),
-                })
-                .then(successPayment, this.setState({ addtocart: [] }))
-                .catch(errorPayment);
-
-
+      
         return (
             <Grid className={
                 this.props.settings &&
@@ -769,7 +674,7 @@ class Index extends Component {
                                                 )}
                                             </Grid>)}
                                             <Elements stripe={stripePromise}>
-                                                <Payment languageType={this.props.stateLanguageType} show1={this.state.show1} show2={this.state.show2} CancelClick={this.CancelClick} onToken={onToken}
+                                                <Payment redirectTolist={()=>{this.redirectTolist()}} languageType={this.props.stateLanguageType} show1={this.state.show1} show2={this.state.show2} CancelClick={this.CancelClick}
                                                 />
                                             </Elements>
                                         </Grid>
