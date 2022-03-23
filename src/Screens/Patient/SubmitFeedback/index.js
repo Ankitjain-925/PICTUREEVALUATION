@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
-import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import { LoginReducerAim } from "Screens/Login/actions";
-import { Settings } from "Screens/Login/setting";
-import { LanguageFetchReducer } from "Screens/actions";
+import React, { Component } from 'react';
+import Grid from '@material-ui/core/Grid';
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { LoginReducerAim } from 'Screens/Login/actions';
+import { Settings } from 'Screens/Login/setting';
+import { LanguageFetchReducer } from 'Screens/actions';
 import LeftMenu from 'Screens/Components/Menus/PatientLeftMenu/index';
 import LeftMenuMobile from 'Screens/Components/Menus/PatientLeftMenu/mobile';
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
@@ -13,12 +13,18 @@ import Loader from "Screens/Components/Loader/index";
 import { getLanguage } from "translations/index"
 import Pagination from "Screens/Components/Pagination/index";
 import { getAllPictureEval } from 'Screens/Patient/PictureEvaluation/api';
+import Modal from '@material-ui/core/Modal';
+import SymptomQuestions from '../../Components/TimelineComponent/CovidSymptomsField/SymptomQuestions';
 
 class Index extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            AllData: []
+            AllData: [],
+            openFeedback: false,
+            updateFeedback: {},
+            openDetail: true,
+            openDetail: false,
         };
         // new Timer(this.logOutClick.bind(this))
     }
@@ -26,12 +32,41 @@ class Index extends Component {
     componentDidMount = () => {
         getAllPictureEval(this)
     }
+    // Open Feedback Form
+  handleOpFeedback = () => {
+    this.setState({ openFeedback: true });
+  };
+  // Close Feedback Form
+  handleCloseFeedback = () => {
+    this.setState({ openFeedback: false });
+  };
+  // Open See Details Form
+  handleOpenDetail = () => {
+    this.setState({ openDetail: true });
+  };
+  // Close See Details Form
+  handleCloseDetail = () => {
+    this.setState({ openDetail: false });
+  };
 
-    render() {
-        let translate = getLanguage(this.props.stateLanguageType)
-        let {
+  updateEntryState1 = (value, name) => {
+    const state = this.state.updateFeedback;
+    state[name] = value;
+    this.setState({ updateFeedback: state });
+    // this.props.updateEntryState1(value, name);
+  };
 
-        } = translate;
+  handleSubmitFeed = () => {
+    console.log('updateFeedback', this.state.updateFeedback);
+    setTimeout(
+      this.setState({ updateFeedback: {}, openFeedback: false }),
+      6000
+    );
+  };
+
+  render() {
+    let translate = getLanguage(this.props.stateLanguageType);
+    let {} = translate;
 
         return (
             <Grid className={this.props.settings && this.props.settings.setting && this.props.settings.setting.mode && this.props.settings.setting.mode === 'dark' ? "homeBg homeBgDrk" : "homeBg"}>
@@ -92,7 +127,7 @@ class Index extends Component {
                                                             />
                                                             <ul>
                                                                 <li>
-                                                                    <a >
+                                                                <a onClick={this.handleOpenDetail}>
                                                                         <img
                                                                             src={require("assets/images/details.svg")}
                                                                             alt=""
@@ -133,11 +168,7 @@ class Index extends Component {
                                                                 </>}
                                                                 {item.status === "done" && <>
                                                                 <li>
-                                                                    <a
-                                                                        onClick={() => {
-                                                                            // this.updatePrescription("cancel", data._id);
-                                                                        }}
-                                                                    >
+                                                                <a onClick={this.handleOpFeedback}>
                                                                         <img
                                                                             src={require("assets/images/cancel-request.svg")}
                                                                             alt=""
@@ -178,30 +209,145 @@ class Index extends Component {
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                            </Grid>
-                        </Grid>
+                              </Grid>
+            
+              {/* Feedback form open */}
+              <Modal
+                open={this.state.openFeedback}
+                onClose={this.handleCloseFeedback}
+                className={
+                  this.props.settings &&
+                  this.props.settings.setting &&
+                  this.props.settings.setting.mode &&
+                  this.props.settings.setting.mode === 'dark'
+                    ? 'darkTheme nwDiaModel'
+                    : 'nwDiaModel'
+                }
+              >
+                <Grid className="nwDiaCntnt">
+                  <Grid className="nwDiaCntntIner">
+                    <Grid className="nwDiaCourse">
+                      <Grid className="nwDiaCloseBtn">
+                        <a onClick={this.handleCloseFeedback}>
+                          <img
+                            src={require('assets/images/close-search.svg')}
+                            alt=""
+                            title=""
+                          />
+                        </a>
+                      </Grid>
+
+                      <div>
+                        <p>Submit Feedback</p>
+                      </div>
                     </Grid>
+                    <Grid className="symptomSec symptomSec1">
+                      <h3></h3>
+                      <SymptomQuestions
+                        updateEntryState1={(e) =>
+                          this.updateEntryState1(e, 'fast_service')
+                        }
+                        comesFrom="Feedback"
+                        label="Is it fast service?"
+                        value={this.state.updateFeedback?.fast_service}
+                      />
+                      <SymptomQuestions
+                        updateEntryState1={(e) =>
+                          this.updateEntryState1(e, 'doctor_explaination')
+                        }
+                        comesFrom="Feedback"
+                        label="Did you understood the doctor explaination?"
+                        value={this.state.updateFeedback?.doctor_explaination}
+                      />
+                      <SymptomQuestions
+                        updateEntryState1={(e) =>
+                          this.updateEntryState1(e, 'satisfy_with_service')
+                        }
+                        comesFrom="Feedback"
+                        label="Are you satisfied with the service?"
+                        value={this.state.updateFeedback?.satisfy_with_service}
+                      />
+                      <Grid className="infoShwSave3">
+                        <input
+                          type="submit"
+                          value="Submit"
+                          onClick={this.handleSubmitFeed}
+                        />
+                      </Grid>
+                    </Grid>
+                  </Grid>
                 </Grid>
+              </Modal>
+              {/* Feedback Model close */}
+
+              {/* Model setup */}
+              <Modal
+                open={this.state.openDetail}
+                onClose={this.handleCloseDetail}
+                className={
+                  this.props.settings &&
+                  this.props.settings.setting &&
+                  this.props.settings.setting.mode &&
+                  this.props.settings.setting.mode === 'dark'
+                    ? 'prespBoxModel darkTheme'
+                    : 'prespBoxModel'
+                }
+              >
+                <Grid className="prespBoxCntnt">
+                  <Grid className="prespCourse">
+                    <Grid className="prespCloseBtn nwEntrCloseBtnAdd">
+                      <a onClick={this.handleCloseDetail}>
+                        <img
+                          src={require('assets/images/close-search.svg')}
+                          alt=""
+                          title=""
+                        />
+                      </a>
+                    </Grid>
+                    <p>Details</p>
+                    {/* <Grid>
+                      <label>hello</label>
+                    </Grid> */}
+                  </Grid>
+                  <Grid className="detailPrescp">
+                    <Grid className="stndQues">
+                      <Grid>
+                        <span>Added On</span>
+                      </Grid>
+                      <Grid>
+                        <p>Hospital</p>
+                        <p>patient_info</p>
+                        <Grid>
+                          <label>Assigned to</label>
+                        </Grid>
+                        <p>Status</p>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Modal>
+              {/* End of Model setup */}
             </Grid>
-        );
-    }
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+  }
 }
 const mapStateToProps = (state) => {
-    const {
-        stateLoginValueAim,
-        loadingaIndicatoranswerdetail,
-    } = state.LoginReducerAim;
-    const { stateLanguageType } = state.LanguageReducer;
-    const { settings } = state.Settings;
-    return {
-        stateLanguageType,
-        stateLoginValueAim,
-        loadingaIndicatoranswerdetail,
-        settings,
-    };
+  const { stateLoginValueAim, loadingaIndicatoranswerdetail } =
+    state.LoginReducerAim;
+  const { stateLanguageType } = state.LanguageReducer;
+  const { settings } = state.Settings;
+  return {
+    stateLanguageType,
+    stateLoginValueAim,
+    loadingaIndicatoranswerdetail,
+    settings,
+  };
 };
 export default withRouter(
-    connect(mapStateToProps, { LoginReducerAim, LanguageFetchReducer, Settings })(
-        Index
-    )
+  connect(mapStateToProps, { LoginReducerAim, LanguageFetchReducer, Settings })(
+    Index
+  )
 );
