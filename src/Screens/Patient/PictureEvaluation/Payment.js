@@ -76,10 +76,7 @@ function HomePage(props) {
 
     const result = await stripe.createPaymentMethod({
       type: 'card',
-      card: elements.getElement(CardElement),
-      billing_details: {
-        // email: email,
-      },
+      card: elements.getElement(CardElement)
     });
 
     if (result.error) {
@@ -184,7 +181,7 @@ function HomePage(props) {
         {showError}
     {/* <Grid item xs={12} md={6}> */}
     {(props.show2 ) && <div className="payment_sec_extra_ser1">
-        <TextField
+        {/* <TextField
           label={recEmp_Emailaddress}
           id='outlined-email-input'
           helperText={email_rcv_update_reciept}
@@ -195,7 +192,7 @@ function HomePage(props) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           fullWidth
-        />
+        /> */}
            <CardElement options={CARD_ELEMENT_OPTIONS} />
           <div className="sbu_button">
           
