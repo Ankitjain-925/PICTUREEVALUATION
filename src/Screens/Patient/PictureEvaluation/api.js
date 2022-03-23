@@ -55,8 +55,8 @@ export const handleEvalSubmit = (value, current) => {
     } else {
     //     current.setState({ mod1Open: false, show2: true, show1: false })
 
-    if (data.fileattach && data.fileattach.length > 0) {
-        if (data.hospital) {
+    if (current.state.fileattach &&  current.state.fileattach?.length > 0) {
+        // if (data.hospital) {
             if (data.start_date && new Date(new Date() - new Date(data.start_date)).getFullYear() - 1970 <= 130) {
                 if (validateBpAndSugar1(data.warm, 'warm', current)) {
                     if (validateBpAndSugar1(data.size_progress, 'size_progress', current)) {
@@ -74,6 +74,7 @@ export const handleEvalSubmit = (value, current) => {
                                             'image': current.props.stateLoginValueAim.user.image
                                         }
                                         data.patient = { patient }
+                                        data.patient_id = current.props.stateLoginValueAim.user._id
                                         data.fileattach = current.state.fileattach
                                         data.task_name = "Picture evaluation from patient"
                                         data.task_type = "picture_evaluation"
@@ -82,6 +83,7 @@ export const handleEvalSubmit = (value, current) => {
                                         data.priority = 0;
                                         data.archived = false;
                                         data.status = "open";
+                                        data.house_id = "61e68e6bf5dd3e1a503d9dc9";
                                         data.created_at = new Date();
                                         if (!data?.due_on?.date) {
                                             let due_on = data?.due_on || {};
@@ -100,13 +102,17 @@ export const handleEvalSubmit = (value, current) => {
                                             commonHeader(current.props.stateLoginValueAim.token)
                                         )
                                         .then((responce) => {
-                                            current.setState({
-                                        updateEvaluate:{}
-                                            });
+                                            if(responce.data.hassuccessed){
+                                                current.setState({
+                                                    updateEvaluate: responce.data.data
+                                                }, ()=>{
+                                                    console.log('updateEvaluate', current.state.updateEvaluate)
+                                                });
+                                            }
+                                          
                                         })
                                         .catch(function (error) {
                                             console.log(error);
-                                            // this.setState({  })
                                         });
                                         current.setState({ mod1Open: false, show2: true, show1: false })
                                     }
@@ -120,11 +126,11 @@ export const handleEvalSubmit = (value, current) => {
                 current.setState({ errorChrMsg: "Please select valid start date" })  
                 MoveTop();
             }
-        }
-        else{
-            current.setState({ errorChrMsg: "Please select hospital" }) 
-            MoveTop();
-        }
+        // }
+        // else{
+        //     current.setState({ errorChrMsg: "Please select hospital" }) 
+        //     MoveTop();
+        // }
     } else {
         current.setState({ errorChrMsg: "Please upload atleast one Picture for evaluation" })
         MoveTop();
@@ -335,12 +341,6 @@ export const validateBpAndSugar = (value, item, current) => {
     }
 }
 
-//For validate the blood pressure is correct or not
-export const validateBp = (elementValue, type) => {
-    var bpPattern = /^[0-9]+$/;
-    return bpPattern.test(elementValue);
-};
-
 export const FileAttachMulti = (Fileadd, current) => {
     current.setState({
         isfileuploadmulti: true,
@@ -378,4 +378,43 @@ export const getallGroups = (current) => {
             current.setState({ loaderImage: false });
         });
     MoveTop();
+};
+
+export const getAllPictureEval = (current) => {
+    current.setState({ loaderImage: true });
+    axios
+        .post(
+            sitedata.data.path +
+            `/vh/trackrecordsforpatient`,{
+                patient_id: current.props.stateLoginValueAim?.user?._id,
+            },
+            commonHeader(current.props.stateLoginValueAim.token)
+        )
+        .then((responce) => {
+            if (responce.data.hassuccessed && responce.data.data) {
+                current.setState({ AllData: responce.data.data });
+            }
+            current.setState({ loaderImage: false });
+        });
+};
+
+export const saveOnDB = (payment, current) => {
+    current.setState({ loaderImage: true });
+    if(current.state.updateEvaluate._id){
+        axios
+        .put(
+          sitedata.data.path + "/vh/AddTask/" + current.state.updateEvaluate._id,
+          {payment_data: payment, is_payment: true },
+          commonHeader(current.props.stateLoginValueAim.token)
+        )
+        .then((responce) => {
+        current.setState({ loaderImage: false });
+          if (responce.data.hassuccessed) {
+            current.props.history.push('/patient/evaluation-list')
+          }
+        });
+    }
+    else{
+        current.setState({ loaderImage: false });
+    }
 };

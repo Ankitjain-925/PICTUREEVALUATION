@@ -78,7 +78,7 @@ function HomePage(props) {
       type: 'card',
       card: elements.getElement(CardElement),
       billing_details: {
-        email: email,
+        // email: email,
       },
     });
 
@@ -88,10 +88,10 @@ function HomePage(props) {
       const res = await axios.post(sitedata.data.path + "/lms_stripeCheckout/intent", {
         currency: CURRENCY, amount: fromEuroToCent(99), payment_method_types: ['card']});
       // eslint-disable-next-line camelcase
-      console.log('res', res)
+     
       const client_secret = res?.data?.data;
       const PaymentIntent = await stripe
-      .confirmCardPayment(client_secret, {
+      .confirmCardPayment(client_secret.client_secret, {
         payment_method: {
           card:  elements.getElement(CardElement),
         },
@@ -123,7 +123,7 @@ function HomePage(props) {
             );
           },
         });
-  
+        props.saveOnDB(client_secret)
         // let user_token = this.props.stateLoginValueAim.token;
         // axios
         //   .post(

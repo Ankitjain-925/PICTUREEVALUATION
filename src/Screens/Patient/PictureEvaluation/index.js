@@ -34,7 +34,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { GetShowLabel1 } from "Screens/Components/GetMetaData/index.js";
 import SelectByTwo from "Screens/Components/SelectbyTwo/index";
 import SelectField from "Screens/Components/Select/index";
-import { handleEvalSubmit, FileAttachMulti, getallGroups } from "./api"
+import { handleEvalSubmit, FileAttachMulti, getallGroups, saveOnDB } from "./api"
 import { confirmAlert } from "react-confirm-alert"; // Import
 import { OptionList } from "Screens/Login/metadataaction";
 import {
@@ -43,10 +43,6 @@ import {
 const CURRENCY = "USD";
 const STRIPE_PUBLISHABLE = getPublishableKey()
 const stripePromise = loadStripe(STRIPE_PUBLISHABLE);
-
-const options = [{ label: "POSTPRANDIAL", value: "stress" },
-{ label: "EMPTY STOMACH", value: "relaxed" }];
-
 function TabContainer(props) {
     return (
         <Typography component="div" className="tabsCntnts">
@@ -75,7 +71,6 @@ class Index extends Component {
             show2: false,
             show1: false,
             Housesoptions: {},
-            options: options,
             Allsituation: [],
             Allsmoking_status: [],
             activated: false,
@@ -118,6 +113,10 @@ class Index extends Component {
             });
         }
     };
+
+    redirectTolist = ()=>{
+        this.props.history.push('/patient/evaluation-list');
+    }
 
     CancelClick = () => {
         this.setState({ show1: false, show2: false })
@@ -215,18 +214,18 @@ class Index extends Component {
                                                                 <label>Age</label>
                                                             </Grid>
                                                             <Grid>
-                                                                <DateFormat
-                                                                    name="date"
-                                                                    value={this.state.updateEvaluate?.date ?
-                                                                        new Date(this.state.updateEvaluate?.date) :
-                                                                        new Date()
-                                                                    }
-                                                                    max={new Date()}
-                                                                    onChange={(e) => this.updateEntryState1(e, "date")}
-                                                                    date_format={this.props.settings &&
-                                                                        this.props.settings.setting &&
-                                                                        this.props.settings.setting.date_format}
-                                                                />
+                                                            <DateFormat
+                                                                        name="date"
+                                                                        value={this.state.updateEvaluate?.dob ?
+                                                                            new Date(this.state.updateEvaluate?.dob) :
+                                                                            new Date()
+                                                                        }
+                                                                        NotFutureDate={true}
+                                                                        onChange={(e) => this.updateEntryState1(e, "dob")}
+                                                                        date_format={this.props.settings &&
+                                                                            this.props.settings.setting &&
+                                                                            this.props.settings.setting.date_format}
+                                                                    />
                                                             </Grid>
                                                             <Grid item xs={12} md={8}>
                                                                 <Grid>
@@ -346,22 +345,21 @@ class Index extends Component {
                                                                         />
                                                                     </Grid>
                                                                 </Grid> */}
-                                                            {console.log("this.state.Allsituation", this.state.Allsituation)}
                                                             <Grid className="fillDia">
-                                                                <SelectByTwo
-                                                                    name="situation"
-                                                                    label={situation}
-                                                                    options={this.state.Allsituation}
-                                                                    onChange={(e) => this.updateEntryState1(e, "situation")}
-                                                                    value={GetShowLabel1(
-                                                                        this.state.Allsituation,
-                                                                        this.state.updateEvaluate &&
-                                                                        this.state.updateEvaluate.situation &&
-                                                                        this.state.updateEvaluate.situation.value,
-                                                                        this.props.stateLanguageType
-                                                                    )}
-                                                                />
-                                                            </Grid>
+                                                                    <SelectByTwo
+                                                                        name="situation"
+                                                                        label={situation}
+                                                                        options={this.state.Allsituation}
+                                                                        onChange={(e) => this.updateEntryState1(e, "situation")}
+                                                                        value={GetShowLabel1(
+                                                                            this.state.options,
+                                                                            this.state.updateEvaluate &&
+                                                                            this.state.updateEvaluate?.situation &&
+                                                                            this.state.updateEvaluate?.situation?.value,
+                                                                            this.props.stateLanguageType
+                                                                        )}
+                                                                    />
+                                                                </Grid>
 
                                                             <Grid className="bloodpreLb">
                                                                 <label>{smoking_status}</label>
@@ -372,12 +370,12 @@ class Index extends Component {
                                                                     name="select_status"
                                                                     label="Select Status"
                                                                     option={this.state.Allsmoking_status}
-                                                                    onChange={(e) => this.updateEntryState1(e, "select_status")}
+                                                                    onChange={(e) => this.updateEntryState1(e, "smoking_status")}
                                                                     value={GetShowLabel1(
                                                                         this.state.Allsmoking_status,
                                                                         this.state.updateEvaluate &&
-                                                                        this.state.updateEvaluate?.select_status &&
-                                                                        this.state.updateEvaluate?.select_status?.value,
+                                                                        this.state.updateEvaluate?.smoking_status &&
+                                                                        this.state.updateEvaluate?.smoking_status?.value,
                                                                         this.props.stateLanguageType,
                                                                         false,
                                                                         "anamnesis"
@@ -461,8 +459,8 @@ class Index extends Component {
                                                                 <label>Place of Birth</label>
                                                                 <Grid className="cntryDropTop">
                                                                     <Select
-                                                                        value={this.state.updateEvaluate?.birth}
-                                                                        onChange={(e) => this.updateEntryState1(e, "birth")}
+                                                                        value={this.state.updateEvaluate?.country}
+                                                                        onChange={(e) => this.updateEntryState1(e, "country")}
                                                                         options={this.state.selectCountry}
                                                                         placeholder=""
                                                                         isSearchable={true}
@@ -476,8 +474,8 @@ class Index extends Component {
                                                                     <label>Place of residence</label>
                                                                     <Grid className="cntryDropTop">
                                                                         <Select
-                                                                            value={this.state.updateEvaluate?.residence}
-                                                                            onChange={(e) => this.updateEntryState1(e, "residence")}
+                                                                            value={this.state.updateEvaluate?.residenceCountry}
+                                                                            onChange={(e) => this.updateEntryState1(e, "residenceCountry")}
                                                                             options={this.state.selectCountry}
                                                                             placeholder=""
                                                                             isSearchable={true}
@@ -551,7 +549,7 @@ class Index extends Component {
                                                                 fileUpload={(e) => FileAttachMulti(e, this)}
                                                             />
                                                         </Grid>
-                                                        <Grid item xs={12} md={12}>
+                                                        {/* <Grid item xs={12} md={12}>
                                                             <label>Hospital</label>
                                                             <Grid className="cntryDropTop">
 
@@ -565,7 +563,7 @@ class Index extends Component {
                                                                     className="cntryDrop"
                                                                 />
                                                             </Grid>
-                                                        </Grid>
+                                                        </Grid> */}
                                                         {/* <Grid className="fatiqueQues fatiqueQuess1"> */}
                                                         {/* <Grid className="dateSet">
                                                                 <label>When did it start?</label>
@@ -598,17 +596,17 @@ class Index extends Component {
                                                             <Grid className="dateSet">
                                                                 <label>When did it start?</label>
                                                                 <DateFormat
-                                                                    name="date"
-                                                                    value={this.state.updateEvaluate?.start_date ?
-                                                                        new Date(this.state.updateEvaluate?.start_date) :
-                                                                        new Date()
-                                                                    }
-                                                                    onChange={(e) => this.updateEntryState1(e, "start_date")}
-                                                                    date_format={this.props.settings &&
-                                                                        this.props.settings.setting &&
-                                                                        this.props.settings.setting.date_format}
-
-                                                                />
+                                                                        name="date"
+                                                                        value={this.state.updateEvaluate?.start_date ?
+                                                                            new Date(this.state.updateEvaluate?.start_date) :
+                                                                            new Date()
+                                                                        }
+                                                                        onChange={(e) => this.updateEntryState1(e, "start_date")}
+                                                                        date_format={this.props.settings &&
+                                                                            this.props.settings.setting &&
+                                                                            this.props.settings.setting.date_format}
+                                                                            
+                                                                    />
                                                             </Grid>
                                                             <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'warm')} label="Warm?" value={this.state.updateEvaluate?.warm} />
                                                             <FatiqueQuestion updateEntryState1={(e) => this.updateEntryState1(e, 'size_progress')} label="Size progress? " value={this.state.updateEvaluate?.size_progress} />
@@ -674,8 +672,7 @@ class Index extends Component {
                                                 )}
                                             </Grid>)}
                                             <Elements stripe={stripePromise}>
-                                                <Payment redirectTolist={()=>{this.redirectTolist()}} languageType={this.props.stateLanguageType} show1={this.state.show1} show2={this.state.show2} CancelClick={this.CancelClick}
-                                                />
+                                                <Payment redirectTolist={()=>{this.redirectTolist()}} languageType={this.props.stateLanguageType} show1={this.state.show1} show2={this.state.show2} CancelClick={this.CancelClick} saveOnDB={(Payment) => saveOnDB(Payment, this)}/>
                                             </Elements>
                                         </Grid>
 
