@@ -12,6 +12,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import Loader from 'Screens/Components/Loader/index';
 import { getLanguage } from 'translations/index';
 import Pagination from 'Screens/Components/Pagination/index';
+import { getAllPictureEval } from 'Screens/Patient/PictureEvaluation/api';
 import Modal from '@material-ui/core/Modal';
 import SymptomQuestions from '../../Components/TimelineComponent/CovidSymptomsField/SymptomQuestions';
 
@@ -19,6 +20,7 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      AllData: [],
       openFeedback: false,
       updateFeedback: {},
       openDetail: true,
@@ -26,6 +28,10 @@ class Index extends Component {
     };
     // new Timer(this.logOutClick.bind(this))
   }
+
+  componentDidMount = () => {
+    getAllPictureEval(this);
+  };
   // Open Feedback Form
   handleOpFeedback = () => {
     this.setState({ openFeedback: true });
@@ -33,6 +39,12 @@ class Index extends Component {
   // Close Feedback Form
   handleCloseFeedback = () => {
     this.setState({ openFeedback: false });
+  };
+  updateRequestBeforePayment = (data) => {
+    this.props.history.push({
+      pathname: '/patient/picture-evaluation',
+      state: { data: data },
+    });
   };
   // Open See Details Form
   handleOpenDetail = () => {
@@ -86,6 +98,7 @@ class Index extends Component {
       >
         {this.state.loaderImage && <Loader />}
         <Grid className="homeBgIner">
+          {console.log('AllDataAllData', this.state.AllData)}
           <Grid container direction="row" justify="center">
             <Grid item xs={12} md={12}>
               <Grid container direction="row">
@@ -111,378 +124,114 @@ class Index extends Component {
                               <Th>{hospital}</Th>
                               <Th>{assigned_to}</Th>
                               <Th>{status}</Th>
+                              <Th></Th>
+                              <Th></Th>
                             </Tr>
                           </Thead>
                           <Tbody>
-                            {/* {this.state.currentList &&
-                                                    this.state.currentList.length > 0 &&
-                                                    this.state.currentList.map((data, index) => ( */}
-                            <Tr>
-                              <Td>03/03/2022</Td>
-                              <Td>Hopital admin 1</Td>
-                              <Td className="presImg">
-                                <img
-                                  src={require('assets/images/dr1.jpg')}
-                                  alt=""
-                                  title=""
-                                />
-                                Dr. Rupali Gupta
-                              </Td>
-                              <Td className="dotsImgColor">
-                                <span className="revwYelow"></span>
-                                {'Assigned to Doctor'}{' '}
-                              </Td>
-
-                              <Td className="presEditDot scndOptionIner">
-                                <a className="openScndhrf">
-                                  <img
-                                    src={require('assets/images/three_dots_t.png')}
-                                    alt=""
-                                    title=""
-                                    className="openScnd"
-                                  />
-                                  <ul>
-                                    <li>
-                                      <a onClick={this.handleOpenDetail}>
-                                        <img
-                                          src={require('assets/images/details.svg')}
-                                          alt=""
-                                          title=""
-                                        />
-                                        {see_details}
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a
-                                        onClick={() => {
-                                          // this.updatePrescription("cancel", data._id);
-                                        }}
-                                      >
-                                        <img
-                                          src={require('assets/images/cancel-request.svg')}
-                                          alt=""
-                                          title=""
-                                        />
-                                        {edit_request}
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a
-                                        onClick={() => {
-                                          // this.updatePrescription("cancel", data._id);
-                                        }}
-                                      >
-                                        <img
-                                          src={require('assets/images/cancel-request.svg')}
-                                          alt=""
-                                          title=""
-                                        />
-                                        {cancel_request}
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </a>
-                              </Td>
-                            </Tr>
-                            <Tr>
-                              <Td>03/03/2022</Td>
-                              <Td>Hopital admin 1</Td>
-                              <Td className="presImg">Not Assigned</Td>
-                              <Td className="dotsImgColor">
-                                <span className="revwGry"></span>
-                                {'Request Sent'}{' '}
-                              </Td>
-
-                              <Td className="presEditDot scndOptionIner">
-                                <a className="openScndhrf">
-                                  <img
-                                    src={require('assets/images/three_dots_t.png')}
-                                    alt=""
-                                    title=""
-                                    className="openScnd"
-                                  />
-                                  <ul>
-                                    <li>
-                                      <a>
-                                        <img
-                                          src={require('assets/images/details.svg')}
-                                          alt=""
-                                          title=""
-                                        />
-                                        {see_details}
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a
-                                        onClick={() => {
-                                          // this.updatePrescription("cancel", data._id);
-                                        }}
-                                      >
-                                        <img
-                                          src={require('assets/images/cancel-request.svg')}
-                                          alt=""
-                                          title=""
-                                        />
-                                        {edit_request}
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a
-                                        onClick={() => {
-                                          // this.updatePrescription("cancel", data._id);
-                                        }}
-                                      >
-                                        <img
-                                          src={require('assets/images/cancel-request.svg')}
-                                          alt=""
-                                          title=""
-                                        />
-                                        {cancel_request}
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </a>
-                              </Td>
-                            </Tr>
-                            <Tr>
-                              <Td>03/03/2022</Td>
-                              <Td>Hopital admin 1</Td>
-                              <Td className="presImg">
-                                <img
-                                  src={require('assets/images/dr1.jpg')}
-                                  alt=""
-                                  title=""
-                                />
-                                Dr. Rupali Gupta
-                              </Td>
-                              <Td className="dotsImgColor">
-                                <span className="revwGren"></span>
-                                {'Answered'}{' '}
-                              </Td>
-
-                              <Td className="presEditDot scndOptionIner">
-                                <a className="openScndhrf">
-                                  <img
-                                    src={require('assets/images/three_dots_t.png')}
-                                    alt=""
-                                    title=""
-                                    className="openScnd"
-                                  />
-                                  <ul>
-                                    <li>
-                                      <a>
-                                        <img
-                                          src={require('assets/images/details.svg')}
-                                          alt=""
-                                          title=""
-                                        />
-                                        {see_details}
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a onClick={this.handleOpFeedback}>
-                                        <img
-                                          src={require('assets/images/details.svg')}
-                                          alt=""
-                                          title=""
-                                        />
-                                        {give_feedback}
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </a>
-                              </Td>
-                            </Tr>
-                            <Tr>
-                              <Td>03/03/2022</Td>
-                              <Td>Hopital admin 1</Td>
-                              <Td className="presImg">
-                                <img
-                                  src={require('assets/images/dr1.jpg')}
-                                  alt=""
-                                  title=""
-                                />
-                                Dr. Rupali Gupta
-                              </Td>
-                              <Td className="dotsImgColor">
-                                <span className="revwGren"></span>
-                                {'Submit Feedback'}{' '}
-                              </Td>
-
-                              <Td className="presEditDot scndOptionIner">
-                                <a className="openScndhrf">
-                                  <img
-                                    src={require('assets/images/three_dots_t.png')}
-                                    alt=""
-                                    title=""
-                                    className="openScnd"
-                                  />
-                                  <ul>
-                                    <li>
-                                      <a>
-                                        <img
-                                          src={require('assets/images/details.svg')}
-                                          alt=""
-                                          title=""
-                                        />
-                                        {see_details}
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a>
-                                        <img
-                                          src={require('assets/images/details.svg')}
-                                          alt=""
-                                          title=""
-                                        />
-                                        {edit_feedback}
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </a>
-                              </Td>
-                            </Tr>
-
-                            <Tr>
-                              <Td>03/03/2022</Td>
-                              <Td>Hopital admin 1</Td>
-                              <Td className="presImg">
-                                <img
-                                  src={require('assets/images/dr1.jpg')}
-                                  alt=""
-                                  title=""
-                                />
-                                Dr. Rupali Gupta
-                              </Td>
-                              <Td className="dotsImgColor">
-                                <span className="revwRed"></span>
-                                {'Declined'}{' '}
-                              </Td>
-
-                              <Td className="presEditDot scndOptionIner">
-                                <a className="openScndhrf">
-                                  <img
-                                    src={require('assets/images/three_dots_t.png')}
-                                    alt=""
-                                    title=""
-                                    className="openScnd"
-                                  />
-                                  <ul>
-                                    <li>
-                                      <a>
-                                        <img
-                                          src={require('assets/images/details.svg')}
-                                          alt=""
-                                          title=""
-                                        />
-                                        {see_details}
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a
-                                        onClick={() => {
-                                          // this.updatePrescription("cancel", data._id);
-                                        }}
-                                      >
-                                        <img
-                                          src={require('assets/images/cancel-request.svg')}
-                                          alt=""
-                                          title=""
-                                        />
-                                        {edit_request}
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a
-                                        onClick={() => {
-                                          // this.updatePrescription("cancel", data._id);
-                                        }}
-                                      >
-                                        <img
-                                          src={require('assets/images/cancel-request.svg')}
-                                          alt=""
-                                          title=""
-                                        />
-                                        {cancel_request}
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </a>
-                              </Td>
-                            </Tr>
-                            <Tr>
-                              <Td>03/03/2022</Td>
-                              <Td>Hopital admin 1</Td>
-                              <Td className="presImg">
-                                <img
-                                  src={require('assets/images/dr1.jpg')}
-                                  alt=""
-                                  title=""
-                                />
-                                Dr. Rupali Gupta
-                              </Td>
-                              <Td className="dotsImgColor">
-                                <span className="revwYelow"></span>
-                                {'Assigned to Doctor'}{' '}
-                              </Td>
-
-                              <Td className="presEditDot scndOptionIner">
-                                <a className="openScndhrf">
-                                  <img
-                                    src={require('assets/images/three_dots_t.png')}
-                                    alt=""
-                                    title=""
-                                    className="openScnd"
-                                  />
-                                  <ul>
-                                    <li>
-                                      <a>
-                                        <img
-                                          src={require('assets/images/details.svg')}
-                                          alt=""
-                                          title=""
-                                        />
-                                        {see_details}
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a
-                                        onClick={() => {
-                                          // this.updatePrescription("cancel", data._id);
-                                        }}
-                                      >
-                                        <img
-                                          src={require('assets/images/details.svg')}
-                                          alt=""
-                                          title=""
-                                        />
-                                        {edit_request}
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a
-                                        onClick={() => {
-                                          // this.updatePrescription("cancel", data._id);
-                                        }}
-                                      >
-                                        <img
-                                          src={require('assets/images/cancel-request.svg')}
-                                          alt=""
-                                          title=""
-                                        />
-                                        {cancel_request}
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </a>
-                              </Td>
-                            </Tr>
-
-                            {/* ))} */}
+                            {this.state.AllData?.length > 0 &&
+                              this.state.AllData.map((item, index) => (
+                                <Tr>
+                                  <Td>{item.created_at}</Td>
+                                  <Td>{item.task_name}</Td>
+                                  <Td>
+                                    {' '}
+                                    <span
+                                      dangerouslySetInnerHTML={{
+                                        __html: item.treatment_so_far,
+                                      }}
+                                    />
+                                  </Td>
+                                  <Td>
+                                    <span
+                                      dangerouslySetInnerHTML={{
+                                        __html: item.premedication,
+                                      }}
+                                    />
+                                  </Td>
+                                  <Td>
+                                    {!item.is_payment && (
+                                      <span className="err_message">
+                                        Your Payment is pending
+                                      </span>
+                                    )}
+                                  </Td>
+                                  <Td className="presEditDot scndOptionIner">
+                                    <a className="openScndhrf">
+                                      <img
+                                        src={require('assets/images/three_dots_t.png')}
+                                        alt=""
+                                        title=""
+                                        className="openScnd"
+                                      />
+                                      <ul>
+                                        <li>
+                                          <a onClick={this.handleOpenDetail}>
+                                            <img
+                                              src={require('assets/images/details.svg')}
+                                              alt=""
+                                              title=""
+                                            />
+                                            {see_details}
+                                          </a>
+                                        </li>
+                                        {!item.is_payment && (
+                                          <>
+                                            <li>
+                                              <a
+                                                onClick={() => {
+                                                  this.updateRequestBeforePayment(
+                                                    item
+                                                  );
+                                                }}
+                                              >
+                                                <img
+                                                  src={require('assets/images/cancel-request.svg')}
+                                                  alt=""
+                                                  title=""
+                                                />
+                                                {edit_request}
+                                              </a>
+                                            </li>
+                                            <li>
+                                              <a
+                                                onClick={() => {
+                                                  // this.updatePrescription("cancel", data._id);
+                                                }}
+                                              >
+                                                <img
+                                                  src={require('assets/images/cancel-request.svg')}
+                                                  alt=""
+                                                  title=""
+                                                />
+                                                {cancel_request}
+                                              </a>
+                                            </li>
+                                          </>
+                                        )}
+                                        {item.status === 'done' && (
+                                          <>
+                                            <li>
+                                              <a
+                                                onClick={this.handleOpFeedback}
+                                              >
+                                                <img
+                                                  src={require('assets/images/cancel-request.svg')}
+                                                  alt=""
+                                                  title=""
+                                                />
+                                                {give_feedback}
+                                              </a>
+                                            </li>
+                                          </>
+                                        )}
+                                      </ul>
+                                    </a>
+                                  </Td>
+                                </Tr>
+                              ))}
                           </Tbody>
                         </Table>
-                        {/* Model setup for Prescription*/}
-
                         <Grid className="tablePagNum">
                           <Grid container direction="row">
                             <Grid item xs={12} md={6}>
@@ -512,6 +261,7 @@ class Index extends Component {
                   </Grid>
                 </Grid>
               </Grid>
+
               {/* Feedback form open */}
               <Modal
                 open={this.state.openFeedback}

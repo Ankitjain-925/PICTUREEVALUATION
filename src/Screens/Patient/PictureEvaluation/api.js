@@ -17,8 +17,8 @@ export const handleEvalSubmit = (value, current) => {
   if (value == 1) {
     // current.setState({ mod1Open: true, picEval: true })
     if (
-      data.date &&
-      new Date(new Date() - new Date(data.date)).getFullYear() - 1970 <= 130
+      data.dob &&
+      new Date(new Date() - new Date(data.dob)).getFullYear() - 1970 <= 130
     ) {
       if (data.sex) {
         if (validateBpAndSugar(data.rr_systolic, 'systolic', current)) {
@@ -493,12 +493,6 @@ export const validateBpAndSugar = (value, item, current) => {
   }
 };
 
-//For validate the blood pressure is correct or not
-export const validateBp = (elementValue, type) => {
-  var bpPattern = /^[0-9]+$/;
-  return bpPattern.test(elementValue);
-};
-
 export const FileAttachMulti = (Fileadd, current) => {
   current.setState({
     isfileuploadmulti: true,
@@ -530,9 +524,45 @@ export const getallGroups = (current) => {
             });
           }
         });
-        current.setState({ Housesoptions: Housesoptions });
+        MoveTop();
+      }
+    });
+};
+
+export const getAllPictureEval = (current) => {
+  current.setState({ loaderImage: true });
+  axios
+    .post(
+      sitedata.data.path + `/vh/trackrecordsforpatient`,
+      {
+        patient_id: current.props.stateLoginValueAim?.user?._id,
+      },
+      commonHeader(current.props.stateLoginValueAim.token)
+    )
+    .then((responce) => {
+      if (responce.data.hassuccessed && responce.data.data) {
+        current.setState({ AllData: responce.data.data });
       }
       current.setState({ loaderImage: false });
     });
-  MoveTop();
+};
+
+export const saveOnDB = (payment, current) => {
+  current.setState({ loaderImage: true });
+  if (current.state.updateEvaluate._id) {
+    axios
+      .put(
+        sitedata.data.path + '/vh/AddTask/' + current.state.updateEvaluate._id,
+        { payment_data: payment, is_payment: true },
+        commonHeader(current.props.stateLoginValueAim.token)
+      )
+      .then((responce) => {
+        current.setState({ loaderImage: false });
+        if (responce.data.hassuccessed) {
+          current.props.history.push('/patient/evaluation-list');
+        }
+      });
+  } else {
+    current.setState({ loaderImage: false });
+  }
 };

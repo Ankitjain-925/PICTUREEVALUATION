@@ -76,10 +76,7 @@ function HomePage(props) {
 
     const result = await stripe.createPaymentMethod({
       type: 'card',
-      card: elements.getElement(CardElement),
-      billing_details: {
-        email: email,
-      },
+      card: elements.getElement(CardElement)
     });
 
     if (result.error) {
@@ -88,23 +85,23 @@ function HomePage(props) {
       const res = await axios.post(sitedata.data.path + "/lms_stripeCheckout/intent", {
         currency: CURRENCY, amount: fromEuroToCent(99), payment_method_types: ['card']});
       // eslint-disable-next-line camelcase
-      console.log('res', res)
+     
       const client_secret = res?.data?.data;
       const PaymentIntent = await stripe
-      .confirmCardPayment(client_secret, {
+      .confirmCardPayment(client_secret.client_secret, {
         payment_method: {
           card:  elements.getElement(CardElement),
         },
       })
-      if(PaymentIntent.paymentIntent.id === "succeeded"){
+      if(PaymentIntent.paymentIntent.status === "succeeded"){
         confirmAlert({
           customUI: ({ onClose }) => {
             return (
               <div
                 className={
-                  this.props.settings &&
-                    this.props.settings.setting &&
-                    this.props.settings.setting.mode === "dark"
+                 props.setting &&
+                   props.setting.setting &&
+                   props.setting.setting.mode === "dark"
                     ? "dark-confirm react-confirm-alert-body"
                     : "react-confirm-alert-body"
                 }
@@ -123,26 +120,7 @@ function HomePage(props) {
             );
           },
         });
-  
-        // let user_token = this.props.stateLoginValueAim.token;
-        // axios
-        //   .post(
-        //     sitedata.data.path + "/lms_stripeCheckout/saveData",
-        //     {
-        //       user_id: this.props.stateLoginValueAim.user._id,
-        //       userName:
-        //         this.props.stateLoginValueAim.user.first_name + ' ' +
-        //         this.props.stateLoginValueAim.user.last_name,
-        //       userType: this.props.stateLoginValueAim.user.type,
-        //       paymentData: data,
-        //       orderlist: this.state.AllCart,
-        //     },
-        //     commonHeader(user_token)
-        //   )
-        //   .then((res) => {
-        //     props.redirectTolist();
-        //   })
-        //   .catch((err) => { });
+        props.saveOnDB(client_secret)  
       }
       else{
         let translate = getLanguage(props.languageType)
@@ -152,9 +130,9 @@ function HomePage(props) {
             return (
               <div
                 className={
-                  this.props.settings &&
-                    this.props.settings.setting &&
-                    this.props.settings.setting.mode === "dark"
+                 props.setting &&
+                   props.setting.setting &&
+                   props.setting.setting.mode === "dark"
                     ? "dark-confirm react-confirm-alert-body"
                     : "react-confirm-alert-body"
                 }
@@ -184,7 +162,7 @@ function HomePage(props) {
         {showError}
     {/* <Grid item xs={12} md={6}> */}
     {(props.show2 ) && <div className="payment_sec_extra_ser1">
-        <TextField
+        {/* <TextField
           label={recEmp_Emailaddress}
           id='outlined-email-input'
           helperText={email_rcv_update_reciept}
@@ -195,7 +173,7 @@ function HomePage(props) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           fullWidth
-        />
+        /> */}
            <CardElement options={CARD_ELEMENT_OPTIONS} />
           <div className="sbu_button">
           

@@ -34,19 +34,18 @@ import { loadStripe } from '@stripe/stripe-js';
 import { GetShowLabel1 } from 'Screens/Components/GetMetaData/index.js';
 import SelectByTwo from 'Screens/Components/SelectbyTwo/index';
 import SelectField from 'Screens/Components/Select/index';
-import { handleEvalSubmit, FileAttachMulti, getallGroups } from './api';
+import {
+  handleEvalSubmit,
+  FileAttachMulti,
+  getallGroups,
+  saveOnDB,
+} from './api';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import { OptionList } from 'Screens/Login/metadataaction';
 import { GetLanguageDropdown } from 'Screens/Components/GetMetaData/index.js';
 const CURRENCY = 'USD';
 const STRIPE_PUBLISHABLE = getPublishableKey();
 const stripePromise = loadStripe(STRIPE_PUBLISHABLE);
-
-const options = [
-  { label: 'POSTPRANDIAL', value: 'stress' },
-  { label: 'EMPTY STOMACH', value: 'relaxed' },
-];
-
 function TabContainer(props) {
   return (
     <Typography component="div" className="tabsCntnts">
@@ -75,7 +74,6 @@ class Index extends Component {
       show2: false,
       show1: false,
       Housesoptions: {},
-      options: options,
       Allsituation: [],
       Allsmoking_status: [],
       activated: false,
@@ -88,6 +86,16 @@ class Index extends Component {
     this.setState({ selectCountry: npmCountry });
     getallGroups(this);
     this.getMetadata();
+    console.log(
+      'this.props.location?.state?.data',
+      this.props.location?.state?.data
+    );
+    if (this.props.location?.state?.data) {
+      this.setState({
+        updateEvaluate: this.props.location?.state?.data,
+        fileattach: this.props.location?.state?.data?.fileattach,
+      });
+    }
   }
 
   //Get All information Related to Metadata
@@ -117,6 +125,10 @@ class Index extends Component {
         Allsmoking_status: Allsmoking_status,
       });
     }
+  };
+
+  redirectTolist = () => {
+    this.props.history.push('/patient/evaluation-list');
   };
 
   CancelClick = () => {
@@ -258,17 +270,17 @@ class Index extends Component {
                                 </Grid>
                                 <Grid>
                                   <DateFormat
-                                    name="date"
+                                    name="dob"
                                     value={
-                                      this.state.updateEvaluate?.date
+                                      this.state.updateEvaluate?.dob
                                         ? new Date(
-                                            this.state.updateEvaluate?.date
+                                            this.state.updateEvaluate?.dob
                                           )
                                         : new Date()
                                     }
                                     max={new Date()}
                                     onChange={(e) =>
-                                      this.updateEntryState1(e, 'date')
+                                      this.updateEntryState1(e, 'dob')
                                     }
                                     date_format={
                                       this.props.settings &&
@@ -372,48 +384,6 @@ class Index extends Component {
                                     value={this.state.updateEvaluate?.Hba1c}
                                   />
                                 </Grid>
-                                {/* <Grid className="fillDia">
-                                                                    <Grid className="rrSysto">
-                                                                        <Grid>
-                                                                            <label>{date_measure}</label>
-                                                                        </Grid>
-                                                                        <DateFormat
-                                                                            name="date_measured"
-                                                                            value={
-                                                                                this.state.updateEvaluate?.date_measured
-                                                                                    ? new Date(this.state.updateEvaluate?.date_measured)
-                                                                                    : new Date()
-                                                                            }
-                                                                            date_format={this.props.settings &&
-                                                                                this.props.settings.setting &&
-                                                                                this.props.settings.setting.date_format}
-                                                                            onChange={(e) => this.updateEntryState2(e, "date_measured")}
-                                                                        />
-                                                                    </Grid> 
-                                                                </Grid>*/}
-                                {/* <Grid className="fillDia">
-                                                                    <Grid className="rrSysto">
-                                                                        <Grid>
-                                                                            <label>{time_measure}</label>
-                                                                        </Grid>
-                                                                        <TimeFormat
-                                                                            name="time_measured"
-                                                                            value={
-                                                                                this.state.updateEvaluate?.time_measured
-                                                                                    ? new Date(this.state.updateEvaluate?.time_measured)
-                                                                                    : new Date()
-                                                                            }
-                                                                            time_format={this.props.settings &&
-                                                                                this.props.settings.setting &&
-                                                                                this.props.settings.setting.time_format}
-                                                                            onChange={(e) => this.updateEntryState1(e, "time_measured")}
-                                                                        />
-                                                                    </Grid>
-                                                                </Grid> */}
-                                {console.log(
-                                  'this.state.Allsituation',
-                                  this.state.Allsituation
-                                )}
                                 <Grid className="fillDia">
                                   <SelectByTwo
                                     name="situation"
@@ -423,7 +393,7 @@ class Index extends Component {
                                       this.updateEntryState1(e, 'situation')
                                     }
                                     value={GetShowLabel1(
-                                      this.state.Allsituation,
+                                      this.state.options,
                                       this.state.updateEvaluate &&
                                         this.state.updateEvaluate.situation &&
                                         this.state.updateEvaluate.situation
@@ -449,9 +419,9 @@ class Index extends Component {
                                       this.state.Allsmoking_status,
                                       this.state.updateEvaluate &&
                                         this.state.updateEvaluate
-                                          ?.select_status &&
-                                        this.state.updateEvaluate?.select_status
-                                          ?.value,
+                                          ?.smoking_status &&
+                                        this.state.updateEvaluate
+                                          ?.smoking_status?.value,
                                       this.props.stateLanguageType,
                                       false,
                                       'anamnesis'
