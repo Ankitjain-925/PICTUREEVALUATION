@@ -14448,6 +14448,16 @@ label.newrole {
 .symptomSec1 {
   margin-left: 25px;
 }
-.symptomSec1 input{
-    width: 90%!important;
+.symptomSec1 input {
+  width: 90% !important;
+}
+.stndQues1 h2 {
+  font-weight: 800;
+  margin-top: 10px;
+}
+.imageEvalSize img {
+  height: 90px;
+  width: 50%;
+  /* border-radius: 32px; */
+  margin-right: 8px;
 }

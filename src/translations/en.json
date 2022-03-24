@@ -1657,7 +1657,7 @@
     "premedication": "Premedication",
     "image_evaluation": "Image Evaluation",
     "when_did_it_start": "When did it start ?",
-    "pain_level": "Pain level ?",
+    "pain_level": "Pain level",
     "itch": "Itch",
     "size_progress": "Size progress",
     "warm": "Warm",
@@ -1703,6 +1703,11 @@
     "max_Words_limit_exceeds_in": "Max Words limit exceeds in",
     "history_month": "History month",
     "race": "Race",
-    "select_status": "Select Status"
+    "select_status": "Select Status",
+    "body_temp": "Body temperature",
+    "cold": "Cold",
+    "sun_before": "Sun before",
+    "sexual_active": "Sexual Activities",
+    "payment_done": "Payment done"
   }
 }
