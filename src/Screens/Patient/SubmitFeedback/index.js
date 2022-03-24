@@ -16,7 +16,6 @@ import { getAllPictureEval } from 'Screens/Patient/PictureEvaluation/api';
 import Modal from '@material-ui/core/Modal';
 import { getDate } from "Screens/Components/BasicMethod/index";
 import SymptomQuestions from '../../Components/TimelineComponent/CovidSymptomsField/SymptomQuestions';
-import { getDate } from 'Screens/Components/BasicMethod';
 import { S3Image } from 'Screens/Components/GetS3Images/index';
 
 class Index extends Component {
@@ -668,7 +667,7 @@ class Index extends Component {
                             <p>{no}</p>
                           )}
                         </Grid>
-                        <Grid xs={3} md={3}>
+                        <Grid xs={4} md={4}>
                           <label>{size_progress}</label>
 
                           {this.state.showDetails &&
@@ -688,7 +687,7 @@ class Index extends Component {
                             <p>{no}</p>
                           )}
                         </Grid>
-                        <Grid xs={3} md={3}>
+                        <Grid xs={2} md={2}>
                           <label>{pain}</label>
 
                           {this.state.showDetails &&
