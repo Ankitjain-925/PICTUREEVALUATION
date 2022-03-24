@@ -60,7 +60,18 @@ class Index extends Component {
 
   render() {
     let translate = getLanguage(this.props.stateLanguageType);
-    let {} = translate;
+    let {
+      evaluation_request,
+      added_on,
+      hospital,
+      assigned_to,
+      status,
+      see_details,
+      edit_request,
+      edit_feedback,
+      cancel_request,
+      give_feedback,
+    } = translate;
 
     return (
       <Grid
@@ -85,7 +96,7 @@ class Index extends Component {
                   <Grid className="docsOpinion">
                     <Grid container direction="row" className="docsOpinLbl">
                       <Grid item xs={12} md={6}>
-                        <label>{'Evaluation Request'}</label>
+                        <label>{evaluation_request}</label>
                       </Grid>
                       {/* <Grid item xs={12} md={6} className="docsOpinRght">
                                                 <a onClick={this.handlePicEval}>+ {New} {"Picture Evaluation"}</a>
@@ -96,10 +107,10 @@ class Index extends Component {
                         <Table>
                           <Thead>
                             <Tr>
-                              <Th>{'Added On'}</Th>
-                              <Th>{'Hospital'}</Th>
-                              <Th>{'Assigned to'}</Th>
-                              <Th>{'Status'}</Th>
+                              <Th>{added_on}</Th>
+                              <Th>{hospital}</Th>
+                              <Th>{assigned_to}</Th>
+                              <Th>{status}</Th>
                             </Tr>
                           </Thead>
                           <Tbody>
@@ -138,7 +149,7 @@ class Index extends Component {
                                           alt=""
                                           title=""
                                         />
-                                        {'See Details'}
+                                        {see_details}
                                       </a>
                                     </li>
                                     <li>
@@ -152,7 +163,7 @@ class Index extends Component {
                                           alt=""
                                           title=""
                                         />
-                                        {'Edit Request'}
+                                        {edit_request}
                                       </a>
                                     </li>
                                     <li>
@@ -166,7 +177,7 @@ class Index extends Component {
                                           alt=""
                                           title=""
                                         />
-                                        {'Cancel Request'}
+                                        {cancel_request}
                                       </a>
                                     </li>
                                   </ul>
@@ -198,7 +209,7 @@ class Index extends Component {
                                           alt=""
                                           title=""
                                         />
-                                        {'See Details'}
+                                        {see_details}
                                       </a>
                                     </li>
                                     <li>
@@ -212,7 +223,7 @@ class Index extends Component {
                                           alt=""
                                           title=""
                                         />
-                                        {'Edit Request'}
+                                        {edit_request}
                                       </a>
                                     </li>
                                     <li>
@@ -226,7 +237,7 @@ class Index extends Component {
                                           alt=""
                                           title=""
                                         />
-                                        {'Cancel Request'}
+                                        {cancel_request}
                                       </a>
                                     </li>
                                   </ul>
@@ -265,7 +276,7 @@ class Index extends Component {
                                           alt=""
                                           title=""
                                         />
-                                        {'See Details'}
+                                        {see_details}
                                       </a>
                                     </li>
                                     <li>
@@ -275,7 +286,7 @@ class Index extends Component {
                                           alt=""
                                           title=""
                                         />
-                                        {'Give feedback'}
+                                        {give_feedback}
                                       </a>
                                     </li>
                                   </ul>
@@ -314,7 +325,7 @@ class Index extends Component {
                                           alt=""
                                           title=""
                                         />
-                                        {'See Details'}
+                                        {see_details}
                                       </a>
                                     </li>
                                     <li>
@@ -324,7 +335,7 @@ class Index extends Component {
                                           alt=""
                                           title=""
                                         />
-                                        {'Edit feedback'}
+                                        {edit_feedback}
                                       </a>
                                     </li>
                                   </ul>
@@ -364,7 +375,7 @@ class Index extends Component {
                                           alt=""
                                           title=""
                                         />
-                                        {'See Details'}
+                                        {see_details}
                                       </a>
                                     </li>
                                     <li>
@@ -378,7 +389,7 @@ class Index extends Component {
                                           alt=""
                                           title=""
                                         />
-                                        {'Edit Request'}
+                                        {edit_request}
                                       </a>
                                     </li>
                                     <li>
@@ -392,7 +403,7 @@ class Index extends Component {
                                           alt=""
                                           title=""
                                         />
-                                        {'Cancel Request'}
+                                        {cancel_request}
                                       </a>
                                     </li>
                                   </ul>
@@ -431,7 +442,7 @@ class Index extends Component {
                                           alt=""
                                           title=""
                                         />
-                                        {'See Details'}
+                                        {see_details}
                                       </a>
                                     </li>
                                     <li>
@@ -445,7 +456,7 @@ class Index extends Component {
                                           alt=""
                                           title=""
                                         />
-                                        {'Edit Request'}
+                                        {edit_request}
                                       </a>
                                     </li>
                                     <li>
@@ -459,7 +470,7 @@ class Index extends Component {
                                           alt=""
                                           title=""
                                         />
-                                        {'Cancel Request'}
+                                        {cancel_request}
                                       </a>
                                     </li>
                                   </ul>
