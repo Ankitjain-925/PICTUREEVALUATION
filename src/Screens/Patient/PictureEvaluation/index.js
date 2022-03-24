@@ -83,6 +83,10 @@ class Index extends Component {
         this.setState({ selectCountry: npmCountry });
         getallGroups(this);
         this.getMetadata();
+        console.log('this.props.location?.state?.data', this.props.location?.state?.data)
+        if(this.props.location?.state?.data){
+            this.setState({ updateEvaluate: this.props.location?.state?.data, fileattach: this.props.location?.state?.data?.fileattach})
+        }
     }
 
     //Get All information Related to Metadata
@@ -672,7 +676,7 @@ class Index extends Component {
                                                 )}
                                             </Grid>)}
                                             <Elements stripe={stripePromise}>
-                                                <Payment redirectTolist={()=>{this.redirectTolist()}} languageType={this.props.stateLanguageType} show1={this.state.show1} show2={this.state.show2} CancelClick={this.CancelClick} saveOnDB={(Payment) => saveOnDB(Payment, this)}/>
+                                                <Payment setting={this.props.setting} redirectTolist={()=>{this.redirectTolist()}} languageType={this.props.stateLanguageType} show1={this.state.show1} show2={this.state.show2} CancelClick={this.CancelClick} saveOnDB={(Payment) => saveOnDB(Payment, this)}/>
                                             </Elements>
                                         </Grid>
 

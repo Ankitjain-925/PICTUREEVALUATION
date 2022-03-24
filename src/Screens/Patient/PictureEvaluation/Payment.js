@@ -93,15 +93,15 @@ function HomePage(props) {
           card:  elements.getElement(CardElement),
         },
       })
-      if(PaymentIntent.paymentIntent.id === "succeeded"){
+      if(PaymentIntent.paymentIntent.status === "succeeded"){
         confirmAlert({
           customUI: ({ onClose }) => {
             return (
               <div
                 className={
-                  this.props.settings &&
-                    this.props.settings.setting &&
-                    this.props.settings.setting.mode === "dark"
+                 props.setting &&
+                   props.setting.setting &&
+                   props.setting.setting.mode === "dark"
                     ? "dark-confirm react-confirm-alert-body"
                     : "react-confirm-alert-body"
                 }
@@ -120,26 +120,7 @@ function HomePage(props) {
             );
           },
         });
-        props.saveOnDB(client_secret)
-        // let user_token = this.props.stateLoginValueAim.token;
-        // axios
-        //   .post(
-        //     sitedata.data.path + "/lms_stripeCheckout/saveData",
-        //     {
-        //       user_id: this.props.stateLoginValueAim.user._id,
-        //       userName:
-        //         this.props.stateLoginValueAim.user.first_name + ' ' +
-        //         this.props.stateLoginValueAim.user.last_name,
-        //       userType: this.props.stateLoginValueAim.user.type,
-        //       paymentData: data,
-        //       orderlist: this.state.AllCart,
-        //     },
-        //     commonHeader(user_token)
-        //   )
-        //   .then((res) => {
-        //     props.redirectTolist();
-        //   })
-        //   .catch((err) => { });
+        props.saveOnDB(client_secret)  
       }
       else{
         let translate = getLanguage(props.languageType)
@@ -149,9 +130,9 @@ function HomePage(props) {
             return (
               <div
                 className={
-                  this.props.settings &&
-                    this.props.settings.setting &&
-                    this.props.settings.setting.mode === "dark"
+                 props.setting &&
+                   props.setting.setting &&
+                   props.setting.setting.mode === "dark"
                     ? "dark-confirm react-confirm-alert-body"
                     : "react-confirm-alert-body"
                 }

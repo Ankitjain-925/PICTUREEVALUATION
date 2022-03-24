@@ -40,6 +40,12 @@ class Index extends Component {
   handleCloseFeedback = () => {
     this.setState({ openFeedback: false });
   };
+  updateRequestBeforePayment=(data)=>{
+    this.props.history.push({
+      pathname: '/patient/picture-evaluation',
+      state: { data: data }
+    })
+  }
   // Open See Details Form
   handleOpenDetail = () => {
     this.setState({ openDetail: true });
@@ -136,11 +142,11 @@ class Index extends Component {
                                                                         {"See Details"}
                                                                     </a>
                                                                 </li>
-                                                                {item.status !== "done" && <> 
+                                                                {!item.is_payment && <> 
                                                                 <li>
                                                                     <a
                                                                         onClick={() => {
-                                                                            // this.updatePrescription("cancel", data._id);
+                                                                            this.updateRequestBeforePayment(item);
                                                                         }}
                                                                     >
                                                                         <img
