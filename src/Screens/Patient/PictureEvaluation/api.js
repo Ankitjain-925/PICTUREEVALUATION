@@ -4,217 +4,168 @@ import { commonHeader, commonCometHeader } from 'component/CommonHeader/index';
 import { getLanguage } from 'translations/index';
 
 export const handleEvalSubmit = (value, current) => {
-  let translate = getLanguage(current.props.stateLanguageType);
-  let {
-    please_select_gender,
-    valid_age_between,
-    valid_date,
-    select_hospital,
-    atleast_one_picture,
-  } = translate;
   let data = {};
   data = current.state.updateEvaluate;
   if (value == 1) {
-    // current.setState({ mod1Open: true, picEval: true })
-    if (
-      data.dob &&
-      new Date(new Date() - new Date(data.dob)).getFullYear() - 1970 <= 130
-    ) {
-      if (data.sex) {
-        if (validateBpAndSugar(data.rr_systolic, 'systolic', current)) {
-          if (validateBpAndSugar(data.rr_diastolic, 'diastolic', current)) {
-            if (validateBpAndSugar(data.blood_sugar, 'blood_sugar', current)) {
-              if (validateBpAndSugar(data.Hba1c, 'Hba1c', current)) {
-                if (validateBpAndSugar(data.situation, 'situation', current)) {
-                  if (
-                    validateBpAndSugar(
-                      data.select_status,
-                      'smoking_status',
-                      current
-                    )
-                  ) {
-                    if (
-                      validateBpAndSugar(data.allergies, 'allergies', current)
-                    ) {
-                      if (
-                        validateBpAndSugar(
-                          data.family_history,
-                          'family_history',
-                          current
-                        )
-                      ) {
-                        if (
-                          validateBpAndSugar(
-                            data.treatment_so_far,
-                            'treatment_so_far',
-                            current
-                          )
-                        ) {
-                          if (
-                            validateBpAndSugar(data.birth, 'country', current)
-                          ) {
-                            if (
-                              validateBpAndSugar(
-                                data.residence,
-                                'residenceCountry',
-                                current
-                              )
-                            ) {
-                              if (
-                                validateBpAndSugar(data.race, 'race', current)
-                              ) {
-                                if (
-                                  validateBpAndSugar(
-                                    data.history_month,
-                                    'history_month',
-                                    current
-                                  )
-                                ) {
-                                  if (
-                                    validateBpAndSugar(
-                                      data.medical_precondition,
-                                      'medical_precondition',
-                                      current
-                                    )
-                                  ) {
-                                    if (
-                                      validateBpAndSugar(
-                                        data.premedication,
-                                        'premedication',
-                                        current
-                                      )
-                                    ) {
-                                      current.setState({
-                                        mod1Open: true,
-                                        picEval: true,
-                                      });
-                                    }
+      // current.setState({ mod1Open: true, picEval: true })
+      if (data.dob && new Date(new Date() - new Date(data.dob)).getFullYear() - 1970 <= 130) {
+          if (data.sex) {
+              if (validateBpAndSugar(data.rr_systolic, 'systolic', current)) {
+                  if (validateBpAndSugar(data.rr_diastolic, 'diastolic', current)) {
+                      if (validateBpAndSugar(data.blood_sugar, 'blood_sugar', current)) {
+                          if (validateBpAndSugar(data.Hba1c, 'Hba1c', current)) {
+                              if (validateBpAndSugar(data.situation, 'situation', current)) {
+                                  if (validateBpAndSugar(data.smoking_status, 'smoking_status', current)) {
+                                      if (validateBpAndSugar(data.allergies, 'allergies', current)) {
+                                          if (validateBpAndSugar(data.family_history, 'family_history', current)) {
+                                              if (validateBpAndSugar(data.treatment_so_far, 'treatment_so_far', current)) {
+                                                  if (validateBpAndSugar(data.country, 'country', current)) {
+                                                      if (validateBpAndSugar(data.residenceCountry, 'residenceCountry', current)) {
+                                                          if (validateBpAndSugar(data.race, 'race', current)) {
+                                                              if (validateBpAndSugar(data.history_month, 'history_month', current)) {
+                                                                  if (validateBpAndSugar(data.medical_precondition, 'medical_precondition', current)) {
+                                                                      if (validateBpAndSugar(data.premedication, 'premedication', current)) {
+                                                                          current.setState({ mod1Open: true, picEval: true })
+                                                                      }
+                                                                  }
+                                                              }
+                                                          }
+                                                      }
+                                                  }
+                                              }
+                                          }
+                                      }
                                   }
-                                }
                               }
-                            }
                           }
-                        }
                       }
-                    }
                   }
-                }
               }
-            }
           }
-        }
-      } else {
-        current.setState({ errorChrMsg: please_select_gender });
-        MoveTop();
-      }
-    } else {
-      current.setState({
-        errorChrMsg: valid_age_between,
-      });
-      MoveTop();
-    }
-  } else {
-    //     current.setState({ mod1Open: false, show2: true, show1: false })
+          else {
+              current.setState({ errorChrMsg: "Please select Gender" })
+              MoveTop();
 
-    if (data.fileattach && data.fileattach.length > 0) {
-      if (data.hospital) {
-        if (
-          data.start_date &&
-          new Date(new Date() - new Date(data.start_date)).getFullYear() -
-            1970 <=
-            130
-        ) {
-          if (validateBpAndSugar1(data.warm, 'warm', current)) {
-            if (
-              validateBpAndSugar1(data.size_progress, 'size_progress', current)
-            ) {
-              if (validateBpAndSugar1(data.itch, 'itch', current)) {
-                if (validateBpAndSugar1(data.pain, 'pain', current)) {
-                  if (
-                    validateBpAndSugar1(data.body_temp, 'body_temp', current)
-                  ) {
-                    if (
-                      validateBpAndSugar1(
-                        data.sexual_active,
-                        'sexual_active',
-                        current
-                      )
-                    ) {
-                      current.setState({ errorChrMsg: '' });
-                      var patient = {
-                        first_name:
-                          current.props.stateLoginValueAim.user.first_name,
-                        last_name:
-                          current.props.stateLoginValueAim.user.last_name,
-                        alies_id:
-                          current.props.stateLoginValueAim.user.alies_id,
-                        profile_id:
-                          current.props.stateLoginValueAim.user.profile_id,
-                        user_id: current.props.stateLoginValueAim.user._id,
-                        image: current.props.stateLoginValueAim.user.image,
-                      };
-                      data.patient = { patient };
-                      data.fileattach = current.state.fileattach;
-                      data.task_name = 'Picture evaluation from patient';
-                      data.task_type = 'picture_evaluation';
-                      data.is_payment = 'false';
-                      data.done_on = '';
-                      data.priority = 0;
-                      data.archived = false;
-                      data.status = 'open';
-                      data.created_at = new Date();
-                      if (!data?.due_on?.date) {
-                        let due_on = data?.due_on || {};
-                        due_on['date'] = new Date();
-                        data.due_on = due_on;
-                      }
-                      if (!data?.due_on?.time) {
-                        let due_on = data?.due_on || {};
-                        due_on['time'] = new Date();
-                        data.due_on = due_on;
-                      }
-                      axios
-                        .post(
-                          sitedata.data.path + '/vh/AddTask',
-                          data,
-                          commonHeader(current.props.stateLoginValueAim.token)
-                        )
-                        .then((responce) => {
-                          current.setState({
-                            updateEvaluate: {},
-                          });
-                        })
-                        .catch(function (error) {
-                          console.log(error);
-                          // this.setState({  })
-                        });
-                      current.setState({
-                        mod1Open: false,
-                        show2: true,
-                        show1: false,
-                      });
-                    }
-                  }
-                }
-              }
-            }
           }
-        } else {
-          current.setState({ errorChrMsg: valid_date });
-          MoveTop();
-        }
-      } else {
-        current.setState({ errorChrMsg: select_hospital });
-        MoveTop();
       }
-    } else {
-      current.setState({
-        errorChrMsg: atleast_one_picture,
-      });
-      MoveTop();
-    }
+      else {
+          current.setState({ errorChrMsg: "Please select valid age, Age must be between 0 to 130" })
+          MoveTop();
+      }
+
+  } else {
+      //     current.setState({ mod1Open: false, show2: true, show1: false })
+
+      if (current.state.fileattach && current.state.fileattach?.length > 0) {
+          // if (data.hospital) {
+          if (data.start_date && new Date(new Date() - new Date(data.start_date)).getFullYear() - 1970 <= 130) {
+              if (validateBpAndSugar1(data.warm, 'warm', current)) {
+                  if (validateBpAndSugar1(data.size_progress, 'size_progress', current)) {
+                      if (validateBpAndSugar1(data.itch, 'itch', current)) {
+                          if (validateBpAndSugar1(data.pain, 'pain', current)) {
+                              if (validateBpAndSugar1(data.body_temp, 'body_temp', current)) {
+                                  if (validateBpAndSugar1(data.sexual_active, 'sexual_active', current)) {
+                                      current.setState({ errorChrMsg: '' })
+
+                                      if (data?._id) {
+                                          axios
+                                              .put(
+                                                  sitedata.data.path + "/vh/AddTask/" + data._id,
+                                                  data,
+                                                  commonHeader(current.props.stateLoginValueAim.token)
+                                              )
+                                              .then((responce) => {
+                                                  if (responce.data.hassuccessed) {
+                                                      current.setState({
+                                                          updateEvaluate: data
+                                                      }, () => {
+                                                          console.log('updateEvaluate', current.state.updateEvaluate)
+                                                      });
+                                                  }
+
+                                              })
+                                              .catch(function (error) {
+                                                  console.log(error);
+                                              });
+                                      }
+                                      else {
+                                          var patient = {
+                                              'first_name': current.props.stateLoginValueAim.user.first_name,
+                                              'last_name': current.props.stateLoginValueAim.user.last_name,
+                                              'alies_id': current.props.stateLoginValueAim.user.alies_id,
+                                              'profile_id': current.props.stateLoginValueAim.user.profile_id,
+                                              'user_id': current.props.stateLoginValueAim.user._id,
+                                              'image': current.props.stateLoginValueAim.user.image
+                                          }
+                                          data.patient = { patient }
+                                          data.patient_id = current.props.stateLoginValueAim.user._id
+                                          data.fileattach = current.state.fileattach
+                                          data.task_name = "Picture evaluation from patient"
+                                          data.task_type = "picture_evaluation"
+                                          data.is_payment = "false"
+                                          data.done_on = "";
+                                          data.priority = 0;
+                                          data.archived = false;
+                                          data.status = "open";
+                                          data.house_id = "60fabfe5b3394533f7f9a6dc-1639551688707";
+                                          data.created_at = new Date();
+                                          if (!data?.due_on?.date) {
+                                              let due_on = data?.due_on || {};
+                                              due_on['date'] = new Date()
+                                              data.due_on = due_on;
+                                          }
+                                          if (!data?.due_on?.time) {
+                                              let due_on = data?.due_on || {};
+                                              due_on['time'] = new Date()
+                                              data.due_on = due_on;
+                                          }
+                                          axios
+                                              .post(
+                                                  sitedata.data.path + "/vh/AddTask",
+                                                  data,
+                                                  commonHeader(current.props.stateLoginValueAim.token)
+                                              )
+                                              .then((responce) => {
+                                                  if (responce.data.hassuccessed) {
+                                                      current.setState({
+                                                          updateEvaluate: responce.data.data
+                                                      }, () => {
+                                                          console.log('updateEvaluate', current.state.updateEvaluate)
+                                                      });
+                                                  }
+
+                                              })
+                                              .catch(function (error) {
+                                                  console.log(error);
+                                              });
+                                      }
+
+                                      current.setState({ mod1Open: false, show2: true, show1: false })
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+          else {
+              current.setState({ errorChrMsg: "Please select valid start date" })
+              MoveTop();
+          }
+          // }
+          // else{
+          //     current.setState({ errorChrMsg: "Please select hospital" }) 
+          //     MoveTop();
+          // }
+      } else {
+          current.setState({ errorChrMsg: "Please upload atleast one Picture for evaluation" })
+          MoveTop();
+      }
+
+
   }
-};
+}
+
 
 export const MoveTop = () => {
   window.scroll({
@@ -265,7 +216,7 @@ export const validateBpAndSugar1 = (value, item, current) => {
       current.setState({ errorChrMsg: enter_body_temp });
       MoveTop();
       return false;
-    } else if (value > 96 && value < 105) {
+    } else if (value < 96 || value > 105) {
       current.setState({ errorChrMsg: valid_body_temp });
       MoveTop();
       return false;
@@ -501,33 +452,6 @@ export const FileAttachMulti = (Fileadd, current) => {
   });
 };
 
-export const getallGroups = (current) => {
-  current.setState({ loaderImage: true });
-  axios
-    .get(
-      sitedata.data.path + `/admin/GetHintinstitute`,
-      commonHeader(current.props.stateLoginValueAim.token)
-    )
-    .then((responce) => {
-      if (responce.data.hassuccessed && responce.data.data) {
-        var Housesoptions = [];
-        responce.data.data.map((data) => {
-          if (data?.institute_groups && data?.institute_groups?.length > 0) {
-            data.institute_groups.map((data1) => {
-              data1.houses.map((data2) => {
-                Housesoptions.push({
-                  group_name: data2.house_name,
-                  label: data2.house_name,
-                  value: data2._id,
-                });
-              });
-            });
-          }
-        });
-        MoveTop();
-      }
-    });
-};
 
 export const getAllPictureEval = (current) => {
   current.setState({ loaderImage: true });
