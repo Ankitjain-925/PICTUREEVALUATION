@@ -77,6 +77,7 @@ class Index extends Component {
       Allsmoking_status: [],
       activated: false,
       deactivated: false,
+      is_payment: false
     };
   }
 
@@ -85,14 +86,12 @@ class Index extends Component {
     this.setState({ selectCountry: npmCountry });
     // getallGroups(this);
     this.getMetadata();
-    console.log(
-      'this.props.location?.state?.data',
-      this.props.location?.state?.data
-    );
+   
     if (this.props.location?.state?.data) {
       this.setState({
         updateEvaluate: this.props.location?.state?.data,
         fileattach: this.props.location?.state?.data?.fileattach,
+        is_payment: this.props.location?.state?.data?.is_payment,
       });
     }
   }
@@ -159,7 +158,6 @@ class Index extends Component {
     var state = this.state.updateEvaluate;
     if (name == 'house_id') {
       state[name] = value.value;
-      console.log('state', state);
     } else {
       state[name] = value;
     }
@@ -339,17 +337,22 @@ class Index extends Component {
                                 <Grid className="bloodpreLb">
                                   <label>{blood_pressure}</label>
                                 </Grid>
-                                <Grid className="fillDia">
-                                  <MMHG
-                                    name="rr_systolic"
-                                    Unit="mmHg"
-                                    label={rr_systolic}
-                                    onChange={(e) => this.updateEntryState2(e)}
-                                    value={
-                                      this.state.updateEvaluate?.rr_systolic
-                                    }
-                                  />
+                                <Grid container direction="row" spacing="1">
+                                <Grid item md={6} sm={6}>
+                                    <Grid className="fillDia">
+                                    <MMHG
+                                        name="rr_systolic"
+                                        Unit="mmHg"
+                                        label={rr_systolic}
+                                        onChange={(e) => this.updateEntryState2(e)}
+                                        value={
+                                        this.state.updateEvaluate?.rr_systolic
+                                        }
+                                    />
+                                    </Grid>
                                 </Grid>
+                             
+                               <Grid item md={6} sm={6}>
                                 <Grid className="fillDia">
                                   <MMHG
                                     name="rr_diastolic"
@@ -361,20 +364,26 @@ class Index extends Component {
                                     }
                                   />
                                 </Grid>
+                            </Grid>
+                            </Grid>
                                 <Grid className="bloodpreLb">
                                   <label>{diabetes}</label>
                                 </Grid>
-                                <Grid className="fillDia">
-                                  <MMHG
-                                    name="blood_sugar"
-                                    Unit="mg/dl"
-                                    label={blood_sugar}
-                                    onChange={(e) => this.updateEntryState2(e)}
-                                    value={
-                                      this.state.updateEvaluate?.blood_sugar
-                                    }
-                                  />
+                                <Grid container direction="row" spacing="1">
+                                <Grid item md={6} sm={6}>
+                                    <Grid className="fillDia">
+                                    <MMHG
+                                        name="blood_sugar"
+                                        Unit="mg/dl"
+                                        label={blood_sugar}
+                                        onChange={(e) => this.updateEntryState2(e)}
+                                        value={
+                                        this.state.updateEvaluate?.blood_sugar
+                                        }
+                                    />
+                                    </Grid>
                                 </Grid>
+                                <Grid item md={6} sm={6}>
                                 <Grid className="fillDia">
                                   <MMHG
                                     name="Hba1c"
@@ -383,6 +392,8 @@ class Index extends Component {
                                     onChange={(e) => this.updateEntryState2(e)}
                                     value={this.state.updateEvaluate?.Hba1c}
                                   />
+                                </Grid>
+                                </Grid>
                                 </Grid>
                                 <Grid className="fillDia">
                                   <SelectByTwo
@@ -406,6 +417,8 @@ class Index extends Component {
                                 <Grid className="bloodpreLb">
                                   <label>{smoking_status}</label>
                                 </Grid>
+                                <Grid container direction="row" spacing="1">
+                                <Grid item md={4} sm={4}>
                                 <Grid className="fillDia">
                                   <SelectField
                                     isSearchable={true}
@@ -428,11 +441,12 @@ class Index extends Component {
                                     )}
                                   />
                                 </Grid>
+                                </Grid>
+                                <Grid item md={4} sm={4}>
                                 {(!this.state.updateEvaluate?.smoking_status ||
                                   (this.state.updateEvaluate?.smoking_status &&
                                     this.state.updateEvaluate?.smoking_status
                                       ?.value !== 'Never_smoked')) && (
-                                  <div>
                                     <Grid className="fillDia">
                                       <Grid className="rrSysto">
                                         <Grid>
@@ -463,7 +477,16 @@ class Index extends Component {
                                           }
                                         />
                                       </Grid>
-                                      <Grid className="rrSysto">
+                                    </Grid>
+                                )}
+                                </Grid>
+                                <Grid item md={4} sm={4}>
+                                {(!this.state.updateEvaluate?.smoking_status ||
+                                  (this.state.updateEvaluate?.smoking_status &&
+                                    this.state.updateEvaluate?.smoking_status
+                                      ?.value !== 'Never_smoked')) && (
+                                    <Grid className="fillDia">
+                                  <Grid className="rrSysto">
                                         <Grid>
                                           <label>
                                             {until} {when}
@@ -494,9 +517,9 @@ class Index extends Component {
                                         />
                                       </Grid>
                                     </Grid>
-                                  </div>
-                                )}
-
+                                      )}
+                                </Grid>
+                            </Grid>
                                 <Grid className="fillDiaAll">
                                   <label>{allergies}</label>
                                   <NotesEditor
@@ -538,8 +561,8 @@ class Index extends Component {
                                     }
                                   />
                                 </Grid>
-
-                                <Grid item xs={12} md={12}>
+                                <Grid container direction="row" spacing="1">
+                                <Grid item xs={6} md={6}>
                                   <label>{place_of_birth}</label>
                                   <Grid className="cntryDropTop">
                                   <Select
@@ -553,8 +576,8 @@ class Index extends Component {
                                     />
                                   </Grid>
                                 </Grid>
-                                <Grid item xs={12} md={12}>
-                                  <Grid className="fillDiaSection">
+                                <Grid item xs={6} md={6}>
+                                  <Grid>
                                     <label>{place_of_residence}</label>
                                     <Grid className="cntryDropTop">
                                     <Select
@@ -568,6 +591,7 @@ class Index extends Component {
                                     />
                                     </Grid>
                                   </Grid>
+                                </Grid>
                                 </Grid>
                                 <Grid className="fillDiaAll fillDiaSection">
                                   <label>{phenotyp_race}</label>
@@ -639,8 +663,8 @@ class Index extends Component {
                                   // cur_one={this.props.cur_one}
                                   attachfile={
                                     this.state.updateEvaluate &&
-                                    this.state.updateEvaluate?.attachfile
-                                      ? this.state.updateEvaluate?.attachfile
+                                    this.state.updateEvaluate?.fileattach
+                                      ? this.state.updateEvaluate?.fileattach
                                       : []
                                   }
                                   name="UploadTrackImageMulti"
@@ -739,6 +763,7 @@ class Index extends Component {
                                     className={
                                       this.state.forError ? 'setRedColor' : ''
                                     }
+                                    value={this.state.updateEvaluate?.body_temp}
                                   ></input>
                                 </Grid>
                                 <Grid className="textFieldArea1">
@@ -748,6 +773,7 @@ class Index extends Component {
                                     placeholder="0"
                                     name="sun_before"
                                     onChange={(e) => this.updateEntryState2(e)}
+                                    value={this.state.updateEvaluate?.sun_before}
                                   ></input>
                                 </Grid>
                                 <Grid className="textFieldArea1">
@@ -757,6 +783,7 @@ class Index extends Component {
                                     placeholder="0"
                                     name="cold"
                                     onChange={(e) => this.updateEntryState2(e)}
+                                    value={this.state.updateEvaluate?.cold}
                                   ></input>
                                 </Grid>
                                 <Grid className="fillDiaAll">
@@ -784,6 +811,7 @@ class Index extends Component {
                           )}
                         </Grid>
                       )}
+                      {this.state.updateEvaluate?.is_payment === false && (
                       <Elements stripe={stripePromise}>
                         <Payment
                           redirectTolist={() => {
@@ -796,6 +824,7 @@ class Index extends Component {
                           saveOnDB={(payment)=>saveOnDB(payment, this)}
                         />
                       </Elements>
+                      )}
                     </Grid>
                   </Grid>
 

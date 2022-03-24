@@ -18,6 +18,12 @@ class Editor extends React.Component {
     this.props.onChange(value);
   };
 
+  componentDidUpdate=(prevProps, prevState)=>{
+    if(prevProps.value !== this.props.value || prevProps.name !== this.props.name || prevProps.label !== this.props.label){
+      this.setState({value: this.props.value, name: this.props.name, label: this.props.label});
+    }
+  }
+
   render() {
     return (
       <Grid className="rrSysto">

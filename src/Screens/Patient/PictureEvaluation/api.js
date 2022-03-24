@@ -78,8 +78,6 @@ export const handleEvalSubmit = (value, current) => {
                                                   if (responce.data.hassuccessed) {
                                                       current.setState({
                                                           updateEvaluate: data
-                                                      }, () => {
-                                                          console.log('updateEvaluate', current.state.updateEvaluate)
                                                       });
                                                   }
 
@@ -97,12 +95,12 @@ export const handleEvalSubmit = (value, current) => {
                                               'user_id': current.props.stateLoginValueAim.user._id,
                                               'image': current.props.stateLoginValueAim.user.image
                                           }
-                                          data.patient = { patient }
+                                          data.patient =  patient 
                                           data.patient_id = current.props.stateLoginValueAim.user._id
                                           data.fileattach = current.state.fileattach
                                           data.task_name = "Picture evaluation from patient"
                                           data.task_type = "picture_evaluation"
-                                          data.is_payment = "false"
+                                          data.is_payment = current.state.is_payment
                                           data.done_on = "";
                                           data.priority = 0;
                                           data.archived = false;
@@ -129,9 +127,7 @@ export const handleEvalSubmit = (value, current) => {
                                                   if (responce.data.hassuccessed) {
                                                       current.setState({
                                                           updateEvaluate: responce.data.data
-                                                      }, () => {
-                                                          console.log('updateEvaluate', current.state.updateEvaluate)
-                                                      });
+                                                      })
                                                   }
 
                                               })
@@ -139,8 +135,14 @@ export const handleEvalSubmit = (value, current) => {
                                                   console.log(error);
                                               });
                                       }
-
-                                      current.setState({ mod1Open: false, show2: true, show1: false })
+                                      if(current.state.is_payment){
+                                        current.setState({ mod1Open: false, show1: false })
+                                        current.props.history.push('/patient/evaluation-list')
+                                      }
+                                      else{
+                                        current.setState({ mod1Open: false, show2: true, show1: false })
+                                      }
+                                      
                                   }
                               }
                           }
@@ -196,13 +198,13 @@ export const validateBpAndSugar1 = (value, item, current) => {
   ) {
     var currentItem =
       item === 'warm'
-        ? { warm }
+        ?  warm 
         : item === 'size_progress'
-        ? { size_progress }
+        ?  size_progress 
         : item === 'itch'
-        ? { itch }
-        : { pain };
-    if (!value) {
+        ?  itch 
+        :  pain ;
+    if (!value ) {
       current.setState({
         errorChrMsg: please_select + ' ' + currentItem + ' ' + with_yes_no,
       });
@@ -382,7 +384,6 @@ export const validateBpAndSugar = (value, item, current) => {
       return true;
     }
   } else if (item === 'country' || item === 'residenceCountry') {
-    console.log('item', item, value);
     var fillItem =
       item === 'residenceCountry' ? country_of_residence : country_of_birth;
     if (!value) {

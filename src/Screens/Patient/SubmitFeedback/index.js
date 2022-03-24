@@ -14,6 +14,7 @@ import { getLanguage } from 'translations/index';
 import Pagination from 'Screens/Components/Pagination/index';
 import { getAllPictureEval } from 'Screens/Patient/PictureEvaluation/api';
 import Modal from '@material-ui/core/Modal';
+import { getDate } from "Screens/Components/BasicMethod/index";
 import SymptomQuestions from '../../Components/TimelineComponent/CovidSymptomsField/SymptomQuestions';
 
 class Index extends Component {
@@ -78,6 +79,9 @@ class Index extends Component {
       hospital,
       assigned_to,
       status,
+      task_name,
+      treatment_so_far,
+      premedication,
       see_details,
       edit_request,
       edit_feedback,
@@ -121,9 +125,9 @@ class Index extends Component {
                           <Thead>
                             <Tr>
                               <Th>{added_on}</Th>
-                              <Th>{hospital}</Th>
-                              <Th>{assigned_to}</Th>
-                              <Th>{status}</Th>
+                              <Th>{task_name}</Th>
+                              <Th>{treatment_so_far}</Th>
+                              <Th>{premedication}</Th>
                               <Th></Th>
                               <Th></Th>
                             </Tr>
@@ -132,7 +136,9 @@ class Index extends Component {
                             {this.state.AllData?.length > 0 &&
                               this.state.AllData.map((item, index) => (
                                 <Tr>
-                                  <Td>{item.created_at}</Td>
+                                  <Td>{getDate(
+                                      item.created_at
+                                    )}</Td>
                                   <Td>{item.task_name}</Td>
                                   <Td>
                                     {' '}
@@ -150,11 +156,15 @@ class Index extends Component {
                                     />
                                   </Td>
                                   <Td>
-                                    {!item.is_payment && (
-                                      <span className="err_message">
-                                        Your Payment is pending
+                                  {!item.is_payment && (
+                                    <span className="err_message">
+                                    Your Payment is pending
+                                  </span>)}
+                                   {item.status === 'done' && 
+                                      <span className="success_message">
+                                        Check the reply from the doctor on detail
                                       </span>
-                                    )}
+                                    }
                                   </Td>
                                   <Td className="presEditDot scndOptionIner">
                                     <a className="openScndhrf">
@@ -175,8 +185,7 @@ class Index extends Component {
                                             {see_details}
                                           </a>
                                         </li>
-                                        {!item.is_payment && (
-                                          <>
+                                       
                                             <li>
                                               <a
                                                 onClick={() => {
@@ -193,6 +202,7 @@ class Index extends Component {
                                                 {edit_request}
                                               </a>
                                             </li>
+                                            {!item.is_payment && (
                                             <li>
                                               <a
                                                 onClick={() => {
@@ -207,7 +217,6 @@ class Index extends Component {
                                                 {cancel_request}
                                               </a>
                                             </li>
-                                          </>
                                         )}
                                         {item.status === 'done' && (
                                           <>
