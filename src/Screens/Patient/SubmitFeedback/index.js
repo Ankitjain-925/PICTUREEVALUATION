@@ -515,13 +515,23 @@ class Index extends Component {
                                     {from} {when}
                                   </label>
                                   <p>
-                                    {getDate(
-                                      this.state.showDetails &&
-                                        this.state.showDetails?.from_when,
-                                      this.props.settings &&
-                                        this.props.settings?.setting &&
-                                        this.props.settings?.setting
-                                          ?.date_format
+                                    {console.log(
+                                      'this.state.showDetails?.from_when',
+                                      this.state.showDetails?.from_when
+                                    )}
+                                    {this.state.showDetails &&
+                                    !this.state.showDetails?.from_when ? (
+                                      '-'
+                                    ) : (
+                                      <>
+                                        {getDate(
+                                          this.state.showDetails?.from_when,
+                                          this.props.settings &&
+                                            this.props.settings?.setting &&
+                                            this.props.settings?.setting
+                                              ?.date_format
+                                        )}
+                                      </>
                                     )}
                                   </p>
                                 </Grid>
@@ -530,13 +540,19 @@ class Index extends Component {
                                     {until} {when}
                                   </label>
                                   <p>
-                                    {getDate(
-                                      this.state.showDetails &&
-                                        this.state.showDetails?.until_when,
-                                      this.props.settings &&
-                                        this.props.settings?.setting &&
-                                        this.props.settings?.setting
-                                          ?.date_format
+                                    {this.state.showDetails &&
+                                    !this.state.showDetails?.until_when ? (
+                                      '-'
+                                    ) : (
+                                      <>
+                                        {getDate(
+                                          this.state.showDetails?.until_when,
+                                          this.props.settings &&
+                                            this.props.settings?.setting &&
+                                            this.props.settings?.setting
+                                              ?.date_format
+                                        )}
+                                      </>
                                     )}
                                   </p>
                                 </Grid>

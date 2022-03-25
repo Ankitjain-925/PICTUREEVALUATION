@@ -37,6 +37,7 @@ import SelectField from 'Screens/Components/Select/index';
 import {
   handleEvalSubmit,
   FileAttachMulti,
+  getallGroups,
   saveOnDB,
 } from './api';
 import { confirmAlert } from 'react-confirm-alert'; // Import
@@ -156,13 +157,9 @@ class Index extends Component {
   };
 
   updateEntryState1 = (value, name) => {
+    console.log('value', value);
     var state = this.state.updateEvaluate;
-    if (name == 'house_id') {
-      state[name] = value.value;
-      console.log('state', state);
-    } else {
-      state[name] = value;
-    }
+    state[name] = value;
     this.setState({ updateEvaluate: state });
   };
 
@@ -286,7 +283,6 @@ class Index extends Component {
                                       this.props.settings.setting &&
                                       this.props.settings.setting.date_format
                                     }
-                                    NotFutureDate={true}
                                   />
                                 </Grid>
                                 <Grid item xs={12} md={8}>
@@ -409,11 +405,14 @@ class Index extends Component {
                                 <Grid className="fillDia">
                                   <SelectField
                                     isSearchable={true}
-                                    name="select_status"
-                                    label={select_status}
+                                    name="smoking_status"
+                                    label={smoking_status}
                                     option={this.state.Allsmoking_status}
                                     onChange={(e) =>
-                                      this.updateEntryState1(e, 'smoking_status')
+                                      this.updateEntryState1(
+                                        e,
+                                        'smoking_status'
+                                      )
                                     }
                                     value={GetShowLabel1(
                                       this.state.Allsmoking_status,
@@ -428,9 +427,9 @@ class Index extends Component {
                                     )}
                                   />
                                 </Grid>
-                                {(!this.state.updateEvaluate?.smoking_status ||
-                                  (this.state.updateEvaluate?.smoking_status &&
-                                    this.state.updateEvaluate?.smoking_status
+                                {(!this.state.updateEvaluate?.select_status ||
+                                  (this.state.updateEvaluate?.select_status &&
+                                    this.state.updateEvaluate?.select_status
                                       ?.value !== 'Never_smoked')) && (
                                   <div>
                                     <Grid className="fillDia">
@@ -542,14 +541,16 @@ class Index extends Component {
                                 <Grid item xs={12} md={12}>
                                   <label>{place_of_birth}</label>
                                   <Grid className="cntryDropTop">
-                                  <Select
-                                        value={this.state.updateEvaluate?.country}
-                                        onChange={(e) => this.updateEntryState1(e, "country")}
-                                        options={this.state.selectCountry}
-                                        placeholder=""
-                                        isSearchable={true}
-                                        name="birth"
-                                        className="cntryDrop"
+                                    <Select
+                                      value={this.state.updateEvaluate?.country}
+                                      onChange={(e) =>
+                                        this.updateEntryState1(e, 'country')
+                                      }
+                                      options={this.state.selectCountry}
+                                      placeholder=""
+                                      isSearchable={true}
+                                      name="country"
+                                      className="cntryDrop"
                                     />
                                   </Grid>
                                 </Grid>
@@ -557,15 +558,23 @@ class Index extends Component {
                                   <Grid className="fillDiaSection">
                                     <label>{place_of_residence}</label>
                                     <Grid className="cntryDropTop">
-                                    <Select
-                                        value={this.state.updateEvaluate?.residenceCountry}
-                                        onChange={(e) => this.updateEntryState1(e, "residenceCountry")}
+                                      <Select
+                                        value={
+                                          this.state.updateEvaluate
+                                            ?.residenceCountry
+                                        }
+                                        onChange={(e) =>
+                                          this.updateEntryState1(
+                                            e,
+                                            'residenceCountry'
+                                          )
+                                        }
                                         options={this.state.selectCountry}
                                         placeholder=""
                                         isSearchable={true}
-                                        name="residence"
+                                        name="residenceCountry"
                                         className="cntryDrop"
-                                    />
+                                      />
                                     </Grid>
                                   </Grid>
                                 </Grid>
@@ -649,22 +658,22 @@ class Index extends Component {
                                   fileUpload={(e) => FileAttachMulti(e, this)}
                                 />
                               </Grid>
-                              {/* <Grid item xs={12} md={12}>
+                              <Grid item xs={12} md={12}>
                                 <label>{hospital}</label>
                                 <Grid className="cntryDropTop">
                                   <Select
-                                    value={this.state.updateEvaluate?.house_id}
+                                    value={this.state.updateEvaluate?.hospital}
                                     onChange={(e) =>
-                                      this.updateEntryState1(e, 'house_id')
+                                      this.updateEntryState1(e, 'hospital')
                                     }
                                     options={this.state.Housesoptions}
                                     placeholder=""
                                     isSearchable={true}
-                                    name="house_id"
+                                    name="hospital"
                                     className="cntryDrop"
                                   />
                                 </Grid>
-                              </Grid> */}
+                              </Grid>
 
                               <Grid className="fatiqueQues fatiqueQuess1">
                                 <Grid className="dateSet">
@@ -793,7 +802,6 @@ class Index extends Component {
                           show1={this.state.show1}
                           show2={this.state.show2}
                           CancelClick={this.CancelClick}
-                          saveOnDB={(payment)=>saveOnDB(payment, this)}
                         />
                       </Elements>
                     </Grid>
