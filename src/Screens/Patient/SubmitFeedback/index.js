@@ -6,11 +6,15 @@ import { connect } from 'react-redux';
 import { LoginReducerAim } from 'Screens/Login/actions';
 import { Settings } from 'Screens/Login/setting';
 import { LanguageFetchReducer } from 'Screens/actions';
+import axios from 'axios';
+import sitedata from 'sitedata';
+import { commonHeader } from 'component/CommonHeader/index';
 import LeftMenu from 'Screens/Components/Menus/PatientLeftMenu/index';
 import LeftMenuMobile from 'Screens/Components/Menus/PatientLeftMenu/mobile';
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import Loader from 'Screens/Components/Loader/index';
 import { getLanguage } from 'translations/index';
+import { confirmAlert } from 'react-confirm-alert';
 import Pagination from 'Screens/Components/Pagination/index';
 import { getAllPictureEval } from 'Screens/Patient/PictureEvaluation/api';
 import Modal from '@material-ui/core/Modal';
@@ -66,6 +70,94 @@ class Index extends Component {
     // this.props.updateEntryState1(value, name);
   };
 
+  deleteRequest = (id)=>{
+    this.setState({ message: null, openTask: false });
+    let translate = getLanguage(this.props.stateLanguageType);
+    let { remove_task, you_sure_to_remove_task, No, Yes } = translate;
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div
+            className={
+              this.props.settings &&
+              this.props.settings.setting &&
+              this.props.settings.setting.mode &&
+              this.props.settings.setting.mode === 'dark'
+                ? 'dark-confirm react-confirm-alert-body'
+                : 'react-confirm-alert-body'
+            }
+          >
+            <h1>{remove_task}</h1>
+            <p>{you_sure_to_remove_task}</p>
+            <div className="react-confirm-alert-button-group">
+              <button onClick={onClose}>{No}</button>
+              <button
+                onClick={() => {
+                  this.removeTask2(id);
+                  // onClose();
+                }}
+              >
+                {Yes}
+              </button>
+            </div>
+          </div>
+        );
+      },
+    });
+  };
+
+  removeTask2 = (id) => {
+    this.setState({ message: null, openTask: false });
+    let translate = getLanguage(this.props.stateLanguageType);
+    let { RemoveTask, really_want_to_remove_task, No, Yes } = translate;
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div
+            className={
+              this.props.settings &&
+              this.props.settings.setting &&
+              this.props.settings.setting.mode &&
+              this.props.settings.setting.mode === 'dark'
+                ? 'dark-confirm react-confirm-alert-body'
+                : 'react-confirm-alert-body'
+            }
+          >
+            <h1 class="alert-btn">{RemoveTask}</h1>
+            <p>{really_want_to_remove_task}</p>
+            <div className="react-confirm-alert-button-group">
+              <button onClick={onClose}>{No}</button>
+              <button
+                onClick={() => {
+                  this.deleteClickTask(id);
+                  onClose();
+                }}
+              >
+                {Yes}
+              </button>
+            </div>
+          </div>
+        );
+      },
+    });
+  };
+   //for delete the Task
+  deleteClickTask(id) {
+    this.setState({ loaderImage: true });
+    axios
+      .delete(
+        sitedata.data.path + '/vh/AddTask/' + id,
+        commonHeader(this.props.stateLoginValueAim.token)
+      )
+      .then((response) => {
+        this.setState({ loaderImage: false });
+        if (response.data.hassuccessed) {
+          getAllPictureEval(this)
+        }
+      })
+      .catch((error) => {});
+  }
+ 
   handleSubmitFeed = () => {
     setTimeout(
       this.setState({ updateFeedback: {}, openFeedback: false }),
@@ -260,7 +352,7 @@ class Index extends Component {
                                             <li>
                                               <a
                                                 onClick={() => {
-                                                  // this.updatePrescription("cancel", data._id);
+                                                  this.deleteRequest(item._id);
                                                 }}
                                               >
                                                 <img

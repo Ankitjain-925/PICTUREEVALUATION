@@ -26,6 +26,13 @@ export const handleEvalSubmit = (value, current) => {
                                                                   if (validateBpAndSugar(data.medical_precondition, 'medical_precondition', current)) {
                                                                       if (validateBpAndSugar(data.premedication, 'premedication', current)) {
                                                                           current.setState({ mod1Open: true, picEval: true })
+                                                                          axios.put(sitedata.data.path + '/UserProfile/Users/update', {
+                                                                            birthday: data.dob,
+                                                                            sex: data.sex,
+                                                                            country: data.residenceCountry,
+                                                                            citizen_country: data.country
+                                                                          }).then((res)=>{})
+                                                                          .catch((e)=>{})
                                                                       }
                                                                   }
                                                               }
