@@ -14463,9 +14463,10 @@ label.newrole {
   border-radius: 15px;
   margin-right: 8px;
 }
-
 .dataCommentBor {
-  border-bottom: 1px solid #787878;
-  padding-bottom: 8px;
-  padding-top: 5px;
+  padding: 10px;
+  background: #ddd;
+  margin: 10px 0px;
+  border-radius: 5px;
+  color: #000 !important;
 }

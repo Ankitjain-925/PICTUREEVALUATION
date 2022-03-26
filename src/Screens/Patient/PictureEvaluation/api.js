@@ -514,7 +514,24 @@ export const saveOnDB = (payment, current) => {
 
 // Open See Details Form
 export const handleOpenDetail = (current, detail) => {
-  current.setState({ openDetail: true, showDetails: detail });
+  current.setState({ openDetail: true, showDetails: detail }, () => {
+    if( current.state.showDetails?.status === 'done' || current.state.showDetails?.comments?.length>0 || current.state.showDetails?.attachments?.length>0){
+      axios
+      .put(
+        sitedata.data.path + '/vh/AddTask/' + current.state.showDetails?._id,
+        {isviewed: true},
+        commonHeader(current.props.stateLoginValueAim.token)
+      )
+      .then((responce) => {
+        var showDetails = current.state.showDetails;
+        showDetails.isviewed = true;
+        current.setState({showDetails: showDetails})
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+  });
 };
 // Close See Details Form
 export const handleCloseDetail = (current) => {
@@ -522,12 +539,12 @@ export const handleCloseDetail = (current) => {
 };
 
 // Open Feedback Form
-export const handleOpFeedback = (current) => {
-  current.setState({ openFeedback: true });
+export const handleOpFeedback = (current, openData) => {
+  current.setState({ openFeedback: true , forFeedback : openData,});
 };
 // Close Feedback Form
 export const handleCloseFeedback = (current) => {
-  current.setState({ openFeedback: false, updateFeedback: {} });
+  current.setState({ openFeedback: false, updateFeedback: {} , forFeedback : {}});
 };
 
 // Set state for feedback form
@@ -535,7 +552,7 @@ export const updateEntryState1 = (current, value, name) => {
   const state = current.state.updateFeedback;
   state[name] = value;
   current.setState({ updateFeedback: state });
-  // this.props.updateEntryState1(value, name);
+  // current.props.updateEntryState1(value, name);
 };
 
 // For payment stripe
@@ -549,22 +566,57 @@ export const updateRequestBeforePayment = (current, data) => {
 // Api call for feedback form
 export const handleSubmitFeed = (current) => {
   var data = current.state.updateFeedback;
-  current.setState({ loaderImage: true });
-  axios
-    .post(
-      sitedata.data.path + '/vh/pictureevaluationfeedback',
-      data,
-      commonHeader(current.props.stateLoginValueAim.token)
-    )
-    .then((response) => {
-      if (response.data.hassuccessed) {
-        current.setState({ loaderImage: false });
-        handleCloseFeedback(current);
-      }
-      current.setState({ loaderImage: false });
-    })
-    .catch((err) => { });
-};
+  if(data.fast_service && data.doctor_explaination && data.satification){
+    current.setState({ loaderImage: true, allcompulsary: false });
+    data.patient = {
+      first_name:
+          current.props.stateLoginValueAim.user.first_name,
+        last_name:
+          current.props.stateLoginValueAim.user.last_name,
+        alies_id:
+          current.props.stateLoginValueAim.user.alies_id,
+        profile_id:
+          current.props.stateLoginValueAim.user.profile_id,
+          patient_id: current.props.stateLoginValueAim.user._id,
+          profile_image: current.props.stateLoginValueAim.user.image,
+          birthday: current.props.stateLoginValueAim.user.birthday,
+    }
+    if(current.state?.forFeedback?.assinged_to?.length>0){
+      data.doctor_id = current.state?.forFeedback?.assinged_to.map((item)=>{
+        return item.user_id;
+      })
+      current.setState({sendError : false, sendSuccess: false})
+      data.task_id = current.state?.forFeedback?._id
+        axios
+          .post(
+            sitedata.data.path + '/vh/pictureevaluationfeedback',
+            data,
+            commonHeader(current.props.stateLoginValueAim.token)
+          )
+          .then((response) => {
+            if (response.data.hassuccessed) {
+              current.setState({ loaderImage: false, sendSuccess: true });
+              setTimeout(() => {
+                current.setState({sendSuccess : false})
+                handleCloseFeedback(current);
+              }, 3000);
+            }
+            else{
+              current.setState({ loaderImage: false, sendError: true });
+              setTimeout(() => {
+                current.setState({sendError : false})
+                handleCloseFeedback(current);
+              }, 3000);
+            }
+            current.setState({ loaderImage: false });
+          })
+          .catch((err) => { });
+    }
+  }
+  else{
+    current.setState({allcompulsary: true})
+  }
+}  
 
 export const getUserData = (current) => {
   current.setState({ loaderImage: true });

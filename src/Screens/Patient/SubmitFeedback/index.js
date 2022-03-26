@@ -41,6 +41,10 @@ class Index extends Component {
       updateFeedback: {},
       openDetail: false,
       showDetails: {},
+      forFeedback: {},
+      allcompulsary: false,
+      sendError: false,
+      sendSuccess: false
     };
     // new Timer(this.logOutClick.bind(this))
   }
@@ -48,27 +52,12 @@ class Index extends Component {
   componentDidMount = () => {
     getAllPictureEval(this);
   };
-  // Open Feedback Form
-  handleOpFeedback = () => {
-    this.setState({ openFeedback: true });
-  };
-  // Close Feedback Form
-  handleCloseFeedback = () => {
-    this.setState({ openFeedback: false });
-  };
+ 
   updateRequestBeforePayment = (data) => {
     this.props.history.push({
       pathname: '/patient/picture-evaluation',
       state: { data: data },
     });
-  };
-  // Open See Details Form
-  handleOpenDetail = (detail) => {
-    this.setState({ openDetail: true, showDetails: detail });
-  };
-  // Close See Details Form
-  handleCloseDetail = () => {
-    this.setState({ openDetail: false });
   };
 
   updateEntryState1 = (value, name) => {
@@ -314,8 +303,8 @@ class Index extends Component {
                                         Your Payment is pending
                                       </span>
                                     )}
-                                    {(item.status === 'done' ||
-                                      item?.comments?.length > 0) && (
+                                    {((item.status === 'done' ||
+                                      item?.comments?.length > 0 ||  item?.attachments?.length> 0 ) && !item.isviewed) && (
                                       <span className="success_message">
                                         Check the reply from the doctor on
                                         detail
@@ -402,7 +391,7 @@ class Index extends Component {
                                             <li>
                                               <a
                                                 onClick={() =>
-                                                  handleOpFeedback(this)
+                                                  handleOpFeedback(this, item)
                                                 }
                                               >
                                                 <img
@@ -482,6 +471,16 @@ class Index extends Component {
                         <p>Submit Feedback</p>
                       </div>
                     </Grid>
+                    {this.state.allcompulsary &&  <div className="err_message">
+                      {"All fields are compulsary, please fill all"}
+                    </div>}
+                    {this.state.sendError &&  <div className="err_message">
+                      {"Feedback already given by you"}
+                    </div>}
+                    {this.state.sendSuccess &&   
+                    <div className="success_message">
+                      {"Feedback submit successfully"}
+                    </div>}
                     <Grid className="symptomSec symptomSec1">
                       <h3></h3>
                       <SymptomQuestions
