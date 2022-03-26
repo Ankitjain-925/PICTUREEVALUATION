@@ -491,3 +491,15 @@ export const saveOnDB = (payment, current) => {
     current.setState({ loaderImage: false });
   }
 };
+export const getUserData = (current) => {
+  current.setState({ loaderImage: true });
+  let user_token = current.props.stateLoginValueAim.token
+  let user_id = current.props.stateLoginValueAim.user._id
+  axios.get(sitedata.data.path + '/UserProfile/Users/' + user_id,
+      commonHeader(user_token)).then((responce) => {
+        current.setState({ loaderImage: false });
+        if (responce.data.hassuccessed) {
+          current.setState({updateEvaluate :{sex : responce.data.data?.sex, dob: responce.data.data?.birthday, country: responce.data.data?.citizen_country, residenceCountry: responce.data.data?.country}})
+        }
+  });
+}

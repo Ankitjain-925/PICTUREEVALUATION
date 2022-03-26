@@ -11,6 +11,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import sitedata from "sitedata";
 import { getLanguage } from "translations/index"
 import { confirmAlert } from "react-confirm-alert";
+import Loader from 'Screens/Components/Loader/index';
 import { commonHeader } from 'component/CommonHeader/index';
 const CURRENCY = "USD";
 
@@ -62,6 +63,7 @@ function HomePage(props) {
     paymnt_err,} = translate;
   const [email, setEmail] = useState('');
   const [showError, setshowError] = useState('');
+  const [loaderImage, setLoaderImage] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
 
@@ -73,7 +75,7 @@ function HomePage(props) {
       // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
-
+    setLoaderImage(true);
     const result = await stripe.createPaymentMethod({
       type: 'card',
       card: elements.getElement(CardElement)
@@ -82,6 +84,7 @@ function HomePage(props) {
     if (result.error) {
     
     } else {
+
       const res = await axios.post(sitedata.data.path + "/lms_stripeCheckout/intent", {
         currency: CURRENCY, amount: fromEuroToCent(99), payment_method_types: ['card']});
       // eslint-disable-next-line camelcase
@@ -94,6 +97,7 @@ function HomePage(props) {
         },
       })
       if(PaymentIntent.paymentIntent.status === "succeeded"){
+        setLoaderImage(false);
         confirmAlert({
           customUI: ({ onClose }) => {
             return (
@@ -123,6 +127,7 @@ function HomePage(props) {
         props.saveOnDB(client_secret)  
       }
       else{
+        setLoaderImage(false);
         let translate = getLanguage(props.languageType)
         let { ok,  paymnt_err,} = translate;
         confirmAlert({
@@ -160,6 +165,7 @@ function HomePage(props) {
   return (
     <Grid container direction="row" spacing="3">
         {showError}
+        {loaderImage && <Loader />}
     {/* <Grid item xs={12} md={6}> */}
     {(props.show2 ) && <div className="payment_sec_extra_ser1">
         {/* <TextField
@@ -174,6 +180,7 @@ function HomePage(props) {
           onChange={(e) => setEmail(e.target.value)}
           fullWidth
         /> */}
+        
            <CardElement options={CARD_ELEMENT_OPTIONS} />
           <div className="sbu_button">
           

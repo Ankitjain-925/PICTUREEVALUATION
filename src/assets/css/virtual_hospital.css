@@ -10006,6 +10006,9 @@ button.crdoLghtBlu2 {
   border-bottom: none;
 }
 /* Added by Ankita */
+.setDetail-eval {
+  padding: 15px;
+}
 .ElementsApp,
 .ElementsApp .InputElement {
   color: #00abaf;

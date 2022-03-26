@@ -38,6 +38,7 @@ import {
   handleEvalSubmit,
   FileAttachMulti,
   saveOnDB,
+  getUserData
 } from './api';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import { OptionList } from 'Screens/Login/metadataaction';
@@ -86,7 +87,7 @@ class Index extends Component {
     this.setState({ selectCountry: npmCountry });
     // getallGroups(this);
     this.getMetadata();
-   
+    
     if (this.props.location?.state?.data) {
       this.setState({
         updateEvaluate: this.props.location?.state?.data,
@@ -94,6 +95,7 @@ class Index extends Component {
         is_payment: this.props.location?.state?.data?.is_payment,
       });
     }
+    getUserData(this)
   }
 
   //Get All information Related to Metadata
