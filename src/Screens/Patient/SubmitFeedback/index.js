@@ -14,9 +14,10 @@ import { getLanguage } from 'translations/index';
 import Pagination from 'Screens/Components/Pagination/index';
 import { getAllPictureEval } from 'Screens/Patient/PictureEvaluation/api';
 import Modal from '@material-ui/core/Modal';
+import { getDate } from 'Screens/Components/BasicMethod/index';
 import SymptomQuestions from '../../Components/TimelineComponent/CovidSymptomsField/SymptomQuestions';
-import { getDate } from 'Screens/Components/BasicMethod';
 import { S3Image } from 'Screens/Components/GetS3Images/index';
+import { handleSubmitFeed } from '../PictureEvaluation/api';
 
 class Index extends Component {
   constructor(props) {
@@ -65,13 +66,6 @@ class Index extends Component {
     // this.props.updateEntryState1(value, name);
   };
 
-  handleSubmitFeed = () => {
-    setTimeout(
-      this.setState({ updateFeedback: {}, openFeedback: false }),
-      6000
-    );
-  };
-
   render() {
     let translate = getLanguage(this.props.stateLanguageType);
     let {
@@ -79,6 +73,8 @@ class Index extends Component {
       added_on,
       hospital,
       assigned_to,
+      status,
+      task_name,
       see_details,
       edit_request,
       edit_feedback,
@@ -92,7 +88,6 @@ class Index extends Component {
       Hba1c,
       situation,
       smoking_status,
-      status,
       from,
       when,
       until,
@@ -168,9 +163,9 @@ class Index extends Component {
                           <Thead>
                             <Tr>
                               <Th>{added_on}</Th>
-                              <Th>{hospital}</Th>
-                              <Th>{assigned_to}</Th>
-                              <Th>{status}</Th>
+                              <Th>{task_name}</Th>
+                              <Th>{treatment_so_far}</Th>
+                              <Th>{premedication}</Th>
                               <Th></Th>
                               <Th></Th>
                             </Tr>
@@ -209,6 +204,12 @@ class Index extends Component {
                                         Your Payment is pending
                                       </span>
                                     )}
+                                    {item.status === 'done' && (
+                                      <span className="success_message">
+                                        Check the reply from the doctor on
+                                        detail
+                                      </span>
+                                    )}
                                   </Td>
                                   <Td className="presEditDot scndOptionIner">
                                     <a className="openScndhrf">
@@ -233,39 +234,38 @@ class Index extends Component {
                                             {see_details}
                                           </a>
                                         </li>
+
+                                        <li>
+                                          <a
+                                            onClick={() => {
+                                              this.updateRequestBeforePayment(
+                                                item
+                                              );
+                                            }}
+                                          >
+                                            <img
+                                              src={require('assets/images/cancel-request.svg')}
+                                              alt=""
+                                              title=""
+                                            />
+                                            {edit_request}
+                                          </a>
+                                        </li>
                                         {!item.is_payment && (
-                                          <>
-                                            <li>
-                                              <a
-                                                onClick={() => {
-                                                  this.updateRequestBeforePayment(
-                                                    item
-                                                  );
-                                                }}
-                                              >
-                                                <img
-                                                  src={require('assets/images/cancel-request.svg')}
-                                                  alt=""
-                                                  title=""
-                                                />
-                                                {edit_request}
-                                              </a>
-                                            </li>
-                                            <li>
-                                              <a
-                                                onClick={() => {
-                                                  // this.updatePrescription("cancel", data._id);
-                                                }}
-                                              >
-                                                <img
-                                                  src={require('assets/images/cancel-request.svg')}
-                                                  alt=""
-                                                  title=""
-                                                />
-                                                {cancel_request}
-                                              </a>
-                                            </li>
-                                          </>
+                                          <li>
+                                            <a
+                                              onClick={() => {
+                                                // this.updatePrescription("cancel", data._id);
+                                              }}
+                                            >
+                                              <img
+                                                src={require('assets/images/cancel-request.svg')}
+                                                alt=""
+                                                title=""
+                                              />
+                                              {cancel_request}
+                                            </a>
+                                          </li>
                                         )}
                                         {item.status === 'done' && (
                                           <>
@@ -370,17 +370,17 @@ class Index extends Component {
                       />
                       <SymptomQuestions
                         updateEntryState1={(e) =>
-                          this.updateEntryState1(e, 'satisfy_with_service')
+                          this.updateEntryState1(e, 'satification')
                         }
                         comesFrom="Feedback"
                         label="Are you satisfied with the service?"
-                        value={this.state.updateFeedback?.satisfy_with_service}
+                        value={this.state.updateFeedback?.satification}
                       />
                       <Grid className="infoShwSave3">
                         <input
                           type="submit"
                           value="Submit"
-                          onClick={this.handleSubmitFeed}
+                          onClick={() => handleSubmitFeed(this)}
                         />
                       </Grid>
                     </Grid>
@@ -679,7 +679,7 @@ class Index extends Component {
                             <p>{no}</p>
                           )}
                         </Grid>
-                        <Grid xs={3} md={3}>
+                        <Grid xs={4} md={4}>
                           <label>{size_progress}</label>
 
                           {this.state.showDetails &&
@@ -699,7 +699,7 @@ class Index extends Component {
                             <p>{no}</p>
                           )}
                         </Grid>
-                        <Grid xs={3} md={3}>
+                        <Grid xs={2} md={2}>
                           <label>{pain}</label>
 
                           {this.state.showDetails &&
