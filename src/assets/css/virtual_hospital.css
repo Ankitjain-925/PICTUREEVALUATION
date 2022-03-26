@@ -14459,8 +14459,13 @@ label.newrole {
   margin-top: 10px;
 }
 .imageEvalSize img {
-  height: 90px;
   width: 50%;
-  /* border-radius: 32px; */
+  border-radius: 15px;
   margin-right: 8px;
+}
+
+.dataCommentBor {
+  border-bottom: 1px solid #787878;
+  padding-bottom: 8px;
+  padding-top: 5px;
 }

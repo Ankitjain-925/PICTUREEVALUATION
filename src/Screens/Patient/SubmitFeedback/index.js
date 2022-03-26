@@ -18,9 +18,18 @@ import { confirmAlert } from 'react-confirm-alert';
 import Pagination from 'Screens/Components/Pagination/index';
 import { getAllPictureEval } from 'Screens/Patient/PictureEvaluation/api';
 import Modal from '@material-ui/core/Modal';
-import { getDate } from "Screens/Components/BasicMethod/index";
+import { getDate } from 'Screens/Components/BasicMethod/index';
 import SymptomQuestions from '../../Components/TimelineComponent/CovidSymptomsField/SymptomQuestions';
 import { S3Image } from 'Screens/Components/GetS3Images/index';
+import {
+  handleSubmitFeed,
+  handleOpFeedback,
+  handleCloseFeedback,
+  handleOpenDetail,
+  handleCloseDetail,
+  updateEntryState1,
+  updateRequestBeforePayment,
+} from '../PictureEvaluation/api';
 import FileViews from 'Screens/Components/TimelineComponent/FileViews/index';
 
 class Index extends Component {
@@ -30,7 +39,6 @@ class Index extends Component {
       AllData: [],
       openFeedback: false,
       updateFeedback: {},
-      openDetail: true,
       openDetail: false,
       showDetails: {},
     };
@@ -225,6 +233,9 @@ class Index extends Component {
       sun_before,
       body_temp,
       payment_done,
+      Attachments,
+      Reply,
+      Comments,
     } = translate;
 
     return (
@@ -298,15 +309,18 @@ class Index extends Component {
                                     />
                                   </Td>
                                   <Td>
-                                  {!item.is_payment && (
-                                    <span className="err_message">
-                                    Your Payment is pending
-                                  </span>)}
-                                   {(item.status === 'done' || item?.comments?.length>0) &&
-                                      <span className="success_message">
-                                        Check the reply from the doctor on detail
+                                    {!item.is_payment && (
+                                      <span className="err_message">
+                                        Your Payment is pending
                                       </span>
-                                    }
+                                    )}
+                                    {(item.status === 'done' ||
+                                      item?.comments?.length > 0) && (
+                                      <span className="success_message">
+                                        Check the reply from the doctor on
+                                        detail
+                                      </span>
+                                    )}
                                   </Td>
                                   <Td className="presEditDot scndOptionIner">
                                     <a className="openScndhrf">
@@ -320,7 +334,7 @@ class Index extends Component {
                                         <li>
                                           <a
                                             onClick={() =>
-                                              this.handleOpenDetail(item)
+                                              handleOpenDetail(this, item)
                                             }
                                           >
                                             <img
@@ -331,11 +345,13 @@ class Index extends Component {
                                             {see_details}
                                           </a>
                                         </li>
-                                        {(item.status !== 'done' && item?.comments?.length==0) && (
+                                        {item.status !== 'done' &&
+                                          item?.comments?.length == 0 && (
                                             <li>
                                               <a
                                                 onClick={() => {
-                                                  this.updateRequestBeforePayment(
+                                                  updateRequestBeforePayment(
+                                                    this,
                                                     item
                                                   );
                                                 }}
@@ -363,12 +379,31 @@ class Index extends Component {
                                                 {cancel_request}
                                               </a>
                                             </li>
+                                          )}
+                                        {!item.is_payment && (
+                                          <li>
+                                            <a
+                                              onClick={() => {
+                                                // this.updatePrescription("cancel", data._id);
+                                              }}
+                                            >
+                                              <img
+                                                src={require('assets/images/cancel-request.svg')}
+                                                alt=""
+                                                title=""
+                                              />
+                                              {cancel_request}
+                                            </a>
+                                          </li>
                                         )}
-                                       {(item.status === 'done' || item?.comments?.length>0) && (
+                                        {(item.status === 'done' ||
+                                          item?.comments?.length > 0) && (
                                           <>
                                             <li>
                                               <a
-                                                onClick={this.handleOpFeedback}
+                                                onClick={() =>
+                                                  handleOpFeedback(this)
+                                                }
                                               >
                                                 <img
                                                   src={require('assets/images/cancel-request.svg')}
@@ -420,7 +455,7 @@ class Index extends Component {
               {/* Feedback form open */}
               <Modal
                 open={this.state.openFeedback}
-                onClose={this.handleCloseFeedback}
+                onClose={() => handleCloseFeedback(this)}
                 className={
                   this.props.settings &&
                   this.props.settings.setting &&
@@ -434,7 +469,7 @@ class Index extends Component {
                   <Grid className="nwDiaCntntIner">
                     <Grid className="nwDiaCourse">
                       <Grid className="nwDiaCloseBtn">
-                        <a onClick={this.handleCloseFeedback}>
+                        <a onClick={() => handleCloseFeedback(this)}>
                           <img
                             src={require('assets/images/close-search.svg')}
                             alt=""
@@ -451,7 +486,7 @@ class Index extends Component {
                       <h3></h3>
                       <SymptomQuestions
                         updateEntryState1={(e) =>
-                          this.updateEntryState1(e, 'fast_service')
+                          updateEntryState1(this, e, 'fast_service')
                         }
                         comesFrom="Feedback"
                         label="Is it fast service?"
@@ -459,7 +494,7 @@ class Index extends Component {
                       />
                       <SymptomQuestions
                         updateEntryState1={(e) =>
-                          this.updateEntryState1(e, 'doctor_explaination')
+                          updateEntryState1(this, e, 'doctor_explaination')
                         }
                         comesFrom="Feedback"
                         label="Did you understood the doctor explaination?"
@@ -467,17 +502,17 @@ class Index extends Component {
                       />
                       <SymptomQuestions
                         updateEntryState1={(e) =>
-                          this.updateEntryState1(e, 'satisfy_with_service')
+                          updateEntryState1(this, e, 'satification')
                         }
                         comesFrom="Feedback"
                         label="Are you satisfied with the service?"
-                        value={this.state.updateFeedback?.satisfy_with_service}
+                        value={this.state.updateFeedback?.satification}
                       />
                       <Grid className="infoShwSave3">
                         <input
                           type="submit"
                           value="Submit"
-                          onClick={this.handleSubmitFeed}
+                          onClick={() => handleSubmitFeed(this)}
                         />
                       </Grid>
                     </Grid>
@@ -489,7 +524,7 @@ class Index extends Component {
               {/* Model setup */}
               <Modal
                 open={this.state.openDetail}
-                onClose={this.handleCloseDetail}
+                onClose={() => handleCloseDetail(this)}
                 className={
                   this.props.settings &&
                   this.props.settings.setting &&
@@ -499,374 +534,414 @@ class Index extends Component {
                     : ''
                 }
               >
-                  <Grid className="creatTaskModel">
-              <Grid className="creatTaskCntnt">
-                <Grid container direction="row">
-                  <Grid item xs={12} md={12}>
-                    <Grid className="creatLbl">
-                      <Grid className="creatLblClose">
-                        <a onClick={this.handleCloseTask}>
-                          <img
-                            src={require('assets/images/close-search.svg')}
-                            alt=""
-                            title=""
-                          />
-                        </a>
+                <Grid className="creatTaskModel">
+                  <Grid className="creatTaskCntnt">
+                    <Grid container direction="row">
+                      <Grid item xs={12} md={12}>
+                        <Grid className="creatLbl">
+                          <Grid className="creatLblClose">
+                            <a onClick={() => handleCloseDetail(this)}>
+                              <img
+                                src={require('assets/images/close-search.svg')}
+                                alt=""
+                                title=""
+                              />
+                            </a>
+                          </Grid>
+                          <label>Details</label>
+                        </Grid>
                       </Grid>
-                      <label>Details</label>
-                  </Grid>
-                  </Grid>
-                  </Grid>
-                  <Grid container direction="row" className="setDetail-eval">
-                    <Grid item xs={12} md={12} className="taskDescp">
-                                <Grid className="stndQues stndQues1">
-                                  <Grid>
-                                    <label>Added On</label>
-                                  </Grid>
-                                  <p>
-                                    {getDate(
-                                      this.state.showDetails &&
-                                        this.state.showDetails?.created_at,
-                                      this.props.settings &&
-                                        this.props.settings?.setting &&
-                                        this.props.settings?.setting?.date_format
-                                    )}
-                                  </p>
-                                  <Grid>
-                                    <label>{age}</label>
-                                  </Grid>
-                                  <p>
-                                    {getDate(
-                                      this.state.showDetails &&
-                                        this.state.showDetails?.dob,
-                                      this.props.settings &&
-                                        this.props.settings?.setting &&
-                                        this.props.settings?.setting?.date_format
-                                    )}
-                                  </p>
-                                  <Grid>
-                                    <label>{gender}</label>
-                                  </Grid>
-                                  <p>
-                                    {this.state.showDetails &&
-                                      this.state.showDetails?.sex}
-                                  </p>
-                                  <Grid>
-                                    <h2>{blood_pressure}</h2>
-                                  </Grid>
-                                  <Grid container xs={12} md={12}>
-                                    <Grid xs={4} md={4}>
-                                      <label>{rr_systolic}</label>
-                                      <p>
-                                        {this.state.showDetails &&
-                                          this.state.showDetails?.rr_systolic}
-                                      </p>
-                                    </Grid>
-                                    <Grid xs={4} md={4}>
-                                      <label>{RR_diastolic}</label>
-                                      <p>
-                                        {this.state.showDetails &&
-                                          this.state.showDetails?.rr_diastolic}
-                                      </p>
-                                    </Grid>
-                                  </Grid>
-                                  <Grid>
-                                    <h2>{diabetes}</h2>
-                                  </Grid>
-                                  <Grid container xs={12} md={12}>
-                                    <Grid xs={4} md={4}>
-                                      <label>{blood_sugar}</label>
-                                      <p>
-                                        {this.state.showDetails &&
-                                          this.state.showDetails?.blood_sugar}
-                                      </p>
-                                    </Grid>
-                                    <Grid xs={4} md={4}>
-                                      <label>{Hba1c}</label>
-                                      <p>
-                                        {this.state.showDetails &&
-                                          this.state.showDetails?.Hba1c}
-                                      </p>
-                                    </Grid>
-                                    <Grid xs={4} md={4}>
-                                      <label>{situation}</label>
-                                      <p>
-                                        {this.state.showDetails &&
-                                          this.state.showDetails?.situation &&
-                                          this.state.showDetails?.situation?.label}
-                                      </p>
-                                    </Grid>
-                                  </Grid>
-                                  <Grid>
-                                    <h2>{smoking_status}</h2>
-                                  </Grid>
-                                  <Grid container xs={12} md={12}>
-                                    <Grid xs={4} md={4}>
-                                      <label>{status}</label>
-                                      <p>
-                                        {this.state.showDetails &&
-                                          this.state.showDetails?.smoking_status &&
-                                          this.state.showDetails?.smoking_status
-                                            ?.label}
-                                      </p>
-                                    </Grid>
-                                    {!this.state.showDetails?.smoking_status ||
-                                      (this.state.showDetails &&
-                                        this.state.showDetails?.smoking_status &&
-                                        this.state.showDetails?.smoking_status
-                                          ?.value !== 'Never_smoked' && (
-                                          <>
-                                            <Grid xs={4} md={4}>
-                                              <label>
-                                                {from} {when}
-                                              </label>
-                                              <p>
-                                                {this.state.showDetails &&
-                                                !this.state.showDetails?.from_when ? (
-                                                  '-'
-                                                ) : (
-                                                  <>
-                                                    {getDate(
-                                                      this.state.showDetails
-                                                        ?.from_when,
-                                                      this.props.settings &&
-                                                        this.props.settings
-                                                          ?.setting &&
-                                                        this.props.settings
-                                                          ?.setting?.date_format
-                                                    )}
-                                                  </>
-                                                )}
-                                              </p>
-                                            </Grid>
-                                            <Grid xs={4} md={4}>
-                                              <label>
-                                                {until} {when}
-                                              </label>
-                                              <p>
-                                                {this.state.showDetails &&
-                                                !this.state.showDetails
-                                                  ?.until_when ? (
-                                                  '-'
-                                                ) : (
-                                                  <>
-                                                    {getDate(
-                                                      this.state.showDetails
-                                                        ?.until_when,
-                                                      this.props.settings &&
-                                                        this.props.settings
-                                                          ?.setting &&
-                                                        this.props.settings
-                                                          ?.setting?.date_format
-                                                    )}
-                                                  </>
-                                                )}
-                                              </p>
-                                            </Grid>
-                                          </>
-                                        ))}
-                                  </Grid>
-                                  <Grid>
-                                    <label>{allergies}</label>
-                                  </Grid>
-                                  <p
-                                    dangerouslySetInnerHTML={{
-                                      __html:
-                                        this.state.showDetails &&
-                                        this.state.showDetails?.allergies,
-                                    }}
-                                  />
-                                  <Grid>
-                                    <label>{family_history}</label>
-                                  </Grid>
-                                  <p
-                                    dangerouslySetInnerHTML={{
-                                      __html:
-                                        this.state.showDetails &&
-                                        this.state.showDetails?.family_history,
-                                    }}
-                                  />
-                                  <Grid>
-                                    <label>{treatment_so_far}</label>
-                                  </Grid>
-                                  <p
-                                    dangerouslySetInnerHTML={{
-                                      __html:
-                                        this.state.showDetails &&
-                                        this.state.showDetails?.treatment_so_far,
-                                    }}
-                                  />
-                                  <Grid>
-                                    <label>{place_of_residence}</label>
-                                  </Grid>
-                                  <p>
-                                    {this.state.showDetails &&
-                                      this.state.showDetails?.residenceCountry &&
-                                      this.state.showDetails?.residenceCountry?.label}
-                                  </p>
-                                  <Grid>
-                                    <label>{place_of_birth}</label>
-                                  </Grid>
-                                  <p>
-                                    {this.state.showDetails &&
-                                      this.state.showDetails?.country &&
-                                      this.state.showDetails?.country?.label}
-                                  </p>
-                                  <Grid>
-                                    <label>{phenotyp_race}</label>
-                                  </Grid>
-                                  <p
-                                    dangerouslySetInnerHTML={{
-                                      __html:
-                                        this.state.showDetails &&
-                                        this.state.showDetails?.race,
-                                    }}
-                                  />
-                                  <Grid>
-                                    <label>{travel_history_last_month}</label>
-                                  </Grid>
-                                  <p
-                                    dangerouslySetInnerHTML={{
-                                      __html:
-                                        this.state.showDetails &&
-                                        this.state.showDetails?.history_month,
-                                    }}
-                                  />
-                                  <Grid>
-                                    <label>{medical_preconditions}</label>
-                                  </Grid>
-                                  <p
-                                    dangerouslySetInnerHTML={{
-                                      __html:
-                                        this.state.showDetails &&
-                                        this.state.showDetails?.medical_precondition,
-                                    }}
-                                  />
-                                  <Grid>
-                                    <label>{premedication}</label>
-                                  </Grid>
-                                  <p
-                                    dangerouslySetInnerHTML={{
-                                      __html:
-                                        this.state.showDetails &&
-                                        this.state.showDetails?.premedication,
-                                    }}
-                                  />
-                                  <Grid>
-                                    <label>{image_evaluation}</label>
-                                  </Grid>
-                                  <div className="imageEvalSize">
-                                    {/* <FileViews
-                                      comesFrom="Picture_Task"
-                                      images={this.state.images}
-                                      attachfile={this.state.showDetails?.fileattach}
-                                    /> */}
-                                  </div>
-                                  <Grid>
-                                    <label>Start From</label>
-                                  </Grid>
-                                  <p>
-                                    {getDate(
-                                      this.state.showDetails &&
-                                        this.state.showDetails?.start_date,
-                                      this.props.settings &&
-                                        this.props.settings?.setting &&
-                                        this.props.settings?.setting?.date_format
-                                    )}
-                                  </p>
-                                  <Grid container xs={12} md={12}>
-                                    <Grid xs={3} md={3}>
-                                      <label>{warm}</label>
-                                      {this.state.showDetails &&
-                                      this.state.showDetails?.warm === true ? (
-                                        <p>{yes}</p>
-                                      ) : (
-                                        <p>{no}</p>
-                                      )}
-                                    </Grid>
-                                    <Grid xs={3} md={3}>
-                                      <label>{size_progress}</label>
-
-                                      {this.state.showDetails &&
-                                      this.state.showDetails?.size_progress ===
-                                        true ? (
-                                        <p>{yes}</p>
-                                      ) : (
-                                        <p>{no}</p>
-                                      )}
-                                    </Grid>
-                                    <Grid xs={3} md={3}>
-                                      <label>{itch}</label>
-
-                                      {this.state.showDetails &&
-                                      this.state.showDetails?.itch === true ? (
-                                        <p>{yes}</p>
-                                      ) : (
-                                        <p>{no}</p>
-                                      )}
-                                    </Grid>
-                                    <Grid xs={3} md={3}>
-                                      <label>{pain}</label>
-
-                                      {this.state.showDetails &&
-                                      this.state.showDetails?.pain === true ? (
-                                        <p>{yes}</p>
-                                      ) : (
-                                        <p>{no}</p>
-                                      )}
-                                    </Grid>
-                                  </Grid>
-                                  <Grid>
-                                    <label>{pain_level}</label>
-                                  </Grid>
-                                  <p>
-                                    {this.state.showDetails &&
-                                      this.state.showDetails?.pain_intensity}
-                                  </p>
-                                  <Grid>
-                                    <label>{body_temp}</label>
-                                  </Grid>
-                                  <p>
-                                    {this.state.showDetails &&
-                                      this.state.showDetails?.body_temp}
-                                  </p>
-                                  <Grid>
-                                    <label>{sun_before}</label>
-                                  </Grid>
-                                  <p>
-                                    {this.state.showDetails &&
-                                      this.state.showDetails?.sun_before}
-                                  </p>
-                                  <Grid>
-                                    <label>{cold}</label>
-                                  </Grid>
-                                  <p>
-                                    {this.state.showDetails &&
-                                      this.state.showDetails?.cold}
-                                  </p>
-                                  <Grid>
-                                    <label>{sexual_active}</label>
-                                  </Grid>
-                                  <p
-                                    dangerouslySetInnerHTML={{
-                                      __html:
-                                        this.state.showDetails &&
-                                        this.state.showDetails?.sexual_active,
-                                    }}
-                                  />
-                                  <Grid>
-                                    <label>{payment_done}</label>
-                                  </Grid>
-                                  {this.state.showDetails &&
-                                  this.state.showDetails?.is_payment === true ? (
-                                    <p>{yes}</p>
-                                  ) : (
-                                    <p>{no}</p>
-                                  )}
-                                </Grid>
                     </Grid>
-                  </Grid>
-                  
+                    <Grid container direction="row" className="setDetail-eval">
+                      <Grid item xs={12} md={12} className="taskDescp">
+                        <Grid className="stndQues stndQues1">
+                          <Grid>
+                            <label>Added On</label>
+                          </Grid>
+                          <p>
+                            {this.state.showDetails &&
+                            !this.state.showDetails?.from_when ? (
+                              '-'
+                            ) : (
+                              <>
+                                {getDate(
+                                  this.state.showDetails?.from_when,
+                                  this.props.settings &&
+                                    this.props.settings?.setting &&
+                                    this.props.settings?.setting?.date_format
+                                )}
+                              </>
+                            )}
+                          </p>
+                          <Grid>
+                            <label>{age}</label>
+                          </Grid>
+                          <p>
+                            {this.state.showDetails &&
+                            !this.state.showDetails?.until_when ? (
+                              '-'
+                            ) : (
+                              <>
+                                {getDate(
+                                  this.state.showDetails?.until_when,
+                                  this.props.settings &&
+                                    this.props.settings?.setting &&
+                                    this.props.settings?.setting?.date_format
+                                )}
+                              </>
+                            )}
+                          </p>
+                          <Grid>
+                            <label>{gender}</label>
+                          </Grid>
+                          <p>
+                            {this.state.showDetails &&
+                              this.state.showDetails?.sex}
+                          </p>
+                          <Grid>
+                            <h2>{blood_pressure}</h2>
+                          </Grid>
+                          <Grid container xs={12} md={12}>
+                            <Grid xs={4} md={4}>
+                              <label>{rr_systolic}</label>
+                              <p>
+                                {this.state.showDetails &&
+                                  this.state.showDetails?.rr_systolic}
+                              </p>
+                            </Grid>
+                            <Grid xs={4} md={4}>
+                              <label>{RR_diastolic}</label>
+                              <p>
+                                {this.state.showDetails &&
+                                  this.state.showDetails?.rr_diastolic}
+                              </p>
+                            </Grid>
+                          </Grid>
+                          <Grid>
+                            <h2>{diabetes}</h2>
+                          </Grid>
+                          <Grid container xs={12} md={12}>
+                            <Grid xs={4} md={4}>
+                              <label>{blood_sugar}</label>
+                              <p>
+                                {this.state.showDetails &&
+                                  this.state.showDetails?.blood_sugar}
+                              </p>
+                            </Grid>
+                            <Grid xs={4} md={4}>
+                              <label>{Hba1c}</label>
+                              <p>
+                                {this.state.showDetails &&
+                                  this.state.showDetails?.Hba1c}
+                              </p>
+                            </Grid>
+                            <Grid xs={4} md={4}>
+                              <label>{situation}</label>
+                              <p>
+                                {this.state.showDetails &&
+                                  this.state.showDetails?.situation &&
+                                  this.state.showDetails?.situation?.label}
+                              </p>
+                            </Grid>
+                          </Grid>
+                          <Grid>
+                            <h2>{smoking_status}</h2>
+                          </Grid>
+                          <Grid container xs={12} md={12}>
+                            <Grid xs={4} md={4}>
+                              <label>{status}</label>
+                              <p>
+                                {this.state.showDetails &&
+                                  this.state.showDetails?.smoking_status &&
+                                  this.state.showDetails?.smoking_status?.label}
+                              </p>
+                            </Grid>
+                            {!this.state.showDetails?.smoking_status ||
+                              (this.state.showDetails &&
+                                this.state.showDetails?.smoking_status &&
+                                this.state.showDetails?.smoking_status
+                                  ?.value !== 'Never_smoked' && (
+                                  <>
+                                    <Grid xs={4} md={4}>
+                                      <label>
+                                        {from} {when}
+                                      </label>
+                                      <p>
+                                        {this.state.showDetails &&
+                                        !this.state.showDetails?.from_when ? (
+                                          '-'
+                                        ) : (
+                                          <>
+                                            {getDate(
+                                              this.state.showDetails?.from_when,
+                                              this.props.settings &&
+                                                this.props.settings?.setting &&
+                                                this.props.settings?.setting
+                                                  ?.date_format
+                                            )}
+                                          </>
+                                        )}
+                                      </p>
+                                    </Grid>
+                                    <Grid xs={4} md={4}>
+                                      <label>
+                                        {until} {when}
+                                      </label>
+                                      <p>
+                                        {this.state.showDetails &&
+                                        !this.state.showDetails?.until_when ? (
+                                          '-'
+                                        ) : (
+                                          <>
+                                            {getDate(
+                                              this.state.showDetails
+                                                ?.until_when,
+                                              this.props.settings &&
+                                                this.props.settings?.setting &&
+                                                this.props.settings?.setting
+                                                  ?.date_format
+                                            )}
+                                          </>
+                                        )}
+                                      </p>
+                                    </Grid>
+                                  </>
+                                ))}
+                          </Grid>
+                          <Grid>
+                            <label>{allergies}</label>
+                          </Grid>
+                          <p
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                this.state.showDetails &&
+                                this.state.showDetails?.allergies,
+                            }}
+                          />
+                          <Grid>
+                            <label>{family_history}</label>
+                          </Grid>
+                          <p
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                this.state.showDetails &&
+                                this.state.showDetails?.family_history,
+                            }}
+                          />
+                          <Grid>
+                            <label>{treatment_so_far}</label>
+                          </Grid>
+                          <p
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                this.state.showDetails &&
+                                this.state.showDetails?.treatment_so_far,
+                            }}
+                          />
+                          <Grid>
+                            <label>{place_of_residence}</label>
+                          </Grid>
+                          <p>
+                            {this.state.showDetails &&
+                              this.state.showDetails?.residenceCountry &&
+                              this.state.showDetails?.residenceCountry?.label}
+                          </p>
+                          <Grid>
+                            <label>{place_of_birth}</label>
+                          </Grid>
+                          <p>
+                            {this.state.showDetails &&
+                              this.state.showDetails?.country &&
+                              this.state.showDetails?.country?.label}
+                          </p>
+                          <Grid>
+                            <label>{phenotyp_race}</label>
+                          </Grid>
+                          <p
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                this.state.showDetails &&
+                                this.state.showDetails?.race,
+                            }}
+                          />
+                          <Grid>
+                            <label>{travel_history_last_month}</label>
+                          </Grid>
+                          <p
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                this.state.showDetails &&
+                                this.state.showDetails?.history_month,
+                            }}
+                          />
+                          <Grid>
+                            <label>{medical_preconditions}</label>
+                          </Grid>
+                          <p
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                this.state.showDetails &&
+                                this.state.showDetails?.medical_precondition,
+                            }}
+                          />
+                          <Grid>
+                            <label>{premedication}</label>
+                          </Grid>
+                          <p
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                this.state.showDetails &&
+                                this.state.showDetails?.premedication,
+                            }}
+                          />
+                          <Grid>
+                            <label>{image_evaluation}</label>
+                          </Grid>
+                          <div className="imageEvalSize">
+                            <FileViews
+                              comesFrom="Picture_Task"
+                              images={this.state.images}
+                              attachfile={this.state.showDetails?.fileattach}
+                            />
+                          </div>
+                          <Grid>
+                            <label>Start From</label>
+                          </Grid>
+                          <p>
+                            {getDate(
+                              this.state.showDetails &&
+                                this.state.showDetails?.start_date,
+                              this.props.settings &&
+                                this.props.settings?.setting &&
+                                this.props.settings?.setting?.date_format
+                            )}
+                          </p>
+                          <Grid container xs={12} md={12}>
+                            <Grid xs={3} md={3}>
+                              <label>{warm}</label>
+                              {this.state.showDetails &&
+                              this.state.showDetails?.warm === true ? (
+                                <p>{yes}</p>
+                              ) : (
+                                <p>{no}</p>
+                              )}
+                            </Grid>
+                            <Grid xs={3} md={3}>
+                              <label>{size_progress}</label>
+
+                              {this.state.showDetails &&
+                              this.state.showDetails?.size_progress === true ? (
+                                <p>{yes}</p>
+                              ) : (
+                                <p>{no}</p>
+                              )}
+                            </Grid>
+                            <Grid xs={3} md={3}>
+                              <label>{itch}</label>
+
+                              {this.state.showDetails &&
+                              this.state.showDetails?.itch === true ? (
+                                <p>{yes}</p>
+                              ) : (
+                                <p>{no}</p>
+                              )}
+                            </Grid>
+                            <Grid xs={3} md={3}>
+                              <label>{pain}</label>
+
+                              {this.state.showDetails &&
+                              this.state.showDetails?.pain === true ? (
+                                <p>{yes}</p>
+                              ) : (
+                                <p>{no}</p>
+                              )}
+                            </Grid>
+                          </Grid>
+                          <Grid>
+                            <label>{pain_level}</label>
+                          </Grid>
+                          <p>
+                            {this.state.showDetails &&
+                              this.state.showDetails?.pain_intensity}
+                          </p>
+                          <Grid>
+                            <label>{body_temp}</label>
+                          </Grid>
+                          <p>
+                            {this.state.showDetails &&
+                              this.state.showDetails?.body_temp}
+                          </p>
+                          <Grid>
+                            <label>{sun_before}</label>
+                          </Grid>
+                          <p>
+                            {this.state.showDetails &&
+                              this.state.showDetails?.sun_before}
+                          </p>
+                          <Grid>
+                            <label>{cold}</label>
+                          </Grid>
+                          <p>
+                            {this.state.showDetails &&
+                              this.state.showDetails?.cold}
+                          </p>
+                          <Grid>
+                            <label>{sexual_active}</label>
+                          </Grid>
+                          <p
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                this.state.showDetails &&
+                                this.state.showDetails?.sexual_active,
+                            }}
+                          />
+                          <Grid>
+                            <label>{payment_done}</label>
+                          </Grid>
+                          {this.state.showDetails &&
+                          this.state.showDetails?.is_payment === true ? (
+                            <p>{yes}</p>
+                          ) : (
+                            <p>{no}</p>
+                          )}
+                          <Grid>
+                            <h2>{Reply}</h2>
+                            <label>{Attachments}</label>
+                          </Grid>
+                          <Grid className="imageEvalSize" imageEvalSize>
+                            {this.state.showDetails &&
+                            this.state.showDetails?.attachments &&
+                            this.state.showDetails?.attachments?.length > 0 ? (
+                              <FileViews
+                                comesFrom="Picture_Task"
+                                images={this.state.images}
+                                attachfile={this.state.showDetails?.attachments}
+                              />
+                            ) : (
+                              <p>No attachments!</p>
+                            )}
+                          </Grid>
+                          <Grid>
+                            <label>{Comments}</label>
+                          </Grid>
+                          <p>
+                            {this.state.showDetails &&
+                            this.state.showDetails?.comments &&
+                            this.state.showDetails?.comments?.length > 0 ? (
+                              this.state.showDetails?.comments.map(
+                                (data, index) => (
+                                  <div className="dataCommentBor">
+                                    {data?.comment}
+                                  </div>
+                                )
+                              )
+                            ) : (
+                              <p>No comments!</p>
+                            )}
+                          </p>
+                        </Grid>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
               </Modal>
