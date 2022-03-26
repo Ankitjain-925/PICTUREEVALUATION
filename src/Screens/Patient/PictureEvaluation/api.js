@@ -557,6 +557,41 @@ export const saveOnDB = (payment, current) => {
   }
 };
 
+// Open See Details Form
+export const handleOpenDetail = (current, detail) => {
+  current.setState({ openDetail: true, showDetails: detail });
+};
+// Close See Details Form
+export const handleCloseDetail = (current) => {
+  current.setState({ openDetail: false });
+};
+
+// Open Feedback Form
+export const handleOpFeedback = (current) => {
+  current.setState({ openFeedback: true });
+};
+// Close Feedback Form
+export const handleCloseFeedback = (current) => {
+  current.setState({ openFeedback: false, updateFeedback: {} });
+};
+
+// Set state for feedback form
+export const updateEntryState1 = (current, value, name) => {
+  const state = current.state.updateFeedback;
+  state[name] = value;
+  current.setState({ updateFeedback: state });
+  // this.props.updateEntryState1(value, name);
+};
+
+// For payment stripe
+export const updateRequestBeforePayment = (current, data) => {
+  current.props.history.push({
+    pathname: '/patient/picture-evaluation',
+    state: { data: data },
+  });
+};
+
+// Api call for feedback form
 export const handleSubmitFeed = (current) => {
   var data = current.state.updateFeedback;
   current.setState({ loaderImage: true });
@@ -568,9 +603,33 @@ export const handleSubmitFeed = (current) => {
     )
     .then((response) => {
       if (response.data.hassuccessed) {
-        current.setState({ updateFeedback: {}, loaderImage: false });
+        current.setState({ loaderImage: false });
+        handleCloseFeedback(current);
       }
       current.setState({ loaderImage: false });
     })
     .catch((err) => {});
+};
+export const getUserData = (current) => {
+  current.setState({ loaderImage: true });
+  let user_token = current.props.stateLoginValueAim.token;
+  let user_id = current.props.stateLoginValueAim.user._id;
+  axios
+    .get(
+      sitedata.data.path + '/UserProfile/Users/' + user_id,
+      commonHeader(user_token)
+    )
+    .then((responce) => {
+      current.setState({ loaderImage: false });
+      if (responce.data.hassuccessed) {
+        current.setState({
+          updateEvaluate: {
+            sex: responce.data.data?.sex,
+            dob: responce.data.data?.birthday,
+            country: responce.data.data?.citizen_country,
+            residenceCountry: responce.data.data?.country,
+          },
+        });
+      }
+    });
 };
