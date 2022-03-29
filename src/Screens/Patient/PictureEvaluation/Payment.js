@@ -82,7 +82,8 @@ function HomePage(props) {
     });
 
     if (result.error) {
-    
+      setLoaderImage(false);
+      setshowError('Please fill the full or correct information of CARD');
     } else {
 
       const res = await axios.post(sitedata.data.path + "/lms_stripeCheckout/intent", {
@@ -98,14 +99,15 @@ function HomePage(props) {
       })
       if(PaymentIntent.paymentIntent.status === "succeeded"){
         setLoaderImage(false);
+        console.log('props.setting.setting.mode', props.settings)
         confirmAlert({
           customUI: ({ onClose }) => {
             return (
               <div
                 className={
-                 props.setting &&
-                   props.setting.setting &&
-                   props.setting.setting.mode === "dark"
+                 props.settings &&
+                   props.settings.setting &&
+                   props.settings.setting.mode === "dark"
                     ? "dark-confirm react-confirm-alert-body"
                     : "react-confirm-alert-body"
                 }
@@ -115,6 +117,7 @@ function HomePage(props) {
                   <button
                     onClick={() => {
                       onClose();
+                      props.saveOnDB(client_secret)  
                     }}
                   >
                     {ok}
@@ -124,7 +127,7 @@ function HomePage(props) {
             );
           },
         });
-        props.saveOnDB(client_secret)  
+        
       }
       else{
         setLoaderImage(false);
@@ -163,8 +166,8 @@ function HomePage(props) {
   };
     
   return (
-    <Grid container direction="row" spacing="3">
-        {showError}
+    <Grid container direction="row" justify="center" alignItems="center" spacing="3">
+        <div className="err_message">{showError}</div>
         {loaderImage && <Loader />}
     {/* <Grid item xs={12} md={6}> */}
     {(props.show2 ) && <div className="payment_sec_extra_ser1">

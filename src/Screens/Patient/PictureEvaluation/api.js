@@ -25,7 +25,7 @@ export const handleEvalSubmit = (value, current) => {
                                 if (validateBpAndSugar(data.history_month, 'history_month', current)) {
                                   if (validateBpAndSugar(data.medical_precondition, 'medical_precondition', current)) {
                                     if (validateBpAndSugar(data.premedication, 'premedication', current)) {
-                                      current.setState({ mod1Open: true, picEval: true })
+                                      current.setState({ mod1Open: true, picEval: true, error_section: 0, errorChrMsg: '' })
                                       axios.put(sitedata.data.path + '/UserProfile/Users/update', {
                                         birthday: data.dob,
                                         sex: data.sex,
@@ -51,14 +51,14 @@ export const handleEvalSubmit = (value, current) => {
           }
         }
       } else {
-        current.setState({ errorChrMsg: 'Please select Gender' });
-        MoveTop();
+        current.setState({ errorChrMsg: 'Please select Gender', error_section: 2 });
+        MoveTop(0);
       }
     } else {
       current.setState({
-        errorChrMsg: 'Please select valid age, Age must be between 0 to 130',
+        errorChrMsg: 'Please select valid age, Age must be between 0 to 130',error_section: 1 
       });
-      MoveTop();
+      MoveTop(0);
     }
   } else {
     //     current.setState({ mod1Open: false, show2: true, show1: false })
@@ -87,6 +87,19 @@ export const handleEvalSubmit = (value, current) => {
                     current.setState({ errorChrMsg: '' });
 
                     if (data?._id) {
+                      if(data.is_decline){
+                        data.is_decline = false;
+                        data.done_on = '';
+                        data.priority = 0;
+                        data.archived = false;
+                        data.status = 'open';
+                        data.created_at = new Date();
+                        var due_on = data?.due_on || {};
+                        due_on['date'] = new Date();
+                        data.due_on = due_on;
+                        due_on['time'] = new Date();
+                        data.due_on = due_on;
+                      }
                       axios
                         .put(
                           sitedata.data.path + '/vh/AddTask/' + data._id,
@@ -173,26 +186,26 @@ export const handleEvalSubmit = (value, current) => {
           }
         }
       } else {
-        current.setState({ errorChrMsg: 'Please select valid start date' });
-        MoveTop();
+        current.setState({ errorChrMsg: 'Please select valid start date', error_section: 19 });
+        MoveTop(0);
       }
       // }
       // else{
       //     current.setState({ errorChrMsg: "Please select hospital" })
-      //     MoveTop();
+      //     MoveTop(0);
       // }
     } else {
       current.setState({
-        errorChrMsg: 'Please upload atleast one Picture for evaluation',
+        errorChrMsg: 'Please upload atleast one Picture for evaluation',  error_section: 18
       });
-      MoveTop();
+      MoveTop(0);
     }
   }
 };
 
-export const MoveTop = () => {
+export const MoveTop = (top) => {
   window.scroll({
-    top: 0,
+    top: top,
     behavior: 'smooth',
   });
 };
@@ -227,36 +240,36 @@ export const validateBpAndSugar1 = (value, item, current) => {
             : pain;
     if (!value) {
       current.setState({
-        errorChrMsg: please_select + ' ' + currentItem + ' ' + with_yes_no,
+        errorChrMsg: please_select + ' ' + currentItem + ' ' + with_yes_no, error_section: 20
       });
-      MoveTop();
+      MoveTop(200);
       return false;
     } else {
       return true;
     }
   } else if (item === 'body_temp') {
     if (!value) {
-      current.setState({ errorChrMsg: enter_body_temp });
-      MoveTop();
+      current.setState({ errorChrMsg: enter_body_temp , error_section: 21});
+      MoveTop(250);
       return false;
     } else if (value < 96 || value > 105) {
-      current.setState({ errorChrMsg: valid_body_temp });
-      MoveTop();
+      current.setState({ errorChrMsg: valid_body_temp, error_section: 22 });
+      MoveTop(250);
       return false;
     } else {
       return true;
     }
   } else if (item === 'sexual_active') {
     if (!value) {
-      current.setState({ errorChrMsg: enter_sexual_activities });
-      MoveTop();
+      current.setState({ errorChrMsg: enter_sexual_activities , error_section: 23});
+      MoveTop(400);
       return false;
     }
     if (value.length > 400) {
       current.setState({
-        errorChrMsg: Max_word_limit_exceeds,
+        errorChrMsg: Max_word_limit_exceeds, error_section: 23
       });
-      MoveTop();
+      MoveTop(400);
       return false;
     } else {
       return true;
@@ -297,72 +310,72 @@ export const validateBpAndSugar = (value, item, current) => {
   var Valid = bpPattern.test(value);
   if (item === 'systolic') {
     if (!value) {
-      current.setState({ errorChrMsg: enter_systolic_value });
-      MoveTop();
+      current.setState({ errorChrMsg: enter_systolic_value, error_section: 3 });
+      MoveTop(0);
       return false;
     } else if (!Valid) {
-      current.setState({ errorChrMsg: systolic_bp_in_number });
-      MoveTop();
+      current.setState({ errorChrMsg: systolic_bp_in_number, error_section: 3 });
+      MoveTop(0);
       return false;
     } else if (value < 120) {
       current.setState({
-        errorChrMsg: systolic_value_between,
+        errorChrMsg: systolic_value_between, error_section: 3
       });
-      MoveTop();
+      MoveTop(0);
       return false;
     } else if (value > 140) {
       current.setState({
-        errorChrMsg: systolic_value_between,
+        errorChrMsg: systolic_value_between, error_section: 3
       });
-      MoveTop();
+      MoveTop(0);
       return false;
     } else {
       return true;
     }
   } else if (item === 'diastolic') {
     if (!value) {
-      current.setState({ errorChrMsg: enter_diastolic_value });
-      MoveTop();
+      current.setState({ errorChrMsg: enter_diastolic_value, error_section: 4 });
+      MoveTop(0);
       return false;
     } else if (!Valid) {
-      current.setState({ errorChrMsg: diastolic_in_number });
-      MoveTop();
+      current.setState({ errorChrMsg: diastolic_in_number, error_section: 4 });
+      MoveTop(0);
       return false;
     } else if (value < 80) {
       current.setState({
-        errorChrMsg: diastolic_value_between,
+        errorChrMsg: diastolic_value_between,error_section: 4
       });
-      MoveTop();
+      MoveTop(0);
       return false;
     } else if (value > 90) {
       current.setState({
-        errorChrMsg: diastolic_value_between,
+        errorChrMsg: diastolic_value_between, error_section: 4
       });
-      MoveTop();
+      MoveTop(0);
       return false;
     } else {
       return true;
     }
   } else if (item === 'blood_sugar') {
     if (!value) {
-      current.setState({ errorChrMsg: enter_blood_sugar });
-      MoveTop();
+      current.setState({ errorChrMsg: enter_blood_sugar, error_section: 5 });
+      MoveTop(0);
       return false;
     } else if (!Valid) {
-      current.setState({ errorChrMsg: blood_sugar_in_number });
-      MoveTop();
+      current.setState({ errorChrMsg: blood_sugar_in_number, error_section: 5 });
+      MoveTop(0);
       return false;
     } else if (value < 160) {
       current.setState({
-        errorChrMsg: sugar_value_between,
+        errorChrMsg: sugar_value_between, error_section: 5
       });
-      MoveTop();
+      MoveTop(0);
       return false;
     } else if (value > 240) {
       current.setState({
-        errorChrMsg: sugar_value_between,
+        errorChrMsg: sugar_value_between, error_section: 5
       });
-      MoveTop();
+      MoveTop(0);
       return false;
     } else {
       return true;
@@ -370,36 +383,36 @@ export const validateBpAndSugar = (value, item, current) => {
   } else if (item === 'Hba1c') {
     let calHba1c = value && value / 10;
     if (!value) {
-      current.setState({ errorChrMsg: enter_hba1c });
-      MoveTop();
+      current.setState({ errorChrMsg: enter_hba1c, error_section: 6 });
+      MoveTop(0);
       return false;
     } else if (calHba1c < 57 / 10) {
       current.setState({
-        errorChrMsg: homoglobin_levels_between,
+        errorChrMsg: homoglobin_levels_between, error_section: 6
       });
-      MoveTop();
+      MoveTop(0);
       return false;
     } else if (calHba1c > 64 / 10) {
       current.setState({
-        errorChrMsg: homoglobin_levels_between,
+        errorChrMsg: homoglobin_levels_between, error_section: 6
       });
-      MoveTop();
+      MoveTop(0);
       return false;
     } else {
       return true;
     }
   } else if (item === 'situation') {
     if (!value) {
-      current.setState({ errorChrMsg: enter_situation });
-      MoveTop();
+      current.setState({ errorChrMsg: enter_situation, error_section: 7 });
+      MoveTop(0);
       return false;
     } else {
       return true;
     }
   } else if (item === 'smoking_status') {
     if (!value) {
-      current.setState({ errorChrMsg: enter_smoking_status });
-      MoveTop();
+      current.setState({ errorChrMsg: enter_smoking_status , error_section: 8});
+      MoveTop(100);
       return false;
     } else {
       return true;
@@ -407,9 +420,10 @@ export const validateBpAndSugar = (value, item, current) => {
   } else if (item === 'country' || item === 'residenceCountry') {
     var fillItem =
       item === 'residenceCountry' ? country_of_residence : country_of_birth;
+    var section = item === 'residenceCountry' ? 13 : 12;
     if (!value) {
-      current.setState({ errorChrMsg: please_select + ' ' + fillItem });
-      MoveTop();
+      current.setState({ errorChrMsg: please_select + ' ' + fillItem, error_section: section });
+      MoveTop(650); 
       return false;
     } else {
       return true;
@@ -421,6 +435,15 @@ export const validateBpAndSugar = (value, item, current) => {
     item === 'medical_precondition' ||
     item === 'premedication'
   ) {
+    var section = item === 'allergies'
+    ? 9
+    : item === 'family_history'
+      ? 10
+      : item === 'treatment_so_far'
+        ? 11
+        : item === 'medical_precondition'
+          ? 16
+          : 17;
     var currentItem =
       item === 'allergies'
         ? allergies
@@ -431,32 +454,42 @@ export const validateBpAndSugar = (value, item, current) => {
             : item === 'medical_precondition'
               ? medical_preconditions
               : premedication;
+
     if (!value) {
-      current.setState({ errorChrMsg: please_enter + ' ' + currentItem });
-      MoveTop();
+      current.setState({ errorChrMsg: please_enter + ' ' + currentItem , error_section: section });
+      if(item === 'treatment_so_far') { MoveTop(650); }
+      else if(item === 'medical_precondition' || item === 'premedication'){
+        MoveTop(850);
+      }
+      else{  MoveTop(300); }
       return false;
     }
     if (value.length > 400) {
       current.setState({
-        errorChrMsg: max_Words_limit_exceeds_in + ' ' + currentItem,
+        errorChrMsg: max_Words_limit_exceeds_in + ' ' + currentItem, error_section: section 
       });
-      MoveTop();
+      if(item === 'treatment_so_far') { MoveTop(650); }
+      else if(item === 'medical_precondition' || item === 'premedication'){
+        MoveTop(850);
+      }
+      else{  MoveTop(300); }
       return false;
     } else {
       return true;
     }
   } else if (item === 'race' || item === 'history_month') {
+    var section = item === 'race' ? 14 : 15;
     var currentItem = item === 'race' ? race : history_month;
     if (!value) {
-      current.setState({ errorChrMsg: please_enter + ' ' + currentItem });
-      MoveTop();
+      current.setState({ errorChrMsg: please_enter + ' ' + currentItem , error_section: section});
+      MoveTop(600);
       return false;
     }
     if (value.length > 100) {
       current.setState({
-        errorChrMsg: max_Words_limit_exceeds_in + ' ' + currentItem,
+        errorChrMsg: max_Words_limit_exceeds_in + ' ' + currentItem, error_section: section
       });
-      MoveTop();
+      MoveTop(600);
       return false;
     } else {
       return true;
@@ -486,7 +519,30 @@ export const getAllPictureEval = (current) => {
     )
     .then((responce) => {
       if (responce.data.hassuccessed && responce.data.data) {
-        current.setState({ AllData: responce.data.data });
+        var totalPage = Math.ceil(responce.data.data?.length / 20);
+        current.setState(
+          {
+            AllData1: responce.data.data,
+            loaderImage: false,
+            totalPage: totalPage,
+            currentPage: 1,
+          },
+          () => {
+            if (totalPage > 1) {
+              var pages = [];
+              for (var i = 1; i <= current.state.totalPage; i++) {
+                pages.push(i);
+              }
+              current.setState({
+                AllData: current.state.AllData1.slice(0, 20),
+                pages: pages,
+              });
+            } else {
+              current.setState({ AllData: current.state.AllData1 });
+            }
+          }
+        );
+        // current.setState({ AllData: responce.data.data });
       }
       current.setState({ loaderImage: false });
     });
@@ -630,14 +686,12 @@ export const getUserData = (current) => {
     .then((responce) => {
       current.setState({ loaderImage: false });
       if (responce.data.hassuccessed) {
-        current.setState({
-          updateEvaluate: {
-            sex: responce.data.data?.sex,
-            dob: responce.data.data?.birthday,
-            country: responce.data.data?.citizen_country,
-            residenceCountry: responce.data.data?.country,
-          },
-        });
+        var State = current.state.updateEvaluate
+        State['sex'] = responce.data.data?.sex
+        State['dob'] = responce.data.data?.birthday
+        State['country'] = responce.data.data?.citizen_country
+        State['residenceCountry'] = responce.data.data?.country
+        current.setState({ updateEvaluate: State });
       }
     });
 };

@@ -80,6 +80,7 @@ class Index extends Component {
       activated: false,
       deactivated: false,
       is_payment: false,
+      error_section: 0
     };
   }
 
@@ -157,7 +158,6 @@ class Index extends Component {
   };
 
   updateEntryState1 = (value, name) => {
-    console.log('value', value);
     var state = this.state.updateEvaluate;
     if (name == 'house_id') {
       state[name] = value.value;
@@ -257,9 +257,6 @@ class Index extends Component {
                   </Grid>
                   <Grid item xs={12} sm={12} md={8}>
                     <Grid className="cnfrmDiaMain profilePkg cnfrmDiaMain1">
-                      <div className="err_message">
-                        {this.state.errorChrMsg}
-                      </div>
                       {!this.state.show2 && (
                         <Grid>
                           {!this.state.picEval === true ? (
@@ -287,7 +284,11 @@ class Index extends Component {
                                       this.props.settings.setting &&
                                       this.props.settings.setting.date_format
                                     }
+                                    NotFutureDate={true}
                                   />
+                                  {this.state.error_section == 1 && <div className="err_message2">
+                                    {this.state.errorChrMsg}
+                                  </div>}
                                 </Grid>
                                 <Grid item xs={12} md={8}>
                                   <Grid>
@@ -334,6 +335,9 @@ class Index extends Component {
                                       {' '}
                                       {other}
                                     </a>
+                                    {this.state.error_section == 2 && <div className="err_message2">
+                                    {this.state.errorChrMsg}
+                                  </div>}
                                   </Grid>
                                 </Grid>
                                 <Grid className="bloodpreLb">
@@ -353,7 +357,11 @@ class Index extends Component {
                                           this.state.updateEvaluate?.rr_systolic
                                         }
                                       />
+                                       {this.state.error_section == 3 && <div className="err_message2">
+                                    {this.state.errorChrMsg}
+                                  </div>}
                                     </Grid>
+                                   
                                   </Grid>
 
                                   <Grid item md={6} sm={6}>
@@ -370,6 +378,9 @@ class Index extends Component {
                                             ?.rr_diastolic
                                         }
                                       />
+                                      {this.state.error_section == 4 && <div className="err_message2">
+                                        {this.state.errorChrMsg}
+                                    </div>}
                                     </Grid>
                                   </Grid>
                                 </Grid>
@@ -390,6 +401,9 @@ class Index extends Component {
                                           this.state.updateEvaluate?.blood_sugar
                                         }
                                       />
+                                      {this.state.error_section == 5 && <div className="err_message2">
+                                        {this.state.errorChrMsg}
+                                    </div>}
                                     </Grid>
                                   </Grid>
                                   <Grid item md={6} sm={6}>
@@ -403,6 +417,9 @@ class Index extends Component {
                                         }
                                         value={this.state.updateEvaluate?.Hba1c}
                                       />
+                                      {this.state.error_section == 6 && <div className="err_message2">
+                                        {this.state.errorChrMsg}
+                                    </div>}
                                     </Grid>
                                   </Grid>
                                 </Grid>
@@ -415,7 +432,7 @@ class Index extends Component {
                                       this.updateEntryState1(e, 'situation')
                                     }
                                     value={GetShowLabel1(
-                                      this.state.options,
+                                      this.state.Allsituation,
                                       this.state.updateEvaluate &&
                                         this.state.updateEvaluate.situation &&
                                         this.state.updateEvaluate.situation
@@ -423,6 +440,9 @@ class Index extends Component {
                                       this.props.stateLanguageType
                                     )}
                                   />
+                                  {this.state.error_section == 7 && <div className="err_message2">
+                                        {this.state.errorChrMsg}
+                                    </div>}
                                 </Grid>
 
                                 <Grid className="bloodpreLb">
@@ -454,6 +474,9 @@ class Index extends Component {
                                           'anamnesis'
                                         )}
                                       />
+                                      {this.state.error_section == 8 && <div className="err_message2">
+                                        {this.state.errorChrMsg}
+                                    </div>}
                                     </Grid>
                                   </Grid>
                                   <Grid item md={4} sm={4}>
@@ -550,6 +573,9 @@ class Index extends Component {
                                     }
                                     value={this.state.updateEvaluate?.allergies}
                                   />
+                                  {this.state.error_section == 9 && <div className="err_message2">
+                                        {this.state.errorChrMsg}
+                                    </div>}
                                 </Grid>
                                 <Grid className="fillDiaAll">
                                   <label>{family_history}</label>
@@ -565,6 +591,9 @@ class Index extends Component {
                                       this.state.updateEvaluate?.family_history
                                     }
                                   />
+                                  {this.state.error_section == 10 && <div className="err_message2">
+                                        {this.state.errorChrMsg}
+                                    </div>}
                                 </Grid>
                                 <Grid className="fillDiaAll">
                                   <label>{treatment_so_far}</label>
@@ -581,6 +610,9 @@ class Index extends Component {
                                         ?.treatment_so_far
                                     }
                                   />
+                                  {this.state.error_section == 11 && <div className="err_message2">
+                                        {this.state.errorChrMsg}
+                                    </div>}
                                 </Grid>
                                 <Grid container direction="row" spacing="1">
                                   <Grid item xs={6} md={6}>
@@ -599,6 +631,9 @@ class Index extends Component {
                                         name="country"
                                         className="cntryDrop"
                                       />
+                                      {this.state.error_section == 12 && <div className="err_message2">
+                                        {this.state.errorChrMsg}
+                                    </div>}
                                     </Grid>
                                   </Grid>
                                   <Grid item xs={6} md={6}>
@@ -622,6 +657,9 @@ class Index extends Component {
                                           name="residenceCountry"
                                           className="cntryDrop"
                                         />
+                                        {this.state.error_section == 13 && <div className="err_message2">
+                                        {this.state.errorChrMsg}
+                                    </div>}
                                       </Grid>
                                     </Grid>
                                   </Grid>
@@ -635,6 +673,9 @@ class Index extends Component {
                                     }
                                     value={this.state.updateEvaluate?.race}
                                   />
+                                  {this.state.error_section == 14 && <div className="err_message2">
+                                        {this.state.errorChrMsg}
+                                    </div>}
                                 </Grid>
                                 <Grid className="fillDiaAll">
                                   <label>{travel_history_last_month}</label>
@@ -647,6 +688,9 @@ class Index extends Component {
                                       this.state.updateEvaluate?.history_month
                                     }
                                   />
+                                  {this.state.error_section == 15 && <div className="err_message2">
+                                        {this.state.errorChrMsg}
+                                    </div>}
                                 </Grid>
                                 <Grid className="fillDiaAll">
                                   <label>{medical_preconditions}</label>
@@ -663,6 +707,9 @@ class Index extends Component {
                                         ?.medical_precondition
                                     }
                                   />
+                                  {this.state.error_section == 16 && <div className="err_message2">
+                                        {this.state.errorChrMsg}
+                                    </div>}
                                 </Grid>
                                 <Grid className="fillDiaAll">
                                   <label>{premedication}</label>
@@ -675,6 +722,9 @@ class Index extends Component {
                                       this.state.updateEvaluate?.premedication
                                     }
                                   />
+                                  {this.state.error_section == 17 && <div className="err_message2">
+                                        {this.state.errorChrMsg}
+                                    </div>}
                                 </Grid>
 
                                 <Grid className="infoShwSave3">
@@ -705,8 +755,11 @@ class Index extends Component {
                                   isMulti={true}
                                   fileUpload={(e) => FileAttachMulti(e, this)}
                                 />
+                                 {this.state.error_section == 18 && <div className="err_message2">
+                                        {this.state.errorChrMsg}
+                                    </div>}
                               </Grid>
-                              <Grid item xs={12} md={12}>
+                              {/* <Grid item xs={12} md={12}>
                                 <label>{hospital}</label>
                                 <Grid className="cntryDropTop">
                                   <Select
@@ -721,7 +774,7 @@ class Index extends Component {
                                     className="cntryDrop"
                                   />
                                 </Grid>
-                              </Grid>
+                              </Grid> */}
 
                               <Grid className="fatiqueQues fatiqueQuess1">
                                 <Grid className="dateSet">
@@ -744,7 +797,11 @@ class Index extends Component {
                                       this.props.settings.setting.date_format
                                     }
                                   />
+                                   {this.state.error_section == 19 && <div className="err_message2">
+                                        {this.state.errorChrMsg}
+                                    </div>}
                                 </Grid>
+                                <Grid>
                                 <FatiqueQuestion
                                   updateEntryState1={(e) =>
                                     this.updateEntryState1(e, 'warm')
@@ -775,6 +832,10 @@ class Index extends Component {
                                   label={pain}
                                   value={this.state.updateEvaluate?.pain}
                                 />
+                                 {this.state.error_section == 20 && <div className="err_message2">
+                                        {this.state.errorChrMsg}
+                                    </div>}
+                                </Grid>
                                 <Grid className="setDividerPic-eval">
                                   <label>{pain_level}</label>
                                   <PainIntensity
@@ -784,7 +845,11 @@ class Index extends Component {
                                       this.state.updateEvaluate?.pain_intensity
                                     )}
                                     comesFrom="Evalute"
+                                    setting= {this.props.settings}
                                   />
+                                  {this.state.error_section == 21 && <div className="err_message2">
+                                        {this.state.errorChrMsg}
+                                    </div>}
                                 </Grid>
                                 <Grid className="textFieldArea1">
                                   <label>{fever_body_temp}</label>
@@ -798,6 +863,9 @@ class Index extends Component {
                                     }
                                     value={this.state.updateEvaluate?.body_temp}
                                   ></input>
+                                    {this.state.error_section == 22 && <div className="err_message2">
+                                        {this.state.errorChrMsg}
+                                    </div>}
                                 </Grid>
                                 <Grid className="textFieldArea1">
                                   <label>{sun_before_how_long} </label>
@@ -832,6 +900,9 @@ class Index extends Component {
                                       this.state.updateEvaluate.sexual_active
                                     }
                                   />
+                                   {this.state.error_section == 23 && <div className="err_message2">
+                                        {this.state.errorChrMsg}
+                                    </div>}
                                 </Grid>
                                 <Grid className="infoShwSave3">
                                   <input
@@ -846,6 +917,7 @@ class Index extends Component {
                           )}
                         </Grid>
                       )}
+                    
                       {this.state.updateEvaluate?.is_payment === false && (
                         <Elements stripe={stripePromise}>
                           <Payment
@@ -856,6 +928,8 @@ class Index extends Component {
                             show1={this.state.show1}
                             show2={this.state.show2}
                             CancelClick={this.CancelClick}
+                            saveOnDB={(payment)=> saveOnDB(payment, this)}
+                            settings={this.props.settings}
                           />
                         </Elements>
                       )}

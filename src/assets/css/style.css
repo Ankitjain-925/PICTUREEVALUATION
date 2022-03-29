@@ -3596,8 +3596,8 @@ a.profilMenu {
     border-radius: 12px;
     background-color: #FFFFFF;
     box-shadow: 0 1px 8px 0 rgba(0,8,8,0.04);
-    margin-left: 70px;
-    margin-top: 41px;
+    margin-left: 48px;
+    margin-top: 42px;
 }
 .profileId {
     border-radius: 12px;
@@ -3740,10 +3740,10 @@ span.css-1okebmr-indicatorSeparator {
     background-color: #00ABAF !important;
     color: #FFFFFF;
 }
-.cntryDrop .css-yk16xz-control {
+/* .cntryDrop .css-yk16xz-control {
     height: 36px !important;
     min-height: initial;
-}
+} */
 .profileInfoIner input {
     min-height: initial !important;
     width: 100% !important;
@@ -5546,6 +5546,7 @@ span.revwRed{
     letter-spacing: 0;
     line-height: 40px;
     margin-bottom: 0px;
+    display: block;
 }
 .docsOpinRght {
     text-align: right;
@@ -6822,6 +6823,7 @@ a.diaCDActv {
 .infoShwSave3 input {
     border-radius: 8px;
     background-color: #00ABAF;
+    border: 2px solid #00ABAF;
     width: 100%;
     color: #FFFFFF;
     font-family: Muli;
@@ -6830,11 +6832,14 @@ a.diaCDActv {
     letter-spacing: 0;
     line-height: 16px;
     text-align: center;
-    border: none;
     padding: 12px 8px;
-    margin-top: 22px;
+    margin-top: 15px;
     margin-bottom: 2px;
     outline: none;
+}
+.infoShwSave3 input:hover {
+    background: transparent;
+    color: #00ABAF;
 }
 .infoShwHidMain3upr {
     border-top: 1px solid #F2F2F2;
@@ -8417,7 +8422,7 @@ a.vsblDots2 img {
     line-height: 18px;
 }
 .rrSysto {
-    margin-bottom: 18px;
+    /* margin-bottom: 18px; */
     position: relative;
 }
 span.dosMg {
@@ -8550,7 +8555,7 @@ span.dosMg {
     padding: 12px 10px;
 }
 .relexStressLft a {
-    border-radius: 4px 0 0 4px;
+    border-radius: 0px 4px 4px 0px;
     border: 1px solid #00ABAF;
     background-color: #00ABAF;
     color: #FFFFFF;
@@ -8563,6 +8568,10 @@ span.dosMg {
     width: 100%;
     display: block;
     padding: 12px 10px;
+}
+.relexStress div:first-child a {
+    border-right: none;
+    border-radius: 4px 0px 0px 4px !important;
 }
 .notesEditor {
     border: 1px solid #BFC1C1;
@@ -16040,7 +16049,7 @@ td.dotsImgColor.pivoted{
 }
 @media screen and (min-width: 960px) and (max-width: 1200px){
   .docsOpinion{
-     margin-left: 25px !important;
+     margin-left: 48px !important;
   }
 }
 @media (max-width: 959px){
@@ -17329,7 +17338,6 @@ ul.duringCovid li:last-child {
 .taskBorder {
     border-left: 4px solid #00ABAF !important;
 }
-
 /* done by naveen */
 .homeBgDrk span.task_desk {
     color: #edf2f2!important;
@@ -17466,6 +17474,34 @@ ul.duringCovid li:last-child {
     display: flex;
     margin-top: 10px;
 }
-.OnExistBed{
+.OnExistBed {
     margin-top: 18px;
+}
+.relexStress .relexStressRght:first-child a {
+    border-right: none;
+    border-radius: 4px 0px 0px 4px;
+}
+.fillDiaAll {
+    margin-top: 7px;
+}
+.fillDiaAll label {
+    margin-bottom: 8px;
+    display: block !important;
+}
+.cnfrmDiaMain .fillDia .rrSysto div {
+    border-radius: 3px;
+}
+.fatiqueQues .dateSet .ant-picker {
+    margin-top: 10px;
+}
+.homeBgDrk .ql-toolbar.ql-snow {
+    background-color: #192020 !important;
+}
+.darkTheme .fillDiaAll .ql-stroke,
+.darkTheme .ql-snow .ql-fill, 
+.darkTheme .ql-snow .ql-stroke.ql-fill,
+.darkTheme .ql-snow.ql-toolbar .ql-picker-label {
+    fill: none;
+    stroke: #00abaf !important;
+    color: #00abaf !important;;
 }

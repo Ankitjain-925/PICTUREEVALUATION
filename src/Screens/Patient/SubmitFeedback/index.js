@@ -37,6 +37,7 @@ class Index extends Component {
     super(props);
     this.state = {
       AllData: [],
+      AllData1: [],
       openFeedback: false,
       updateFeedback: {},
       openDetail: false,
@@ -44,7 +45,9 @@ class Index extends Component {
       forFeedback: {},
       allcompulsary: false,
       sendError: false,
-      sendSuccess: false
+      sendSuccess: false,
+      totalPage: 1,
+      currentPage: 1
     };
     // new Timer(this.logOutClick.bind(this))
   }
@@ -57,6 +60,7 @@ class Index extends Component {
     this.props.history.push({
       pathname: '/patient/picture-evaluation',
       state: { data: data },
+
     });
   };
 
@@ -66,6 +70,17 @@ class Index extends Component {
     this.setState({ updateFeedback: state });
     // this.props.updateEntryState1(value, name);
   };
+
+    //For chnage the page
+    onChangePage = (pageNumber) => {
+      this.setState({
+        AllData: this.state.AllData1.slice(
+          (pageNumber - 1) * 20,
+          pageNumber * 20
+        ),
+        currentPage: pageNumber,
+      });
+    };
 
   deleteRequest = (id)=>{
     this.setState({ message: null, openTask: false });
@@ -298,6 +313,12 @@ class Index extends Component {
                                     />
                                   </Td>
                                   <Td>
+                                    {item.is_decline ? <>
+                                      <span className="err_message">
+                                        Your request is Declined
+                                      </span>
+                                    </>:
+                                    <>
                                     {!item.is_payment && (
                                       <span className="err_message">
                                         Your Payment is pending
@@ -310,6 +331,7 @@ class Index extends Component {
                                         detail
                                       </span>
                                     )}
+                                    </>}
                                   </Td>
                                   <Td className="presEditDot scndOptionIner">
                                     <a className="openScndhrf">
@@ -369,22 +391,7 @@ class Index extends Component {
                                               </a>
                                             </li>
                                           )}
-                                        {!item.is_payment && (
-                                          <li>
-                                            <a
-                                              onClick={() => {
-                                                // this.updatePrescription("cancel", data._id);
-                                              }}
-                                            >
-                                              <img
-                                                src={require('assets/images/cancel-request.svg')}
-                                                alt=""
-                                                title=""
-                                              />
-                                              {cancel_request}
-                                            </a>
-                                          </li>
-                                        )}
+                                    
                                         {(item.status === 'done' ||
                                           item?.comments?.length > 0) && (
                                           <>
@@ -421,14 +428,15 @@ class Index extends Component {
                                 </a>
                               </Grid>
                             </Grid>
+                            {console.log('totalPage', this.state.totalPage)}
                             <Grid item xs={12} md={6}>
                               {this.state.totalPage > 1 && (
                                 <Grid className="prevNxtpag">
                                   <Pagination
-                                    totalPage={1}
-                                    currentPage={1}
+                                    totalPage={this.state.totalPage}
+                                    currentPage={this.state.currentPage}
                                     pages={this.state.pages}
-                                    // onChangePage={(page) => { this.onChangePage(page) }}
+                                    onChangePage={(page) => { this.onChangePage(page) }}
                                   />
                                 </Grid>
                               )}
@@ -559,12 +567,12 @@ class Index extends Component {
                           </Grid>
                           <p>
                             {this.state.showDetails &&
-                            !this.state.showDetails?.from_when ? (
+                            !this.state.showDetails?.created_at ? (
                               '-'
                             ) : (
                               <>
                                 {getDate(
-                                  this.state.showDetails?.from_when,
+                                  this.state.showDetails?.created_at,
                                   this.props.settings &&
                                     this.props.settings?.setting &&
                                     this.props.settings?.setting?.date_format
@@ -577,12 +585,12 @@ class Index extends Component {
                           </Grid>
                           <p>
                             {this.state.showDetails &&
-                            !this.state.showDetails?.until_when ? (
+                            !this.state.showDetails?.dob ? (
                               '-'
                             ) : (
                               <>
                                 {getDate(
-                                  this.state.showDetails?.until_when,
+                                  this.state.showDetails?.dob,
                                   this.props.settings &&
                                     this.props.settings?.setting &&
                                     this.props.settings?.setting?.date_format

@@ -10006,6 +10006,11 @@ button.crdoLghtBlu2 {
   border-bottom: none;
 }
 /* Added by Ankita */
+.err_message2 {
+  color: red !important;;
+  font-weight: 600;
+  padding: 0px !important;
+}
 .setDetail-eval {
   padding: 15px;
 }
@@ -10040,7 +10045,7 @@ button.crdoLghtBlu2 {
 
 .payment_sec_extra_ser1 {
   background: #fff;
-  padding-bottom: 30px;
+  padding-bottom: 0px;
   width: 100%;
 }
 .homeBgDrk .payment_sec_extra_ser1 {
@@ -10589,8 +10594,8 @@ img.manage-size {
 }
 .darkTheme .cntryDropTop,
 .homeBgDrk .cntryDropTop {
-  border: 1px solid #5d5d5d;
-  border-radius: 5px;
+  border: 1px solid #cccccc;
+  border-radius: 2px;
 }
 .cntryDropTop div {
   box-shadow: initial !important;
@@ -14344,6 +14349,7 @@ input:-webkit-autofill:active{
   border-radius: 5px;
   border: 1px solid #bfc1c1;
   margin-top: 10px;
+  padding: 5px 10px;
 }
 
 .homeBgDrk .textFieldArea1 input {
@@ -14454,9 +14460,15 @@ label.newrole {
 .symptomSec1 input {
   width: 90% !important;
 }
+.stndQues1 label{
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  margin-top:13px;
+}
 .stndQues1 h2 {
   font-weight: 800;
-  margin-top: 10px;
+  margin-top: 20px;
+  font-size: 16px;
 }
 .imageEvalSize img {
   width: 50%;

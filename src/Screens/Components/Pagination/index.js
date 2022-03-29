@@ -49,6 +49,7 @@ class Index extends Component {
     let { previous, next } = translate
     return (
         <>
+        {console.log('this.state.totalPage', this.state.totalPage, this.state.currentPage)}
             {this.state.totalPage > 1 && <Grid className="prevNxtpag">
                 <div className="movetoPage">
                   {this.state.currentPage !== 1 && <a className="prevpag" onClick={() => { this.props.onChangePage(this.state.currentPage - 1) }}>{previous}</a>}
