@@ -10006,13 +10006,12 @@ button.crdoLghtBlu2 {
   border-bottom: none;
 }
 /* Added by Ankita */
-.err_message2 {
-  color: red !important;;
-  font-weight: 600;
-  padding: 0px !important;
+.createLSet{
+  width: 30%;
+  float: right;
 }
 .setDetail-eval {
-  padding: 15px;
+  padding: 0px 20px;
 }
 .ElementsApp,
 .ElementsApp .InputElement {
@@ -10422,7 +10421,7 @@ button.dischrgInvoic span {
 }
 .darkTheme .err_message,
 .homeBgDrk .err_message {
-  color: red !important;
+  color: #ff6262 !important;
 }
 .darkTheme .success_message,
 .homeBgDrk .success_message {
@@ -14460,15 +14459,9 @@ label.newrole {
 .symptomSec1 input {
   width: 90% !important;
 }
-.stndQues1 label{
-  font-size: 15px !important;
-  font-weight: 700 !important;
-  margin-top:13px;
-}
 .stndQues1 h2 {
   font-weight: 800;
-  margin-top: 20px;
-  font-size: 16px;
+  margin-top: 10px;
 }
 .imageEvalSize img {
   width: 50%;

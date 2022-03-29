@@ -5610,13 +5610,13 @@ button.presTabsIner {
     min-height: 150vh;
 }
 .presOpinionIner thead th {
-    padding: 16px 25px;
-    color: #7F8383;
+    color: #00abaf;
     font-family: Muli;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 600;
     letter-spacing: 0;
     line-height: 12px;
+    padding: 30px 18px 12px 18px !important;
 }
 .presOpinionIner tbody tr {
     border-bottom: 1px solid #F2F2F2;
@@ -7404,9 +7404,9 @@ a.vsblDots, a.conPainDots, a.bp_vsblDots, a.hideDots {
 .homeBgDrk .presOpinionIner {
     background-color: #404646 !important;
 }
-.homeBgDrk .presOpinionIner thead th {
+/* .homeBgDrk .presOpinionIner thead th {
     color: #BFC1C1 !important;
-}
+} */
 .homeBgDrk .totalOutOff a, .homeBgDrk .prevNxtpag a {
     color: #D9DADA !important;
 }
@@ -9806,9 +9806,6 @@ a.temp_f {
     letter-spacing: 0;
     line-height: 14px;
     margin-bottom: 6px;
-}
-.stndQues {
-    margin-bottom: 30px;
 }
 input.approvBtn {
     border-radius: 8px;
@@ -16332,7 +16329,7 @@ select:-webkit-autofill:focus {
 }
 @media (min-width: 641px){
  .presOpinionIner td.pivoted{
-    padding: 12px 8px !important;
+    padding: 12px 18px !important;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 959px){
@@ -17504,4 +17501,38 @@ ul.duringCovid li:last-child {
     fill: none;
     stroke: #00abaf !important;
     color: #00abaf !important;;
+}
+.darkTheme .stndQues1 h2 {
+    color: #00abaf !important;
+}
+.addStnd {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.addStnd1 {
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 5px;
+}
+.addStnd, .stndQues1 h2 {
+    margin-top: 17px !important;
+}
+.addStnd .imgsFile a {
+    /* margin-right: 0px; */
+    width: 82px;
+}
+.addStndCstm {
+    display: block;
+}
+.imageEvalSize img {
+    margin-right: 0px !important;
+}
+.stndQues p {
+    margin-bottom: 0px !important;
+}
+.stndQues label {
+    margin-bottom: 7px;
 }
