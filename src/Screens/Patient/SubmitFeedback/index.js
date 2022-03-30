@@ -44,7 +44,7 @@ class Index extends Component {
       forFeedback: {},
       allcompulsary: false,
       sendError: false,
-      sendSuccess: false
+      sendSuccess: false,
     };
     // new Timer(this.logOutClick.bind(this))
   }
@@ -52,7 +52,7 @@ class Index extends Component {
   componentDidMount = () => {
     getAllPictureEval(this);
   };
- 
+
   updateRequestBeforePayment = (data) => {
     this.props.history.push({
       pathname: '/patient/picture-evaluation',
@@ -67,7 +67,7 @@ class Index extends Component {
     // this.props.updateEntryState1(value, name);
   };
 
-  deleteRequest = (id)=>{
+  deleteRequest = (id) => {
     this.setState({ message: null, openTask: false });
     let translate = getLanguage(this.props.stateLanguageType);
     let { remove_task, you_sure_to_remove_task, No, Yes } = translate;
@@ -138,7 +138,7 @@ class Index extends Component {
       },
     });
   };
-   //for delete the Task
+  //for delete the Task
   deleteClickTask(id) {
     this.setState({ loaderImage: true });
     axios
@@ -149,12 +149,12 @@ class Index extends Component {
       .then((response) => {
         this.setState({ loaderImage: false });
         if (response.data.hassuccessed) {
-          getAllPictureEval(this)
+          getAllPictureEval(this);
         }
       })
       .catch((error) => {});
   }
- 
+
   handleSubmitFeed = () => {
     setTimeout(
       this.setState({ updateFeedback: {}, openFeedback: false }),
@@ -303,13 +303,15 @@ class Index extends Component {
                                         Your Payment is pending
                                       </span>
                                     )}
-                                    {((item.status === 'done' ||
-                                      item?.comments?.length > 0 ||  item?.attachments?.length> 0 ) && !item.isviewed) && (
-                                      <span className="success_message">
-                                        Check the reply from the doctor on
-                                        detail
-                                      </span>
-                                    )}
+                                    {(item.status === 'done' ||
+                                      item?.comments?.length > 0 ||
+                                      item?.attachments?.length > 0) &&
+                                      !item.isviewed && (
+                                        <span className="success_message">
+                                          Check the reply from the doctor on
+                                          detail
+                                        </span>
+                                      )}
                                   </Td>
                                   <Td className="presEditDot scndOptionIner">
                                     <a className="openScndhrf">
@@ -352,23 +354,24 @@ class Index extends Component {
                                                 />
                                                 {edit_request}
                                               </a>
-                                            </li>)}
-                                            {!item.is_payment && (
-                                            <li>
-                                              <a
-                                                onClick={() => {
-                                                  this.deleteRequest(item._id);
-                                                }}
-                                              >
-                                                <img
-                                                  src={require('assets/images/cancel-request.svg')}
-                                                  alt=""
-                                                  title=""
-                                                />
-                                                {cancel_request}
-                                              </a>
                                             </li>
                                           )}
+                                        {!item.is_payment && (
+                                          <li>
+                                            <a
+                                              onClick={() => {
+                                                this.deleteRequest(item._id);
+                                              }}
+                                            >
+                                              <img
+                                                src={require('assets/images/cancel-request.svg')}
+                                                alt=""
+                                                title=""
+                                              />
+                                              {cancel_request}
+                                            </a>
+                                          </li>
+                                        )}
                                         {!item.is_payment && (
                                           <li>
                                             <a
@@ -471,16 +474,21 @@ class Index extends Component {
                         <p>Submit Feedback</p>
                       </div>
                     </Grid>
-                    {this.state.allcompulsary &&  <div className="err_message">
-                      {"All fields are compulsary, please fill all"}
-                    </div>}
-                    {this.state.sendError &&  <div className="err_message">
-                      {"Feedback already given by you"}
-                    </div>}
-                    {this.state.sendSuccess &&   
-                    <div className="success_message">
-                      {"Feedback submit successfully"}
-                    </div>}
+                    {this.state.allcompulsary && (
+                      <div className="err_message">
+                        {'All fields are compulsary, please fill all'}
+                      </div>
+                    )}
+                    {this.state.sendError && (
+                      <div className="err_message">
+                        {'Feedback already given by you'}
+                      </div>
+                    )}
+                    {this.state.sendSuccess && (
+                      <div className="success_message">
+                        {'Feedback submit successfully'}
+                      </div>
+                    )}
                     <Grid className="symptomSec symptomSec1">
                       <h3></h3>
                       <SymptomQuestions
@@ -559,12 +567,12 @@ class Index extends Component {
                           </Grid>
                           <p>
                             {this.state.showDetails &&
-                            !this.state.showDetails?.from_when ? (
+                            !this.state.showDetails?.created_at ? (
                               '-'
                             ) : (
                               <>
                                 {getDate(
-                                  this.state.showDetails?.from_when,
+                                  this.state.showDetails?.created_at,
                                   this.props.settings &&
                                     this.props.settings?.setting &&
                                     this.props.settings?.setting?.date_format
@@ -577,12 +585,12 @@ class Index extends Component {
                           </Grid>
                           <p>
                             {this.state.showDetails &&
-                            !this.state.showDetails?.until_when ? (
+                            !this.state.showDetails?.dob ? (
                               '-'
                             ) : (
                               <>
                                 {getDate(
-                                  this.state.showDetails?.until_when,
+                                  this.state.showDetails?.dob,
                                   this.props.settings &&
                                     this.props.settings?.setting &&
                                     this.props.settings?.setting?.date_format
