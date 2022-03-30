@@ -99,7 +99,6 @@ function HomePage(props) {
       })
       if(PaymentIntent.paymentIntent.status === "succeeded"){
         setLoaderImage(false);
-        console.log('props.setting.setting.mode', props.settings)
         confirmAlert({
           customUI: ({ onClose }) => {
             return (

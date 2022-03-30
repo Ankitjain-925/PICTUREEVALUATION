@@ -47,7 +47,7 @@ class Index extends Component {
       sendError: false,
       sendSuccess: false,
       totalPage: 1,
-      currentPage: 1    
+      currentPage: 1
     };
     // new Timer(this.logOutClick.bind(this))
   }
@@ -55,7 +55,7 @@ class Index extends Component {
   componentDidMount = () => {
     getAllPictureEval(this);
   };
- 
+
   updateRequestBeforePayment = (data) => {
     this.props.history.push({
       pathname: '/patient/picture-evaluation',
@@ -70,18 +70,18 @@ class Index extends Component {
     // this.props.updateEntryState1(value, name);
   };
 
-      //For chnage the page
-      onChangePage = (pageNumber) => {
-        this.setState({
-          AllData: this.state.AllData1.slice(
-            (pageNumber - 1) * 20,
-            pageNumber * 20
-          ),
-          currentPage: pageNumber,
-        });
-      };
+  //For chnage the page
+  onChangePage = (pageNumber) => {
+    this.setState({
+      AllData: this.state.AllData1.slice(
+        (pageNumber - 1) * 20,
+        pageNumber * 20
+      ),
+      currentPage: pageNumber,
+    });
+  };
 
-  deleteRequest = (id)=>{
+  deleteRequest = (id) => {
     this.setState({ message: null, openTask: false });
     let translate = getLanguage(this.props.stateLanguageType);
     let { remove_task, you_sure_to_remove_task, No, Yes } = translate;
@@ -91,9 +91,9 @@ class Index extends Component {
           <div
             className={
               this.props.settings &&
-              this.props.settings.setting &&
-              this.props.settings.setting.mode &&
-              this.props.settings.setting.mode === 'dark'
+                this.props.settings.setting &&
+                this.props.settings.setting.mode &&
+                this.props.settings.setting.mode === 'dark'
                 ? 'dark-confirm react-confirm-alert-body'
                 : 'react-confirm-alert-body'
             }
@@ -127,9 +127,9 @@ class Index extends Component {
           <div
             className={
               this.props.settings &&
-              this.props.settings.setting &&
-              this.props.settings.setting.mode &&
-              this.props.settings.setting.mode === 'dark'
+                this.props.settings.setting &&
+                this.props.settings.setting.mode &&
+                this.props.settings.setting.mode === 'dark'
                 ? 'dark-confirm react-confirm-alert-body'
                 : 'react-confirm-alert-body'
             }
@@ -152,7 +152,7 @@ class Index extends Component {
       },
     });
   };
-   //for delete the Task
+  //for delete the Task
   deleteClickTask(id) {
     this.setState({ loaderImage: true });
     axios
@@ -166,15 +166,36 @@ class Index extends Component {
           getAllPictureEval(this)
         }
       })
-      .catch((error) => {});
+      .catch((error) => { });
   }
- 
+
   handleSubmitFeed = () => {
     setTimeout(
       this.setState({ updateFeedback: {}, openFeedback: false }),
       6000
     );
   };
+
+  calculateAge = (date) => {
+    if (date) {
+      var birthDate = new Date(date);
+      var otherDate = new Date();
+
+      var years = otherDate.getFullYear() - birthDate.getFullYear();
+
+      if (
+        otherDate.getMonth() < birthDate.getMonth() ||
+        (otherDate.getMonth() == birthDate.getMonth() &&
+          otherDate.getDate() < birthDate.getDate())
+      ) {
+        years--;
+      }
+      return years;
+    }
+    return '-';
+  };
+
+
 
   render() {
     let translate = getLanguage(this.props.stateLanguageType);
@@ -245,9 +266,9 @@ class Index extends Component {
       <Grid
         className={
           this.props.settings &&
-          this.props.settings.setting &&
-          this.props.settings.setting.mode &&
-          this.props.settings.setting.mode === 'dark'
+            this.props.settings.setting &&
+            this.props.settings.setting.mode &&
+            this.props.settings.setting.mode === 'dark'
             ? 'homeBg homeBgDrk'
             : 'homeBg'
         }
@@ -291,9 +312,9 @@ class Index extends Component {
                                     {getDate(
                                       item && item?.created_at,
                                       this.props.settings &&
-                                        this.props.settings?.setting &&
-                                        this.props.settings?.setting
-                                          ?.date_format
+                                      this.props.settings?.setting &&
+                                      this.props.settings?.setting
+                                        ?.date_format
                                     )}
                                   </Td>
                                   <Td>{item.task_name}</Td>
@@ -316,21 +337,21 @@ class Index extends Component {
                                       <span className="err_message">
                                         Your request is Declined
                                       </span>
-                                    </>:
-                                    <>
-                                    {!item.is_payment && (
-                                      <span className="err_message">
-                                        Your Payment is pending
-                                      </span>
-                                    )}
-                                    {((item.status === 'done' ||
-                                      item?.comments?.length > 0 ||  item?.attachments?.length> 0 ) && !item.isviewed) && (
-                                      <span className="success_message">
-                                        Check the reply from the doctor on
-                                        detail
-                                      </span>
-                                    )}
-                                    </>}
+                                    </> :
+                                      <>
+                                        {!item.is_payment && (
+                                          <span className="err_message">
+                                            Your Payment is pending
+                                          </span>
+                                        )}
+                                        {((item.status === 'done' ||
+                                          item?.comments?.length > 0 || item?.attachments?.length > 0) && !item.isviewed) && (
+                                            <span className="success_message">
+                                              Check the reply from the doctor on
+                                              detail
+                                            </span>
+                                          )}
+                                      </>}
                                   </Td>
                                   <Td className="presEditDot scndOptionIner">
                                     <a className="openScndhrf">
@@ -374,42 +395,42 @@ class Index extends Component {
                                                 {edit_request}
                                               </a>
                                             </li>)}
-                                            {!item.is_payment && (
-                                            <li>
-                                              <a
-                                                onClick={() => {
-                                                  this.deleteRequest(item._id);
-                                                }}
-                                              >
-                                                <img
-                                                  src={require('assets/images/cancel-request.svg')}
-                                                  alt=""
-                                                  title=""
-                                                />
-                                                {cancel_request}
-                                              </a>
-                                            </li>
-                                          )}
-                                    
+                                        {!item.is_payment && (
+                                          <li>
+                                            <a
+                                              onClick={() => {
+                                                this.deleteRequest(item._id);
+                                              }}
+                                            >
+                                              <img
+                                                src={require('assets/images/cancel-request.svg')}
+                                                alt=""
+                                                title=""
+                                              />
+                                              {cancel_request}
+                                            </a>
+                                          </li>
+                                        )}
+
                                         {(item.status === 'done' ||
                                           item?.comments?.length > 0) && (
-                                          <>
-                                            <li>
-                                              <a
-                                                onClick={() =>
-                                                  handleOpFeedback(this, item)
-                                                }
-                                              >
-                                                <img
-                                                  src={require('assets/images/cancel-request.svg')}
-                                                  alt=""
-                                                  title=""
-                                                />
-                                                {give_feedback}
-                                              </a>
-                                            </li>
-                                          </>
-                                        )}
+                                            <>
+                                              <li>
+                                                <a
+                                                  onClick={() =>
+                                                    handleOpFeedback(this, item)
+                                                  }
+                                                >
+                                                  <img
+                                                    src={require('assets/images/cancel-request.svg')}
+                                                    alt=""
+                                                    title=""
+                                                  />
+                                                  {give_feedback}
+                                                </a>
+                                              </li>
+                                            </>
+                                          )}
                                       </ul>
                                     </a>
                                   </Td>
@@ -453,9 +474,9 @@ class Index extends Component {
                 onClose={() => handleCloseFeedback(this)}
                 className={
                   this.props.settings &&
-                  this.props.settings.setting &&
-                  this.props.settings.setting.mode &&
-                  this.props.settings.setting.mode === 'dark'
+                    this.props.settings.setting &&
+                    this.props.settings.setting.mode &&
+                    this.props.settings.setting.mode === 'dark'
                     ? 'darkTheme nwDiaModel'
                     : 'nwDiaModel'
                 }
@@ -477,16 +498,16 @@ class Index extends Component {
                         <p>Submit Feedback</p>
                       </div>
                     </Grid>
-                    {this.state.allcompulsary &&  <div className="err_message">
+                    {this.state.allcompulsary && <div className="err_message">
                       {"All fields are compulsary, please fill all"}
                     </div>}
-                    {this.state.sendError &&  <div className="err_message">
+                    {this.state.sendError && <div className="err_message">
                       {"Feedback already given by you"}
                     </div>}
-                    {this.state.sendSuccess &&   
-                    <div className="success_message">
-                      {"Feedback submit successfully"}
-                    </div>}
+                    {this.state.sendSuccess &&
+                      <div className="success_message">
+                        {"Feedback submit successfully"}
+                      </div>}
                     <Grid className="symptomSec symptomSec1">
                       <h3></h3>
                       <SymptomQuestions
@@ -532,9 +553,9 @@ class Index extends Component {
                 onClose={() => handleCloseDetail(this)}
                 className={
                   this.props.settings &&
-                  this.props.settings.setting &&
-                  this.props.settings.setting.mode &&
-                  this.props.settings.setting.mode === 'dark'
+                    this.props.settings.setting &&
+                    this.props.settings.setting.mode &&
+                    this.props.settings.setting.mode === 'dark'
                     ? 'darkTheme'
                     : ''
                 }>
@@ -555,45 +576,46 @@ class Index extends Component {
                     <Grid container direction="row" className="setDetail-eval">
                       <Grid item xs={12} md={12} className="taskDescp">
                         <Grid className="stndQues stndQues1">
-                         <Grid class="addStnd"> 
+                          <Grid class="addStnd">
                             <Grid><label>Added On</label></Grid>
                             <p>
-                            {this.state.showDetails &&
-                            !this.state.showDetails?.created_at ? (
-                              '-'
+                              {this.state.showDetails &&
+                                !this.state.showDetails?.created_at ? (
+                                '-'
                               ) : (
                                 <>
                                   {getDate(
                                     this.state.showDetails?.created_at,
                                     this.props.settings &&
-                                      this.props.settings?.setting &&
-                                      this.props.settings?.setting?.date_format
+                                    this.props.settings?.setting &&
+                                    this.props.settings?.setting?.date_format
                                   )}
                                 </>
                               )}
                             </p>
                           </Grid>
-                          <Grid class="addStnd"> 
+                          <Grid class="addStnd">
                             <Grid><label>{age}</label></Grid>
                             <p>
-                            {this.state.showDetails &&
-                            !this.state.showDetails?.dob ? (
-                              '-'
+                              {this.state.showDetails &&
+                                !this.state.showDetails?.dob ? (
+                                '-'
                               ) : (
                                 <>
                                   {getDate(
                                     this.state.showDetails?.dob,
                                     this.props.settings &&
-                                      this.props.settings?.setting &&
-                                      this.props.settings?.setting?.date_format
-                                  )}
+                                    this.props.settings?.setting &&
+                                    this.props.settings?.setting?.date_format
+                                  )} {` (${this.calculateAge(this.state.showDetails?.dob)} years)`}
+
                                 </>
                               )}
                             </p>
                           </Grid>
-                          <Grid class="addStnd"> 
+                          <Grid class="addStnd">
                             <Grid><label>{gender}</label></Grid>
-                            <p>
+                            <p className="setFirstCapGender">
                               {this.state.showDetails &&
                                 this.state.showDetails?.sex}
                             </p>
@@ -664,16 +686,16 @@ class Index extends Component {
                                       </label>
                                       <p>
                                         {this.state.showDetails &&
-                                        !this.state.showDetails?.from_when ? (
+                                          !this.state.showDetails?.from_when ? (
                                           '-'
                                         ) : (
                                           <>
                                             {getDate(
                                               this.state.showDetails?.from_when,
                                               this.props.settings &&
-                                                this.props.settings?.setting &&
-                                                this.props.settings?.setting
-                                                  ?.date_format
+                                              this.props.settings?.setting &&
+                                              this.props.settings?.setting
+                                                ?.date_format
                                             )}
                                           </>
                                         )}
@@ -685,7 +707,7 @@ class Index extends Component {
                                       </label>
                                       <p>
                                         {this.state.showDetails &&
-                                        !this.state.showDetails?.until_when ? (
+                                          !this.state.showDetails?.until_when ? (
                                           '-'
                                         ) : (
                                           <>
@@ -693,9 +715,9 @@ class Index extends Component {
                                               this.state.showDetails
                                                 ?.until_when,
                                               this.props.settings &&
-                                                this.props.settings?.setting &&
-                                                this.props.settings?.setting
-                                                  ?.date_format
+                                              this.props.settings?.setting &&
+                                              this.props.settings?.setting
+                                                ?.date_format
                                             )}
                                           </>
                                         )}
@@ -704,37 +726,37 @@ class Index extends Component {
                                   </>
                                 ))}
                           </Grid>
-                          <Grid class="addStnd"> 
-                           <Grid><label>{allergies}</label></Grid>
+                          <Grid class="addStnd">
+                            <Grid><label>{allergies}</label></Grid>
                             <p
                               dangerouslySetInnerHTML={{
                                 __html:
                                   this.state.showDetails &&
                                   this.state.showDetails?.allergies,
                               }} />
-                           </Grid> 
-                           <Grid class="addStnd"> 
-                              <Grid><label>{family_history}</label></Grid>
-                              <p
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    this.state.showDetails &&
-                                    this.state.showDetails?.family_history,
-                                }}
-                              />
-                           </Grid>
+                          </Grid>
+                          <Grid class="addStnd">
+                            <Grid><label>{family_history}</label></Grid>
+                            <p
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  this.state.showDetails &&
+                                  this.state.showDetails?.family_history,
+                              }}
+                            />
+                          </Grid>
 
-                           <Grid class="addStnd"> 
-                              <Grid><label>{treatment_so_far}</label></Grid>
-                              <p
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    this.state.showDetails &&
-                                    this.state.showDetails?.treatment_so_far,
-                                }}
-                              />
-                           </Grid>
-                           <Grid class="addStnd"> 
+                          <Grid class="addStnd">
+                            <Grid><label>{treatment_so_far}</label></Grid>
+                            <p
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  this.state.showDetails &&
+                                  this.state.showDetails?.treatment_so_far,
+                              }}
+                            />
+                          </Grid>
+                          <Grid class="addStnd">
                             <Grid><label>{place_of_residence}</label></Grid>
                             <p>
                               {this.state.showDetails &&
@@ -742,7 +764,7 @@ class Index extends Component {
                                 this.state.showDetails?.residenceCountry?.label}
                             </p>
                           </Grid>
-                          <Grid class="addStnd"> 
+                          <Grid class="addStnd">
                             <Grid><label>{place_of_birth}</label></Grid>
                             <p>
                               {this.state.showDetails &&
@@ -750,7 +772,7 @@ class Index extends Component {
                                 this.state.showDetails?.country?.label}
                             </p>
                           </Grid>
-                          <Grid class="addStnd"> 
+                          <Grid class="addStnd">
                             <Grid><label>{phenotyp_race}</label></Grid>
                             <p
                               dangerouslySetInnerHTML={{
@@ -760,7 +782,7 @@ class Index extends Component {
                               }}
                             />
                           </Grid>
-                          <Grid class="addStnd"> 
+                          <Grid class="addStnd">
                             <Grid><label>{travel_history_last_month}</label></Grid>
                             <p
                               dangerouslySetInnerHTML={{
@@ -770,7 +792,7 @@ class Index extends Component {
                               }}
                             />
                           </Grid>
-                          <Grid class="addStnd"> 
+                          <Grid class="addStnd">
                             <Grid><label>{medical_preconditions}</label></Grid>
                             <p
                               dangerouslySetInnerHTML={{
@@ -780,7 +802,7 @@ class Index extends Component {
                               }}
                             />
                           </Grid>
-                          <Grid class="addStnd"> 
+                          <Grid class="addStnd">
                             <Grid><label>{premedication}</label></Grid>
                             <p
                               dangerouslySetInnerHTML={{
@@ -790,7 +812,7 @@ class Index extends Component {
                               }}
                             />
                           </Grid>
-                          <Grid class="addStnd addStndCstm"> 
+                          <Grid class="addStnd addStndCstm">
                             <Grid><label>{image_evaluation}</label></Grid>
                             <div className="imageEvalSize">
                               <FileViews
@@ -800,15 +822,15 @@ class Index extends Component {
                               />
                             </div>
                           </Grid>
-                          <Grid class="addStnd"> 
+                          <Grid class="addStnd">
                             <Grid><label>Start From</label></Grid>
                             <p>
                               {getDate(
                                 this.state.showDetails &&
-                                  this.state.showDetails?.start_date,
+                                this.state.showDetails?.start_date,
                                 this.props.settings &&
-                                  this.props.settings?.setting &&
-                                  this.props.settings?.setting?.date_format
+                                this.props.settings?.setting &&
+                                this.props.settings?.setting?.date_format
                               )}
                             </p>
                           </Grid>
@@ -818,7 +840,7 @@ class Index extends Component {
                             <Grid xs={3} md={3}>
                               <label>{warm}</label>
                               {this.state.showDetails &&
-                              this.state.showDetails?.warm === 'yes' ? (
+                                this.state.showDetails?.warm === 'yes' ? (
                                 <p>{yes}</p>
                               ) : (
                                 <p>{no}</p>
@@ -828,7 +850,7 @@ class Index extends Component {
                               <label>{size_progress}</label>
 
                               {this.state.showDetails &&
-                              this.state.showDetails?.size_progress === 'yes' ? (
+                                this.state.showDetails?.size_progress === 'yes' ? (
                                 <p>{yes}</p>
                               ) : (
                                 <p>{no}</p>
@@ -838,7 +860,7 @@ class Index extends Component {
                               <label>{itch}</label>
 
                               {this.state.showDetails &&
-                              this.state.showDetails?.itch === 'yes' ? (
+                                this.state.showDetails?.itch === 'yes' ? (
                                 <p>{yes}</p>
                               ) : (
                                 <p>{no}</p>
@@ -848,42 +870,42 @@ class Index extends Component {
                               <label>{pain}</label>
 
                               {this.state.showDetails &&
-                              this.state.showDetails?.pain === 'yes' ? (
+                                this.state.showDetails?.pain === 'yes' ? (
                                 <p>{yes}</p>
                               ) : (
                                 <p>{no}</p>
                               )}
                             </Grid>
                           </Grid>
-                          <Grid class="addStnd"> 
+                          <Grid class="addStnd">
                             <Grid><label>{pain_level}</label></Grid>
                             <p>
                               {this.state.showDetails &&
                                 this.state.showDetails?.pain_intensity}
                             </p>
                           </Grid>
-                          <Grid class="addStnd"> 
+                          <Grid class="addStnd">
                             <Grid><label>{body_temp}</label></Grid>
                             <p>
                               {this.state.showDetails &&
                                 this.state.showDetails?.body_temp}
                             </p>
                           </Grid>
-                          <Grid class="addStnd"> 
+                          <Grid class="addStnd">
                             <Grid><label>{sun_before}</label></Grid>
                             <p>
                               {this.state.showDetails &&
                                 this.state.showDetails?.sun_before}
                             </p>
                           </Grid>
-                          <Grid class="addStnd"> 
+                          <Grid class="addStnd">
                             <Grid><label>{cold}</label></Grid>
                             <p>
                               {this.state.showDetails &&
                                 this.state.showDetails?.cold}
                             </p>
                           </Grid>
-                          <Grid class="addStnd"> 
+                          <Grid class="addStnd">
                             <Grid><label>{sexual_active}</label></Grid>
                             <p
                               dangerouslySetInnerHTML={{
@@ -892,11 +914,11 @@ class Index extends Component {
                                   this.state.showDetails?.sexual_active,
                               }}
                             />
-                          </Grid>  
-                          <Grid class="addStnd"> 
+                          </Grid>
+                          <Grid class="addStnd">
                             <Grid><label>{payment_done}</label></Grid>
                             {this.state.showDetails &&
-                            this.state.showDetails?.is_payment === true ? (
+                              this.state.showDetails?.is_payment === true ? (
                               <p>{yes}</p>
                             ) : (
                               <p>{no}</p>
@@ -909,8 +931,8 @@ class Index extends Component {
                           </Grid>
                           <Grid className="imageEvalSize" imageEvalSize>
                             {this.state.showDetails &&
-                            this.state.showDetails?.attachments &&
-                            this.state.showDetails?.attachments?.length > 0 ? (
+                              this.state.showDetails?.attachments &&
+                              this.state.showDetails?.attachments?.length > 0 ? (
                               <FileViews
                                 comesFrom="Picture_Task"
                                 images={this.state.images}
@@ -921,12 +943,12 @@ class Index extends Component {
                             )}
                           </Grid>
 
-                         <Grid class="addStnd1"> 
+                          <Grid class="addStnd1">
                             <Grid><label>{Comments}</label></Grid>
                             <p>
                               {this.state.showDetails &&
-                              this.state.showDetails?.comments &&
-                              this.state.showDetails?.comments?.length > 0 ? (
+                                this.state.showDetails?.comments &&
+                                this.state.showDetails?.comments?.length > 0 ? (
                                 this.state.showDetails?.comments.map(
                                   (data, index) => (
                                     <div className="dataCommentBor">
@@ -938,7 +960,7 @@ class Index extends Component {
                                 <p>No comments!</p>
                               )}
                             </p>
-                          </Grid>  
+                          </Grid>
 
                         </Grid>
                       </Grid>

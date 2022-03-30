@@ -256,7 +256,7 @@ class Index extends Component {
                     </Grid>
                   </Grid>
                   <Grid item xs={12} sm={12} md={8}>
-                    <Grid className="cnfrmDiaMain profilePkg cnfrmDiaMain1">
+                    <Grid className={this.state.show2 ? "cnfrmDiaMain1 setPaymentBack" : "cnfrmDiaMain profilePkg cnfrmDiaMain1"}>
                       {!this.state.show2 && (
                         <Grid>
                           {!this.state.picEval === true ? (
@@ -279,11 +279,11 @@ class Index extends Component {
                                     onChange={(e) =>
                                       this.updateEntryState1(e, 'dob')
                                     }
-                                    date_format={
-                                      this.props.settings &&
-                                      this.props.settings.setting &&
-                                      this.props.settings.setting.date_format
-                                    }
+                                    // date_format={
+                                    //   this.props.settings &&
+                                    //   this.props.settings.setting &&
+                                    //   this.props.settings.setting.date_format
+                                    // }
                                     NotFutureDate={true}
                                   />
                                   {this.state.error_section == 1 && <div className="err_message2">

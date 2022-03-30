@@ -10006,6 +10006,14 @@ button.crdoLghtBlu2 {
   border-bottom: none;
 }
 /* Added by Ankita */
+.err_message2 {
+  color: red !important;;
+  font-weight: 600;
+  padding: 0px !important;
+}
+.setFirstCapGender{
+  text-transform:capitalize;
+}
 .createLSet{
   width: 30%;
   float: right;
@@ -10015,7 +10023,7 @@ button.crdoLghtBlu2 {
 }
 .ElementsApp,
 .ElementsApp .InputElement {
-  color: #00abaf;
+  color: #00abaf !important;
 }
 .setDividerPic-eval {
   border-top: 1px solid #cfcfcf;
@@ -10047,8 +10055,16 @@ button.crdoLghtBlu2 {
   padding-bottom: 0px;
   width: 100%;
 }
-.homeBgDrk .payment_sec_extra_ser1 {
-  background: #404646;
+.setPaymentBack{
+  border-radius: 12px;
+  background-color: #FFFFFF;
+  box-shadow: 0 1px 8px 0 rgb(0 8 8 / 4%);
+  margin-left: 48px;
+  margin-top: 42px;
+}
+
+.homeBgDrk .payment_sec_extra_ser1, .homeBgDrk .setPaymentBack {
+  background: #e1f7f7 !important;
 }
 @media (max-width: 959px) {
   .vh-section .prfilHghtLft p span,
@@ -10420,7 +10436,9 @@ button.dischrgInvoic span {
   color: #cfcfcf !important;
 }
 .darkTheme .err_message,
-.homeBgDrk .err_message {
+.homeBgDrk .err_message,
+.darkTheme .err_message2,
+.homeBgDrk .err_message2{
   color: #ff6262 !important;
 }
 .darkTheme .success_message,
