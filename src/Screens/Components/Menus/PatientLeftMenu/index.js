@@ -82,6 +82,8 @@ class Index extends Component {
       Language,
       DarkMode,
       logout,
+      evaluation_request,
+      picture_evaluation
     } = translate;
     return (
       <Grid

@@ -19,7 +19,7 @@ class Index extends Component {
       attachfile: this.props.attachfile,
       crnt_img: false,
       openPopup: false,
-      cnrttype: false,
+      cnrttype: '',
       images: [],
       loaderImage: false,
       forZoom: {},
@@ -123,7 +123,7 @@ class Index extends Component {
   };
 
   CloseFile = () => {
-    this.setState({ openPopup: false, crnt_img: false, cnrttype: false });
+    this.setState({ openPopup: false, crnt_img: false, cnrttype: '' });
   };
 
   render() {
@@ -135,7 +135,7 @@ class Index extends Component {
           item.length > 0 &&
           item.map((file) => (
             <a>
-              {file?.filetype === 'mp4' && (
+              {file?.filetype.toLowerCase() === 'mp4' && (
                 <video width="100%" className="VideoPlay" controls>
                   <source
                     src={getImage(file.filename, this.state.images)}
@@ -143,10 +143,10 @@ class Index extends Component {
                   />
                 </video>
               )}
-              {(file?.filetype === 'png' ||
-                file?.filetype === 'jpeg' ||
-                file?.filetype === 'jpg' ||
-                file?.filetype === 'svg') && (
+              {(file?.filetype.toLowerCase() === 'png' ||
+                file?.filetype.toLowerCase() === 'jpeg' ||
+                file?.filetype.toLowerCase() === 'jpg' ||
+                file?.filetype.toLowerCase() === 'svg') && (
                 <img
                   onClick={() => this.OpenFile(file.filename, file?.filetype)}
                   src={getImage(file.filename, this.state.images)}
@@ -154,7 +154,7 @@ class Index extends Component {
                   title=""
                 />
               )}
-              {file?.filetype === 'pdf' && (
+              {file?.filetype.toLowerCase() === 'pdf' && (
                 <img
                   onClick={() => this.OpenFile(file.filename, file?.filetype)}
                   src={require('assets/images/pdfimg.png')}
@@ -162,10 +162,10 @@ class Index extends Component {
                   title=""
                 />
               )}
-              {(file?.filetype === 'doc' ||
-                file?.filetype === 'docx' ||
-                file?.filetype === 'xml' ||
-                file?.filetype === 'txt') && (
+              {(file?.filetype.toLowerCase() === 'doc' ||
+                file?.filetype.toLowerCase() === 'docx' ||
+                file?.filetype.toLowerCase() === 'xml' ||
+                file?.filetype.toLowerCase() === 'txt') && (
                 <img
                   onClick={() => this.OpenFile(file.filename, file?.filetype)}
                   src={require('assets/images/txt1.png')}
@@ -173,9 +173,9 @@ class Index extends Component {
                   title=""
                 />
               )}
-              {(file?.filetype === 'xls' ||
-                file?.filetype === 'xlsx' ||
-                file?.filetype === 'xml') && (
+              {(file?.filetype.toLowerCase() === 'xls' ||
+                file?.filetype.toLowerCase() === 'xlsx' ||
+                file?.filetype.toLowerCase() === 'xml') && (
                 <img
                   onClick={() => this.OpenFile(file.filename, file?.filetype)}
                   src={require('assets/images/xls1.svg')}
@@ -183,7 +183,7 @@ class Index extends Component {
                   title=""
                 />
               )}
-              {file?.filetype === 'csv' && (
+              {file?.filetype.toLowerCase() === 'csv' && (
                 <img
                   onClick={() => this.OpenFile(file.filename, file?.filetype)}
                   src={require('assets/images/csv1.png')}
@@ -191,10 +191,10 @@ class Index extends Component {
                   title=""
                 />
               )}
-              {(file?.filetype === 'dcm' ||
-                file?.filetype === 'DICOM' ||
-                file?.filetype === 'dicom' ||
-                file?.filetype === 'DCM') && (
+              {(file?.filetype.toLowerCase() === 'dcm' ||
+                file?.filetype.toLowerCase() === 'DICOM' ||
+                file?.filetype.toLowerCase() === 'dicom' ||
+                file?.filetype.toLowerCase() === 'DCM') && (
                 <img
                   onClick={() => this.OpenFile(file.filename, file?.filetype)}
                   src={require('assets/images/dcm1.png')}
@@ -221,10 +221,10 @@ class Index extends Component {
         >
           <Grid
             className={
-              this.state.cnrttype === 'png' ||
-              this.state.cnrttype === 'jpeg' ||
-              this.state.cnrttype === 'jpg' ||
-              this.state.cnrttype === 'svg'
+              this.state.cnrttype.toLowerCase() === 'png' ||
+              this.state.cnrttype.toLowerCase() === 'jpeg' ||
+              this.state.cnrttype.toLowerCase() === 'jpg' ||
+              this.state.cnrttype.toLowerCase() === 'svg'
                 ? 'entryBoxCntnt SetWidthPopup1'
                 : 'entryBoxCntnt SetWidthPopup'
             }
@@ -240,10 +240,10 @@ class Index extends Component {
                 </a>
               </Grid>
             </Grid>
-            {this.state.cnrttype === 'png' ||
-            this.state.cnrttype === 'jpeg' ||
-            this.state.cnrttype === 'jpg' ||
-            this.state.cnrttype === 'svg' ? (
+            {this.state.cnrttype.toLowerCase() === 'png' ||
+            this.state.cnrttype.toLowerCase() === 'jpeg' ||
+            this.state.cnrttype.toLowerCase() === 'jpg' ||
+            this.state.cnrttype.toLowerCase() === 'svg' ? (
               <InnerImageZoom src={this.state.crnt_img} />
             ) : (
               <Iframeview

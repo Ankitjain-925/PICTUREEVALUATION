@@ -4,6 +4,13 @@ import { commonHeader, commonCometHeader } from 'component/CommonHeader/index';
 import { getLanguage } from 'translations/index';
 
 export const handleEvalSubmit = (value, current) => {
+  let translate = getLanguage(current.props.stateLanguageType)
+  let {
+    please_select_gender, 
+    valid_age_between,
+    valid_date,
+    atleast_one_picture
+  } = translate;
   let data = {};
   data = current.state.updateEvaluate;
   if (value == 1) {
@@ -31,7 +38,7 @@ export const handleEvalSubmit = (value, current) => {
                                         sex: data.sex,
                                         country: data.residenceCountry,
                                         citizen_country: data.country
-                                      }).then((res) => { })
+                                      }, commonHeader(current.props.stateLoginValueAim.token)).then((res) => { })
                                         .catch((e) => { })
                                     }
                                   }
@@ -51,12 +58,12 @@ export const handleEvalSubmit = (value, current) => {
           }
         }
       } else {
-        current.setState({ errorChrMsg: 'Please select Gender', error_section: 2 });
+        current.setState({ errorChrMsg: please_select_gender, error_section: 2 });
         MoveTop(0);
       }
     } else {
       current.setState({
-        errorChrMsg: 'Please select valid age, Age must be between 0 to 130',error_section: 1 
+        errorChrMsg: valid_age_between,error_section: 1 
       });
       MoveTop(0);
     }
@@ -186,7 +193,7 @@ export const handleEvalSubmit = (value, current) => {
           }
         }
       } else {
-        current.setState({ errorChrMsg: 'Please select valid start date', error_section: 19 });
+        current.setState({ errorChrMsg: valid_date, error_section: 19 });
         MoveTop(0);
       }
       // }
@@ -196,7 +203,7 @@ export const handleEvalSubmit = (value, current) => {
       // }
     } else {
       current.setState({
-        errorChrMsg: 'Please upload atleast one Picture for evaluation',  error_section: 18
+        errorChrMsg: atleast_one_picture,  error_section: 18
       });
       MoveTop(0);
     }
@@ -596,7 +603,23 @@ export const handleCloseDetail = (current) => {
 
 // Open Feedback Form
 export const handleOpFeedback = (current, openData) => {
-  current.setState({ openFeedback: true , forFeedback : openData,});
+  current.setState({ loaderImage: true, sendError: false, updateFeedback: {} });
+  let user_token = current.props.stateLoginValueAim.token;
+  axios
+    .get(
+      sitedata.data.path + '/vh/checkFeedBack/' + openData._id,
+      commonHeader(user_token)
+    )
+    .then((responce) => {
+      current.setState({ loaderImage: false });
+      if (responce.data.hassuccessed) {
+        current.setState({ openFeedback: true , forFeedback : openData, sendError: true, updateFeedback: responce.data.data});
+      }
+      else{
+        current.setState({ openFeedback: true , forFeedback : openData, sendError: false});
+      }
+    });
+  
 };
 // Close Feedback Form
 export const handleCloseFeedback = (current) => {

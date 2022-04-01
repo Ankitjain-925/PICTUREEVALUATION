@@ -1710,6 +1710,19 @@
     "sun_before": "Sun before",
     "sexual_active": "Sexual Activities",
     "payment_done": "Payment done",
-    "Reply": "Reply"
+    "Reply": "Reply",
+    "Your_request_is_Declined": "Your request is Declined",
+    "Your_Payment_is_pending":"Your Payment is pending",
+    "Check_the_reply_from_the_doctor_on_detail":"Check the reply from the doctor on detail",
+    "No_attachments":"No attachments!",
+    "No_comments":"No comments!",
+    "submit_Feedback" :"Submit Feedback",
+    "All_fields_are_compulsary_please_fill_all": "All fields are compulsary, please fill all",
+    "Feedback_already_given_by_you":"Feedback already given by you",
+    "Feedback_submit_successfully":"Feedback submit successfully",
+    "understood_explaination":"Did you understood the doctor explaination?",
+    "satisfied_service":"Are you satisfied with the service?",
+    "Is_it_fast_service": "Is it fast service?"
+
   }
 }

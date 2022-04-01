@@ -20,7 +20,6 @@ import { getAllPictureEval } from 'Screens/Patient/PictureEvaluation/api';
 import Modal from '@material-ui/core/Modal';
 import { getDate } from 'Screens/Components/BasicMethod/index';
 import SymptomQuestions from '../../Components/TimelineComponent/CovidSymptomsField/SymptomQuestions';
-import { S3Image } from 'Screens/Components/GetS3Images/index';
 import {
   handleSubmitFeed,
   handleOpFeedback,
@@ -47,7 +46,7 @@ class Index extends Component {
       sendError: false,
       sendSuccess: false,
       totalPage: 1,
-      currentPage: 1
+      currentPage: 1,
     };
     // new Timer(this.logOutClick.bind(this))
   }
@@ -200,6 +199,19 @@ class Index extends Component {
   render() {
     let translate = getLanguage(this.props.stateLanguageType);
     let {
+      Your_Payment_is_pending,
+      Your_request_is_Declined,
+      Check_the_reply_from_the_doctor_on_detail,
+      submit_Feedback,
+      All_fields_are_compulsary_please_fill_all,
+      Feedback_already_given_by_you,
+      Feedback_submit_successfully,
+      understood_explaination,
+      satisfied_service,
+      Submit,
+      details,
+      No_attachments,
+      No_comments,
       evaluation_request,
       added_on,
       hospital,
@@ -253,6 +265,7 @@ class Index extends Component {
       yes,
       no,
       cold,
+      Is_it_fast_service,
       sexual_active,
       sun_before,
       body_temp,
@@ -335,20 +348,19 @@ class Index extends Component {
                                   <Td>
                                     {item.is_decline ? <>
                                       <span className="err_message">
-                                        Your request is Declined
+                                      {Your_request_is_Declined}
                                       </span>
                                     </> :
                                       <>
                                         {!item.is_payment && (
                                           <span className="err_message">
-                                            Your Payment is pending
+                                            {Your_Payment_is_pending}
                                           </span>
                                         )}
                                         {((item.status === 'done' ||
                                           item?.comments?.length > 0 || item?.attachments?.length > 0) && !item.isviewed) && (
                                             <span className="success_message">
-                                              Check the reply from the doctor on
-                                              detail
+                                              {Check_the_reply_from_the_doctor_on_detail}
                                             </span>
                                           )}
                                       </>}
@@ -376,9 +388,9 @@ class Index extends Component {
                                             {see_details}
                                           </a>
                                         </li>
-                                        {item.status !== 'done' &&
-                                          item?.comments?.length == 0 && (
-                                            <li>
+                                        {(!item.is_payment || item.is_decline)
+                                           &&
+                                            (<li>
                                               <a
                                                 onClick={() => {
                                                   updateRequestBeforePayment(
@@ -495,18 +507,18 @@ class Index extends Component {
                       </Grid>
 
                       <div>
-                        <p>Submit Feedback</p>
+                        <p>{submit_Feedback}</p>
                       </div>
                     </Grid>
                     {this.state.allcompulsary && <div className="err_message">
-                      {"All fields are compulsary, please fill all"}
+                      {All_fields_are_compulsary_please_fill_all}
                     </div>}
                     {this.state.sendError && <div className="err_message">
-                      {"Feedback already given by you"}
+                      {Feedback_already_given_by_you}
                     </div>}
                     {this.state.sendSuccess &&
                       <div className="success_message">
-                        {"Feedback submit successfully"}
+                        {Feedback_submit_successfully}
                       </div>}
                     <Grid className="symptomSec symptomSec1">
                       <h3></h3>
@@ -515,7 +527,7 @@ class Index extends Component {
                           updateEntryState1(this, e, 'fast_service')
                         }
                         comesFrom="Feedback"
-                        label="Is it fast service?"
+                        label={Is_it_fast_service}
                         value={this.state.updateFeedback?.fast_service}
                       />
                       <SymptomQuestions
@@ -523,7 +535,7 @@ class Index extends Component {
                           updateEntryState1(this, e, 'doctor_explaination')
                         }
                         comesFrom="Feedback"
-                        label="Did you understood the doctor explaination?"
+                        label={understood_explaination}
                         value={this.state.updateFeedback?.doctor_explaination}
                       />
                       <SymptomQuestions
@@ -531,16 +543,16 @@ class Index extends Component {
                           updateEntryState1(this, e, 'satification')
                         }
                         comesFrom="Feedback"
-                        label="Are you satisfied with the service?"
+                        label={satisfied_service}
                         value={this.state.updateFeedback?.satification}
                       />
-                      <Grid className="infoShwSave3">
+                      {!this.state.sendError && <Grid className="infoShwSave3">
                         <input
                           type="submit"
-                          value="Submit"
+                          value={Submit}
                           onClick={() => handleSubmitFeed(this)}
                         />
-                      </Grid>
+                      </Grid>}
                     </Grid>
                   </Grid>
                 </Grid>
@@ -569,7 +581,7 @@ class Index extends Component {
                               <img src={require('assets/images/close-search.svg')} alt="" title="" />
                             </a>
                           </Grid>
-                          <label>Details</label>
+                          <label>{details}</label>
                         </Grid>
                       </Grid>
                     </Grid>
@@ -577,7 +589,7 @@ class Index extends Component {
                       <Grid item xs={12} md={12} className="taskDescp">
                         <Grid className="stndQues stndQues1">
                           <Grid class="addStnd">
-                            <Grid><label>Added On</label></Grid>
+                            <Grid><label>{added_on}</label></Grid>
                             <p>
                               {this.state.showDetails &&
                                 !this.state.showDetails?.created_at ? (
@@ -939,7 +951,7 @@ class Index extends Component {
                                 attachfile={this.state.showDetails?.attachments}
                               />
                             ) : (
-                              <p>No attachments!</p>
+                              <p>{No_attachments}</p>
                             )}
                           </Grid>
 
@@ -957,7 +969,7 @@ class Index extends Component {
                                   )
                                 )
                               ) : (
-                                <p>No comments!</p>
+                                <p>{No_comments}</p>
                               )}
                             </p>
                           </Grid>
