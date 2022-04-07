@@ -516,6 +516,7 @@ class Index extends Component {
                                                 'from_when'
                                               )
                                             }
+                                            NotFutureDate={true}
                                           />
                                         </Grid>
                                       </Grid>
@@ -558,6 +559,7 @@ class Index extends Component {
                                                 'until_when'
                                               )
                                             }
+                                            NotFutureDate={true}
                                           />
                                         </Grid>
                                       </Grid>
@@ -796,6 +798,7 @@ class Index extends Component {
                                       this.props.settings.setting &&
                                       this.props.settings.setting.date_format
                                     }
+                                    NotFutureDate={true}
                                   />
                                    {this.state.error_section == 19 && <div className="err_message2">
                                         {this.state.errorChrMsg}

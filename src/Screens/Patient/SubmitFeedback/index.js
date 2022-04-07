@@ -425,7 +425,8 @@ class Index extends Component {
                                         )}
 
                                         {(item.status === 'done' ||
-                                          item?.comments?.length > 0) && (
+                                          item?.comments?.length > 0 || 
+                                          item?.attachments?.length > 0) && (
                                             <>
                                               <li>
                                                 <a

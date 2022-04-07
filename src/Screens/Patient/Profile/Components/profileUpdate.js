@@ -20,7 +20,7 @@ import DateFormat from 'Screens/Components/DateFormat/index'
 import { getLanguage } from "translations/index";
 import _ from 'lodash';
 import { updateFLAG, updateMOBILE, getUserData, contact_partnerState, getMetadata, handleChange_multi, saveUserData1, saveUserData, firstLoginUpdate, onChange, updateEntryState1, updateEntryState11, copyText, updateflags,
-    updateEntryState, Upsaterhesus, EntryValueName , GetLanguageMetadata, filterCountry, filterCountry1, toggle, filterList, updatesinsurances, changeAlies, changePin, ChangeIDPIN, updatesinsurancesCountry ,removeInsurance,  } from './puapi';
+    handleMaritalStatus, updateEntryState, Upsaterhesus, EntryValueName , GetLanguageMetadata, filterCountry, filterCountry1, toggle, filterList, updatesinsurances, changeAlies, changePin, ChangeIDPIN, updatesinsurancesCountry ,removeInsurance,  } from './puapi';
 
 class Index extends Component {
     constructor(props) {
@@ -392,7 +392,7 @@ class Index extends Component {
                                                     this.props.stateLanguageType
                                                 )}
                                                 // value ={this.state.UpDataDetails && this.state.UpDataDetails.marital_status && GetShowLabel(this.state.UpDataDetails.marital_status, this.props.stateLanguageType)}
-                                                onChange={this.handleMaritalStatus} 
+                                                onChange={(e) => handleMaritalStatus(e, this)} 
                                                 className="cntryDrop"/>
                                         </Grid>
                                     </Grid>
