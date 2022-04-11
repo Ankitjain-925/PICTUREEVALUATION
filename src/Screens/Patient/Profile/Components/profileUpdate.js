@@ -10,7 +10,6 @@ import QRCode from 'qrcode.react';
 import { LoginReducerAim } from 'Screens/Login/actions';
 import { Settings } from 'Screens/Login/setting';
 import npmCountryList from 'react-select-country-list'
-import { Table } from 'reactstrap';
 import Autocomplete from 'Screens/Components/Autocomplete/index';
 import { LanguageFetchReducer } from 'Screens/actions';
 import Modal from '@material-ui/core/Modal';

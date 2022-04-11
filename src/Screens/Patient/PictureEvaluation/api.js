@@ -126,19 +126,19 @@ export const handleEvalSubmit = (value, current) => {
                     } else {
                       var patient = {
                         first_name:
-                          current.props.stateLoginValueAim.user.first_name,
+                          current.props.stateLoginValueAim.user?.first_name,
                         last_name:
-                          current.props.stateLoginValueAim.user.last_name,
+                          current.props.stateLoginValueAim.user?.last_name,
                         alies_id:
-                          current.props.stateLoginValueAim.user.alies_id,
+                          current.props.stateLoginValueAim.user?.alies_id,
                         profile_id:
-                          current.props.stateLoginValueAim.user.profile_id,
-                        user_id: current.props.stateLoginValueAim.user._id,
-                        image: current.props.stateLoginValueAim.user.image,
+                          current.props.stateLoginValueAim.user?.profile_id,
+                        user_id: current.props.stateLoginValueAim.user?._id,
+                        image: current.props.stateLoginValueAim.user?.image,
                       };
                       data.patient = patient;
                       data.patient_id =
-                        current.props.stateLoginValueAim.user._id;
+                        current.props.stateLoginValueAim.user?._id;
                       data.fileattach = current.state.fileattach;
                       data.task_name = 'Picture evaluation from patient';
                       data.task_type = 'picture_evaluation';
@@ -561,7 +561,7 @@ export const saveOnDB = (payment, current) => {
     axios
       .put(
         sitedata.data.path + '/vh/AddTask/' + current.state.updateEvaluate._id,
-        { payment_data: payment, is_payment: true },
+        { payment_data: payment?.data?.payment_data, is_payment: true },
         commonHeader(current.props.stateLoginValueAim.token)
       )
       .then((responce) => {
@@ -649,16 +649,16 @@ export const handleSubmitFeed = (current) => {
     current.setState({ loaderImage: true, allcompulsary: false });
     data.patient = {
       first_name:
-          current.props.stateLoginValueAim.user.first_name,
+          current.props.stateLoginValueAim.user?.first_name,
         last_name:
-          current.props.stateLoginValueAim.user.last_name,
+          current.props.stateLoginValueAim.user?.last_name,
         alies_id:
-          current.props.stateLoginValueAim.user.alies_id,
+          current.props.stateLoginValueAim.user?.alies_id,
         profile_id:
-          current.props.stateLoginValueAim.user.profile_id,
-          patient_id: current.props.stateLoginValueAim.user._id,
-          profile_image: current.props.stateLoginValueAim.user.image,
-          birthday: current.props.stateLoginValueAim.user.birthday,
+          current.props.stateLoginValueAim.user?.profile_id,
+          patient_id: current.props.stateLoginValueAim.user?._id,
+          profile_image: current.props.stateLoginValueAim.user?.image,
+          birthday: current.props.stateLoginValueAim.user?.birthday,
     }
     if(current.state?.forFeedback?.assinged_to?.length>0){
       data.doctor_id = current.state?.forFeedback?.assinged_to.map((item)=>{
@@ -700,7 +700,7 @@ export const handleSubmitFeed = (current) => {
 export const getUserData = (current) => {
   current.setState({ loaderImage: true });
   let user_token = current.props.stateLoginValueAim.token;
-  let user_id = current.props.stateLoginValueAim.user._id;
+  let user_id = current.props.stateLoginValueAim.user?._id;
   axios
     .get(
       sitedata.data.path + '/UserProfile/Users/' + user_id,
@@ -717,4 +717,53 @@ export const getUserData = (current) => {
         current.setState({ updateEvaluate: State });
       }
     });
+};
+
+export const DownloadBill = (current, id, bill_date) => {
+ var data = {}, senddata = {};
+  data.patient_id = current.props.stateLoginValueAim.user?._id;
+  data.profile_id = current.props.stateLoginValueAim.user?.profile_id;
+  data.first_name = current.props.stateLoginValueAim.user?.first_name;
+  data.last_name = current.props.stateLoginValueAim.user?.last_name;
+  data.alies_id = current.props.stateLoginValueAim.user?.alies_id;
+  data.mobile =  current.props.stateLoginValueAim.user?.mobile;
+  data.email = current.props.stateLoginValueAim.user?.email;
+  data.profile_image = current.props.stateLoginValueAim.user?.image;
+  data.address = current.props.stateLoginValueAim.user?.address;
+  data.postal_code = current.props.stateLoginValueAim.user?.postal_code;
+  data.country = current.props.stateLoginValueAim.user?.country?.label;
+  data.city = current.props.stateLoginValueAim.user?.city;
+  data.birthday = current.props.stateLoginValueAim.user?.birthday;
+  senddata.invoice_id = id;
+  senddata.bill_date = bill_date
+  senddata.data = data;
+  current.setState({ loaderImage: true })
+  axios
+      .post(sitedata.data.dowload_link + "/vh/downloadPEBill", senddata,
+          { responseType: "blob" }
+      )
+      .then((res) => {
+          setTimeout(() => {
+              current.setState({ loaderImage: false });
+          }, 3000)
+          var data = new Blob([res.data]);
+          if (typeof window.navigator.msSaveBlob === "function") {
+              // If it is IE that support download blob directly.
+              window.navigator.msSaveBlob(data, "Bill.pdf");
+          } else {
+              var blob = data;
+              var link = document.createElement("a");
+              link.href = window.URL.createObjectURL(blob);
+              link.download = "Bill.pdf";
+              document.body.appendChild(link);
+              link.click(); // create an <a> element and simulate the click operation.
+          }
+
+      })
+      .catch((err) => {
+          current.setState({ loaderImage: false });
+      })
+      .catch((err) => {
+          current.setState({ loaderImage: false });
+      });
 };

@@ -1723,7 +1723,9 @@
     "understood_explaination":"Did you understood the doctor explaination?",
     "satisfied_service":"Are you satisfied with the service?",
     "Is_it_fast_service": "Is it fast service?",
-    "correct_information_of_CARD":"Please fill the full or correct information of CARD"
+    "correct_information_of_CARD":"Please fill the full or correct information of CARD",
+    "Download_Bill": "Download Bill",
+    "Payment":"Payment"
 
   }
 }

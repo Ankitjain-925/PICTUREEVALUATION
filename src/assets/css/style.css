@@ -4737,6 +4737,7 @@ button.aboutTabsIner {
     position: absolute;
     left: 0;
     top: 45px;
+    width:100%;
     z-index: 999;
 }
 .browsInput {
@@ -14227,7 +14228,7 @@ span.unread_msg_notifyspan {
     width: 50px!important;
 }
 button.CutomStripeButton{
-    opacity: 0 !important;
+    opacity: 1 !important;
 }
 .homeBgDrk .NotFoundContent {
     color: #BFC1C1 !important;
@@ -14602,6 +14603,9 @@ button.CutomStripeButton {
     color: #fff !important;
     padding: 5px 20px !important;
     border-radius: 5px !important;
+    height: 40px !important;
+    width: 100% !important;
+    font-weight: 800 !important;
 }
 button.CutomStripeButton span {
     background: #00ABAF !important;

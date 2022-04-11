@@ -18,9 +18,10 @@ import { confirmAlert } from 'react-confirm-alert';
 import Pagination from 'Screens/Components/Pagination/index';
 import { getAllPictureEval } from 'Screens/Patient/PictureEvaluation/api';
 import Modal from '@material-ui/core/Modal';
-import { getDate } from 'Screens/Components/BasicMethod/index';
+import { getDate, getTime } from 'Screens/Components/BasicMethod/index';
 import SymptomQuestions from '../../Components/TimelineComponent/CovidSymptomsField/SymptomQuestions';
 import {
+  DownloadBill,
   handleSubmitFeed,
   handleOpFeedback,
   handleCloseFeedback,
@@ -194,6 +195,7 @@ class Index extends Component {
     return '-';
   };
 
+  
 
 
   render() {
@@ -272,6 +274,7 @@ class Index extends Component {
       payment_done,
       Attachments,
       Reply,
+      Download_Bill,
       Comments,
     } = translate;
 
@@ -322,13 +325,37 @@ class Index extends Component {
                               this.state.AllData.map((item, index) => (
                                 <Tr>
                                   <Td>
-                                    {getDate(
+                                  <p>
+                              {item &&
+                                !item?.due_on?.date ? (
+                                '-'
+                              ) : (
+                                <>
+                                  {getDate(
+                                    item?.due_on?.date,
+                                    this.props.settings &&
+                                    this.props.settings?.setting &&
+                                    this.props.settings?.setting?.date_format
+                                  )}
+                                </>
+                              )}
+                            </p>
+                            <p>
+                            {item?.due_on?.time &&
+                              getTime(
+                                new Date(item?.due_on?.time),
+                                this.props.settings &&
+                                this.props.settings?.setting &&
+                                this.props.settings?.setting?.time_format
+                              )}
+                          </p>
+                                    {/* {getDate(
                                       item && item?.created_at,
                                       this.props.settings &&
                                       this.props.settings?.setting &&
                                       this.props.settings?.setting
                                         ?.date_format
-                                    )}
+                                    )} */}
                                   </Td>
                                   <Td>{item.task_name}</Td>
                                   <Td>
@@ -400,7 +427,7 @@ class Index extends Component {
                                                 }}
                                               >
                                                 <img
-                                                  src={require('assets/images/cancel-request.svg')}
+                                                  src={require('assets/virtual_images/pencil-1.svg')}
                                                   alt=""
                                                   title=""
                                                 />
@@ -424,6 +451,23 @@ class Index extends Component {
                                           </li>
                                         )}
 
+                                        {item.is_payment && (
+                                          <li>
+                                            <a
+                                              onClick={() => {
+                                                DownloadBill(this, item?.payment_data?.id, item?.created_at);
+                                              }}
+                                            >
+                                              <img
+                                                src={require('assets/images/download.svg')}
+                                                alt=""
+                                                title=""
+                                              />
+                                              {Download_Bill}
+                                            </a>
+                                          </li>
+                                        )}
+
                                         {(item.status === 'done' ||
                                           item?.comments?.length > 0 || 
                                           item?.attachments?.length > 0) && (
@@ -435,7 +479,7 @@ class Index extends Component {
                                                   }
                                                 >
                                                   <img
-                                                    src={require('assets/images/cancel-request.svg')}
+                                                    src={require('assets/images/details.svg')}
                                                     alt=""
                                                     title=""
                                                   />
@@ -593,19 +637,29 @@ class Index extends Component {
                             <Grid><label>{added_on}</label></Grid>
                             <p>
                               {this.state.showDetails &&
-                                !this.state.showDetails?.created_at ? (
+                                !this.state.showDetails?.due_on?.date ? (
                                 '-'
                               ) : (
                                 <>
                                   {getDate(
-                                    this.state.showDetails?.created_at,
+                                    this.state.showDetails?.due_on?.date,
                                     this.props.settings &&
                                     this.props.settings?.setting &&
                                     this.props.settings?.setting?.date_format
-                                  )}
+                                  )} ({this.state.showDetails?.due_on?.time &&
+                              getTime(
+                                new Date(this.state.showDetails?.due_on?.time),
+                                this.props.settings &&
+                                this.props.settings?.setting &&
+                                this.props.settings?.setting?.time_format
+                              )})
                                 </>
+
+
                               )}
-                            </p>
+
+                            
+                          </p>
                           </Grid>
                           <Grid class="addStnd">
                             <Grid><label>{age}</label></Grid>
@@ -959,7 +1013,7 @@ class Index extends Component {
                           <Grid class="addStnd1">
                             <Grid><label>{Comments}</label></Grid>
                             <p>
-                              {this.state.showDetails &&
+                              {this.state.showDetails && 
                                 this.state.showDetails?.comments &&
                                 this.state.showDetails?.comments?.length > 0 ? (
                                 this.state.showDetails?.comments.map(

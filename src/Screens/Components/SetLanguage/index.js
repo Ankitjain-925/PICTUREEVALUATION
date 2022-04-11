@@ -129,7 +129,7 @@ class Index extends Component {
             <Grid className="languageBox">
               <Grid className="row">
                 <Grid className="col-xl-6">
-                  <Grid>
+                  {/* <Grid>
                     <input
                       value="ar"
                       onChange={this.changeLanguage}
@@ -185,7 +185,7 @@ class Index extends Component {
                       />
                       Dutch (Nederlands)
                     </label>
-                  </Grid>
+                  </Grid> */}
                   <Grid>
                     <input
                       value="en"
@@ -205,7 +205,7 @@ class Index extends Component {
                       English (English)
                     </label>
                   </Grid>
-                  <Grid>
+                  {/* <Grid>
                     <input
                       value="fr"
                       onChange={this.changeLanguage}
@@ -223,7 +223,7 @@ class Index extends Component {
                       />
                       French (Francais)
                     </label>
-                  </Grid>
+                  </Grid> */}
                   <Grid>
                     <input
                       value="de"
@@ -244,7 +244,7 @@ class Index extends Component {
                     </label>
                   </Grid>
                 </Grid>
-                <Grid className="col-xl-6">
+                {/* <Grid className="col-xl-6">
                   <Grid>
                     <input
                       value="pt"
@@ -340,7 +340,7 @@ class Index extends Component {
                       Turkish (Türk)
                     </label>
                   </Grid>
-                </Grid>
+                </Grid> */}
               </Grid>
             </Grid>
             <Grid className="infoShwHidBrdr2"></Grid>

@@ -137,7 +137,7 @@ class Index extends Component {
                     title=""
                   />
                 )}
-                <span>{"Picture Evaluation"}</span>
+                <span>{picture_evaluation}</span>
               </a>
             </li>
             <li
@@ -160,7 +160,7 @@ class Index extends Component {
                     title=""
                   />
                 )}
-                <span>{"Evaluation Request"}</span>
+                <span>{evaluation_request}</span>
               </a>
             </li>
         
