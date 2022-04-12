@@ -1,9 +1,11 @@
 import axios from 'axios';
 import sitedata from 'sitedata';
-import { commonHeader, commonCometHeader } from 'component/CommonHeader/index';
+import { commonHeader, commonCometHeader, GetHouseID } from 'component/CommonHeader/index';
 import { getLanguage } from 'translations/index';
+var HouseID = GetHouseID();
 
 export const handleEvalSubmit = (value, current) => {
+  
   let translate = getLanguage(current.props.stateLanguageType)
   let {
     please_select_gender, 
@@ -92,7 +94,6 @@ export const handleEvalSubmit = (value, current) => {
                     )
                   ) {
                     current.setState({ errorChrMsg: '' });
-
                     if (data?._id) {
                       if(data.is_decline){
                         data.is_decline = false;
@@ -107,6 +108,7 @@ export const handleEvalSubmit = (value, current) => {
                         due_on['time'] = new Date();
                         data.due_on = due_on;
                       }
+                     
                       axios
                         .put(
                           sitedata.data.path + '/vh/AddTask/' + data._id,
@@ -147,7 +149,7 @@ export const handleEvalSubmit = (value, current) => {
                       data.priority = 0;
                       data.archived = false;
                       data.status = 'open';
-                      data.house_id = '60fabfe5b3394533f7f9a6dc-1639551688707';
+                      data.house_id = HouseID;
                       data.created_at = new Date();
                       if (!data?.due_on?.date) {
                         let due_on = data?.due_on || {};

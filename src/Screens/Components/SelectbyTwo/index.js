@@ -13,9 +13,9 @@ class Date extends Component {
   }
 
   componentDidUpdate =(prevProps, prevState)=>{
-    if(prevProps.options !== this.props.options || prevProps.value !== this.props.value){
-      this.setState({Options: this.props.options, value: this.props.value});
-      console.log('this.props.value', this.props.value)
+    if(prevProps.options !== this.props.options || prevProps.value !== this.props.value || 
+      prevProps.label !== this.props.label){
+      this.setState({Options: this.props.options, value: this.props.value, label: this.props.label});
     }
   }
   //On Select Change

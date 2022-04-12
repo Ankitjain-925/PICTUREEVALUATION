@@ -101,6 +101,12 @@ class Index extends Component {
     getUserData(this);
   }
 
+  componentDidUpdate = (prevProps, prevState)=>{
+      if(prevProps.stateLanguageType !== this.props.stateLanguageType){
+        this.GetLanguageMetadata();
+      }
+  }
+
   //Get All information Related to Metadata
   getMetadata() {
     this.setState({ allMetadata: this.props.metadata }, () => {
