@@ -18,7 +18,10 @@ import { confirmAlert } from 'react-confirm-alert';
 import Pagination from 'Screens/Components/Pagination/index';
 import { getAllPictureEval } from 'Screens/Patient/PictureEvaluation/api';
 import Modal from '@material-ui/core/Modal';
+import { GetShowLabel1 } from 'Screens/Components/GetMetaData/index.js';
 import { getDate, getTime } from 'Screens/Components/BasicMethod/index';
+import { GetLanguageDropdown } from 'Screens/Components/GetMetaData/index.js';
+import { OptionList } from 'Screens/Login/metadataaction';
 import SymptomQuestions from '../../Components/TimelineComponent/CovidSymptomsField/SymptomQuestions';
 import {
   DownloadBill,
@@ -48,13 +51,52 @@ class Index extends Component {
       sendSuccess: false,
       totalPage: 1,
       currentPage: 1,
+      Allsituation: [],
+      Allsmoking_status: [],
+      allMetadata: []
     };
     // new Timer(this.logOutClick.bind(this))
   }
 
   componentDidMount = () => {
     getAllPictureEval(this);
+    this.getMetadata();
   };
+
+  componentDidUpdate = (prevProps, prevState)=>{
+    if(prevProps.stateLanguageType !== this.props.stateLanguageType){
+      this.GetLanguageMetadata();
+    }
+}
+
+GetLanguageMetadata = () => {
+  if (this.state.allMetadata) {
+    var Allsituation = GetLanguageDropdown(
+      this.state.allMetadata &&
+        this.state.allMetadata.situation &&
+        this.state.allMetadata.situation,
+      this.props.stateLanguageType
+    );
+    var Allsmoking_status = GetLanguageDropdown(
+      this.state.allMetadata &&
+        this.state.allMetadata.smoking_status &&
+        this.state.allMetadata.smoking_status,
+      this.props.stateLanguageType
+    );
+
+    this.setState({
+      Allsituation: Allsituation,
+      Allsmoking_status: Allsmoking_status,
+    });
+  }
+};
+
+//Get All information Related to Metadata
+getMetadata() {
+  this.setState({ allMetadata: this.props.metadata }, () => {
+    this.GetLanguageMetadata();
+  });
+}
 
   updateRequestBeforePayment = (data) => {
     this.props.history.push({
@@ -64,6 +106,7 @@ class Index extends Component {
   };
 
   updateEntryState1 = (value, name) => {
+    console.log('dsfsdf', value, name)
     const state = this.state.updateFeedback;
     state[name] = value;
     this.setState({ updateFeedback: state });
@@ -725,9 +768,16 @@ class Index extends Component {
                             <Grid xs={4} md={4}>
                               <label>{situation}</label>
                               <p>
-                                {this.state.showDetails &&
+                              {GetShowLabel1(
+                                  this.state.Allsituation,
+                                  this.state.showDetails?.situation?.value,
+                                  this.props.stateLanguageType,
+                                  true,
+                                  'anamnesis'
+                              )}
+                                {/* {this.state.showDetails &&
                                   this.state.showDetails?.situation &&
-                                  this.state.showDetails?.situation?.label}
+                                  this.state.showDetails?.situation?.label} */}
                               </p>
                             </Grid>
                           </Grid>
@@ -736,9 +786,14 @@ class Index extends Component {
                             <Grid xs={4} md={4}>
                               <label>{status}</label>
                               <p>
-                                {this.state.showDetails &&
-                                  this.state.showDetails?.smoking_status &&
-                                  this.state.showDetails?.smoking_status?.label}
+                              {GetShowLabel1(
+                                      this.state.Allsmoking_status,
+                                  this.state.showDetails?.smoking_status?.value,
+                                      this.props.stateLanguageType,
+                                      true,
+                                      'anamnesis'
+                                    )}
+                                {}
                               </p>
                             </Grid>
                             {!this.state.showDetails?.smoking_status ||
@@ -1048,15 +1103,17 @@ const mapStateToProps = (state) => {
     state.LoginReducerAim;
   const { stateLanguageType } = state.LanguageReducer;
   const { settings } = state.Settings;
+  const { metadata } = state.OptionList;
   return {
     stateLanguageType,
     stateLoginValueAim,
     loadingaIndicatoranswerdetail,
     settings,
+    metadata
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { LoginReducerAim, LanguageFetchReducer, Settings })(
+  connect(mapStateToProps, { LoginReducerAim, LanguageFetchReducer, Settings,OptionList })(
     Index
   )
 );

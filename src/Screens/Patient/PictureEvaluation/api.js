@@ -258,7 +258,7 @@ export const validateBpAndSugar1 = (value, item, current) => {
     }
   } else if (item === 'body_temp') {
     if (!value) {
-      current.setState({ errorChrMsg: enter_body_temp , error_section: 21});
+      current.setState({ errorChrMsg: enter_body_temp , error_section: 22});
       MoveTop(250);
       return false;
     } else if (value < 96 || value > 105) {
@@ -317,55 +317,56 @@ export const validateBpAndSugar = (value, item, current) => {
   } = translate;
   var bpPattern = /^[0-9]+$/;
   var Valid = bpPattern.test(value);
-  if (item === 'systolic') {
-    if (!value) {
-      current.setState({ errorChrMsg: enter_systolic_value, error_section: 3 });
-      MoveTop(0);
-      return false;
-    } else if (!Valid) {
-      current.setState({ errorChrMsg: systolic_bp_in_number, error_section: 3 });
-      MoveTop(0);
-      return false;
-    } else if (value < 120) {
-      current.setState({
-        errorChrMsg: systolic_value_between, error_section: 3
-      });
-      MoveTop(0);
-      return false;
-    } else if (value > 140) {
-      current.setState({
-        errorChrMsg: systolic_value_between, error_section: 3
-      });
-      MoveTop(0);
-      return false;
-    } else {
-      return true;
+    if (item === 'systolic' && current.state.bp_avail) {
+      if (!value) {
+        current.setState({ errorChrMsg: enter_systolic_value, error_section: 3 });
+        MoveTop(0);
+        return false;
+      } else if (!Valid) {
+        current.setState({ errorChrMsg: systolic_bp_in_number, error_section: 3 });
+        MoveTop(0);
+        return false;
+      } else if (value < 120) {
+        current.setState({
+          errorChrMsg: systolic_value_between, error_section: 3
+        });
+        MoveTop(0);
+        return false;
+      } else if (value > 140) {
+        current.setState({
+          errorChrMsg: systolic_value_between, error_section: 3
+        });
+        MoveTop(0);
+        return false;
+      } else {
+        return true;
+      }
+    } else if (item === 'diastolic' && current.state.bp_avail) {
+      if (!value) {
+        current.setState({ errorChrMsg: enter_diastolic_value, error_section: 4 });
+        MoveTop(0);
+        return false;
+      } else if (!Valid) {
+        current.setState({ errorChrMsg: diastolic_in_number, error_section: 4 });
+        MoveTop(0);
+        return false;
+      } else if (value < 80) {
+        current.setState({
+          errorChrMsg: diastolic_value_between,error_section: 4
+        });
+        MoveTop(0);
+        return false;
+      } else if (value > 90) {
+        current.setState({
+          errorChrMsg: diastolic_value_between, error_section: 4
+        });
+        MoveTop(0);
+        return false;
+      } else {
+        return true;
+      }
     }
-  } else if (item === 'diastolic') {
-    if (!value) {
-      current.setState({ errorChrMsg: enter_diastolic_value, error_section: 4 });
-      MoveTop(0);
-      return false;
-    } else if (!Valid) {
-      current.setState({ errorChrMsg: diastolic_in_number, error_section: 4 });
-      MoveTop(0);
-      return false;
-    } else if (value < 80) {
-      current.setState({
-        errorChrMsg: diastolic_value_between,error_section: 4
-      });
-      MoveTop(0);
-      return false;
-    } else if (value > 90) {
-      current.setState({
-        errorChrMsg: diastolic_value_between, error_section: 4
-      });
-      MoveTop(0);
-      return false;
-    } else {
-      return true;
-    }
-  } else if (item === 'blood_sugar') {
+  else if (item === 'blood_sugar' && current.state.diab_avail) {
     if (!value) {
       current.setState({ errorChrMsg: enter_blood_sugar, error_section: 5 });
       MoveTop(0);
@@ -389,7 +390,7 @@ export const validateBpAndSugar = (value, item, current) => {
     } else {
       return true;
     }
-  } else if (item === 'Hba1c') {
+  } else if (item === 'Hba1c'  && current.state.diab_avail) {
     let calHba1c = value && value / 10;
     if (!value) {
       current.setState({ errorChrMsg: enter_hba1c, error_section: 6 });
@@ -410,7 +411,7 @@ export const validateBpAndSugar = (value, item, current) => {
     } else {
       return true;
     }
-  } else if (item === 'situation') {
+  } else if (item === 'situation'  && current.state.diab_avail) {
     if (!value) {
       current.setState({ errorChrMsg: enter_situation, error_section: 7 });
       MoveTop(0);
@@ -504,7 +505,7 @@ export const validateBpAndSugar = (value, item, current) => {
       return true;
     }
   } else {
-    return false;
+    return true;
   }
 };
 
@@ -605,7 +606,7 @@ export const handleCloseDetail = (current) => {
 
 // Open Feedback Form
 export const handleOpFeedback = (current, openData) => {
-  current.setState({ loaderImage: true, sendError: false, updateFeedback: {} });
+  current.setState({ loaderImage: true, sendError: false, updateFeedback: {} , allcompulsary: false});
   let user_token = current.props.stateLoginValueAim.token;
   axios
     .get(
@@ -647,7 +648,7 @@ export const updateRequestBeforePayment = (current, data) => {
 // Api call for feedback form
 export const handleSubmitFeed = (current) => {
   var data = current.state.updateFeedback;
-  if(data.fast_service && data.doctor_explaination && data.satification){
+  if((data.fast_service || data.fast_service>-1) && (data.doctor_explaination || data.doctor_explaination>-1) && (data.satification || data.satification>-1)){
     current.setState({ loaderImage: true, allcompulsary: false });
     data.patient = {
       first_name:

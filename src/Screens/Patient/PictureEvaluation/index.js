@@ -15,10 +15,10 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import LeftMenu from 'Screens/Components/Menus/PatientLeftMenu/index';
 import LeftMenuMobile from 'Screens/Components/Menus/PatientLeftMenu/mobile';
 import { LanguageFetchReducer } from 'Screens/actions';
+import Checkbox from "@material-ui/core/Checkbox";
 import Loader from 'Screens/Components/Loader/index';
 import { Redirect, Route } from 'react-router-dom';
 import { getLanguage } from 'translations/index';
-import { commonHeader } from 'component/CommonHeader/index';
 import PainIntensity from 'Screens/Components/PainIntansity/index';
 import NotesEditor from '../../Components/Editor/index';
 import FatiqueQuestion from '../../Components/TimelineComponent/CovidSymptomsField/FatiqueQuestions';
@@ -82,7 +82,9 @@ class Index extends Component {
       activated: false,
       deactivated: false,
       is_payment: false,
-      error_section: 0
+      error_section: 0,
+      bp_avail: false,
+      diab_avail: false
     };
   }
 
@@ -458,7 +460,17 @@ class Index extends Component {
                                 </Grid>
                                 <Grid className="bloodpreLb">
                                   <label>{blood_pressure}</label>
+                                  <Checkbox
+                                    value="checkedB"
+                                    color="#00ABAF"
+                                    checked={this.state.bp_avail === true && this.state.bp_avail}
+                                    onChange={(e) => {
+                                      this.setState({ bp_avail: e.target.checked});
+                                    }}
+                                    className="PIC_Condition"
+                                  />
                                 </Grid>
+                                {this.state.bp_avail === true && (
                                 <Grid container direction="row" spacing="1">
                                   <Grid item md={6} sm={6}>
                                     <Grid className="fillDia">
@@ -499,10 +511,20 @@ class Index extends Component {
                                     </div>}
                                     </Grid>
                                   </Grid>
-                                </Grid>
+                                </Grid>)}
                                 <Grid className="bloodpreLb">
                                   <label>{diabetes}</label>
+                                  <Checkbox
+                                    value="checkedB"
+                                    color="#00ABAF"
+                                    checked={this.state.diab_avail === true && this.state.diab_avail}
+                                    onChange={(e) => {
+                                      this.setState({ diab_avail: e.target.checked});
+                                    }}
+                                    className="PIC_Condition"
+                                  />
                                 </Grid>
+                                {this.state.diab_avail === true && (<>
                                 <Grid container direction="row" spacing="1">
                                   <Grid item md={6} sm={6}>
                                     <Grid className="fillDia">
@@ -560,6 +582,7 @@ class Index extends Component {
                                         {this.state.errorChrMsg}
                                     </div>}
                                 </Grid>
+                                </>)}
 
                                 <Grid className="bloodpreLb">
                                   <label>{smoking_status}</label>
@@ -983,7 +1006,7 @@ class Index extends Component {
                                     value={this.state.updateEvaluate?.body_temp}
                                   ></input>
                                     {this.state.error_section == 22 && <div className="err_message2">
-                                        {this.state.errorChrMsg}
+                                      {this.state.errorChrMsg}
                                     </div>}
                                 </Grid>
                                 <Grid className="textFieldArea1">

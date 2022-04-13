@@ -10006,6 +10006,12 @@ button.crdoLghtBlu2 {
   border-bottom: none;
 }
 /* Added by Ankita */
+.PIC_Condition{
+  margin-bottom: 5px !important;
+}
+.PIC_Condition .MuiCheckbox-root {
+  color: #00abaf;
+}
 .err_message2 {
   color: red !important;;
   font-weight: 600;
