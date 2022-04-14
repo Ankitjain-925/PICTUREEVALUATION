@@ -14,6 +14,7 @@ class Date extends Component {
     this.state = {
       is24: this.props.date_format,
       value: this.props.value || new Date(),
+      NotFutureDate: this.props.NotFutureDate || false
     };
   }
 
@@ -29,8 +30,8 @@ class Date extends Component {
 
   //on adding new data
   componentDidUpdate = (prevProps) => {
-    if (prevProps.value !== this.props.value) {
-      this.setState({ value: this.props.value });
+    if (prevProps.value !== this.props.value || prevProps.NotFutureDate !== this.props.NotFutureDate) {
+      this.setState({ value: this.props.value, NotFutureDate: this.props.NotFutureDate ? true: false });
     }
   };
   shouldComponentUpdate(nextProps, nextState) {
@@ -57,7 +58,7 @@ class Date extends Component {
             disabledDate={(current) => {
               return (
                 current &&
-                (current > moment()) && this.props.NotFutureDate
+                (current > moment()) && this.state.NotFutureDate
                  
               );
             }}
@@ -82,7 +83,7 @@ class Date extends Component {
             disabledDate={(current) => {
               return (
                 current &&
-                (current > moment()) && this.props.NotFutureDate
+                (current > moment()) && this.state.NotFutureDate
                  
               );
             }}
@@ -107,7 +108,7 @@ class Date extends Component {
             disabledDate={(current) => {
               return (
                 current &&
-                (current > moment()) && this.props.NotFutureDate
+                (current > moment()) && this.state.NotFutureDate
                  
               );
             }}
@@ -133,7 +134,7 @@ class Date extends Component {
             disabledDate={(current) => {
               return (
                 current &&
-                (current > moment()) && this.props.NotFutureDate
+                (current > moment()) && this.state.NotFutureDate
                  
               );
             }}

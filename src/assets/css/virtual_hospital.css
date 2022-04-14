@@ -10006,12 +10006,24 @@ button.crdoLghtBlu2 {
   border-bottom: none;
 }
 /* Added by Ankita */
+.err_message2 {
+  color: red !important;;
+  font-weight: 600;
+  padding: 0px !important;
+}
+.setFirstCapGender{
+  text-transform:capitalize;
+}
+.createLSet{
+  width: 30%;
+  float: right;
+}
 .setDetail-eval {
-  padding: 15px;
+  padding: 0px 20px;
 }
 .ElementsApp,
 .ElementsApp .InputElement {
-  color: #00abaf;
+  color: #00abaf !important;
 }
 .setDividerPic-eval {
   border-top: 1px solid #cfcfcf;
@@ -10040,11 +10052,19 @@ button.crdoLghtBlu2 {
 
 .payment_sec_extra_ser1 {
   background: #fff;
-  padding-bottom: 30px;
+  padding-bottom: 0px;
   width: 100%;
 }
-.homeBgDrk .payment_sec_extra_ser1 {
-  background: #404646;
+.setPaymentBack{
+  border-radius: 12px;
+  background-color: #FFFFFF;
+  box-shadow: 0 1px 8px 0 rgb(0 8 8 / 4%);
+  margin-left: 48px;
+  margin-top: 42px;
+}
+
+.homeBgDrk .payment_sec_extra_ser1, .homeBgDrk .setPaymentBack {
+  background: #e1f7f7 !important;
 }
 @media (max-width: 959px) {
   .vh-section .prfilHghtLft p span,
@@ -10416,8 +10436,10 @@ button.dischrgInvoic span {
   color: #cfcfcf !important;
 }
 .darkTheme .err_message,
-.homeBgDrk .err_message {
-  color: red !important;
+.homeBgDrk .err_message,
+.darkTheme .err_message2,
+.homeBgDrk .err_message2{
+  color: #ff6262 !important;
 }
 .darkTheme .success_message,
 .homeBgDrk .success_message {
@@ -10589,8 +10611,8 @@ img.manage-size {
 }
 .darkTheme .cntryDropTop,
 .homeBgDrk .cntryDropTop {
-  border: 1px solid #5d5d5d;
-  border-radius: 5px;
+  border: 1px solid #cccccc;
+  border-radius: 2px;
 }
 .cntryDropTop div {
   box-shadow: initial !important;
@@ -14344,6 +14366,7 @@ input:-webkit-autofill:active{
   border-radius: 5px;
   border: 1px solid #bfc1c1;
   margin-top: 10px;
+  padding: 5px 10px;
 }
 
 .homeBgDrk .textFieldArea1 input {
