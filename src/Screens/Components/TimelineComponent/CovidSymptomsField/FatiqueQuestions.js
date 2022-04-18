@@ -40,7 +40,6 @@ class Index extends Component {
     let {Yes , No } = translate;
     return (
      <>
-        {console.log('this.state.value', this.state.value)}
         <Grid container direction="row" alignItems="center">
             <Grid item xs={8} md={8}>
             <label>{this.state.label}</label>

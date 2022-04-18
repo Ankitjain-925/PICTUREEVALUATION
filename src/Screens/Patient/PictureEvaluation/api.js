@@ -1,9 +1,18 @@
 import axios from 'axios';
 import sitedata from 'sitedata';
-import { commonHeader, commonCometHeader } from 'component/CommonHeader/index';
+import { commonHeader, commonCometHeader, GetHouseID } from 'component/CommonHeader/index';
 import { getLanguage } from 'translations/index';
+var HouseID = GetHouseID();
 
 export const handleEvalSubmit = (value, current) => {
+  
+  let translate = getLanguage(current.props.stateLanguageType)
+  let {
+    please_select_gender, 
+    valid_age_between,
+    valid_date,
+    atleast_one_picture
+  } = translate;
   let data = {};
   data = current.state.updateEvaluate;
   if (value == 1) {
@@ -31,7 +40,7 @@ export const handleEvalSubmit = (value, current) => {
                                         sex: data.sex,
                                         country: data.residenceCountry,
                                         citizen_country: data.country
-                                      }).then((res) => { })
+                                      }, commonHeader(current.props.stateLoginValueAim.token)).then((res) => { })
                                         .catch((e) => { })
                                     }
                                   }
@@ -51,12 +60,12 @@ export const handleEvalSubmit = (value, current) => {
           }
         }
       } else {
-        current.setState({ errorChrMsg: 'Please select Gender', error_section: 2 });
+        current.setState({ errorChrMsg: please_select_gender, error_section: 2 });
         MoveTop(0);
       }
     } else {
       current.setState({
-        errorChrMsg: 'Please select valid age, Age must be between 0 to 130',error_section: 1 
+        errorChrMsg: valid_age_between,error_section: 1 
       });
       MoveTop(0);
     }
@@ -85,7 +94,6 @@ export const handleEvalSubmit = (value, current) => {
                     )
                   ) {
                     current.setState({ errorChrMsg: '' });
-
                     if (data?._id) {
                       if(data.is_decline){
                         data.is_decline = false;
@@ -100,6 +108,7 @@ export const handleEvalSubmit = (value, current) => {
                         due_on['time'] = new Date();
                         data.due_on = due_on;
                       }
+                     
                       axios
                         .put(
                           sitedata.data.path + '/vh/AddTask/' + data._id,
@@ -119,19 +128,19 @@ export const handleEvalSubmit = (value, current) => {
                     } else {
                       var patient = {
                         first_name:
-                          current.props.stateLoginValueAim.user.first_name,
+                          current.props.stateLoginValueAim.user?.first_name,
                         last_name:
-                          current.props.stateLoginValueAim.user.last_name,
+                          current.props.stateLoginValueAim.user?.last_name,
                         alies_id:
-                          current.props.stateLoginValueAim.user.alies_id,
+                          current.props.stateLoginValueAim.user?.alies_id,
                         profile_id:
-                          current.props.stateLoginValueAim.user.profile_id,
-                        user_id: current.props.stateLoginValueAim.user._id,
-                        image: current.props.stateLoginValueAim.user.image,
+                          current.props.stateLoginValueAim.user?.profile_id,
+                        user_id: current.props.stateLoginValueAim.user?._id,
+                        image: current.props.stateLoginValueAim.user?.image,
                       };
                       data.patient = patient;
                       data.patient_id =
-                        current.props.stateLoginValueAim.user._id;
+                        current.props.stateLoginValueAim.user?._id;
                       data.fileattach = current.state.fileattach;
                       data.task_name = 'Picture evaluation from patient';
                       data.task_type = 'picture_evaluation';
@@ -140,7 +149,7 @@ export const handleEvalSubmit = (value, current) => {
                       data.priority = 0;
                       data.archived = false;
                       data.status = 'open';
-                      data.house_id = '60fabfe5b3394533f7f9a6dc-1639551688707';
+                      data.house_id = HouseID;
                       data.created_at = new Date();
                       if (!data?.due_on?.date) {
                         let due_on = data?.due_on || {};
@@ -186,7 +195,7 @@ export const handleEvalSubmit = (value, current) => {
           }
         }
       } else {
-        current.setState({ errorChrMsg: 'Please select valid start date', error_section: 19 });
+        current.setState({ errorChrMsg: valid_date, error_section: 19 });
         MoveTop(0);
       }
       // }
@@ -196,7 +205,7 @@ export const handleEvalSubmit = (value, current) => {
       // }
     } else {
       current.setState({
-        errorChrMsg: 'Please upload atleast one Picture for evaluation',  error_section: 18
+        errorChrMsg: atleast_one_picture,  error_section: 18
       });
       MoveTop(0);
     }
@@ -249,7 +258,7 @@ export const validateBpAndSugar1 = (value, item, current) => {
     }
   } else if (item === 'body_temp') {
     if (!value) {
-      current.setState({ errorChrMsg: enter_body_temp , error_section: 21});
+      current.setState({ errorChrMsg: enter_body_temp , error_section: 22});
       MoveTop(250);
       return false;
     } else if (value < 96 || value > 105) {
@@ -308,55 +317,56 @@ export const validateBpAndSugar = (value, item, current) => {
   } = translate;
   var bpPattern = /^[0-9]+$/;
   var Valid = bpPattern.test(value);
-  if (item === 'systolic') {
-    if (!value) {
-      current.setState({ errorChrMsg: enter_systolic_value, error_section: 3 });
-      MoveTop(0);
-      return false;
-    } else if (!Valid) {
-      current.setState({ errorChrMsg: systolic_bp_in_number, error_section: 3 });
-      MoveTop(0);
-      return false;
-    } else if (value < 120) {
-      current.setState({
-        errorChrMsg: systolic_value_between, error_section: 3
-      });
-      MoveTop(0);
-      return false;
-    } else if (value > 140) {
-      current.setState({
-        errorChrMsg: systolic_value_between, error_section: 3
-      });
-      MoveTop(0);
-      return false;
-    } else {
-      return true;
+    if (item === 'systolic' && current.state.bp_avail) {
+      if (!value) {
+        current.setState({ errorChrMsg: enter_systolic_value, error_section: 3 });
+        MoveTop(0);
+        return false;
+      } else if (!Valid) {
+        current.setState({ errorChrMsg: systolic_bp_in_number, error_section: 3 });
+        MoveTop(0);
+        return false;
+      } else if (value < 120) {
+        current.setState({
+          errorChrMsg: systolic_value_between, error_section: 3
+        });
+        MoveTop(0);
+        return false;
+      } else if (value > 140) {
+        current.setState({
+          errorChrMsg: systolic_value_between, error_section: 3
+        });
+        MoveTop(0);
+        return false;
+      } else {
+        return true;
+      }
+    } else if (item === 'diastolic' && current.state.bp_avail) {
+      if (!value) {
+        current.setState({ errorChrMsg: enter_diastolic_value, error_section: 4 });
+        MoveTop(0);
+        return false;
+      } else if (!Valid) {
+        current.setState({ errorChrMsg: diastolic_in_number, error_section: 4 });
+        MoveTop(0);
+        return false;
+      } else if (value < 80) {
+        current.setState({
+          errorChrMsg: diastolic_value_between,error_section: 4
+        });
+        MoveTop(0);
+        return false;
+      } else if (value > 90) {
+        current.setState({
+          errorChrMsg: diastolic_value_between, error_section: 4
+        });
+        MoveTop(0);
+        return false;
+      } else {
+        return true;
+      }
     }
-  } else if (item === 'diastolic') {
-    if (!value) {
-      current.setState({ errorChrMsg: enter_diastolic_value, error_section: 4 });
-      MoveTop(0);
-      return false;
-    } else if (!Valid) {
-      current.setState({ errorChrMsg: diastolic_in_number, error_section: 4 });
-      MoveTop(0);
-      return false;
-    } else if (value < 80) {
-      current.setState({
-        errorChrMsg: diastolic_value_between,error_section: 4
-      });
-      MoveTop(0);
-      return false;
-    } else if (value > 90) {
-      current.setState({
-        errorChrMsg: diastolic_value_between, error_section: 4
-      });
-      MoveTop(0);
-      return false;
-    } else {
-      return true;
-    }
-  } else if (item === 'blood_sugar') {
+  else if (item === 'blood_sugar' && current.state.diab_avail) {
     if (!value) {
       current.setState({ errorChrMsg: enter_blood_sugar, error_section: 5 });
       MoveTop(0);
@@ -380,7 +390,7 @@ export const validateBpAndSugar = (value, item, current) => {
     } else {
       return true;
     }
-  } else if (item === 'Hba1c') {
+  } else if (item === 'Hba1c'  && current.state.diab_avail) {
     let calHba1c = value && value / 10;
     if (!value) {
       current.setState({ errorChrMsg: enter_hba1c, error_section: 6 });
@@ -401,7 +411,7 @@ export const validateBpAndSugar = (value, item, current) => {
     } else {
       return true;
     }
-  } else if (item === 'situation') {
+  } else if (item === 'situation'  && current.state.diab_avail) {
     if (!value) {
       current.setState({ errorChrMsg: enter_situation, error_section: 7 });
       MoveTop(0);
@@ -495,7 +505,7 @@ export const validateBpAndSugar = (value, item, current) => {
       return true;
     }
   } else {
-    return false;
+    return true;
   }
 };
 
@@ -554,7 +564,7 @@ export const saveOnDB = (payment, current) => {
     axios
       .put(
         sitedata.data.path + '/vh/AddTask/' + current.state.updateEvaluate._id,
-        { payment_data: payment, is_payment: true },
+        { payment_data: payment?.data?.payment_data, is_payment: true },
         commonHeader(current.props.stateLoginValueAim.token)
       )
       .then((responce) => {
@@ -596,7 +606,23 @@ export const handleCloseDetail = (current) => {
 
 // Open Feedback Form
 export const handleOpFeedback = (current, openData) => {
-  current.setState({ openFeedback: true , forFeedback : openData,});
+  current.setState({ loaderImage: true, sendError: false, updateFeedback: {} , allcompulsary: false});
+  let user_token = current.props.stateLoginValueAim.token;
+  axios
+    .get(
+      sitedata.data.path + '/vh/checkFeedBack/' + openData._id,
+      commonHeader(user_token)
+    )
+    .then((responce) => {
+      current.setState({ loaderImage: false });
+      if (responce.data.hassuccessed) {
+        current.setState({ openFeedback: true , forFeedback : openData, sendError: true, updateFeedback: responce.data.data});
+      }
+      else{
+        current.setState({ openFeedback: true , forFeedback : openData, sendError: false});
+      }
+    });
+  
 };
 // Close Feedback Form
 export const handleCloseFeedback = (current) => {
@@ -622,20 +648,20 @@ export const updateRequestBeforePayment = (current, data) => {
 // Api call for feedback form
 export const handleSubmitFeed = (current) => {
   var data = current.state.updateFeedback;
-  if(data.fast_service && data.doctor_explaination && data.satification){
+  if((data.fast_service || data.fast_service>-1) && (data.doctor_explaination || data.doctor_explaination>-1) && (data.satification || data.satification>-1)){
     current.setState({ loaderImage: true, allcompulsary: false });
     data.patient = {
       first_name:
-          current.props.stateLoginValueAim.user.first_name,
+          current.props.stateLoginValueAim.user?.first_name,
         last_name:
-          current.props.stateLoginValueAim.user.last_name,
+          current.props.stateLoginValueAim.user?.last_name,
         alies_id:
-          current.props.stateLoginValueAim.user.alies_id,
+          current.props.stateLoginValueAim.user?.alies_id,
         profile_id:
-          current.props.stateLoginValueAim.user.profile_id,
-          patient_id: current.props.stateLoginValueAim.user._id,
-          profile_image: current.props.stateLoginValueAim.user.image,
-          birthday: current.props.stateLoginValueAim.user.birthday,
+          current.props.stateLoginValueAim.user?.profile_id,
+          patient_id: current.props.stateLoginValueAim.user?._id,
+          profile_image: current.props.stateLoginValueAim.user?.image,
+          birthday: current.props.stateLoginValueAim.user?.birthday,
     }
     if(current.state?.forFeedback?.assinged_to?.length>0){
       data.doctor_id = current.state?.forFeedback?.assinged_to.map((item)=>{
@@ -677,7 +703,7 @@ export const handleSubmitFeed = (current) => {
 export const getUserData = (current) => {
   current.setState({ loaderImage: true });
   let user_token = current.props.stateLoginValueAim.token;
-  let user_id = current.props.stateLoginValueAim.user._id;
+  let user_id = current.props.stateLoginValueAim.user?._id;
   axios
     .get(
       sitedata.data.path + '/UserProfile/Users/' + user_id,
@@ -694,4 +720,53 @@ export const getUserData = (current) => {
         current.setState({ updateEvaluate: State });
       }
     });
+};
+
+export const DownloadBill = (current, id, bill_date) => {
+ var data = {}, senddata = {};
+  data.patient_id = current.props.stateLoginValueAim.user?._id;
+  data.profile_id = current.props.stateLoginValueAim.user?.profile_id;
+  data.first_name = current.props.stateLoginValueAim.user?.first_name;
+  data.last_name = current.props.stateLoginValueAim.user?.last_name;
+  data.alies_id = current.props.stateLoginValueAim.user?.alies_id;
+  data.mobile =  current.props.stateLoginValueAim.user?.mobile;
+  data.email = current.props.stateLoginValueAim.user?.email;
+  data.profile_image = current.props.stateLoginValueAim.user?.image;
+  data.address = current.props.stateLoginValueAim.user?.address;
+  data.postal_code = current.props.stateLoginValueAim.user?.postal_code;
+  data.country = current.props.stateLoginValueAim.user?.country?.label;
+  data.city = current.props.stateLoginValueAim.user?.city;
+  data.birthday = current.props.stateLoginValueAim.user?.birthday;
+  senddata.invoice_id = id;
+  senddata.bill_date = bill_date
+  senddata.data = data;
+  current.setState({ loaderImage: true })
+  axios
+      .post(sitedata.data.dowload_link + "/vh/downloadPEBill", senddata,
+          { responseType: "blob" }
+      )
+      .then((res) => {
+          setTimeout(() => {
+              current.setState({ loaderImage: false });
+          }, 3000)
+          var data = new Blob([res.data]);
+          if (typeof window.navigator.msSaveBlob === "function") {
+              // If it is IE that support download blob directly.
+              window.navigator.msSaveBlob(data, "Bill.pdf");
+          } else {
+              var blob = data;
+              var link = document.createElement("a");
+              link.href = window.URL.createObjectURL(blob);
+              link.download = "Bill.pdf";
+              document.body.appendChild(link);
+              link.click(); // create an <a> element and simulate the click operation.
+          }
+
+      })
+      .catch((err) => {
+          current.setState({ loaderImage: false });
+      })
+      .catch((err) => {
+          current.setState({ loaderImage: false });
+      });
 };

@@ -19,15 +19,16 @@ class MMHG extends Component {
   };
 
   componentDidUpdate = (prevProps) => {
-    if (prevProps.value !== this.props.value || prevProps.Unit !== this.props.Unit) {
-      this.setState({ value: this.props.value, Unit : this.props.Unit });
+    if (prevProps.value !== this.props.value || prevProps.Unit !== this.props.Unit || prevProps.label !== this.props.label) {
+      this.setState({ value: this.props.value, Unit : this.props.Unit , label : this.props.label});
     }
   };
 
   shouldComponentUpdate(nextProps, nextState) {
     return (
       nextState.value !== this.state.value || nextState.Unit !== this.state.Unit ||
-      nextProps.value !== this.props.value || nextProps.Unit !== this.props.Unit
+      nextProps.value !== this.props.value || nextProps.Unit !== this.props.Unit ||
+      nextProps.value !== this.props.label || nextProps.Unit !== this.props.label
     );
   }
 

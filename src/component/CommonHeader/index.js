@@ -52,3 +52,19 @@ export const commonHeaderToken = () => {
     }
     return Header
 }
+export const GetHouseID = () => {
+    var HouseID;
+    let env = "DEV";
+    let url = "";
+    if (typeof window !== "undefined") {
+      let target = window.location.href;
+      env = target.match(/aidoc.io|localhost|virtualhospital.aimedis.io/) ? "DEV" : "PRD";
+    }
+    if (env === "DEV") {
+        HouseID = process.env.REACT_APP_LOCALHOUSE;
+    } else {
+        HouseID = process.env.REACT_APP_TESTHOUSE;
+    }
+    return HouseID;
+}
+

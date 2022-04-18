@@ -133,7 +133,7 @@ class Index extends Component {
     }
     let translate = getLanguage(this.props.stateLanguageType)
     let {
-    
+      profile_setting
     } = translate;
 
     return (
@@ -160,7 +160,7 @@ class Index extends Component {
                     <Grid className="profilePkgIner1">
                     <Grid className="docsOpinion docsOpinion12">
                       <Grid container direction="row" className="docsOpinLbl">
-                                  <Grid item xs={12} md={6}><label>{"Profile Setting"}</label></Grid>
+                                  <Grid item xs={12} md={6}><label>{profile_setting}</label></Grid>
                                   
                               </Grid>
                      </Grid>

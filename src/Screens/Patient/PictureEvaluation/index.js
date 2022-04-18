@@ -15,10 +15,10 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import LeftMenu from 'Screens/Components/Menus/PatientLeftMenu/index';
 import LeftMenuMobile from 'Screens/Components/Menus/PatientLeftMenu/mobile';
 import { LanguageFetchReducer } from 'Screens/actions';
+import Checkbox from '@material-ui/core/Checkbox';
 import Loader from 'Screens/Components/Loader/index';
 import { Redirect, Route } from 'react-router-dom';
 import { getLanguage } from 'translations/index';
-import { commonHeader } from 'component/CommonHeader/index';
 import PainIntensity from 'Screens/Components/PainIntansity/index';
 import NotesEditor from '../../Components/Editor/index';
 import FatiqueQuestion from '../../Components/TimelineComponent/CovidSymptomsField/FatiqueQuestions';
@@ -43,8 +43,10 @@ import {
 } from './api';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import { OptionList } from 'Screens/Login/metadataaction';
+import $ from 'jquery';
+import StripeCheckout from 'react-stripe-checkout';
 import { GetLanguageDropdown } from 'Screens/Components/GetMetaData/index.js';
-const CURRENCY = 'USD';
+const CURRENCY = 'EUR';
 const STRIPE_PUBLISHABLE = getPublishableKey();
 const stripePromise = loadStripe(STRIPE_PUBLISHABLE);
 function TabContainer(props) {
@@ -59,7 +61,7 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.autocompleteInput = React.createRef();
-    // this.StripeClick = React.createRef();
+    this.StripeClick = React.createRef();
     this.country = null;
     this.state = {
       addEval: false,
@@ -81,6 +83,8 @@ class Index extends Component {
       deactivated: false,
       is_payment: false,
       error_section: 0,
+      bp_avail: false,
+      diab_avail: false,
     };
   }
 
@@ -98,6 +102,12 @@ class Index extends Component {
     }
     getUserData(this);
   }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevProps.stateLanguageType !== this.props.stateLanguageType) {
+      this.GetLanguageMetadata();
+    }
+  };
 
   //Get All information Related to Metadata
   getMetadata() {
@@ -147,7 +157,7 @@ class Index extends Component {
   };
 
   //Not need yet this for the payment
-  fromDollarToCent = (amount) => {
+  fromEuroToCent = (amount) => {
     return parseInt(amount * 100);
   };
 
@@ -165,6 +175,10 @@ class Index extends Component {
       state[name] = value;
     }
     this.setState({ updateEvaluate: state });
+  };
+
+  onClosed = () => {
+    $('body').css('overflow', 'auto');
   };
 
   render() {
@@ -212,6 +226,7 @@ class Index extends Component {
       when_did_it_start,
       hospital,
       pain_level,
+      cancel,
       itch,
       pain,
       size_progress,
@@ -221,9 +236,111 @@ class Index extends Component {
       how_cold_long,
       sexual_activities,
       select_status,
-      submit,
+      pay_with_stripe,
+      Payment,
+      Submit,
     } = translate;
     //Success payment alert after payment is success
+
+    //Success payment alert after payment is success
+    const successPayment = (data) => {
+      let translate = getLanguage(this.props.stateLanguageType);
+      const { paymnt_processed, ok } = translate;
+      confirmAlert({
+        customUI: ({ onClose }) => {
+          return (
+            <div
+              className={
+                this.props.settings &&
+                this.props.settings.setting &&
+                this.props.settings.setting.mode === 'dark'
+                  ? 'dark-confirm react-confirm-alert-body'
+                  : 'react-confirm-alert-body'
+              }
+            >
+              <h1>{paymnt_processed}</h1>
+              <div className="react-confirm-alert-button-group">
+                <button
+                  onClick={() => {
+                    onClose();
+                    saveOnDB(data, this);
+                  }}
+                >
+                  {ok}
+                </button>
+              </div>
+            </div>
+          );
+        },
+      });
+    };
+
+    //Alert of the Error payment
+    const errorPayment = (data) => {
+      let translate = getLanguage(this.props.stateLanguageType);
+      let { ok, paymnt_err } = translate;
+      confirmAlert({
+        customUI: ({ onClose }) => {
+          return (
+            <div
+              className={
+                this.props.setting &&
+                this.props.setting.setting &&
+                this.props.setting.setting.mode === 'dark'
+                  ? 'dark-confirm react-confirm-alert-body'
+                  : 'react-confirm-alert-body'
+              }
+            >
+              <h1>{paymnt_err}</h1>
+              <div className="react-confirm-alert-button-group">
+                <button
+                  onClick={() => {
+                    onClose();
+                  }}
+                >
+                  {ok}
+                </button>
+              </div>
+            </div>
+          );
+        },
+      });
+    };
+
+    const Checkout = ({
+      name = 'AIS',
+      description = 'Stripe Payment',
+      amount = 25,
+      email = this.props.stateLoginValueAim.user.email,
+    }) => (
+      <StripeCheckout
+        ref={(ref) => {
+          this.StripeClick = ref;
+        }}
+        name={name}
+        image="https://sys.aimedis.io/static/media/LogoPNG.03ac2d92.png"
+        description={description}
+        amount={this.fromEuroToCent(amount)}
+        token={onToken}
+        currency={CURRENCY}
+        stripeKey={STRIPE_PUBLISHABLE}
+        label={pay_with_stripe}
+        className="CutomStripeButton"
+        email={email}
+        closed={this.onClosed}
+      />
+    );
+
+    //For payment
+    const onToken = (token) =>
+      axios
+        .post(sitedata.data.path + '/lms_stripeCheckout/intent-pop', {
+          source: token.id,
+          currency: CURRENCY,
+          amount: this.fromEuroToCent(25),
+        })
+        .then(successPayment, this.setState({ addtocart: [] }))
+        .catch(errorPayment);
 
     return (
       <Grid
@@ -352,117 +469,156 @@ class Index extends Component {
                                 </Grid>
                                 <Grid className="bloodpreLb">
                                   <label>{blood_pressure}</label>
+                                  <Checkbox
+                                    value="checkedB"
+                                    color="#00ABAF"
+                                    checked={
+                                      this.state.bp_avail === true &&
+                                      this.state.bp_avail
+                                    }
+                                    onChange={(e) => {
+                                      this.setState({
+                                        bp_avail: e.target.checked,
+                                      });
+                                    }}
+                                    className="PIC_Condition"
+                                  />
                                 </Grid>
-                                <Grid container direction="row" spacing="1">
-                                  <Grid item md={6} sm={6}>
-                                    <Grid className="fillDia">
-                                      <MMHG
-                                        name="rr_systolic"
-                                        Unit="mmHg"
-                                        label={rr_systolic}
-                                        onChange={(e) =>
-                                          this.updateEntryState2(e)
-                                        }
-                                        value={
-                                          this.state.updateEvaluate?.rr_systolic
-                                        }
-                                      />
-                                      {this.state.error_section == 3 && (
-                                        <div className="err_message2">
-                                          {this.state.errorChrMsg}
-                                        </div>
-                                      )}
+                                {this.state.bp_avail === true && (
+                                  <Grid container direction="row" spacing="1">
+                                    <Grid item md={6} sm={6}>
+                                      <Grid className="fillDia">
+                                        <MMHG
+                                          name="rr_systolic"
+                                          Unit="mmHg"
+                                          label={rr_systolic}
+                                          onChange={(e) =>
+                                            this.updateEntryState2(e)
+                                          }
+                                          value={
+                                            this.state.updateEvaluate
+                                              ?.rr_systolic
+                                          }
+                                        />
+                                        {this.state.error_section == 3 && (
+                                          <div className="err_message2">
+                                            {this.state.errorChrMsg}
+                                          </div>
+                                        )}
+                                      </Grid>
                                     </Grid>
-                                  </Grid>
 
-                                  <Grid item md={6} sm={6}>
-                                    <Grid className="fillDia">
-                                      <MMHG
-                                        name="rr_diastolic"
-                                        Unit="mmHg"
-                                        label={RR_diastolic}
-                                        onChange={(e) =>
-                                          this.updateEntryState2(e)
-                                        }
-                                        value={
-                                          this.state.updateEvaluate
-                                            ?.rr_diastolic
-                                        }
-                                      />
-                                      {this.state.error_section == 4 && (
-                                        <div className="err_message2">
-                                          {this.state.errorChrMsg}
-                                        </div>
-                                      )}
+                                    <Grid item md={6} sm={6}>
+                                      <Grid className="fillDia">
+                                        <MMHG
+                                          name="rr_diastolic"
+                                          Unit="mmHg"
+                                          label={RR_diastolic}
+                                          onChange={(e) =>
+                                            this.updateEntryState2(e)
+                                          }
+                                          value={
+                                            this.state.updateEvaluate
+                                              ?.rr_diastolic
+                                          }
+                                        />
+                                        {this.state.error_section == 4 && (
+                                          <div className="err_message2">
+                                            {this.state.errorChrMsg}
+                                          </div>
+                                        )}
+                                      </Grid>
                                     </Grid>
                                   </Grid>
-                                </Grid>
+                                )}
                                 <Grid className="bloodpreLb">
                                   <label>{diabetes}</label>
-                                </Grid>
-                                <Grid container direction="row" spacing="1">
-                                  <Grid item md={6} sm={6}>
-                                    <Grid className="fillDia">
-                                      <MMHG
-                                        name="blood_sugar"
-                                        Unit="mg/dl"
-                                        label={blood_sugar}
-                                        onChange={(e) =>
-                                          this.updateEntryState2(e)
-                                        }
-                                        value={
-                                          this.state.updateEvaluate?.blood_sugar
-                                        }
-                                      />
-                                      {this.state.error_section == 5 && (
-                                        <div className="err_message2">
-                                          {this.state.errorChrMsg}
-                                        </div>
-                                      )}
-                                    </Grid>
-                                  </Grid>
-                                  <Grid item md={6} sm={6}>
-                                    <Grid className="fillDia">
-                                      <MMHG
-                                        name="Hba1c"
-                                        Unit="%"
-                                        label={Hba1c}
-                                        onChange={(e) =>
-                                          this.updateEntryState2(e)
-                                        }
-                                        value={this.state.updateEvaluate?.Hba1c}
-                                      />
-                                      {this.state.error_section == 6 && (
-                                        <div className="err_message2">
-                                          {this.state.errorChrMsg}
-                                        </div>
-                                      )}
-                                    </Grid>
-                                  </Grid>
-                                </Grid>
-                                <Grid className="fillDia">
-                                  <SelectByTwo
-                                    name="situation"
-                                    label={situation}
-                                    options={this.state.Allsituation}
-                                    onChange={(e) =>
-                                      this.updateEntryState1(e, 'situation')
+                                  <Checkbox
+                                    value="checkedB"
+                                    color="#00ABAF"
+                                    checked={
+                                      this.state.diab_avail === true &&
+                                      this.state.diab_avail
                                     }
-                                    value={GetShowLabel1(
-                                      this.state.Allsituation,
-                                      this.state.updateEvaluate &&
-                                        this.state.updateEvaluate.situation &&
-                                        this.state.updateEvaluate.situation
-                                          .value,
-                                      this.props.stateLanguageType
-                                    )}
+                                    onChange={(e) => {
+                                      this.setState({
+                                        diab_avail: e.target.checked,
+                                      });
+                                    }}
+                                    className="PIC_Condition"
                                   />
-                                  {this.state.error_section == 7 && (
-                                    <div className="err_message2">
-                                      {this.state.errorChrMsg}
-                                    </div>
-                                  )}
                                 </Grid>
+                                {this.state.diab_avail === true && (
+                                  <>
+                                    <Grid container direction="row" spacing="1">
+                                      <Grid item md={6} sm={6}>
+                                        <Grid className="fillDia">
+                                          <MMHG
+                                            name="blood_sugar"
+                                            Unit="mg/dl"
+                                            label={blood_sugar}
+                                            onChange={(e) =>
+                                              this.updateEntryState2(e)
+                                            }
+                                            value={
+                                              this.state.updateEvaluate
+                                                ?.blood_sugar
+                                            }
+                                          />
+                                          {this.state.error_section == 5 && (
+                                            <div className="err_message2">
+                                              {this.state.errorChrMsg}
+                                            </div>
+                                          )}
+                                        </Grid>
+                                      </Grid>
+                                      <Grid item md={6} sm={6}>
+                                        <Grid className="fillDia">
+                                          <MMHG
+                                            name="Hba1c"
+                                            Unit="%"
+                                            label={Hba1c}
+                                            onChange={(e) =>
+                                              this.updateEntryState2(e)
+                                            }
+                                            value={
+                                              this.state.updateEvaluate?.Hba1c
+                                            }
+                                          />
+                                          {this.state.error_section == 6 && (
+                                            <div className="err_message2">
+                                              {this.state.errorChrMsg}
+                                            </div>
+                                          )}
+                                        </Grid>
+                                      </Grid>
+                                    </Grid>
+                                    <Grid className="fillDia">
+                                      <SelectByTwo
+                                        name="situation"
+                                        label={situation}
+                                        options={this.state.Allsituation}
+                                        onChange={(e) =>
+                                          this.updateEntryState1(e, 'situation')
+                                        }
+                                        value={GetShowLabel1(
+                                          this.state.Allsituation,
+                                          this.state.updateEvaluate &&
+                                            this.state.updateEvaluate
+                                              .situation &&
+                                            this.state.updateEvaluate.situation
+                                              .value,
+                                          this.props.stateLanguageType
+                                        )}
+                                      />
+                                      {this.state.error_section == 7 && (
+                                        <div className="err_message2">
+                                          {this.state.errorChrMsg}
+                                        </div>
+                                      )}
+                                    </Grid>
+                                  </>
+                                )}
 
                                 <Grid className="bloodpreLb">
                                   <label>{smoking_status}</label>
@@ -537,6 +693,7 @@ class Index extends Component {
                                                 'from_when'
                                               )
                                             }
+                                            NotFutureDate={true}
                                           />
                                         </Grid>
                                       </Grid>
@@ -579,6 +736,7 @@ class Index extends Component {
                                                 'until_when'
                                               )
                                             }
+                                            NotFutureDate={true}
                                           />
                                         </Grid>
                                       </Grid>
@@ -769,7 +927,7 @@ class Index extends Component {
                                 <Grid className="infoShwSave3">
                                   <input
                                     type="submit"
-                                    value={submit}
+                                    value={Submit}
                                     onClick={() => handleEvalSubmit(1, this)}
                                   ></input>
                                 </Grid>
@@ -837,6 +995,7 @@ class Index extends Component {
                                       this.props.settings.setting &&
                                       this.props.settings.setting.date_format
                                     }
+                                    NotFutureDate={true}
                                   />
                                   {this.state.error_section == 19 && (
                                     <div className="err_message2">
@@ -958,7 +1117,7 @@ class Index extends Component {
                                 <Grid className="infoShwSave3">
                                   <input
                                     type="submit"
-                                    value={submit}
+                                    value={Submit}
                                     onClick={() => handleEvalSubmit(0, this)}
                                   ></input>
                                 </Grid>
@@ -969,21 +1128,44 @@ class Index extends Component {
                         </Grid>
                       )}
 
-                      {this.state.updateEvaluate?.is_payment === false && (
-                        <Elements stripe={stripePromise}>
-                          <Payment
-                            redirectTolist={() => {
-                              this.redirectTolist();
-                            }}
-                            languageType={this.props.stateLanguageType}
-                            show1={this.state.show1}
-                            show2={this.state.show2}
-                            CancelClick={this.CancelClick}
-                            saveOnDB={(payment) => saveOnDB(payment, this)}
-                            settings={this.props.settings}
-                          />
-                        </Elements>
-                      )}
+                      {this.state.updateEvaluate?.is_payment === false &&
+                        this.state.show2 && (
+                          // <Elements stripe={stripePromise}>
+                          //   <Payment
+                          //     redirectTolist={() => {
+                          //       this.redirectTolist();
+                          //     }}
+                          //     languageType={this.props.stateLanguageType}
+                          //     show1={this.state.show1}
+                          //     show2={this.state.show2}
+                          //     CancelClick={this.CancelClick}
+                          //     saveOnDB={(payment)=> saveOnDB(payment, this)}
+                          //     settings={this.props.settings}
+                          //   />
+                          // </Elements>
+                          <>
+                            <div className="payment_sec_extra_ser1">
+                              <div className="sbu_button">
+                                <h2>{Payment}</h2>
+                                <Grid container direction="row" spacing={2}>
+                                  <Grid item xs={12} md={6}>
+                                    <Checkout />
+                                  </Grid>
+                                  <Grid item xs={12} md={6}>
+                                    <button
+                                      onClick={() => {
+                                        this.CancelClick();
+                                      }}
+                                      className="CutomStripeButton"
+                                    >
+                                      {cancel}
+                                    </button>
+                                  </Grid>
+                                </Grid>
+                              </div>
+                            </div>
+                          </>
+                        )}
                     </Grid>
                   </Grid>
 

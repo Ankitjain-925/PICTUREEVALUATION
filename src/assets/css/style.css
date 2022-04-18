@@ -90,8 +90,8 @@ h1,h2,h3,h4,h5,h6,h7,p{ margin:0; padding:0; font-size: inherit; font-weight: in
     margin-bottom: 70px;
 }
 .menuItems ul {
-    padding-left: 0px;
-    margin-bottom: 0px;
+    padding: 0px 12px;
+    /* margin-bottom: 0px; */
 }
 .menuItems ul li {
     list-style-type: none;
@@ -1869,15 +1869,22 @@ a.profilMenu {
         overflow-y: scroll;
         height: 362px !important;
     }
-    .docsOpinion {
+    /* .docsOpinion {
         margin-left: 0px !important;
-    }
+    } */
     .presOpinionIner td {
         font-size: 13px !important;
     }    
     .scndOpinionIner td {
         font-size: 13px !important;
     } 
+}
+@media (max-width: 959px){ 
+    .docsOpinion {
+        margin-left: 0px !important;
+        margin-top: 0px !important;
+        padding: 12px 12px !important;
+    }
 }
 @media (max-width: 599px){ 
     .chatContact {
@@ -1939,11 +1946,6 @@ a.profilMenu {
     .extraSrvcUpr {
         padding: 12px 22px !important;
         padding-top: 50px !important;
-    }
-    .docsOpinion {
-        margin-left: 0px !important;
-        margin-top: 0px !important;
-        padding: 12px 12px !important;
     }
     .docsOpinLbl a {
         margin-top: 12px;
@@ -4735,6 +4737,7 @@ button.aboutTabsIner {
     position: absolute;
     left: 0;
     top: 45px;
+    width:100%;
     z-index: 999;
 }
 .browsInput {
@@ -14225,7 +14228,7 @@ span.unread_msg_notifyspan {
     width: 50px!important;
 }
 button.CutomStripeButton{
-    opacity: 0 !important;
+    opacity: 1 !important;
 }
 .homeBgDrk .NotFoundContent {
     color: #BFC1C1 !important;
@@ -14600,6 +14603,9 @@ button.CutomStripeButton {
     color: #fff !important;
     padding: 5px 20px !important;
     border-radius: 5px !important;
+    height: 40px !important;
+    width: 100% !important;
+    font-weight: 800 !important;
 }
 button.CutomStripeButton span {
     background: #00ABAF !important;

@@ -18,10 +18,13 @@ import { confirmAlert } from 'react-confirm-alert';
 import Pagination from 'Screens/Components/Pagination/index';
 import { getAllPictureEval } from 'Screens/Patient/PictureEvaluation/api';
 import Modal from '@material-ui/core/Modal';
-import { getDate } from 'Screens/Components/BasicMethod/index';
+import { GetShowLabel1 } from 'Screens/Components/GetMetaData/index.js';
+import { getDate, getTime } from 'Screens/Components/BasicMethod/index';
+import { GetLanguageDropdown } from 'Screens/Components/GetMetaData/index.js';
+import { OptionList } from 'Screens/Login/metadataaction';
 import SymptomQuestions from '../../Components/TimelineComponent/CovidSymptomsField/SymptomQuestions';
-import { S3Image } from 'Screens/Components/GetS3Images/index';
 import {
+  DownloadBill,
   handleSubmitFeed,
   handleOpFeedback,
   handleCloseFeedback,
@@ -48,13 +51,52 @@ class Index extends Component {
       sendSuccess: false,
       totalPage: 1,
       currentPage: 1,
+      Allsituation: [],
+      Allsmoking_status: [],
+      allMetadata: [],
     };
     // new Timer(this.logOutClick.bind(this))
   }
 
   componentDidMount = () => {
     getAllPictureEval(this);
+    this.getMetadata();
   };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevProps.stateLanguageType !== this.props.stateLanguageType) {
+      this.GetLanguageMetadata();
+    }
+  };
+
+  GetLanguageMetadata = () => {
+    if (this.state.allMetadata) {
+      var Allsituation = GetLanguageDropdown(
+        this.state.allMetadata &&
+          this.state.allMetadata.situation &&
+          this.state.allMetadata.situation,
+        this.props.stateLanguageType
+      );
+      var Allsmoking_status = GetLanguageDropdown(
+        this.state.allMetadata &&
+          this.state.allMetadata.smoking_status &&
+          this.state.allMetadata.smoking_status,
+        this.props.stateLanguageType
+      );
+
+      this.setState({
+        Allsituation: Allsituation,
+        Allsmoking_status: Allsmoking_status,
+      });
+    }
+  };
+
+  //Get All information Related to Metadata
+  getMetadata() {
+    this.setState({ allMetadata: this.props.metadata }, () => {
+      this.GetLanguageMetadata();
+    });
+  }
 
   updateRequestBeforePayment = (data) => {
     this.props.history.push({
@@ -64,6 +106,7 @@ class Index extends Component {
   };
 
   updateEntryState1 = (value, name) => {
+    console.log('dsfsdf', value, name);
     const state = this.state.updateFeedback;
     state[name] = value;
     this.setState({ updateFeedback: state });
@@ -198,6 +241,19 @@ class Index extends Component {
   render() {
     let translate = getLanguage(this.props.stateLanguageType);
     let {
+      Your_Payment_is_pending,
+      Your_request_is_Declined,
+      Check_the_reply_from_the_doctor_on_detail,
+      submit_Feedback,
+      All_fields_are_compulsary_please_fill_all,
+      Feedback_already_given_by_you,
+      Feedback_submit_successfully,
+      understood_explaination,
+      satisfied_service,
+      Submit,
+      details,
+      No_attachments,
+      No_comments,
       evaluation_request,
       added_on,
       hospital,
@@ -251,12 +307,14 @@ class Index extends Component {
       yes,
       no,
       cold,
+      Is_it_fast_service,
       sexual_active,
       sun_before,
       body_temp,
       payment_done,
       Attachments,
       Reply,
+      Download_Bill,
       Comments,
     } = translate;
 
@@ -307,13 +365,38 @@ class Index extends Component {
                               this.state.AllData.map((item, index) => (
                                 <Tr>
                                   <Td>
-                                    {getDate(
+                                    <p>
+                                      {item && !item?.due_on?.date ? (
+                                        '-'
+                                      ) : (
+                                        <>
+                                          {getDate(
+                                            item?.due_on?.date,
+                                            this.props.settings &&
+                                              this.props.settings?.setting &&
+                                              this.props.settings?.setting
+                                                ?.date_format
+                                          )}
+                                        </>
+                                      )}
+                                    </p>
+                                    <p>
+                                      {item?.due_on?.time &&
+                                        getTime(
+                                          new Date(item?.due_on?.time),
+                                          this.props.settings &&
+                                            this.props.settings?.setting &&
+                                            this.props.settings?.setting
+                                              ?.time_format
+                                        )}
+                                    </p>
+                                    {/* {getDate(
                                       item && item?.created_at,
                                       this.props.settings &&
-                                        this.props.settings?.setting &&
-                                        this.props.settings?.setting
-                                          ?.date_format
-                                    )}
+                                      this.props.settings?.setting &&
+                                      this.props.settings?.setting
+                                        ?.date_format
+                                    )} */}
                                   </Td>
                                   <Td>{item.task_name}</Td>
                                   <Td>
@@ -334,14 +417,14 @@ class Index extends Component {
                                     {item.is_decline ? (
                                       <>
                                         <span className="err_message">
-                                          Your request is Declined
+                                          {Your_request_is_Declined}
                                         </span>
                                       </>
                                     ) : (
                                       <>
                                         {!item.is_payment && (
                                           <span className="err_message">
-                                            Your Payment is pending
+                                            {Your_Payment_is_pending}
                                           </span>
                                         )}
                                         {(item.status === 'done' ||
@@ -349,8 +432,9 @@ class Index extends Component {
                                           item?.attachments?.length > 0) &&
                                           !item.isviewed && (
                                             <span className="success_message">
-                                              Check the reply from the doctor on
-                                              detail
+                                              {
+                                                Check_the_reply_from_the_doctor_on_detail
+                                              }
                                             </span>
                                           )}
                                       </>
@@ -379,26 +463,26 @@ class Index extends Component {
                                             {see_details}
                                           </a>
                                         </li>
-                                        {item.status !== 'done' &&
-                                          item?.comments?.length == 0 && (
-                                            <li>
-                                              <a
-                                                onClick={() => {
-                                                  updateRequestBeforePayment(
-                                                    this,
-                                                    item
-                                                  );
-                                                }}
-                                              >
-                                                <img
-                                                  src={require('assets/images/cancel-request.svg')}
-                                                  alt=""
-                                                  title=""
-                                                />
-                                                {edit_request}
-                                              </a>
-                                            </li>
-                                          )}
+                                        {(!item.is_payment ||
+                                          item.is_decline) && (
+                                          <li>
+                                            <a
+                                              onClick={() => {
+                                                updateRequestBeforePayment(
+                                                  this,
+                                                  item
+                                                );
+                                              }}
+                                            >
+                                              <img
+                                                src={require('assets/virtual_images/pencil-1.svg')}
+                                                alt=""
+                                                title=""
+                                              />
+                                              {edit_request}
+                                            </a>
+                                          </li>
+                                        )}
                                         {!item.is_payment && (
                                           <li>
                                             <a
@@ -416,8 +500,30 @@ class Index extends Component {
                                           </li>
                                         )}
 
+                                        {item.is_payment && (
+                                          <li>
+                                            <a
+                                              onClick={() => {
+                                                DownloadBill(
+                                                  this,
+                                                  item?.payment_data?.id,
+                                                  item?.created_at
+                                                );
+                                              }}
+                                            >
+                                              <img
+                                                src={require('assets/images/download.svg')}
+                                                alt=""
+                                                title=""
+                                              />
+                                              {Download_Bill}
+                                            </a>
+                                          </li>
+                                        )}
+
                                         {(item.status === 'done' ||
-                                          item?.comments?.length > 0) && (
+                                          item?.comments?.length > 0 ||
+                                          item?.attachments?.length > 0) && (
                                           <>
                                             <li>
                                               <a
@@ -426,7 +532,7 @@ class Index extends Component {
                                                 }
                                               >
                                                 <img
-                                                  src={require('assets/images/cancel-request.svg')}
+                                                  src={require('assets/images/details.svg')}
                                                   alt=""
                                                   title=""
                                                 />
@@ -501,22 +607,22 @@ class Index extends Component {
                       </Grid>
 
                       <div>
-                        <p>Submit Feedback</p>
+                        <p>{submit_Feedback}</p>
                       </div>
                     </Grid>
                     {this.state.allcompulsary && (
                       <div className="err_message">
-                        {'All fields are compulsary, please fill all'}
+                        {All_fields_are_compulsary_please_fill_all}
                       </div>
                     )}
                     {this.state.sendError && (
                       <div className="err_message">
-                        {'Feedback already given by you'}
+                        {Feedback_already_given_by_you}
                       </div>
                     )}
                     {this.state.sendSuccess && (
                       <div className="success_message">
-                        {'Feedback submit successfully'}
+                        {Feedback_submit_successfully}
                       </div>
                     )}
                     <Grid className="symptomSec symptomSec1">
@@ -526,7 +632,7 @@ class Index extends Component {
                           updateEntryState1(this, e, 'fast_service')
                         }
                         comesFrom="Feedback"
-                        label="Is it fast service?"
+                        label={Is_it_fast_service}
                         value={this.state.updateFeedback?.fast_service}
                       />
                       <SymptomQuestions
@@ -534,7 +640,7 @@ class Index extends Component {
                           updateEntryState1(this, e, 'doctor_explaination')
                         }
                         comesFrom="Feedback"
-                        label="Did you understood the doctor explaination?"
+                        label={understood_explaination}
                         value={this.state.updateFeedback?.doctor_explaination}
                       />
                       <SymptomQuestions
@@ -542,16 +648,18 @@ class Index extends Component {
                           updateEntryState1(this, e, 'satification')
                         }
                         comesFrom="Feedback"
-                        label="Are you satisfied with the service?"
+                        label={satisfied_service}
                         value={this.state.updateFeedback?.satification}
                       />
-                      <Grid className="infoShwSave3">
-                        <input
-                          type="submit"
-                          value="Submit"
-                          onClick={() => handleSubmitFeed(this)}
-                        />
-                      </Grid>
+                      {!this.state.sendError && (
+                        <Grid className="infoShwSave3">
+                          <input
+                            type="submit"
+                            value={Submit}
+                            onClick={() => handleSubmitFeed(this)}
+                          />
+                        </Grid>
+                      )}
                     </Grid>
                   </Grid>
                 </Grid>
@@ -585,7 +693,7 @@ class Index extends Component {
                               />
                             </a>
                           </Grid>
-                          <label>Details</label>
+                          <label>{details}</label>
                         </Grid>
                       </Grid>
                     </Grid>
@@ -594,20 +702,32 @@ class Index extends Component {
                         <Grid className="stndQues stndQues1">
                           <Grid class="addStnd">
                             <Grid>
-                              <label>Added On</label>
+                              <label>{added_on}</label>
                             </Grid>
                             <p>
                               {this.state.showDetails &&
-                              !this.state.showDetails?.created_at ? (
+                              !this.state.showDetails?.due_on?.date ? (
                                 '-'
                               ) : (
                                 <>
                                   {getDate(
-                                    this.state.showDetails?.created_at,
+                                    this.state.showDetails?.due_on?.date,
                                     this.props.settings &&
                                       this.props.settings?.setting &&
                                       this.props.settings?.setting?.date_format
-                                  )}
+                                  )}{' '}
+                                  (
+                                  {this.state.showDetails?.due_on?.time &&
+                                    getTime(
+                                      new Date(
+                                        this.state.showDetails?.due_on?.time
+                                      ),
+                                      this.props.settings &&
+                                        this.props.settings?.setting &&
+                                        this.props.settings?.setting
+                                          ?.time_format
+                                    )}
+                                  )
                                 </>
                               )}
                             </p>
@@ -684,9 +804,16 @@ class Index extends Component {
                             <Grid xs={4} md={4}>
                               <label>{situation}</label>
                               <p>
-                                {this.state.showDetails &&
+                                {GetShowLabel1(
+                                  this.state.Allsituation,
+                                  this.state.showDetails?.situation?.value,
+                                  this.props.stateLanguageType,
+                                  true,
+                                  'anamnesis'
+                                )}
+                                {/* {this.state.showDetails &&
                                   this.state.showDetails?.situation &&
-                                  this.state.showDetails?.situation?.label}
+                                  this.state.showDetails?.situation?.label} */}
                               </p>
                             </Grid>
                           </Grid>
@@ -697,9 +824,14 @@ class Index extends Component {
                             <Grid xs={4} md={4}>
                               <label>{status}</label>
                               <p>
-                                {this.state.showDetails &&
-                                  this.state.showDetails?.smoking_status &&
-                                  this.state.showDetails?.smoking_status?.label}
+                                {GetShowLabel1(
+                                  this.state.Allsmoking_status,
+                                  this.state.showDetails?.smoking_status?.value,
+                                  this.props.stateLanguageType,
+                                  true,
+                                  'anamnesis'
+                                )}
+                                {}
                               </p>
                             </Grid>
                             {!this.state.showDetails?.smoking_status ||
@@ -1005,7 +1137,7 @@ class Index extends Component {
                                 attachfile={this.state.showDetails?.attachments}
                               />
                             ) : (
-                              <p>No attachments!</p>
+                              <p>{No_attachments}</p>
                             )}
                           </Grid>
 
@@ -1025,7 +1157,7 @@ class Index extends Component {
                                   )
                                 )
                               ) : (
-                                <p>No comments!</p>
+                                <p>{No_comments}</p>
                               )}
                             </p>
                           </Grid>
@@ -1048,15 +1180,20 @@ const mapStateToProps = (state) => {
     state.LoginReducerAim;
   const { stateLanguageType } = state.LanguageReducer;
   const { settings } = state.Settings;
+  const { metadata } = state.OptionList;
   return {
     stateLanguageType,
     stateLoginValueAim,
     loadingaIndicatoranswerdetail,
     settings,
+    metadata,
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { LoginReducerAim, LanguageFetchReducer, Settings })(
-    Index
-  )
+  connect(mapStateToProps, {
+    LoginReducerAim,
+    LanguageFetchReducer,
+    Settings,
+    OptionList,
+  })(Index)
 );

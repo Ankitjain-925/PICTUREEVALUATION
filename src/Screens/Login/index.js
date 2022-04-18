@@ -11,7 +11,6 @@ import { authy } from "./authy.js";
 import { CometChat } from '@cometchat-pro/chat';
 import { OptionList } from "./metadataaction.js";
 import { Invoices } from "./invoices";
-
 import {
   NavLink,
   UncontrolledDropdown,
@@ -393,7 +392,7 @@ class Index extends Component {
             >
               <Grid item xs={11} sm={7} md={7}>
                 <Grid className="logData">
-                  <h1>{Log_into} AIS</h1>
+                  <h1>{Log_into} Aimedis Elements Online Diagnose</h1>
                 </Grid>
                 <Grid className="logFormMain">
                   <Grid className="logForm">
