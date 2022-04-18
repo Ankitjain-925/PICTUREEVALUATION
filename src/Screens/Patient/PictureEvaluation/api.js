@@ -31,9 +31,9 @@ export const handleEvalSubmit = (value, current) => {
                           if (validateBpAndSugar(data.country, 'country', current)) {
                             if (validateBpAndSugar(data.residenceCountry, 'residenceCountry', current)) {
                               if (validateBpAndSugar(data.race, 'race', current)) {
-                                if (validateBpAndSugar(data.history_month, 'history_month', current)) {
-                                  if (validateBpAndSugar(data.medical_precondition, 'medical_precondition', current)) {
-                                    if (validateBpAndSugar(data.premedication, 'premedication', current)) {
+                                // if (validateBpAndSugar(data.history_month, 'history_month', current)) {
+                                  // if (validateBpAndSugar(data.medical_precondition, 'medical_precondition', current)) {
+                                    // if (validateBpAndSugar(data.premedication, 'premedication', current)) {
                                       current.setState({ mod1Open: true, picEval: true, error_section: 0, errorChrMsg: '' })
                                       axios.put(sitedata.data.path + '/UserProfile/Users/update', {
                                         birthday: data.dob,
@@ -42,9 +42,9 @@ export const handleEvalSubmit = (value, current) => {
                                         citizen_country: data.country
                                       }, commonHeader(current.props.stateLoginValueAim.token)).then((res) => { })
                                         .catch((e) => { })
-                                    }
-                                  }
-                                }
+                                //     }
+                                //   }
+                                // }
                               }
                             }
                           }
@@ -86,13 +86,13 @@ export const handleEvalSubmit = (value, current) => {
             if (validateBpAndSugar1(data.itch, 'itch', current)) {
               if (validateBpAndSugar1(data.pain, 'pain', current)) {
                 if (validateBpAndSugar1(data.body_temp, 'body_temp', current)) {
-                  if (
-                    validateBpAndSugar1(
-                      data.sexual_active,
-                      'sexual_active',
-                      current
-                    )
-                  ) {
+                  // if (
+                  //   validateBpAndSugar1(
+                  //     data.sexual_active,
+                  //     'sexual_active',
+                  //     current
+                  //   )
+                  // ) {
                     current.setState({ errorChrMsg: '' });
                     if (data?._id) {
                       if(data.is_decline){
@@ -193,7 +193,7 @@ export const handleEvalSubmit = (value, current) => {
               }
             }
           }
-        }
+        // }
       } else {
         current.setState({ errorChrMsg: valid_date, error_section: 19 });
         MoveTop(0);
@@ -261,7 +261,7 @@ export const validateBpAndSugar1 = (value, item, current) => {
       current.setState({ errorChrMsg: enter_body_temp , error_section: 22});
       MoveTop(250);
       return false;
-    } else if (value < 96 || value > 105) {
+    } else if (value < 36 || value > 41) {
       current.setState({ errorChrMsg: valid_body_temp, error_section: 22 });
       MoveTop(250);
       return false;
@@ -464,8 +464,7 @@ export const validateBpAndSugar = (value, item, current) => {
             : item === 'medical_precondition'
               ? medical_preconditions
               : premedication;
-
-    if (!value) {
+    if (!value || value ===  '<p><br></p>' || value === '<p></p>') {
       current.setState({ errorChrMsg: please_enter + ' ' + currentItem , error_section: section });
       if(item === 'treatment_so_far') { MoveTop(650); }
       else if(item === 'medical_precondition' || item === 'premedication'){
@@ -490,7 +489,7 @@ export const validateBpAndSugar = (value, item, current) => {
   } else if (item === 'race' || item === 'history_month') {
     var section = item === 'race' ? 14 : 15;
     var currentItem = item === 'race' ? race : history_month;
-    if (!value) {
+    if (!value || value ===  '<p><br></p>' || value === '<p></p>') {
       current.setState({ errorChrMsg: please_enter + ' ' + currentItem , error_section: section});
       MoveTop(600);
       return false;

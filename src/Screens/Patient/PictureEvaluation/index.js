@@ -997,7 +997,7 @@ class Index extends Component {
                                   <label>{fever_body_temp}</label>
                                   <input
                                     type="number"
-                                    placeholder="97"
+                                    placeholder="36.6"
                                     name="body_temp"
                                     onChange={(e) => this.updateEntryState2(e)}
                                     className={

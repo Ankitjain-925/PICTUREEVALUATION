@@ -63,13 +63,13 @@ class ImageUploderView extends Component {
         }
       });
   };
-  getFileName = (file) => {
+  getFileName = (file, comesFrom) => {
     if (file && file.filename) {
-      if (file.filename.split("Trackrecord/")[1]) {
-        if (file.filename.split("Trackrecord/")[1].split("&bucket=")[0]) {
-          return file.filename.split("Trackrecord/")[1].split("&bucket=")[0];
+      if (file.filename.split(".com/")[1]) {
+        if (file.filename.split(".com/")[1].split("&bucket=")[0]) {
+          return file.filename.split(".com/")[1].split("&bucket=")[0];
         } else {
-          return file.filename.split("Trackrecord/")[1];
+          return file.filename.split(".com/")[1];
         }
       } else {
         return file.filename;
