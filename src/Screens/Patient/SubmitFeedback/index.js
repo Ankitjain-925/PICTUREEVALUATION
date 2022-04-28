@@ -106,7 +106,6 @@ class Index extends Component {
   };
 
   updateEntryState1 = (value, name) => {
-    console.log('dsfsdf', value, name);
     const state = this.state.updateFeedback;
     state[name] = value;
     this.setState({ updateFeedback: state });
@@ -764,59 +763,70 @@ class Index extends Component {
                                 this.state.showDetails?.sex}
                             </p>
                           </Grid>
-                          <Grid>
-                            <h2>{blood_pressure}</h2>
-                          </Grid>
-                          <Grid container xs={12} md={12}>
-                            <Grid xs={4} md={4}>
-                              <label>{rr_systolic}</label>
-                              <p>
-                                {this.state.showDetails &&
-                                  this.state.showDetails?.rr_systolic}
-                              </p>
-                            </Grid>
-                            <Grid xs={4} md={4}>
-                              <label>{RR_diastolic}</label>
-                              <p>
-                                {this.state.showDetails &&
-                                  this.state.showDetails?.rr_diastolic}
-                              </p>
-                            </Grid>
-                          </Grid>
-                          <Grid>
-                            <h2>{diabetes}</h2>
-                          </Grid>
-                          <Grid container xs={12} md={12}>
-                            <Grid xs={4} md={4}>
-                              <label>{blood_sugar}</label>
-                              <p>
-                                {this.state.showDetails &&
-                                  this.state.showDetails?.blood_sugar}
-                              </p>
-                            </Grid>
-                            <Grid xs={4} md={4}>
-                              <label>{Hba1c}</label>
-                              <p>
-                                {this.state.showDetails &&
-                                  this.state.showDetails?.Hba1c}
-                              </p>
-                            </Grid>
-                            <Grid xs={4} md={4}>
-                              <label>{situation}</label>
-                              <p>
-                                {GetShowLabel1(
-                                  this.state.Allsituation,
-                                  this.state.showDetails?.situation?.value,
-                                  this.props.stateLanguageType,
-                                  true,
-                                  'anamnesis'
-                                )}
-                                {/* {this.state.showDetails &&
-                                  this.state.showDetails?.situation &&
-                                  this.state.showDetails?.situation?.label} */}
-                              </p>
-                            </Grid>
-                          </Grid>
+                          {this.state.showDetails &&
+                            this.state.showDetails?.rr_systolic &&
+                            this.state.showDetails?.rr_diastolic && (
+                              <>
+                                <Grid>
+                                  <h2>{blood_pressure}</h2>
+                                </Grid>
+                                <Grid container xs={12} md={12}>
+                                  <Grid xs={4} md={4}>
+                                    <label>{rr_systolic}</label>
+                                    <p>
+                                      {this.state.showDetails &&
+                                        this.state.showDetails?.rr_systolic}
+                                    </p>
+                                  </Grid>
+                                  <Grid xs={4} md={4}>
+                                    <label>{RR_diastolic}</label>
+                                    <p>
+                                      {this.state.showDetails &&
+                                        this.state.showDetails?.rr_diastolic}
+                                    </p>
+                                  </Grid>
+                                </Grid>
+                              </>
+                            )}
+                          {this.state.showDetails &&
+                            this.state.showDetails?.blood_sugar &&
+                            this.state.showDetails?.Hba1c &&
+                            this.state.showDetails?.situation?.value && (
+                              <>
+                                <Grid>
+                                  <h2>{diabetes}</h2>
+                                </Grid>
+                                <Grid container xs={12} md={12}>
+                                  <Grid xs={4} md={4}>
+                                    <label>{blood_sugar}</label>
+                                    <p>
+                                      {this.state.showDetails &&
+                                        this.state.showDetails?.blood_sugar}
+                                    </p>
+                                  </Grid>
+                                  <Grid xs={4} md={4}>
+                                    <label>{Hba1c}</label>
+                                    <p>
+                                      {this.state.showDetails &&
+                                        this.state.showDetails?.Hba1c}
+                                    </p>
+                                  </Grid>
+                                  <Grid xs={4} md={4}>
+                                    <label>{situation}</label>
+                                    <p>
+                                      {GetShowLabel1(
+                                        this.state.Allsituation,
+                                        this.state.showDetails?.situation
+                                          ?.value,
+                                        this.props.stateLanguageType,
+                                        true,
+                                        'anamnesis'
+                                      )}
+                                    </p>
+                                  </Grid>
+                                </Grid>
+                              </>
+                            )}
                           <Grid>
                             <h2>{smoking_status}</h2>
                           </Grid>
@@ -955,42 +965,52 @@ class Index extends Component {
                               }}
                             />
                           </Grid>
-                          <Grid class="addStnd">
-                            <Grid>
-                              <label>{travel_history_last_month}</label>
-                            </Grid>
-                            <p
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  this.state.showDetails &&
-                                  this.state.showDetails?.history_month,
-                              }}
-                            />
-                          </Grid>
-                          <Grid class="addStnd">
-                            <Grid>
-                              <label>{medical_preconditions}</label>
-                            </Grid>
-                            <p
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  this.state.showDetails &&
-                                  this.state.showDetails?.medical_precondition,
-                              }}
-                            />
-                          </Grid>
-                          <Grid class="addStnd">
-                            <Grid>
-                              <label>{premedication}</label>
-                            </Grid>
-                            <p
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  this.state.showDetails &&
-                                  this.state.showDetails?.premedication,
-                              }}
-                            />
-                          </Grid>
+                          {this.state.showDetails &&
+                            this.state.showDetails?.history_month && (
+                              <Grid class="addStnd">
+                                <Grid>
+                                  <label>{travel_history_last_month}</label>
+                                </Grid>
+                                <p
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      this.state.showDetails &&
+                                      this.state.showDetails?.history_month,
+                                  }}
+                                />
+                              </Grid>
+                            )}
+                          {this.state.showDetails &&
+                            this.state.showDetails?.medical_precondition && (
+                              <Grid class="addStnd">
+                                <Grid>
+                                  <label>{medical_preconditions}</label>
+                                </Grid>
+                                <p
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      this.state.showDetails &&
+                                      this.state.showDetails
+                                        ?.medical_precondition,
+                                  }}
+                                />
+                              </Grid>
+                            )}
+                          {this.state.showDetails &&
+                            this.state.showDetails?.premedication && (
+                              <Grid class="addStnd">
+                                <Grid>
+                                  <label>{premedication}</label>
+                                </Grid>
+                                <p
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      this.state.showDetails &&
+                                      this.state.showDetails?.premedication,
+                                  }}
+                                />
+                              </Grid>
+                            )}
                           <Grid class="addStnd addStndCstm">
                             <Grid>
                               <label>{image_evaluation}</label>
@@ -1081,36 +1101,45 @@ class Index extends Component {
                                 this.state.showDetails?.body_temp}
                             </p>
                           </Grid>
-                          <Grid class="addStnd">
-                            <Grid>
-                              <label>{sun_before}</label>
-                            </Grid>
-                            <p>
-                              {this.state.showDetails &&
-                                this.state.showDetails?.sun_before}
-                            </p>
-                          </Grid>
-                          <Grid class="addStnd">
-                            <Grid>
-                              <label>{cold}</label>
-                            </Grid>
-                            <p>
-                              {this.state.showDetails &&
-                                this.state.showDetails?.cold}
-                            </p>
-                          </Grid>
-                          <Grid class="addStnd">
-                            <Grid>
-                              <label>{sexual_active}</label>
-                            </Grid>
-                            <p
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  this.state.showDetails &&
-                                  this.state.showDetails?.sexual_active,
-                              }}
-                            />
-                          </Grid>
+                          {this.state.showDetails &&
+                            this.state.showDetails?.sun_before && (
+                              <Grid class="addStnd">
+                                <Grid>
+                                  <label>{sun_before}</label>
+                                </Grid>
+                                <p>
+                                  {this.state.showDetails &&
+                                    this.state.showDetails?.sun_before}
+                                </p>
+                              </Grid>
+                            )}
+                          {this.state.showDetails &&
+                            this.state.showDetails?.cold && (
+                              <Grid class="addStnd">
+                                <Grid>
+                                  <label>{cold}</label>
+                                </Grid>
+                                <p>
+                                  {this.state.showDetails &&
+                                    this.state.showDetails?.cold}
+                                </p>
+                              </Grid>
+                            )}
+                          {this.state.showDetails &&
+                            this.state.showDetails?.sexual_active && (
+                              <Grid class="addStnd">
+                                <Grid>
+                                  <label>{sexual_active}</label>
+                                </Grid>
+                                <p
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      this.state.showDetails &&
+                                      this.state.showDetails?.sexual_active,
+                                  }}
+                                />
+                              </Grid>
+                            )}
                           <Grid class="addStnd">
                             <Grid>
                               <label>{payment_done}</label>

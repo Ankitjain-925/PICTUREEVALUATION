@@ -112,12 +112,21 @@ class Index extends Component {
   //Get All information Related to Metadata
   getMetadata() {
     this.setState({ allMetadata: this.props.metadata }, () => {
-      this.GetLanguageMetadata();
+      this.GetLanguageMlMetadata.smoking_status &&
+          this.state.allMetadata.smoking_status,
+        this.props.stateLanguageType
+      );
+
+      this.setState({
+        Allsituation: Allsituation,
+        Allsmoking_status: Allsmoking_status,
+      });GetLanguageMetadata();
     });
-  }
+   
 
   GetLanguageMetadata = () => {
     if (this.state.allMetadata) {
+      console.log('1');
       var Allsituation = GetLanguageDropdown(
         this.state.allMetadata &&
           this.state.allMetadata.situation &&
@@ -126,15 +135,7 @@ class Index extends Component {
       );
       var Allsmoking_status = GetLanguageDropdown(
         this.state.allMetadata &&
-          this.state.allMetadata.smoking_status &&
-          this.state.allMetadata.smoking_status,
-        this.props.stateLanguageType
-      );
-
-      this.setState({
-        Allsituation: Allsituation,
-        Allsmoking_status: Allsmoking_status,
-      });
+          this.state.al
     }
   };
 
