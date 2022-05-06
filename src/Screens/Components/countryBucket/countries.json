@@ -79,7 +79,7 @@
     {"name": "Gabon", "code": "GA", "bucket":"aimedis-0003"}, 
     {"name": "Gambia", "code": "GM", "bucket":"aimedis-0003"}, 
     {"name": "Georgia", "code": "GE", "bucket":"aimedis-00002"}, 
-    {"name": "Germany", "code": "DE", "bucket":"aimedis-0001"}, 
+    {"name": "Germany", "code": "DE", "bucket":"aimedis-eu-germany-1"},
     {"name": "Ghana", "code": "GH", "bucket":"aimedis-0003"}, 
     {"name": "Gibraltar", "code": "GI", "bucket":"aimedis-0001"}, 
     {"name": "Greece", "code": "GR", "bucket":"aimedis-0001"}, 
