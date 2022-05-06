@@ -124,6 +124,8 @@ export const getUserData = (current, datas) => {
             datas = current.state.UpDataDetails.insurance;
             var find =
                 response.data && response.data.data && response.data.data.image;
+            var forUpdate = {value: true, token: user_token, user: response.data.data}
+            current.props.LoginReducerAim(response.data.data?.email, '', user_token, () => {}, forUpdate);
             SettingImage(find, current);
             current.setState({ loaderImage: false });
         })
