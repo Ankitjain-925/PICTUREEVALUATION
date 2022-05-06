@@ -82,6 +82,7 @@ class Index extends Component {
             emergency_number: '',
             updateIns: -1,
             error3: false,
+            error4: false,
             succUpdate: false,
             copied: false,
             value: 0,
@@ -230,6 +231,7 @@ class Index extends Component {
                         {this.state.copied && <div className="success_message">{info_copied}</div>}
                         {this.state.succUpdate && <div className="success_message">{profile_updated}</div>}
                         {this.state.error3 && <div className="err_message">{profile_not_updated}</div>}
+                        {this.state.error4 && (<div className="err_message">{"Please fill the citizenship country"}</div>)}
                         {this.state.phonevalidate && <div className="err_message">{mobile_number_not_valid}</div>}
                         {this.state.ChangedPIN && <div className="success_message">{profile} {ID} {and} {pin} {is} {changed}</div>}
                         <h1>{profile} {information}</h1>

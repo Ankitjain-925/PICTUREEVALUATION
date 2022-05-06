@@ -39,12 +39,10 @@ export const updateCometUser = async (data)=>{
 export const LoginReducerAim = (email, password, logintoken, SendCallback = () => {}, forUpdate) => {
   return (dispatch) => {
     if(forUpdate?.value){
-      console.log("for update",forUpdate.value)
       let tmp = {
         token: forUpdate.token,
         user: forUpdate.user,
       };
-      console.log('tmp',tmp);
       dispatch({ type: GET_LOGIN_SUCCESS, payload: tmp });
       SendCallback();
     }

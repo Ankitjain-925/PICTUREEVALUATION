@@ -314,6 +314,7 @@ export const saveUserData1 = (current) => {
 }
 //Save the User profile
 export const saveUserData = (current) => {
+    if(current.state.UpDataDetails?.citizen_country?.value){
     if (!current.state.UpDataDetails.mobile.includes("-")) {
         const state2 = current.state.UpDataDetails
         state2['mobile'] = 'DE-' + current.state.UpDataDetails.mobile;
@@ -410,6 +411,10 @@ export const saveUserData = (current) => {
             setTimeout(() => { current.setState({ error3: false }) }, 5000)
         }
     })
+}
+else{
+    current.setState({error4: true})
+}
 }
 
 // Check the Alies is duplicate or not
