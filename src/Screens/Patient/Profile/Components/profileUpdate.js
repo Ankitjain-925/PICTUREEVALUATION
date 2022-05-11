@@ -16,6 +16,7 @@ import Modal from '@material-ui/core/Modal';
 import Loader from 'Screens/Components/Loader/index';
 import { GetShowLabel1 } from 'Screens/Components/GetMetaData/index.js';
 import DateFormat from 'Screens/Components/DateFormat/index'
+import { confirmAlert } from "react-confirm-alert";
 import { getLanguage } from "translations/index";
 import _ from 'lodash';
 import { updateFLAG, updateMOBILE, getUserData, contact_partnerState, getMetadata, handleChange_multi, saveUserData1, saveUserData, firstLoginUpdate, onChange, updateEntryState1, updateEntryState11, copyText, updateflags,
@@ -146,6 +147,49 @@ class Index extends Component {
         this.setState({ selectedCountry: event });
     };
   
+    OnMobileCodeChange = (event) => {
+        let translate = getLanguage(this.props.languageType)
+        let { change_citizenship, Yes, No } = translate;
+        confirmAlert({
+            customUI: ({ onClose }) => {
+              return (
+                <div
+                  className={
+                   this.props.settings &&
+                   this.props.settings.setting &&
+                   this.props.settings.setting.mode === "dark"
+                      ? "dark-confirm react-confirm-alert-body"
+                      : "react-confirm-alert-body"
+                  }
+                >
+                  <h1>{change_citizenship}</h1>
+                  <div className="react-confirm-alert-button-group">
+                    <button
+                      onClick={() => {
+                        var state = this.state.UpDataDetails;
+                        var data = this.state.selectCountry?.length>0 && this.state.selectCountry.filter((item)=>item.value === event)
+                        if(data?.length>0){
+                        state["citizen_country"] = data[0];
+                        this.setState({UpDataDetails : state})
+                        }
+                        onClose();
+                      }}
+                    >
+                      {Yes}
+                    </button>
+                    <button
+                      onClick={() => {
+                        onClose();
+                      }}
+                    >
+                      {No}
+                    </button>
+                  </div>
+                </div>
+              );
+            },
+          });
+    }
       // For Add more insurance model
     handleAddInsurance = () => {
         this.setState({ addInsuranceOpen: true });
@@ -493,7 +537,7 @@ class Index extends Component {
                                         <label>{mobile_number}</label>
                                         <Grid>
                                             {updateFLAG(this.state.UpDataDetails.mobile) && updateFLAG(this.state.UpDataDetails.mobile) !== '' &&
-                                                <ReactFlagsSelect searchable={true} placeholder="Country Code" onSelect={(e) => { updateflags(e, 'flag_mobile', this) }} name="flag_mobile" showSelectedLabel={false} defaultCountry={updateFLAG(this.state.UpDataDetails.mobile)} />}
+                                                <ReactFlagsSelect searchable={true} placeholder="Country Code" onSelect={(e) => { updateflags(e, 'flag_mobile', this); this.OnMobileCodeChange(e); }} name="flag_mobile" showSelectedLabel={false} defaultCountry={updateFLAG(this.state.UpDataDetails.mobile)} />}
                                             <input type="text"
                                                 className="Mobile_extra"
                                                 placeholder={mobile}

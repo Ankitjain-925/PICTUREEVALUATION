@@ -1728,6 +1728,14 @@
 		"Add_Appointment": "Termin hinzufügen",
 		"Patient_does_not_have_email_the_email_created_by_Hospital": "Der Patient hat keine E-Mail, die vom Krankenhaus erstellte E-Mail",
 		"Admin_staff": "Verwaltungspersonal",
-		"Payment":"Zahlung"
+		"Payment":"Zahlung",
+		"followed": "gefolgt",
+		"unfollowed": "unbefolgt",
+		"aimedis_newsletter": "Aimedis newsletter",
+		"follow": "Folgen",
+		"unfollow": "entfolgen",
+		"since": "seit",
+		"not_followed_by_yet": "noch nicht gefolgt",
+		"change_citizenship": "Möchten Sie das Land der Staatsbürgerschaft gemäß Ihrem neuen mobilen Ländercode ändern?"
 	}
 }

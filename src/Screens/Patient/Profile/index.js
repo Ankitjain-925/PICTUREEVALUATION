@@ -18,10 +18,14 @@ import { authy } from "Screens/Login/authy.js";
 import Typography from "@material-ui/core/Typography";
 import ProfileSection from "./Components/profileUpdate";
 import Timezone from "timezon.json";
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import Notification from "Screens/Components/CometChat/react-chat-ui-kit/CometChat/components/Notifications";
 import { GetLanguageDropdown } from "Screens/Components/GetMetaData/index.js";
 import { getLanguage } from "translations/index"
 import { pure } from "recompose";
+import SecuritySection from 'Screens/Components/CommonProfileSec/security';
 import { commonHeader } from "component/CommonHeader/index";
 function TabContainer(props) {
   return (
@@ -133,7 +137,8 @@ class Index extends Component {
     }
     let translate = getLanguage(this.props.stateLanguageType)
     let {
-      profile_setting
+      my_profile,
+      Security,
     } = translate;
 
     return (
@@ -155,31 +160,65 @@ class Index extends Component {
                 <LeftMenuMobile isNotShow={true} currentPage="profile" />
                 <Notification />
                 {/* Website Mid Content */}
-                <Grid item xs={12} md={10} lg={8}>
+                {/* <Grid item xs={12} md={10} lg={8}>
                   <Grid className="profilePkg ">
                     <Grid className="profilePkgIner1">
                     <Grid className="docsOpinion docsOpinion12">
                       <Grid container direction="row" className="docsOpinLbl">
                                   <Grid item xs={12} md={6}><label>{profile_setting}</label></Grid>
-                                  
                               </Grid>
                      </Grid>
-                    
                     </Grid>
-                 
                     <Grid className="profilePkgIner2">
                     <ProfileSection />
+                    </Grid>
+                  </Grid>
+                </Grid> */}
+                <Grid item xs={12} md={10} lg={8}>
+                  <Grid className="profilePkg ">
+                    <Grid className="profilePkgIner1">
+                      {/* Tabs  */}
+                      <AppBar position="static" className="profileTabsUpr">
+                        <Tabs
+                          value={value}
+                          onChange={this.handleChangeTabs}
+                          className="profileTabs"
+                        >
+                          <Tab label={my_profile} className="aboutTabsIner" />
+                          <Tab label={Security} className="aboutTabsIner" />
+                          {/* <Tab label={my_drs} className="aboutTabsIner" />
+                          <Tab label={organ_donar} className="aboutTabsIner" />
+                          <Tab
+                            label={right_management}
+                            className="aboutTabsIner"
+                          />
+                          <Tab label={kyc} className="aboutTabsIner" />
+                          <Tab label={date_time} className="aboutTabsIner" />
+                          <Tab label={delete_account} className="aboutTabsIner" /> */}
+                        </Tabs>
+                      </AppBar>
+                    </Grid>
+                    <Grid className="profilePkgIner2">
                       {/* Start of MyProfile */}
-                      {/* {value === 0 && (
-                        <TabContainer> */}
-                          {/* <ProfileSection /> */}
-                        {/* </TabContainer>
-                      )} */}
+                      {value === 0 && (
+                        <TabContainer>
+                          <ProfileSection />
+                        </TabContainer>
+                      )}
                       {/* End of MyProfile */}
 
-                      
+                      {/* Start of Security */}
+                      {value === 1 && (
+                        <TabContainer>
+                          <SecuritySection
+                            user_token={this.props.stateLoginValueAim.token}
+                            LoggedInUser={this.state.LoggedInUser}
+                            getUserData={this.getUserData}
+                          />
+                        </TabContainer>
+                      )}
+                      {/* End of Security */}
                     </Grid>
-                 
                     {/* End of Tabs */}
                   </Grid>
                 </Grid>

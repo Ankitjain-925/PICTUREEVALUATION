@@ -2,6 +2,7 @@ import axios from 'axios';
 import sitedata from 'sitedata';
 import { commonHeader, commonCometHeader, GetHouseID } from 'component/CommonHeader/index';
 import { getLanguage } from 'translations/index';
+import contry from "Screens/Components/countryBucket/countries.json";
 var HouseID = GetHouseID();
 
 export const handleEvalSubmit = (value, current) => {
@@ -40,7 +41,15 @@ export const handleEvalSubmit = (value, current) => {
                                         sex: data.sex,
                                         country: data.residenceCountry,
                                         citizen_country: data.country
-                                      }, commonHeader(current.props.stateLoginValueAim.token)).then((res) => { })
+                                      }, commonHeader(current.props.stateLoginValueAim.token)).then((res) => { 
+                                        var user = current.props.stateLoginValueAim?.user;
+                                        var tocheckWith = user?.citizen_country
+                                        var getBucket =contry && contry.length > 0 && contry.filter((value, key) => value.code === tocheckWith?.value.toUpperCase());
+                                        user.citizen_country =  data.country;
+                                        user.bucket = getBucket[0].bucket;
+                                        var forUpdate = {value: true, token: current.props.stateLoginValueAim.token, user: user}
+                                        current.props.LoginReducerAim(user?.email, '', current.props.stateLoginValueAim.token, () => {}, forUpdate);
+                                       })
                                         .catch((e) => { })
                                 //     }
                                 //   }
