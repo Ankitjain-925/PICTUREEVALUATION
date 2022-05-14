@@ -1736,6 +1736,7 @@
 		"unfollow": "entfolgen",
 		"since": "seit",
 		"not_followed_by_yet": "noch nicht gefolgt",
-		"change_citizenship": "Möchten Sie das Land der Staatsbürgerschaft gemäß Ihrem neuen mobilen Ländercode ändern?"
+		"change_citizenship": "Möchten Sie das Land der Staatsbürgerschaft gemäß Ihrem neuen mobilen Ländercode ändern?",
+		"fill_citizenship":"Bitte füllen Sie das Land der Staatsbürgerschaft aus"
 	}
 }

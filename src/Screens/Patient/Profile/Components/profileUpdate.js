@@ -263,7 +263,7 @@ class Index extends Component {
         let translate = getLanguage(this.props.stateLanguageType)
         let { Contact, Citizenship, Register_Name, relation, phone, select_marital_status, organ_donar_status, not_an_organ, emergency, telephone_nmbr, marital_status,
             Rhesus, InsurancecompanyError, Addcompany, Blood, profile_info, profile, information, ID, pin, QR_code, done, Change, edit_id_pin, edit, and, is, changed, profile_id_taken, profile_id_greater_then_5,
-            save_change, email, title, degree, first, last, name, dob, gender, street, add, city, postal_code, country, home_telephone, country_code, Delete, male, female, other,
+            save_change, email, title, degree, first,fill_citizenship, last, name, dob, gender, street, add, city, postal_code, country, home_telephone, country_code, Delete, male, female, other,
             mobile_number, number, mobile, Languages, spoken, pin_greater_then_4, insurance, add_more, company, of, info_copied, profile_updated, profile_not_updated, mobile_number_not_valid, insurance_added } = translate;
 
 
@@ -275,7 +275,7 @@ class Index extends Component {
                         {this.state.copied && <div className="success_message">{info_copied}</div>}
                         {this.state.succUpdate && <div className="success_message">{profile_updated}</div>}
                         {this.state.error3 && <div className="err_message">{profile_not_updated}</div>}
-                        {this.state.error4 && (<div className="err_message">{"Please fill the citizenship country"}</div>)}
+                        {this.state.error4 && (<div className="err_message}">{fill_citizenship}</div>)}
                         {this.state.phonevalidate && <div className="err_message">{mobile_number_not_valid}</div>}
                         {this.state.ChangedPIN && <div className="success_message">{profile} {ID} {and} {pin} {is} {changed}</div>}
                         <h1>{profile} {information}</h1>
