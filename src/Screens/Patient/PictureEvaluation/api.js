@@ -151,7 +151,7 @@ export const handleEvalSubmit = (value, current) => {
                       data.patient_id =
                         current.props.stateLoginValueAim.user?._id;
                       data.fileattach = current.state.fileattach;
-                      data.task_name = 'Picture evaluation from patient';
+                      data.task_name = 'Online Diagnose from patient';
                       data.task_type = 'picture_evaluation';
                       data.is_payment = current.state.is_payment;
                       data.done_on = '';
