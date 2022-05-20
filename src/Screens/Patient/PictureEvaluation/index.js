@@ -259,6 +259,7 @@ class Index extends Component {
                     : "react-confirm-alert-body"
                 }
               >
+                {console.log('dsfsdfsdfsdf', data)}
                 <h1>{paymnt_processed}</h1>
                 <div className="react-confirm-alert-button-group">
                   <button

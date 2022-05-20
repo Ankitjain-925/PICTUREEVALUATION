@@ -36,17 +36,18 @@ export const handleEvalSubmit = (value, current) => {
                                   // if (validateBpAndSugar(data.medical_precondition, 'medical_precondition', current)) {
                                     // if (validateBpAndSugar(data.premedication, 'premedication', current)) {
                                       current.setState({ mod1Open: true, picEval: true, error_section: 0, errorChrMsg: '' })
+                                      var user = current.props.stateLoginValueAim?.user;
+                                        var tocheckWith = data.country
+                                        var getBucket =contry && contry.length > 0 && contry.filter((value, key) => value.code === tocheckWith?.value.toUpperCase());
+                                        user.citizen_country =  data.country;
+                                        user.bucket = getBucket[0].bucket;
                                       axios.put(sitedata.data.path + '/UserProfile/Users/update', {
                                         birthday: data.dob,
                                         sex: data.sex,
                                         country: data.residenceCountry,
-                                        citizen_country: data.country
+                                        citizen_country: data.country,
+                                        bucket : getBucket[0].bucket,
                                       }, commonHeader(current.props.stateLoginValueAim.token)).then((res) => { 
-                                        var user = current.props.stateLoginValueAim?.user;
-                                        var tocheckWith = user?.citizen_country
-                                        var getBucket =contry && contry.length > 0 && contry.filter((value, key) => value.code === tocheckWith?.value.toUpperCase());
-                                        user.citizen_country =  data.country;
-                                        user.bucket = getBucket[0].bucket;
                                         var forUpdate = {value: true, token: current.props.stateLoginValueAim.token, user: user}
                                         current.props.LoginReducerAim(user?.email, '', current.props.stateLoginValueAim.token, () => {}, forUpdate);
                                        })
@@ -567,12 +568,13 @@ export const getAllPictureEval = (current) => {
 };
 
 export const saveOnDB = (payment, current) => {
+  console.log('payment?.data?.payment_data', payment?.data?.paymentData, payment)
   current.setState({ loaderImage: true });
   if (current.state.updateEvaluate._id) {
     axios
       .put(
         sitedata.data.path + '/vh/AddTask/' + current.state.updateEvaluate._id,
-        { payment_data: payment?.data?.payment_data, is_payment: true },
+        { payment_data: payment?.data?.paymentData, is_payment: true },
         commonHeader(current.props.stateLoginValueAim.token)
       )
       .then((responce) => {
