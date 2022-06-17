@@ -3,6 +3,9 @@
 # dependencies
 /node_modules
 
+# Secret file
+.env
+
 # testing
 /coverage
 
