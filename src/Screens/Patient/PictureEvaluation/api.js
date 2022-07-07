@@ -79,7 +79,7 @@ export const handleEvalSubmit = (value, current) => {
                                 axios
                                   .put(
                                     sitedata.data.path +
-                                      '/UserProfile/Users/update',
+                                    '/UserProfile/Users/update',
                                     {
                                       birthday: data.dob,
                                       sex: data.sex,
@@ -90,8 +90,8 @@ export const handleEvalSubmit = (value, current) => {
                                       current.props.stateLoginValueAim.token
                                     )
                                   )
-                                  .then((res) => {})
-                                  .catch((e) => {});
+                                  .then((res) => { })
+                                  .catch((e) => { });
                                 //     }
                                 //   }
                                 // }
@@ -129,7 +129,7 @@ export const handleEvalSubmit = (value, current) => {
       if (
         data.start_date &&
         new Date(new Date() - new Date(data.start_date)).getFullYear() - 1970 <=
-          130
+        130
       ) {
         if (validateBpAndSugar1(data.warm, 'warm', current)) {
           if (
@@ -295,10 +295,10 @@ export const validateBpAndSugar1 = (value, item, current) => {
       item === 'warm'
         ? warm
         : item === 'size_progress'
-        ? size_progress
-        : item === 'itch'
-        ? itch
-        : pain;
+          ? size_progress
+          : item === 'itch'
+            ? itch
+            : pain;
     if (!value) {
       current.setState({
         errorChrMsg: please_select + ' ' + currentItem + ' ' + with_yes_no,
@@ -525,22 +525,22 @@ export const validateBpAndSugar = (value, item, current) => {
       item === 'allergies'
         ? 9
         : item === 'family_history'
-        ? 10
-        : item === 'treatment_so_far'
-        ? 11
-        : item === 'medical_precondition'
-        ? 16
-        : 17;
+          ? 10
+          : item === 'treatment_so_far'
+            ? 11
+            : item === 'medical_precondition'
+              ? 16
+              : 17;
     var currentItem =
       item === 'allergies'
         ? allergies
         : item === 'family_history'
-        ? family_history
-        : item === 'treatment_so_far'
-        ? treatment_so_far
-        : item === 'medical_precondition'
-        ? medical_preconditions
-        : premedication;
+          ? family_history
+          : item === 'treatment_so_far'
+            ? treatment_so_far
+            : item === 'medical_precondition'
+              ? medical_preconditions
+              : premedication;
     if (!value || value === '<p><br></p>' || value === '<p></p>') {
       current.setState({
         errorChrMsg: please_enter + ' ' + currentItem,
@@ -659,6 +659,7 @@ export const saveOnDB = (payment, current) => {
         current.setState({ loaderImage: false });
         if (responce.data.hassuccessed) {
           current.props.history.push('/patient/evaluation-list');
+          getAllPictureEval(current);
         }
       });
   } else {
@@ -799,7 +800,7 @@ export const handleSubmitFeed = (current) => {
           }
           current.setState({ loaderImage: false });
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   } else {
     current.setState({ allcompulsary: true });

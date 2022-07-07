@@ -15,7 +15,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import LeftMenu from 'Screens/Components/Menus/PatientLeftMenu/index';
 import LeftMenuMobile from 'Screens/Components/Menus/PatientLeftMenu/mobile';
 import { LanguageFetchReducer } from 'Screens/actions';
-import Checkbox from '@material-ui/core/Checkbox';
+import Checkbox from "@material-ui/core/Checkbox";
 import Loader from 'Screens/Components/Loader/index';
 import { Redirect, Route } from 'react-router-dom';
 import { getLanguage } from 'translations/index';
@@ -43,8 +43,8 @@ import {
 } from './api';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import { OptionList } from 'Screens/Login/metadataaction';
-import $ from 'jquery';
-import StripeCheckout from 'react-stripe-checkout';
+import $ from "jquery"
+import StripeCheckout from "react-stripe-checkout";
 import { GetLanguageDropdown } from 'Screens/Components/GetMetaData/index.js';
 const CURRENCY = 'EUR';
 const STRIPE_PUBLISHABLE = getPublishableKey();
@@ -84,7 +84,7 @@ class Index extends Component {
       is_payment: false,
       error_section: 0,
       bp_avail: false,
-      diab_avail: false,
+      diab_avail: false
     };
   }
 
@@ -107,35 +107,34 @@ class Index extends Component {
     if (prevProps.stateLanguageType !== this.props.stateLanguageType) {
       this.GetLanguageMetadata();
     }
-  };
+  }
 
   //Get All information Related to Metadata
   getMetadata() {
     this.setState({ allMetadata: this.props.metadata }, () => {
-      this.GetLanguageMlMetadata.smoking_status &&
-          this.state.allMetadata.smoking_status,
+      this.GetLanguageMetadata();
+    });
+  }
+
+  GetLanguageMetadata = () => {
+    if (this.state.allMetadata) {
+      var Allsituation = GetLanguageDropdown(
+        this.state.allMetadata &&
+        this.state.allMetadata.situation &&
+        this.state.allMetadata.situation,
+        this.props.stateLanguageType
+      );
+      var Allsmoking_status = GetLanguageDropdown(
+        this.state.allMetadata &&
+        this.state.allMetadata.smoking_status &&
+        this.state.allMetadata.smoking_status,
         this.props.stateLanguageType
       );
 
       this.setState({
         Allsituation: Allsituation,
         Allsmoking_status: Allsmoking_status,
-      });GetLanguageMetadata();
-    });
-   
-
-  GetLanguageMetadata = () => {
-    if (this.state.allMetadata) {
-      console.log('1');
-      var Allsituation = GetLanguageDropdown(
-        this.state.allMetadata &&
-          this.state.allMetadata.situation &&
-          this.state.allMetadata.situation,
-        this.props.stateLanguageType
-      );
-      var Allsmoking_status = GetLanguageDropdown(
-        this.state.allMetadata &&
-          this.state.al
+      });
     }
   };
 
@@ -179,8 +178,9 @@ class Index extends Component {
   };
 
   onClosed = () => {
-    $('body').css('overflow', 'auto');
-  };
+    $("body").css("overflow", "auto");
+  }
+
 
   render() {
     const { value } = this.state;
@@ -245,18 +245,18 @@ class Index extends Component {
 
     //Success payment alert after payment is success
     const successPayment = (data) => {
-      let translate = getLanguage(this.props.stateLanguageType);
-      const { paymnt_processed, ok } = translate;
+      let translate = getLanguage(this.props.stateLanguageType)
+      const { paymnt_processed, ok, } = translate;
       confirmAlert({
         customUI: ({ onClose }) => {
           return (
             <div
               className={
                 this.props.settings &&
-                this.props.settings.setting &&
-                this.props.settings.setting.mode === 'dark'
-                  ? 'dark-confirm react-confirm-alert-body'
-                  : 'react-confirm-alert-body'
+                  this.props.settings.setting &&
+                  this.props.settings.setting.mode === "dark"
+                  ? "dark-confirm react-confirm-alert-body"
+                  : "react-confirm-alert-body"
               }
             >
               <h1>{paymnt_processed}</h1>
@@ -264,7 +264,7 @@ class Index extends Component {
                 <button
                   onClick={() => {
                     onClose();
-                    saveOnDB(data, this);
+                    saveOnDB(data, this)
                   }}
                 >
                   {ok}
@@ -278,18 +278,18 @@ class Index extends Component {
 
     //Alert of the Error payment
     const errorPayment = (data) => {
-      let translate = getLanguage(this.props.stateLanguageType);
-      let { ok, paymnt_err } = translate;
+      let translate = getLanguage(this.props.stateLanguageType)
+      let { ok, paymnt_err, } = translate;
       confirmAlert({
         customUI: ({ onClose }) => {
           return (
             <div
               className={
                 this.props.setting &&
-                this.props.setting.setting &&
-                this.props.setting.setting.mode === 'dark'
-                  ? 'dark-confirm react-confirm-alert-body'
-                  : 'react-confirm-alert-body'
+                  this.props.setting.setting &&
+                  this.props.setting.setting.mode === "dark"
+                  ? "dark-confirm react-confirm-alert-body"
+                  : "react-confirm-alert-body"
               }
             >
               <h1>{paymnt_err}</h1>
@@ -306,11 +306,11 @@ class Index extends Component {
           );
         },
       });
-    };
+    }
 
     const Checkout = ({
-      name = 'AIS',
-      description = 'Stripe Payment',
+      name = "AIS",
+      description = "Stripe Payment",
       amount = 25,
       email = this.props.stateLoginValueAim.user.email,
     }) => (
@@ -335,7 +335,7 @@ class Index extends Component {
     //For payment
     const onToken = (token) =>
       axios
-        .post(sitedata.data.path + '/lms_stripeCheckout/intent-pop', {
+        .post(sitedata.data.path + "/lms_stripeCheckout/intent-pop", {
           source: token.id,
           currency: CURRENCY,
           amount: this.fromEuroToCent(25),
@@ -347,9 +347,9 @@ class Index extends Component {
       <Grid
         className={
           this.props.settings &&
-          this.props.settings.setting &&
-          this.props.settings.setting.mode &&
-          this.props.settings.setting.mode === 'dark'
+            this.props.settings.setting &&
+            this.props.settings.setting.mode &&
+            this.props.settings.setting.mode === 'dark'
             ? 'homeBg darkTheme homeBgDrk'
             : 'homeBg'
         }
@@ -374,13 +374,7 @@ class Index extends Component {
                     </Grid>
                   </Grid>
                   <Grid item xs={12} sm={12} md={8}>
-                    <Grid
-                      className={
-                        this.state.show2
-                          ? 'cnfrmDiaMain1 setPaymentBack'
-                          : 'cnfrmDiaMain profilePkg cnfrmDiaMain1'
-                      }
-                    >
+                    <Grid className={this.state.show2 ? "cnfrmDiaMain1 setPaymentBack" : "cnfrmDiaMain profilePkg cnfrmDiaMain1"}>
                       {!this.state.show2 && (
                         <Grid>
                           {!this.state.picEval === true ? (
@@ -395,8 +389,8 @@ class Index extends Component {
                                     value={
                                       this.state.updateEvaluate?.dob
                                         ? new Date(
-                                            this.state.updateEvaluate?.dob
-                                          )
+                                          this.state.updateEvaluate?.dob
+                                        )
                                         : new Date()
                                     }
                                     max={new Date()}
@@ -410,11 +404,9 @@ class Index extends Component {
                                     // }
                                     NotFutureDate={true}
                                   />
-                                  {this.state.error_section == 1 && (
-                                    <div className="err_message2">
-                                      {this.state.errorChrMsg}
-                                    </div>
-                                  )}
+                                  {this.state.error_section == 1 && <div className="err_message2">
+                                    {this.state.errorChrMsg}
+                                  </div>}
                                 </Grid>
                                 <Grid item xs={12} md={8}>
                                   <Grid>
@@ -428,7 +420,7 @@ class Index extends Component {
                                       className={
                                         this.state.updateEvaluate.sex &&
                                         this.state.updateEvaluate.sex ===
-                                          'male' &&
+                                        'male' &&
                                         'SelectedGender'
                                       }
                                     >
@@ -441,7 +433,7 @@ class Index extends Component {
                                       className={
                                         this.state.updateEvaluate.sex &&
                                         this.state.updateEvaluate.sex ===
-                                          'female' &&
+                                        'female' &&
                                         'SelectedGender'
                                       }
                                     >
@@ -454,18 +446,16 @@ class Index extends Component {
                                       className={
                                         this.state.updateEvaluate.sex &&
                                         this.state.updateEvaluate.sex ===
-                                          'other' &&
+                                        'other' &&
                                         'SelectedGender'
                                       }
                                     >
                                       {' '}
                                       {other}
                                     </a>
-                                    {this.state.error_section == 2 && (
-                                      <div className="err_message2">
-                                        {this.state.errorChrMsg}
-                                      </div>
-                                    )}
+                                    {this.state.error_section == 2 && <div className="err_message2">
+                                      {this.state.errorChrMsg}
+                                    </div>}
                                   </Grid>
                                 </Grid>
                                 <Grid className="bloodpreLb">
@@ -473,14 +463,9 @@ class Index extends Component {
                                   <Checkbox
                                     value="checkedB"
                                     color="#00ABAF"
-                                    checked={
-                                      this.state.bp_avail === true &&
-                                      this.state.bp_avail
-                                    }
+                                    checked={this.state.bp_avail === true && this.state.bp_avail}
                                     onChange={(e) => {
-                                      this.setState({
-                                        bp_avail: e.target.checked,
-                                      });
+                                      this.setState({ bp_avail: e.target.checked });
                                     }}
                                     className="PIC_Condition"
                                   />
@@ -497,16 +482,14 @@ class Index extends Component {
                                             this.updateEntryState2(e)
                                           }
                                           value={
-                                            this.state.updateEvaluate
-                                              ?.rr_systolic
+                                            this.state.updateEvaluate?.rr_systolic
                                           }
                                         />
-                                        {this.state.error_section == 3 && (
-                                          <div className="err_message2">
-                                            {this.state.errorChrMsg}
-                                          </div>
-                                        )}
+                                        {this.state.error_section == 3 && <div className="err_message2">
+                                          {this.state.errorChrMsg}
+                                        </div>}
                                       </Grid>
+
                                     </Grid>
 
                                     <Grid item md={6} sm={6}>
@@ -523,103 +506,83 @@ class Index extends Component {
                                               ?.rr_diastolic
                                           }
                                         />
-                                        {this.state.error_section == 4 && (
-                                          <div className="err_message2">
-                                            {this.state.errorChrMsg}
-                                          </div>
-                                        )}
+                                        {this.state.error_section == 4 && <div className="err_message2">
+                                          {this.state.errorChrMsg}
+                                        </div>}
                                       </Grid>
                                     </Grid>
-                                  </Grid>
-                                )}
+                                  </Grid>)}
                                 <Grid className="bloodpreLb">
                                   <label>{diabetes}</label>
                                   <Checkbox
                                     value="checkedB"
                                     color="#00ABAF"
-                                    checked={
-                                      this.state.diab_avail === true &&
-                                      this.state.diab_avail
-                                    }
+                                    checked={this.state.diab_avail === true && this.state.diab_avail}
                                     onChange={(e) => {
-                                      this.setState({
-                                        diab_avail: e.target.checked,
-                                      });
+                                      this.setState({ diab_avail: e.target.checked });
                                     }}
                                     className="PIC_Condition"
                                   />
                                 </Grid>
-                                {this.state.diab_avail === true && (
-                                  <>
-                                    <Grid container direction="row" spacing="1">
-                                      <Grid item md={6} sm={6}>
-                                        <Grid className="fillDia">
-                                          <MMHG
-                                            name="blood_sugar"
-                                            Unit="mg/dl"
-                                            label={blood_sugar}
-                                            onChange={(e) =>
-                                              this.updateEntryState2(e)
-                                            }
-                                            value={
-                                              this.state.updateEvaluate
-                                                ?.blood_sugar
-                                            }
-                                          />
-                                          {this.state.error_section == 5 && (
-                                            <div className="err_message2">
-                                              {this.state.errorChrMsg}
-                                            </div>
-                                          )}
-                                        </Grid>
-                                      </Grid>
-                                      <Grid item md={6} sm={6}>
-                                        <Grid className="fillDia">
-                                          <MMHG
-                                            name="Hba1c"
-                                            Unit="%"
-                                            label={Hba1c}
-                                            onChange={(e) =>
-                                              this.updateEntryState2(e)
-                                            }
-                                            value={
-                                              this.state.updateEvaluate?.Hba1c
-                                            }
-                                          />
-                                          {this.state.error_section == 6 && (
-                                            <div className="err_message2">
-                                              {this.state.errorChrMsg}
-                                            </div>
-                                          )}
-                                        </Grid>
-                                      </Grid>
-                                    </Grid>
-                                    <Grid className="fillDia">
-                                      <SelectByTwo
-                                        name="situation"
-                                        label={situation}
-                                        options={this.state.Allsituation}
-                                        onChange={(e) =>
-                                          this.updateEntryState1(e, 'situation')
-                                        }
-                                        value={GetShowLabel1(
-                                          this.state.Allsituation,
-                                          this.state.updateEvaluate &&
-                                            this.state.updateEvaluate
-                                              .situation &&
-                                            this.state.updateEvaluate.situation
-                                              .value,
-                                          this.props.stateLanguageType
-                                        )}
-                                      />
-                                      {this.state.error_section == 7 && (
-                                        <div className="err_message2">
+                                {this.state.diab_avail === true && (<>
+                                  <Grid container direction="row" spacing="1">
+                                    <Grid item md={6} sm={6}>
+                                      <Grid className="fillDia">
+                                        <MMHG
+                                          name="blood_sugar"
+                                          Unit="mg/dl"
+                                          label={blood_sugar}
+                                          onChange={(e) =>
+                                            this.updateEntryState2(e)
+                                          }
+                                          value={
+                                            this.state.updateEvaluate?.blood_sugar
+                                          }
+                                        />
+                                        {this.state.error_section == 5 && <div className="err_message2">
                                           {this.state.errorChrMsg}
-                                        </div>
-                                      )}
+                                        </div>}
+                                      </Grid>
                                     </Grid>
-                                  </>
-                                )}
+                                    <Grid item md={6} sm={6}>
+                                      <Grid className="fillDia">
+                                        <MMHG
+                                          name="Hba1c"
+                                          Unit="%"
+                                          label={Hba1c}
+                                          onChange={(e) =>
+                                            this.updateEntryState2(e)
+                                          }
+                                          value={this.state.updateEvaluate?.Hba1c}
+                                        />
+                                        {this.state.error_section == 6 && <div className="err_message2">
+                                          {this.state.errorChrMsg}
+                                        </div>}
+                                      </Grid>
+                                    </Grid>
+                                  </Grid>
+                                  <Grid className="fillDia">
+                                    <SelectByTwo
+                                      name="situation"
+                                      label={situation}
+                                      options={this.state.Allsituation}
+                                      onChange={(e) =>
+                                        this.updateEntryState1(e, 'situation')
+                                      }
+                                      value={GetShowLabel1(
+                                        this.state.Allsituation,
+                                        this.state.updateEvaluate &&
+                                        this.state.updateEvaluate.situation &&
+                                        this.state.updateEvaluate.situation
+                                          .value,
+                                        this.props.stateLanguageType
+                                      )}
+                                    />
+                                    {this.state.error_section == 7 && <div className="err_message2">
+                                      {this.state.errorChrMsg}
+                                    </div>}
+                                  </Grid>
+                                </>)}
 
                                 <Grid className="bloodpreLb">
                                   <label>{smoking_status}</label>
@@ -641,20 +604,18 @@ class Index extends Component {
                                         value={GetShowLabel1(
                                           this.state.Allsmoking_status,
                                           this.state.updateEvaluate &&
-                                            this.state.updateEvaluate
-                                              ?.smoking_status &&
-                                            this.state.updateEvaluate
-                                              ?.smoking_status?.value,
+                                          this.state.updateEvaluate
+                                            ?.smoking_status &&
+                                          this.state.updateEvaluate
+                                            ?.smoking_status?.value,
                                           this.props.stateLanguageType,
                                           false,
                                           'anamnesis'
                                         )}
                                       />
-                                      {this.state.error_section == 8 && (
-                                        <div className="err_message2">
-                                          {this.state.errorChrMsg}
-                                        </div>
-                                      )}
+                                      {this.state.error_section == 8 && <div className="err_message2">
+                                        {this.state.errorChrMsg}
+                                      </div>}
                                     </Grid>
                                   </Grid>
                                   <Grid item md={4} sm={4}>
@@ -664,41 +625,41 @@ class Index extends Component {
                                         ?.smoking_status &&
                                         this.state.updateEvaluate
                                           ?.smoking_status?.value !==
-                                          'Never_smoked')) && (
-                                      <Grid className="fillDia">
-                                        <Grid className="rrSysto">
-                                          <Grid>
-                                            <label>
-                                              {from} {when}
-                                            </label>
-                                          </Grid>
-                                          <DateFormat
-                                            name="from_when"
-                                            value={
-                                              this.state.updateEvaluate
-                                                ?.from_when
-                                                ? new Date(
+                                        'Never_smoked')) && (
+                                        <Grid className="fillDia">
+                                          <Grid className="rrSysto">
+                                            <Grid>
+                                              <label>
+                                                {from} {when}
+                                              </label>
+                                            </Grid>
+                                            <DateFormat
+                                              name="from_when"
+                                              value={
+                                                this.state.updateEvaluate
+                                                  ?.from_when
+                                                  ? new Date(
                                                     this.state.updateEvaluate?.from_when
                                                   )
-                                                : new Date()
-                                            }
-                                            date_format={
-                                              this.props.settings &&
-                                              this.props.settings.setting &&
-                                              this.props.settings.setting
-                                                .date_format
-                                            }
-                                            onChange={(e) =>
-                                              this.updateEntryState1(
-                                                e,
-                                                'from_when'
-                                              )
-                                            }
-                                            NotFutureDate={true}
-                                          />
+                                                  : new Date()
+                                              }
+                                              date_format={
+                                                this.props.settings &&
+                                                this.props.settings.setting &&
+                                                this.props.settings.setting
+                                                  .date_format
+                                              }
+                                              onChange={(e) =>
+                                                this.updateEntryState1(
+                                                  e,
+                                                  'from_when'
+                                                )
+                                              }
+                                              NotFutureDate={true}
+                                            />
+                                          </Grid>
                                         </Grid>
-                                      </Grid>
-                                    )}
+                                      )}
                                   </Grid>
                                   <Grid item md={4} sm={4}>
                                     {(!this.state.updateEvaluate
@@ -707,41 +668,41 @@ class Index extends Component {
                                         ?.smoking_status &&
                                         this.state.updateEvaluate
                                           ?.smoking_status?.value !==
-                                          'Never_smoked')) && (
-                                      <Grid className="fillDia">
-                                        <Grid className="rrSysto">
-                                          <Grid>
-                                            <label>
-                                              {until} {when}
-                                            </label>
-                                          </Grid>
-                                          <DateFormat
-                                            name="until_when"
-                                            value={
-                                              this.state.updateEvaluate
-                                                ?.until_when
-                                                ? new Date(
+                                        'Never_smoked')) && (
+                                        <Grid className="fillDia">
+                                          <Grid className="rrSysto">
+                                            <Grid>
+                                              <label>
+                                                {until} {when}
+                                              </label>
+                                            </Grid>
+                                            <DateFormat
+                                              name="until_when"
+                                              value={
+                                                this.state.updateEvaluate
+                                                  ?.until_when
+                                                  ? new Date(
                                                     this.state.updateEvaluate?.until_when
                                                   )
-                                                : new Date()
-                                            }
-                                            date_format={
-                                              this.props.settings &&
-                                              this.props.settings.setting &&
-                                              this.props.settings.setting
-                                                .date_format
-                                            }
-                                            onChange={(e) =>
-                                              this.updateEntryState1(
-                                                e,
-                                                'until_when'
-                                              )
-                                            }
-                                            NotFutureDate={true}
-                                          />
+                                                  : new Date()
+                                              }
+                                              date_format={
+                                                this.props.settings &&
+                                                this.props.settings.setting &&
+                                                this.props.settings.setting
+                                                  .date_format
+                                              }
+                                              onChange={(e) =>
+                                                this.updateEntryState1(
+                                                  e,
+                                                  'until_when'
+                                                )
+                                              }
+                                              NotFutureDate={true}
+                                            />
+                                          </Grid>
                                         </Grid>
-                                      </Grid>
-                                    )}
+                                      )}
                                   </Grid>
                                 </Grid>
                                 <Grid className="fillDiaAll">
@@ -753,11 +714,9 @@ class Index extends Component {
                                     }
                                     value={this.state.updateEvaluate?.allergies}
                                   />
-                                  {this.state.error_section == 9 && (
-                                    <div className="err_message2">
-                                      {this.state.errorChrMsg}
-                                    </div>
-                                  )}
+                                  {this.state.error_section == 9 && <div className="err_message2">
+                                    {this.state.errorChrMsg}
+                                  </div>}
                                 </Grid>
                                 <Grid className="fillDiaAll">
                                   <label>{family_history}</label>
@@ -773,11 +732,9 @@ class Index extends Component {
                                       this.state.updateEvaluate?.family_history
                                     }
                                   />
-                                  {this.state.error_section == 10 && (
-                                    <div className="err_message2">
-                                      {this.state.errorChrMsg}
-                                    </div>
-                                  )}
+                                  {this.state.error_section == 10 && <div className="err_message2">
+                                    {this.state.errorChrMsg}
+                                  </div>}
                                 </Grid>
                                 <Grid className="fillDiaAll">
                                   <label>{treatment_so_far}</label>
@@ -794,11 +751,9 @@ class Index extends Component {
                                         ?.treatment_so_far
                                     }
                                   />
-                                  {this.state.error_section == 11 && (
-                                    <div className="err_message2">
-                                      {this.state.errorChrMsg}
-                                    </div>
-                                  )}
+                                  {this.state.error_section == 11 && <div className="err_message2">
+                                    {this.state.errorChrMsg}
+                                  </div>}
                                 </Grid>
                                 <Grid container direction="row" spacing="1">
                                   <Grid item xs={6} md={6}>
@@ -817,11 +772,9 @@ class Index extends Component {
                                         name="country"
                                         className="cntryDrop"
                                       />
-                                      {this.state.error_section == 12 && (
-                                        <div className="err_message2">
-                                          {this.state.errorChrMsg}
-                                        </div>
-                                      )}
+                                      {this.state.error_section == 12 && <div className="err_message2">
+                                        {this.state.errorChrMsg}
+                                      </div>}
                                     </Grid>
                                   </Grid>
                                   <Grid item xs={6} md={6}>
@@ -845,11 +798,9 @@ class Index extends Component {
                                           name="residenceCountry"
                                           className="cntryDrop"
                                         />
-                                        {this.state.error_section == 13 && (
-                                          <div className="err_message2">
-                                            {this.state.errorChrMsg}
-                                          </div>
-                                        )}
+                                        {this.state.error_section == 13 && <div className="err_message2">
+                                          {this.state.errorChrMsg}
+                                        </div>}
                                       </Grid>
                                     </Grid>
                                   </Grid>
@@ -863,11 +814,9 @@ class Index extends Component {
                                     }
                                     value={this.state.updateEvaluate?.race}
                                   />
-                                  {this.state.error_section == 14 && (
-                                    <div className="err_message2">
-                                      {this.state.errorChrMsg}
-                                    </div>
-                                  )}
+                                  {this.state.error_section == 14 && <div className="err_message2">
+                                    {this.state.errorChrMsg}
+                                  </div>}
                                 </Grid>
                                 <Grid className="fillDiaAll">
                                   <label>{travel_history_last_month}</label>
@@ -880,11 +829,9 @@ class Index extends Component {
                                       this.state.updateEvaluate?.history_month
                                     }
                                   />
-                                  {this.state.error_section == 15 && (
-                                    <div className="err_message2">
-                                      {this.state.errorChrMsg}
-                                    </div>
-                                  )}
+                                  {this.state.error_section == 15 && <div className="err_message2">
+                                    {this.state.errorChrMsg}
+                                  </div>}
                                 </Grid>
                                 <Grid className="fillDiaAll">
                                   <label>{medical_preconditions}</label>
@@ -901,11 +848,9 @@ class Index extends Component {
                                         ?.medical_precondition
                                     }
                                   />
-                                  {this.state.error_section == 16 && (
-                                    <div className="err_message2">
-                                      {this.state.errorChrMsg}
-                                    </div>
-                                  )}
+                                  {this.state.error_section == 16 && <div className="err_message2">
+                                    {this.state.errorChrMsg}
+                                  </div>}
                                 </Grid>
                                 <Grid className="fillDiaAll">
                                   <label>{premedication}</label>
@@ -918,11 +863,9 @@ class Index extends Component {
                                       this.state.updateEvaluate?.premedication
                                     }
                                   />
-                                  {this.state.error_section == 17 && (
-                                    <div className="err_message2">
-                                      {this.state.errorChrMsg}
-                                    </div>
-                                  )}
+                                  {this.state.error_section == 17 && <div className="err_message2">
+                                    {this.state.errorChrMsg}
+                                  </div>}
                                 </Grid>
 
                                 <Grid className="infoShwSave3">
@@ -944,7 +887,7 @@ class Index extends Component {
                                   // cur_one={this.props.cur_one}
                                   attachfile={
                                     this.state.updateEvaluate &&
-                                    this.state.updateEvaluate?.fileattach
+                                      this.state.updateEvaluate?.fileattach
                                       ? this.state.updateEvaluate?.fileattach
                                       : []
                                   }
@@ -953,11 +896,9 @@ class Index extends Component {
                                   isMulti={true}
                                   fileUpload={(e) => FileAttachMulti(e, this)}
                                 />
-                                {this.state.error_section == 18 && (
-                                  <div className="err_message2">
-                                    {this.state.errorChrMsg}
-                                  </div>
-                                )}
+                                {this.state.error_section == 18 && <div className="err_message2">
+                                  {this.state.errorChrMsg}
+                                </div>}
                               </Grid>
                               {/* <Grid item xs={12} md={12}>
                                 <label>{hospital}</label>
@@ -984,8 +925,8 @@ class Index extends Component {
                                     value={
                                       this.state.updateEvaluate?.start_date
                                         ? new Date(
-                                            this.state.updateEvaluate?.start_date
-                                          )
+                                          this.state.updateEvaluate?.start_date
+                                        )
                                         : new Date()
                                     }
                                     onChange={(e) =>
@@ -998,11 +939,9 @@ class Index extends Component {
                                     }
                                     NotFutureDate={true}
                                   />
-                                  {this.state.error_section == 19 && (
-                                    <div className="err_message2">
-                                      {this.state.errorChrMsg}
-                                    </div>
-                                  )}
+                                  {this.state.error_section == 19 && <div className="err_message2">
+                                    {this.state.errorChrMsg}
+                                  </div>}
                                 </Grid>
                                 <Grid>
                                   <FatiqueQuestion
@@ -1035,11 +974,9 @@ class Index extends Component {
                                     label={pain}
                                     value={this.state.updateEvaluate?.pain}
                                   />
-                                  {this.state.error_section == 20 && (
-                                    <div className="err_message2">
-                                      {this.state.errorChrMsg}
-                                    </div>
-                                  )}
+                                  {this.state.error_section == 20 && <div className="err_message2">
+                                    {this.state.errorChrMsg}
+                                  </div>}
                                 </Grid>
                                 <Grid className="setDividerPic-eval">
                                   <label>{pain_level}</label>
@@ -1052,11 +989,9 @@ class Index extends Component {
                                     comesFrom="Evalute"
                                     setting={this.props.settings}
                                   />
-                                  {this.state.error_section == 21 && (
-                                    <div className="err_message2">
-                                      {this.state.errorChrMsg}
-                                    </div>
-                                  )}
+                                  {this.state.error_section == 21 && <div className="err_message2">
+                                    {this.state.errorChrMsg}
+                                  </div>}
                                 </Grid>
                                 <Grid className="textFieldArea1">
                                   <label>{fever_body_temp}</label>
@@ -1070,11 +1005,9 @@ class Index extends Component {
                                     }
                                     value={this.state.updateEvaluate?.body_temp}
                                   ></input>
-                                  {this.state.error_section == 22 && (
-                                    <div className="err_message2">
-                                      {this.state.errorChrMsg}
-                                    </div>
-                                  )}
+                                  {this.state.error_section == 22 && <div className="err_message2">
+                                    {this.state.errorChrMsg}
+                                  </div>}
                                 </Grid>
                                 <Grid className="textFieldArea1">
                                   <label>{sun_before_how_long} </label>
@@ -1109,11 +1042,9 @@ class Index extends Component {
                                       this.state.updateEvaluate.sexual_active
                                     }
                                   />
-                                  {this.state.error_section == 23 && (
-                                    <div className="err_message2">
-                                      {this.state.errorChrMsg}
-                                    </div>
-                                  )}
+                                  {this.state.error_section == 23 && <div className="err_message2">
+                                    {this.state.errorChrMsg}
+                                  </div>}
                                 </Grid>
                                 <Grid className="infoShwSave3">
                                   <input
@@ -1129,44 +1060,43 @@ class Index extends Component {
                         </Grid>
                       )}
 
-                      {this.state.updateEvaluate?.is_payment === false &&
-                        this.state.show2 && (
-                          // <Elements stripe={stripePromise}>
-                          //   <Payment
-                          //     redirectTolist={() => {
-                          //       this.redirectTolist();
-                          //     }}
-                          //     languageType={this.props.stateLanguageType}
-                          //     show1={this.state.show1}
-                          //     show2={this.state.show2}
-                          //     CancelClick={this.CancelClick}
-                          //     saveOnDB={(payment)=> saveOnDB(payment, this)}
-                          //     settings={this.props.settings}
-                          //   />
-                          // </Elements>
-                          <>
-                            <div className="payment_sec_extra_ser1">
-                              <div className="sbu_button">
-                                <h2>{Payment}</h2>
-                                <Grid container direction="row" spacing={2}>
-                                  <Grid item xs={12} md={6}>
-                                    <Checkout />
-                                  </Grid>
-                                  <Grid item xs={12} md={6}>
-                                    <button
-                                      onClick={() => {
-                                        this.CancelClick();
-                                      }}
-                                      className="CutomStripeButton"
-                                    >
-                                      {cancel}
-                                    </button>
-                                  </Grid>
+                      {(this.state.updateEvaluate?.is_payment === false && this.state.show2) && (
+                        // <Elements stripe={stripePromise}>
+                        //   <Payment
+                        //     redirectTolist={() => {
+                        //       this.redirectTolist();
+                        //     }}
+                        //     languageType={this.props.stateLanguageType}
+                        //     show1={this.state.show1}
+                        //     show2={this.state.show2}
+                        //     CancelClick={this.CancelClick}
+                        //     saveOnDB={(payment)=> saveOnDB(payment, this)}
+                        //     settings={this.props.settings}
+                        //   />
+                        // </Elements>
+                        <>
+                          <div className="payment_sec_extra_ser1">
+                            <div className="sbu_button">
+                              <h2>{Payment}</h2>
+                              <Grid container direction="row" spacing={2}>
+                                <Grid item xs={12} md={6}>
+                                  <Checkout />
                                 </Grid>
-                              </div>
+                                <Grid item xs={12} md={6}>
+                                  <button
+                                    onClick={() => {
+                                      this.CancelClick()
+                                    }}
+                                    className="CutomStripeButton"
+                                  >
+                                    {cancel}
+                                  </button>
+                                </Grid>
+                              </Grid>
                             </div>
-                          </>
-                        )}
+                          </div>
+                        </>
+                      )}
                     </Grid>
                   </Grid>
 
