@@ -568,7 +568,6 @@ export const getAllPictureEval = (current) => {
 };
 
 export const saveOnDB = (payment, current) => {
-  console.log('payment?.data?.payment_data', payment?.data?.paymentData, payment)
   current.setState({ loaderImage: true });
   if (current.state.updateEvaluate._id) {
     axios
@@ -581,6 +580,7 @@ export const saveOnDB = (payment, current) => {
         current.setState({ loaderImage: false });
         if (responce.data.hassuccessed) {
           current.props.history.push('/patient/evaluation-list');
+          getAllPictureEval(current);
         }
       });
   } else {
