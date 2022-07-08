@@ -190,7 +190,10 @@ export const handleEvalSubmit = (value, current) => {
                     }
                     if (current.state.is_payment) {
                       current.setState({ mod1Open: false, show1: false });
-                      current.props.history.push('/patient/evaluation-list');
+                      setTimeout(()=>{
+                        current.props.history.push('/patient/evaluation-list');
+                      }, 
+                      500)
                     } else {
                       current.setState({
                         mod1Open: false,
@@ -580,7 +583,7 @@ export const saveOnDB = (payment, current) => {
         current.setState({ loaderImage: false });
         if (responce.data.hassuccessed) {
           current.props.history.push('/patient/evaluation-list');
-          getAllPictureEval(current);
+          // getAllPictureEval(current);
         }
       });
   } else {

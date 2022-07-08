@@ -106,7 +106,6 @@ getMetadata() {
   };
 
   updateEntryState1 = (value, name) => {
-    console.log('dsfsdf', value, name)
     const state = this.state.updateFeedback;
     state[name] = value;
     this.setState({ updateFeedback: state });
