@@ -67,6 +67,24 @@ class Index extends Component {
           : 'normal',
     };
   }
+
+    // for activate marketing user
+    activatenewsLetter = (response) => {
+      var data = {
+        first_name: response.data.data.first_name,
+        last_name: response.data.data.last_name,
+        email: response.data.data.email,
+      };
+      axios
+        .post(
+          sitedata.data.path + '/UserProfile/marketing_user',
+          data,
+          commonHeader(response.data.data.usertoken)
+        )
+        .then((responce) => {})
+        .catch(() => {});
+    };
+
   //On change password
   handlePasswordChange = (e) => {
     this.setState({ password: e.target.value });
@@ -157,6 +175,9 @@ class Index extends Component {
                   .then((responce) => {
                     this.setState({ loaderImage: false });
                     if (responce.data.hassuccessed === true) {
+                      if (responce.data?.data?.Aimedis_health_newletter) {
+                        this.activatenewsLetter(responce);
+                      }
                       axios
                         .post(
                           'https://api-eu.cometchat.io/v2.0/users',

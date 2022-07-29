@@ -112,6 +112,14 @@ export const Change2fa = (current) => {
 
 // for follow/unfollow newsletter
 export const ChangenewsLetter = (current) => {
+  if (
+    current.state.Aimedis_health_newletter &&
+    current.state.Aimedis_health_newletter === true
+  ) {
+    deletenewsLetter(current);
+  } else {
+    activatenewsLetter(current);
+  }
   current.setState(
     {
       Aimedis_health_newletter: !current.state.Aimedis_health_newletter,
@@ -136,4 +144,43 @@ export const ChangenewsLetter = (current) => {
         });
     }
   );
+};
+
+// for activate marketing user
+export const activatenewsLetter = (current) => {
+  var data = {
+    first_name: current.props.stateLoginValueAim?.user?.first_name,
+    last_name: current.props.stateLoginValueAim?.user?.last_name,
+    email: current.props.stateLoginValueAim?.user?.email,
+  };
+  current.setState({ loaderImage: true });
+  axios
+    .post(
+      sitedata.data.path + '/UserProfile/marketing_user',
+      data,
+      commonHeader(current.props.user_token)
+    )
+    .then((responce) => {
+      current.setState({ loaderImage: false });
+    })
+    .catch(() => {
+      current.setState({ loaderImage: false });
+    });
+};
+
+// for delete marketing user
+export const deletenewsLetter = (current) => {
+  var email = current.props.stateLoginValueAim?.user?.email;
+  current.setState({ loaderImage: true });
+  axios
+    .delete(
+      sitedata.data.path + '/UserProfile/marketing_user/' + email,
+      commonHeader(current.props.user_token)
+    )
+    .then((responce) => {
+      current.setState({ loaderImage: false });
+    })
+    .catch(() => {
+      current.setState({ loaderImage: false });
+    });
 };
