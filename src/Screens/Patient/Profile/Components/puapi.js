@@ -26,6 +26,18 @@ export const updateFLAG = (str) => {
     }
 }
 
+//For update the mobile number
+export const  updateMOBILE = (str) => {
+    if (!str || str === 'undefined' || str === null || str === '') {
+        return str;
+    }
+    else {
+        var mob = str && str.split("-")
+        return mob.pop()
+
+    }
+}
+
  //For getting the dropdowns from the database
  export const getMetadata=(current)=>{ 
     current.setState({ allMetadata: current.props.metadata },

@@ -26,7 +26,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import { getLanguage } from 'translations/index';
 import contry from 'Screens/Components/countryBucket/countries.json';
 import { updateCometUser } from 'Screens/Components/CommonApi/index';
-import { commonCometHeader } from 'component/CommonHeader/index';
+import { commonCometHeader, commonHeader } from 'component/CommonHeader/index';
 //Values for the validate Password
 var letter = /([a-zA-Z])+([ -~])*/,
   number = /\d+/,
