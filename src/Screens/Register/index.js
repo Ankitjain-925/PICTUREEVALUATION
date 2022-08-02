@@ -535,7 +535,7 @@ class Index extends Component {
                             >
                               <NavLink>German</NavLink>
                             </DropdownItem>
-                            <DropdownItem
+                            {/* <DropdownItem
                               onClick={() => {
                                 this.changeValue('ch', 'Chinese');
                               }}
@@ -590,7 +590,7 @@ class Index extends Component {
                               }}
                             >
                               <NavLink>Turkish</NavLink>
-                            </DropdownItem>
+                            </DropdownItem> */}
                           </DropdownMenu>
                         </UncontrolledDropdown>
                       </Grid>

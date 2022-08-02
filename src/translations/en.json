@@ -1645,7 +1645,7 @@
     "justapply": "Just apply",
     "applyFiltersandsave": "Apply and Save",
 
-    "picture_evaluation": "Picture Evaluation",
+    "picture_evaluation": "Online Diagnose",
     "diabetes": "Diabetes",
     "place_of_residence": "Place of Residence",
     "task_name": "Task Name",
@@ -1666,7 +1666,7 @@
     "sun_before_how_long": "Have you been in the sun before, How long?",
     "how_cold_long": "Have you been in the Cold (lower then -5C), How long?",
     "sexual_activities": "Did you had Sexual Activities before ?",
-    "evaluation_request": "Evaluation Request",
+    "evaluation_request": "Diagnose Request",
     "added_on": "Added on",
     "assigned_to": "Assigned to",
     "hospital": "Hospital",
