@@ -80,7 +80,8 @@
     "redux-thunk": "^2.3.0",
     "start": "^5.1.0",
     "styled-components": "^5.3.3",
-    "swiper": "^6.7.5"
+    "swiper": "^6.7.5",
+    "webpack": "4.42.0"
   },
   "scripts": {
     "start": "react-scripts start",
