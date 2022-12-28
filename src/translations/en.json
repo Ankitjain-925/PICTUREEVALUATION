@@ -1725,7 +1725,15 @@
     "Is_it_fast_service": "Is it fast service?",
     "correct_information_of_CARD":"Please fill the full or correct information of CARD",
     "Download_Bill": "Download Bill",
-    "Payment":"Payment"
-
+    "Payment":"Payment",
+    "followed": "followed",
+    "unfollowed": "unfollowed",
+    "aimedis_newsletter": "Aimedis newsletter",
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "since": "since",
+    "not_followed_by_yet": "not followed by yet",
+    "change_citizenship": "Do you want to change the Citizenship country according your new mobile country code?",
+    "fill_citizenship":"Please fill the Citizenship country"
   }
 }

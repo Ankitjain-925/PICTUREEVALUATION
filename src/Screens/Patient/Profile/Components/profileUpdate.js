@@ -16,6 +16,7 @@ import Modal from '@material-ui/core/Modal';
 import Loader from 'Screens/Components/Loader/index';
 import { GetShowLabel1 } from 'Screens/Components/GetMetaData/index.js';
 import DateFormat from 'Screens/Components/DateFormat/index'
+import { confirmAlert } from "react-confirm-alert";
 import { getLanguage } from "translations/index";
 import _ from 'lodash';
 import { updateFLAG, updateMOBILE, getUserData, contact_partnerState, getMetadata, handleChange_multi, saveUserData1, saveUserData, firstLoginUpdate, onChange, updateEntryState1, updateEntryState11, copyText, updateflags,
@@ -82,6 +83,7 @@ class Index extends Component {
             emergency_number: '',
             updateIns: -1,
             error3: false,
+            error4: false,
             succUpdate: false,
             copied: false,
             value: 0,
@@ -145,6 +147,49 @@ class Index extends Component {
         this.setState({ selectedCountry: event });
     };
   
+    OnMobileCodeChange = (event) => {
+        let translate = getLanguage(this.props.languageType)
+        let { change_citizenship, Yes, No } = translate;
+        confirmAlert({
+            customUI: ({ onClose }) => {
+              return (
+                <div
+                  className={
+                   this.props.settings &&
+                   this.props.settings.setting &&
+                   this.props.settings.setting.mode === "dark"
+                      ? "dark-confirm react-confirm-alert-body"
+                      : "react-confirm-alert-body"
+                  }
+                >
+                  <h1>{change_citizenship}</h1>
+                  <div className="react-confirm-alert-button-group">
+                    <button
+                      onClick={() => {
+                        var state = this.state.UpDataDetails;
+                        var data = this.state.selectCountry?.length>0 && this.state.selectCountry.filter((item)=>item.value === event)
+                        if(data?.length>0){
+                        state["citizen_country"] = data[0];
+                        this.setState({UpDataDetails : state})
+                        }
+                        onClose();
+                      }}
+                    >
+                      {Yes}
+                    </button>
+                    <button
+                      onClick={() => {
+                        onClose();
+                      }}
+                    >
+                      {No}
+                    </button>
+                  </div>
+                </div>
+              );
+            },
+          });
+    }
       // For Add more insurance model
     handleAddInsurance = () => {
         this.setState({ addInsuranceOpen: true });
@@ -218,7 +263,7 @@ class Index extends Component {
         let translate = getLanguage(this.props.stateLanguageType)
         let { Contact, Citizenship, Register_Name, relation, phone, select_marital_status, organ_donar_status, not_an_organ, emergency, telephone_nmbr, marital_status,
             Rhesus, InsurancecompanyError, Addcompany, Blood, profile_info, profile, information, ID, pin, QR_code, done, Change, edit_id_pin, edit, and, is, changed, profile_id_taken, profile_id_greater_then_5,
-            save_change, email, title, degree, first, last, name, dob, gender, street, add, city, postal_code, country, home_telephone, country_code, Delete, male, female, other,
+            save_change, email, title, degree, first,fill_citizenship, last, name, dob, gender, street, add, city, postal_code, country, home_telephone, country_code, Delete, male, female, other,
             mobile_number, number, mobile, Languages, spoken, pin_greater_then_4, insurance, add_more, company, of, info_copied, profile_updated, profile_not_updated, mobile_number_not_valid, insurance_added } = translate;
 
 
@@ -230,6 +275,7 @@ class Index extends Component {
                         {this.state.copied && <div className="success_message">{info_copied}</div>}
                         {this.state.succUpdate && <div className="success_message">{profile_updated}</div>}
                         {this.state.error3 && <div className="err_message">{profile_not_updated}</div>}
+                        {this.state.error4 && (<div className="err_message}">{fill_citizenship}</div>)}
                         {this.state.phonevalidate && <div className="err_message">{mobile_number_not_valid}</div>}
                         {this.state.ChangedPIN && <div className="success_message">{profile} {ID} {and} {pin} {is} {changed}</div>}
                         <h1>{profile} {information}</h1>
@@ -491,7 +537,7 @@ class Index extends Component {
                                         <label>{mobile_number}</label>
                                         <Grid>
                                             {updateFLAG(this.state.UpDataDetails.mobile) && updateFLAG(this.state.UpDataDetails.mobile) !== '' &&
-                                                <ReactFlagsSelect searchable={true} placeholder="Country Code" onSelect={(e) => { updateflags(e, 'flag_mobile', this) }} name="flag_mobile" showSelectedLabel={false} defaultCountry={updateFLAG(this.state.UpDataDetails.mobile)} />}
+                                                <ReactFlagsSelect searchable={true} placeholder="Country Code" onSelect={(e) => { updateflags(e, 'flag_mobile', this); this.OnMobileCodeChange(e); }} name="flag_mobile" showSelectedLabel={false} defaultCountry={updateFLAG(this.state.UpDataDetails.mobile)} />}
                                             <input type="text"
                                                 className="Mobile_extra"
                                                 placeholder={mobile}

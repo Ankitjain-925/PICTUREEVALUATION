@@ -821,7 +821,6 @@ class Index extends Component {
                         className="Mobile_extra"
                         placeholder={mobile}
                         name="mobile"
-                        type="text"
                         onChange={this.updateEntryState1}
                         value={
                           this.state.UpDataDetails.mobile &&

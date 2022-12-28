@@ -884,7 +884,7 @@ class Index extends Component {
                               </Grid>
                               <Grid>
                                 <FileUploader
-                                  // cur_one={this.props.cur_one}
+                                  cur_one={this.props.stateLoginValueAim?.user}
                                   attachfile={
                                     this.state.updateEvaluate &&
                                       this.state.updateEvaluate?.fileattach

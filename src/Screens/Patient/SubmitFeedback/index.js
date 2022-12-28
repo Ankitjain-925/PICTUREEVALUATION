@@ -73,14 +73,14 @@ class Index extends Component {
     if (this.state.allMetadata) {
       var Allsituation = GetLanguageDropdown(
         this.state.allMetadata &&
-          this.state.allMetadata.situation &&
-          this.state.allMetadata.situation,
+        this.state.allMetadata.situation &&
+        this.state.allMetadata.situation,
         this.props.stateLanguageType
       );
       var Allsmoking_status = GetLanguageDropdown(
         this.state.allMetadata &&
-          this.state.allMetadata.smoking_status &&
-          this.state.allMetadata.smoking_status,
+        this.state.allMetadata.smoking_status &&
+        this.state.allMetadata.smoking_status,
         this.props.stateLanguageType
       );
 
@@ -133,9 +133,9 @@ class Index extends Component {
           <div
             className={
               this.props.settings &&
-              this.props.settings.setting &&
-              this.props.settings.setting.mode &&
-              this.props.settings.setting.mode === 'dark'
+                this.props.settings.setting &&
+                this.props.settings.setting.mode &&
+                this.props.settings.setting.mode === 'dark'
                 ? 'dark-confirm react-confirm-alert-body'
                 : 'react-confirm-alert-body'
             }
@@ -169,9 +169,9 @@ class Index extends Component {
           <div
             className={
               this.props.settings &&
-              this.props.settings.setting &&
-              this.props.settings.setting.mode &&
-              this.props.settings.setting.mode === 'dark'
+                this.props.settings.setting &&
+                this.props.settings.setting.mode &&
+                this.props.settings.setting.mode === 'dark'
                 ? 'dark-confirm react-confirm-alert-body'
                 : 'react-confirm-alert-body'
             }
@@ -208,7 +208,7 @@ class Index extends Component {
           getAllPictureEval(this);
         }
       })
-      .catch((error) => {});
+      .catch((error) => { });
   }
 
   handleSubmitFeed = () => {
@@ -321,9 +321,9 @@ class Index extends Component {
       <Grid
         className={
           this.props.settings &&
-          this.props.settings.setting &&
-          this.props.settings.setting.mode &&
-          this.props.settings.setting.mode === 'dark'
+            this.props.settings.setting &&
+            this.props.settings.setting.mode &&
+            this.props.settings.setting.mode === 'dark'
             ? 'homeBg homeBgDrk'
             : 'homeBg'
         }
@@ -372,9 +372,9 @@ class Index extends Component {
                                           {getDate(
                                             item?.due_on?.date,
                                             this.props.settings &&
-                                              this.props.settings?.setting &&
-                                              this.props.settings?.setting
-                                                ?.date_format
+                                            this.props.settings?.setting &&
+                                            this.props.settings?.setting
+                                              ?.date_format
                                           )}
                                         </>
                                       )}
@@ -384,9 +384,9 @@ class Index extends Component {
                                         getTime(
                                           new Date(item?.due_on?.time),
                                           this.props.settings &&
-                                            this.props.settings?.setting &&
-                                            this.props.settings?.setting
-                                              ?.time_format
+                                          this.props.settings?.setting &&
+                                          this.props.settings?.setting
+                                            ?.time_format
                                         )}
                                     </p>
                                     {/* {getDate(
@@ -413,6 +413,7 @@ class Index extends Component {
                                     />
                                   </Td>
                                   <Td>
+                                    {console.log("item.is_decline", item.is_decline)}
                                     {item.is_decline ? (
                                       <>
                                         <span className="err_message">
@@ -464,24 +465,24 @@ class Index extends Component {
                                         </li>
                                         {(!item.is_payment ||
                                           item.is_decline) && (
-                                          <li>
-                                            <a
-                                              onClick={() => {
-                                                updateRequestBeforePayment(
-                                                  this,
-                                                  item
-                                                );
-                                              }}
-                                            >
-                                              <img
-                                                src={require('assets/virtual_images/pencil-1.svg')}
-                                                alt=""
-                                                title=""
-                                              />
-                                              {edit_request}
-                                            </a>
-                                          </li>
-                                        )}
+                                            <li>
+                                              <a
+                                                onClick={() => {
+                                                  updateRequestBeforePayment(
+                                                    this,
+                                                    item
+                                                  );
+                                                }}
+                                              >
+                                                <img
+                                                  src={require('assets/virtual_images/pencil-1.svg')}
+                                                  alt=""
+                                                  title=""
+                                                />
+                                                {edit_request}
+                                              </a>
+                                            </li>
+                                          )}
                                         {!item.is_payment && (
                                           <li>
                                             <a
@@ -523,23 +524,23 @@ class Index extends Component {
                                         {(item.status === 'done' ||
                                           item?.comments?.length > 0 ||
                                           item?.attachments?.length > 0) && (
-                                          <>
-                                            <li>
-                                              <a
-                                                onClick={() =>
-                                                  handleOpFeedback(this, item)
-                                                }
-                                              >
-                                                <img
-                                                  src={require('assets/images/details.svg')}
-                                                  alt=""
-                                                  title=""
-                                                />
-                                                {give_feedback}
-                                              </a>
-                                            </li>
-                                          </>
-                                        )}
+                                            <>
+                                              <li>
+                                                <a
+                                                  onClick={() =>
+                                                    handleOpFeedback(this, item)
+                                                  }
+                                                >
+                                                  <img
+                                                    src={require('assets/images/details.svg')}
+                                                    alt=""
+                                                    title=""
+                                                  />
+                                                  {give_feedback}
+                                                </a>
+                                              </li>
+                                            </>
+                                          )}
                                       </ul>
                                     </a>
                                   </Td>
@@ -585,9 +586,9 @@ class Index extends Component {
                 onClose={() => handleCloseFeedback(this)}
                 className={
                   this.props.settings &&
-                  this.props.settings.setting &&
-                  this.props.settings.setting.mode &&
-                  this.props.settings.setting.mode === 'dark'
+                    this.props.settings.setting &&
+                    this.props.settings.setting.mode &&
+                    this.props.settings.setting.mode === 'dark'
                     ? 'darkTheme nwDiaModel'
                     : 'nwDiaModel'
                 }
@@ -671,9 +672,9 @@ class Index extends Component {
                 onClose={() => handleCloseDetail(this)}
                 className={
                   this.props.settings &&
-                  this.props.settings.setting &&
-                  this.props.settings.setting.mode &&
-                  this.props.settings.setting.mode === 'dark'
+                    this.props.settings.setting &&
+                    this.props.settings.setting.mode &&
+                    this.props.settings.setting.mode === 'dark'
                     ? 'darkTheme'
                     : ''
                 }
@@ -705,15 +706,15 @@ class Index extends Component {
                             </Grid>
                             <p>
                               {this.state.showDetails &&
-                              !this.state.showDetails?.due_on?.date ? (
+                                !this.state.showDetails?.due_on?.date ? (
                                 '-'
                               ) : (
                                 <>
                                   {getDate(
                                     this.state.showDetails?.due_on?.date,
                                     this.props.settings &&
-                                      this.props.settings?.setting &&
-                                      this.props.settings?.setting?.date_format
+                                    this.props.settings?.setting &&
+                                    this.props.settings?.setting?.date_format
                                   )}{' '}
                                   (
                                   {this.state.showDetails?.due_on?.time &&
@@ -722,9 +723,9 @@ class Index extends Component {
                                         this.state.showDetails?.due_on?.time
                                       ),
                                       this.props.settings &&
-                                        this.props.settings?.setting &&
-                                        this.props.settings?.setting
-                                          ?.time_format
+                                      this.props.settings?.setting &&
+                                      this.props.settings?.setting
+                                        ?.time_format
                                     )}
                                   )
                                 </>
@@ -737,15 +738,15 @@ class Index extends Component {
                             </Grid>
                             <p>
                               {this.state.showDetails &&
-                              !this.state.showDetails?.dob ? (
+                                !this.state.showDetails?.dob ? (
                                 '-'
                               ) : (
                                 <>
                                   {getDate(
                                     this.state.showDetails?.dob,
                                     this.props.settings &&
-                                      this.props.settings?.setting &&
-                                      this.props.settings?.setting?.date_format
+                                    this.props.settings?.setting &&
+                                    this.props.settings?.setting?.date_format
                                   )}{' '}
                                   {` (${this.calculateAge(
                                     this.state.showDetails?.dob
@@ -841,7 +842,7 @@ class Index extends Component {
                                   true,
                                   'anamnesis'
                                 )}
-                                {}
+                                { }
                               </p>
                             </Grid>
                             {!this.state.showDetails?.smoking_status ||
@@ -856,16 +857,16 @@ class Index extends Component {
                                       </label>
                                       <p>
                                         {this.state.showDetails &&
-                                        !this.state.showDetails?.from_when ? (
+                                          !this.state.showDetails?.from_when ? (
                                           '-'
                                         ) : (
                                           <>
                                             {getDate(
                                               this.state.showDetails?.from_when,
                                               this.props.settings &&
-                                                this.props.settings?.setting &&
-                                                this.props.settings?.setting
-                                                  ?.date_format
+                                              this.props.settings?.setting &&
+                                              this.props.settings?.setting
+                                                ?.date_format
                                             )}
                                           </>
                                         )}
@@ -877,7 +878,7 @@ class Index extends Component {
                                       </label>
                                       <p>
                                         {this.state.showDetails &&
-                                        !this.state.showDetails?.until_when ? (
+                                          !this.state.showDetails?.until_when ? (
                                           '-'
                                         ) : (
                                           <>
@@ -885,9 +886,9 @@ class Index extends Component {
                                               this.state.showDetails
                                                 ?.until_when,
                                               this.props.settings &&
-                                                this.props.settings?.setting &&
-                                                this.props.settings?.setting
-                                                  ?.date_format
+                                              this.props.settings?.setting &&
+                                              this.props.settings?.setting
+                                                ?.date_format
                                             )}
                                           </>
                                         )}
@@ -1030,10 +1031,10 @@ class Index extends Component {
                             <p>
                               {getDate(
                                 this.state.showDetails &&
-                                  this.state.showDetails?.start_date,
+                                this.state.showDetails?.start_date,
                                 this.props.settings &&
-                                  this.props.settings?.setting &&
-                                  this.props.settings?.setting?.date_format
+                                this.props.settings?.setting &&
+                                this.props.settings?.setting?.date_format
                               )}
                             </p>
                           </Grid>
@@ -1045,7 +1046,7 @@ class Index extends Component {
                             <Grid xs={3} md={3}>
                               <label>{warm}</label>
                               {this.state.showDetails &&
-                              this.state.showDetails?.warm === 'yes' ? (
+                                this.state.showDetails?.warm === 'yes' ? (
                                 <p>{yes}</p>
                               ) : (
                                 <p>{no}</p>
@@ -1055,7 +1056,7 @@ class Index extends Component {
                               <label>{size_progress}</label>
 
                               {this.state.showDetails &&
-                              this.state.showDetails?.size_progress ===
+                                this.state.showDetails?.size_progress ===
                                 'yes' ? (
                                 <p>{yes}</p>
                               ) : (
@@ -1066,7 +1067,7 @@ class Index extends Component {
                               <label>{itch}</label>
 
                               {this.state.showDetails &&
-                              this.state.showDetails?.itch === 'yes' ? (
+                                this.state.showDetails?.itch === 'yes' ? (
                                 <p>{yes}</p>
                               ) : (
                                 <p>{no}</p>
@@ -1076,7 +1077,7 @@ class Index extends Component {
                               <label>{pain}</label>
 
                               {this.state.showDetails &&
-                              this.state.showDetails?.pain === 'yes' ? (
+                                this.state.showDetails?.pain === 'yes' ? (
                                 <p>{yes}</p>
                               ) : (
                                 <p>{no}</p>
@@ -1145,7 +1146,7 @@ class Index extends Component {
                               <label>{payment_done}</label>
                             </Grid>
                             {this.state.showDetails &&
-                            this.state.showDetails?.is_payment === true ? (
+                              this.state.showDetails?.is_payment === true ? (
                               <p>{yes}</p>
                             ) : (
                               <p>{no}</p>
@@ -1158,8 +1159,8 @@ class Index extends Component {
                           </Grid>
                           <Grid className="imageEvalSize" imageEvalSize>
                             {this.state.showDetails &&
-                            this.state.showDetails?.attachments &&
-                            this.state.showDetails?.attachments?.length > 0 ? (
+                              this.state.showDetails?.attachments &&
+                              this.state.showDetails?.attachments?.length > 0 ? (
                               <FileViews
                                 comesFrom="Picture_Task"
                                 images={this.state.images}
@@ -1176,8 +1177,8 @@ class Index extends Component {
                             </Grid>
                             <p>
                               {this.state.showDetails &&
-                              this.state.showDetails?.comments &&
-                              this.state.showDetails?.comments?.length > 0 ? (
+                                this.state.showDetails?.comments &&
+                                this.state.showDetails?.comments?.length > 0 ? (
                                 this.state.showDetails?.comments.map(
                                   (data, index) => (
                                     <div className="dataCommentBor">

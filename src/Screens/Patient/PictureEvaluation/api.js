@@ -6,6 +6,7 @@ import {
   GetHouseID,
 } from 'component/CommonHeader/index';
 import { getLanguage } from 'translations/index';
+import contry from "Screens/Components/countryBucket/countries.json";
 var HouseID = GetHouseID();
 
 export const handleEvalSubmit = (value, current) => {
@@ -160,7 +161,7 @@ export const handleEvalSubmit = (value, current) => {
                       due_on['time'] = new Date();
                       data.due_on = due_on;
                     }
-
+                    console.log("hello")
                     axios
                       .put(
                         sitedata.data.path + '/vh/AddTask/' + data._id,
@@ -230,8 +231,11 @@ export const handleEvalSubmit = (value, current) => {
                       });
                   }
                   if (current.state.is_payment) {
+                    console.log("hello1")
                     current.setState({ mod1Open: false, show1: false });
                     current.props.history.push('/patient/evaluation-list');
+                    getAllPictureEval(current)
+
                   } else {
                     current.setState({
                       mod1Open: false,
@@ -647,19 +651,19 @@ export const getAllPictureEval = (current) => {
 };
 
 export const saveOnDB = (payment, current) => {
+  console.log('payment?.data?.payment_data', payment?.data?.paymentData, payment)
   current.setState({ loaderImage: true });
   if (current.state.updateEvaluate._id) {
     axios
       .put(
         sitedata.data.path + '/vh/AddTask/' + current.state.updateEvaluate._id,
-        { payment_data: payment?.data?.payment_data, is_payment: true },
+        { payment_data: payment?.data?.paymentData, is_payment: true },
         commonHeader(current.props.stateLoginValueAim.token)
       )
       .then((responce) => {
         current.setState({ loaderImage: false });
         if (responce.data.hassuccessed) {
           current.props.history.push('/patient/evaluation-list');
-          getAllPictureEval(current);
         }
       });
   } else {
@@ -685,6 +689,7 @@ export const handleOpenDetail = (current, detail) => {
           var showDetails = current.state.showDetails;
           showDetails.isviewed = true;
           current.setState({ showDetails: showDetails });
+
         })
         .catch(function (error) {
           console.log(error);

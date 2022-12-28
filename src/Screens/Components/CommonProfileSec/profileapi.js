@@ -8,6 +8,7 @@ import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { update_CometUser } from "Screens/Components/CommonApi/index";
 import { blobToFile, resizeFile } from "Screens/Components/BasicMethod/index";
+import contry from "Screens/Components/countryBucket/countries.json";
 
 // Copy the Profile id and PIN
 export const copyText = (copyT, current) => {
@@ -123,6 +124,8 @@ export const getUserData = (current, datas) => {
             datas = current.state.UpDataDetails.insurance;
             var find =
                 response.data && response.data.data && response.data.data.image;
+            var forUpdate = {value: true, token: user_token, user: response.data.data}
+            current.props.LoginReducerAim(response.data.data?.email, '', user_token, () => {}, forUpdate);
             SettingImage(find, current);
             current.setState({ loaderImage: false });
         })
@@ -250,6 +253,11 @@ export const saveUserData = (current, datas) => {
     var parent_id = current.state.UpDataDetails.parent_id
         ? current.state.UpDataDetails.parent_id
         : "0";
+        var tocheckWith = current.state.UpDataDetails?.citizen_country || current?.state?.flag_mobile;
+        var getBucket =
+        contry &&
+        contry.length > 0 &&
+        contry.filter((value, key) => value.code === tocheckWith?.value.toUpperCase());
     axios
         .put(
             sitedata.data.path + "/UserProfile/Users/update",
@@ -273,8 +281,7 @@ export const saveUserData = (current, datas) => {
                 city: current.state.city,
                 area: current.state.area,
                 address: current.state.UpDataDetails.address,
-                emergency_contact_name: current.state.UpDataDetails
-                    .emergency_contact_name,
+                emergency_contact_name: current.state.UpDataDetails.emergency_contact_name,
                 emergency_email: current.state.UpDataDetails.emergency_email,
                 emergency_number: current.state.UpDataDetails.emergency_number,
                 family_doc: current.state.UpDataDetails.family_doc,
@@ -283,6 +290,8 @@ export const saveUserData = (current, datas) => {
                 country: current.state.UpDataDetails.country,
                 citizen_country: current.state.UpDataDetails.citizen_country,
                 pastal_code: current.state.UpDataDetails.pastal_code,
+                bucket: getBucket[0].bucket,
+                country_code: current.state.UpDataDetails?.citizen_country?.value || current?.state?.flag_mobile
             },
             commonHeader(user_token)
         )
