@@ -13,12 +13,13 @@ import * as SwitzerlandC from 'Screens/Components/insuranceCompanies/switzerland
 import * as AmericaC from 'Screens/Components/insuranceCompanies/us.json';
 import * as ThailandC from 'Screens/Components/insuranceCompanies/thailand.json';
 import contry from "Screens/Components/countryBucket/countries.json";
+
 var datas = [];
   // fOR update the flag of mobile
 export const updateFLAG = (str) => {
     var mob = str && str.split("-")
     if (mob && mob.length > 0) {
-        if (mob[0] && mob[0].length === 2) {
+        if (mob[0] && mob[0].length == 2) {
             return mob[0]
         }
         else { return 'DE' }
@@ -35,16 +36,6 @@ export const  updateMOBILE = (str) => {
         return mob.pop()
 
     }
-}
-
-//For update the flags 
-export const updateFlags = (e, name, current) => {
-    const state = current.state.OptionData;
-    if (name === 'flag_phone') {
-        state['phone'] = e + '-' + current.state.phone;
-        current.setState({ flag_phone: e });
-    }
-    current.setState({ OptionData: state });
 }
 
  //For getting the dropdowns from the database
@@ -175,12 +166,12 @@ export const updateflags = (e, name, current) => {
  //For change the language and the Speciality
 export const  handleChange_multi = (event, name, current) => {
     const state = current.state.UpDataDetails;
-    if (name === "languages") {
+    if (name == "languages") {
         current.setState({ name_multi: event });
         state['language'] = event && (Array.prototype.map.call(event, s => s.value))
 
     }
-    if (name === "speciality") {
+    if (name == "speciality") {
         current.setState({ speciality_multi: event });
     }
     current.setState({ UpDataDetails: state })
@@ -314,7 +305,6 @@ export const saveUserData1 = (current) => {
 }
 //Save the User profile
 export const saveUserData = (current) => {
-    if(current.state.UpDataDetails?.citizen_country?.value){
     if (!current.state.UpDataDetails.mobile.includes("-")) {
         const state2 = current.state.UpDataDetails
         state2['mobile'] = 'DE-' + current.state.UpDataDetails.mobile;
@@ -347,10 +337,11 @@ export const saveUserData = (current) => {
     current.setState({ regisError2: "" })
     const user_token = current.props.stateLoginValueAim.token;
     current.setState({ insuranceDetails: { insurance: '', insurance_number: '', insurance_country: '' } })
-    // var parent_id = current.state.UpDataDetails.parent_id ? current.state.UpDataDetails.parent_id : '0';
-    var tocheckWith = current.state.UpDataDetails?.citizen_country || current?.state?.flag_mobile;
-   
-    var getBucket =contry && contry.length > 0 && contry.filter((value, key) => value.code === tocheckWith?.value.toUpperCase());
+    var parent_id = current.state.UpDataDetails.parent_id ? current.state.UpDataDetails.parent_id : '0';
+
+    var tocheckWith = (current.state.UpDataDetails?.citizen_country && current.state.UpDataDetails?.citizen_country !=='') ? current.state.UpDataDetails?.citizen_country  :  current?.state?.flag_mobile;
+   console.log('tocheckWith', tocheckWith)
+    var getBucket = contry && contry.length > 0 && contry.filter((value, key) =>  value.code === tocheckWith?.value ?  tocheckWith?.value : tocheckWith);
 
     axios.put(sitedata.data.path + '/UserProfile/Users/update', {
         type: 'patient',
@@ -387,7 +378,7 @@ export const saveUserData = (current) => {
         blood_group: current.state.UpDataDetails.blood_group,
         rhesus: current.state.UpDataDetails.rhesus,
         bucket: getBucket[0].bucket,
-        country_code: current.state.UpDataDetails?.citizen_country?.value || current?.state?.flag_mobile
+        country_code:current.state.UpDataDetails?.citizen_country?.value || current?.state?.flag_mobile
     }, commonHeader(user_token)).then((responce) => {
         if (responce.data.hassuccessed) {
             current.setState({ editInsuranceOpen: false, addInsuranceOpen: false, succUpdate: true, insuranceDetails: { insurance: '', insurance_number: '', insurance_country: '' } })
@@ -399,7 +390,7 @@ export const saveUserData = (current) => {
             },
             commonCometHeader())
                 .then((res) => {
-                     update_CometUser(current.props?.stateLoginValueAim?.user?.profile_id.toLowerCase() , res.data.data)
+                    var data = update_CometUser(current.props?.stateLoginValueAim?.user?.profile_id.toLowerCase() , res.data.data)
                  })
         }
         else {
@@ -411,10 +402,6 @@ export const saveUserData = (current) => {
             setTimeout(() => { current.setState({ error3: false }) }, 5000)
         }
     })
-}
-else{
-    current.setState({error4: true})
-}
 }
 
 // Check the Alies is duplicate or not
@@ -514,7 +501,7 @@ export const handleAddInsurance = (current) => {
 //To add Insurance
 export const insuranceForm = (e, current) => {
     const state = current.state.insuranceDetails;
-    if (e.target.name === 'insurance') {
+    if (e.target.name == 'insurance') {
         const q = e.target.value.toLowerCase();
         current.setState({ q }, () => filterList(current.state.insuranceDetails.insurance_country, current));
     }
@@ -568,10 +555,10 @@ export const filterList = (data, current)=> {
     let q = current.state.q;
     iCompany = iCompany && iCompany.length > 0 && iCompany.filter(function (company) {
         const companyLower = company.toLowerCase()
-        return companyLower.indexOf(q) !== -1;
+        return companyLower.indexOf(q) != -1;
     })
     current.setState({ filteredCompany: iCompany });
-    if (current.state.q === '') {
+    if (current.state.q == '') {
         current.setState({ filteredCompany: [] });
     }
 }
@@ -592,7 +579,7 @@ export const filterCountry = (i, current) => {
     let countryList = current.state.selectCountry
     let name
     name = countryList.filter(value => {
-        if (value.value === i) {
+        if (value.value == i) {
             return value.label
         }
     })
@@ -604,7 +591,7 @@ export const filterCountry1 = (i, current) => {
     let countryList = current.state.selectCountry
     let name
     name = countryList.filter(value => {
-        if (value.value === i) {
+        if (value.value == i) {
             return value.label
         }
     })

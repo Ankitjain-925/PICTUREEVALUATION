@@ -243,6 +243,7 @@ class Index extends Component {
     } = translate;
     //Success payment alert after payment is success
 
+<<<<<<< HEAD
     //Success payment alert after payment is success
     const successPayment = (data) => {
       let translate = getLanguage(this.props.stateLanguageType)
@@ -269,6 +270,35 @@ class Index extends Component {
                 >
                   {ok}
                 </button>
+=======
+      //Success payment alert after payment is success
+      const successPayment = (data) => {
+        let translate = getLanguage(this.props.stateLanguageType)
+        const { paymnt_processed, ok,} = translate;
+        confirmAlert({
+          customUI: ({ onClose }) => {
+            return (
+              <div
+                className={
+                 this.props.settings &&
+                   this.props.settings.setting &&
+                   this.props.settings.setting.mode === "dark"
+                    ? "dark-confirm react-confirm-alert-body"
+                    : "react-confirm-alert-body"
+                }
+              >
+                <h1>{paymnt_processed}</h1>
+                <div className="react-confirm-alert-button-group">
+                  <button
+                    onClick={() => {
+                      onClose();
+                      saveOnDB(data, this)  
+                    }}
+                  >
+                    {ok}
+                  </button>
+                </div>
+>>>>>>> ef30ba145a0f20a1c2c03aeda341ac7748690abb
               </div>
             </div>
           );

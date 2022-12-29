@@ -161,6 +161,7 @@ export const handleEvalSubmit = (value, current) => {
                       due_on['time'] = new Date();
                       data.due_on = due_on;
                     }
+<<<<<<< HEAD
                     console.log("hello")
                     axios
                       .put(
@@ -177,6 +178,19 @@ export const handleEvalSubmit = (value, current) => {
                       })
                       .catch(function (error) {
                         console.log(error);
+=======
+                    if (current.state.is_payment) {
+                      current.setState({ mod1Open: false, show1: false });
+                      setTimeout(()=>{
+                        current.props.history.push('/patient/evaluation-list');
+                      }, 
+                      500)
+                    } else {
+                      current.setState({
+                        mod1Open: false,
+                        show2: true,
+                        show1: false,
+>>>>>>> ef30ba145a0f20a1c2c03aeda341ac7748690abb
                       });
                   } else {
                     var patient = {
@@ -651,7 +665,6 @@ export const getAllPictureEval = (current) => {
 };
 
 export const saveOnDB = (payment, current) => {
-  console.log('payment?.data?.payment_data', payment?.data?.paymentData, payment)
   current.setState({ loaderImage: true });
   if (current.state.updateEvaluate._id) {
     axios
@@ -664,6 +677,7 @@ export const saveOnDB = (payment, current) => {
         current.setState({ loaderImage: false });
         if (responce.data.hassuccessed) {
           current.props.history.push('/patient/evaluation-list');
+          // getAllPictureEval(current);
         }
       });
   } else {
