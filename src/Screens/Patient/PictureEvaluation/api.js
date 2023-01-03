@@ -834,7 +834,7 @@ export const getUserData = (current) => {
     });
 };
 
-export const DownloadBill = (current, id, bill_date) => {
+export const DownloadBill = (current, id, bill_date, task_id) => {
   var data = {},
     senddata = {};
   data.patient_id = current.props.stateLoginValueAim.user?._id;
@@ -850,6 +850,7 @@ export const DownloadBill = (current, id, bill_date) => {
   data.country = current.props.stateLoginValueAim.user?.country?.label;
   data.city = current.props.stateLoginValueAim.user?.city;
   data.birthday = current.props.stateLoginValueAim.user?.birthday;
+  data.task_id = task_id;
   senddata.invoice_id = id;
   senddata.bill_date = bill_date;
   senddata.data = data;

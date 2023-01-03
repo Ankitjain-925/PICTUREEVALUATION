@@ -34,38 +34,38 @@ export const logout = () => {
     return dispatch => {
         CometChat.logout().then(dispatch(logoutSuccess()));
     }
-    
+
 };
 
 export const auth = (uid, authKey) => {
 
     return dispatch => {
-   
+
         dispatch(authStart());
 
-        CometChat.login(uid, authKey).then((user) => {
-            if(user) {
-                dispatch(authSuccess(user));
-            } else {
-                dispatch(authFail(user));
-            }
-            
-        }).catch(error => {
-            dispatch(authFail(error));
-        });
+        // CometChat.login(uid, authKey).then((user) => {
+        //     if(user) {
+        //         dispatch(authSuccess(user));
+        //     } else {
+        //         dispatch(authFail(user));
+        //     }
+
+        // }).catch(error => {
+        //     dispatch(authFail(error));
+        // });
     };
 };
 
 export const authCheckState = () => {
     return dispatch => {
         CometChat.getLoggedinUser().then(user => {
-            
-            if(user) {
+
+            if (user) {
                 dispatch(authSuccess(user));
             } else {
                 dispatch(authFail(user));
             }
-      
+
         }).catch(error => {
             dispatch(authFail(error));
         });

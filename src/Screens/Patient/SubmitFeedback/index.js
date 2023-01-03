@@ -507,7 +507,8 @@ class Index extends Component {
                                                 DownloadBill(
                                                   this,
                                                   item?.payment_data?.id,
-                                                  item?.created_at
+                                                  item?.created_at,
+                                                  item?._id
                                                 );
                                               }}
                                             >
