@@ -883,3 +883,10 @@ export const DownloadBill = (current, id, bill_date, task_id) => {
       current.setState({ loaderImage: false });
     });
 };
+// Set the state of questions
+// export const updateAllEntrySec = (e, name, current) => {
+//   var updateQues = current.state.updateQues;
+//   updateQues[name] = e;
+//   current.setState({ updateQues: updateQues });
+// };
+
