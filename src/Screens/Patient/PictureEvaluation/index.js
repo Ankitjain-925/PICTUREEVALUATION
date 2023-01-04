@@ -40,7 +40,6 @@ import {
   getallGroups,
   saveOnDB,
   getUserData,
-  // updateAllEntrySec
 } from './api';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import { OptionList } from 'Screens/Login/metadataaction';
@@ -85,8 +84,7 @@ class Index extends Component {
       is_payment: false,
       error_section: 0,
       bp_avail: false,
-      diab_avail: false,
-      ForChecking: {}
+      diab_avail: false
     };
   }
 
@@ -110,22 +108,6 @@ class Index extends Component {
       this.GetLanguageMetadata();
     }
   }
-
-  // Set the state of questions
-  updateAllEntrySec = (value, name) => {
-    var state = this.state.ForChecking;
-    if (name == 'house_id') {
-      state[name] = value.value;
-    } else {
-      state[name] = value;
-    }
-    this.setState({ ForChecking: state });
-
-    console.log("ForChecking", this.state.ForChecking)
-    // var state = this.state.ForChecking;
-    // state[name] = e && e;
-    // this.setState({ ForChecking: state });
-  };
 
   //Get All information Related to Metadata
   getMetadata() {
@@ -192,8 +174,7 @@ class Index extends Component {
     } else {
       state[name] = value;
     }
-    // this.setState({ updateEvaluate: state });
-    console.log("state", this.state.updateEvaluate?.allergies_check)
+    this.setState({ updateEvaluate: state });
   };
 
   onClosed = () => {
@@ -202,13 +183,7 @@ class Index extends Component {
 
 
   render() {
-
-    const { value,
-      ForChecking,
-      error_section,
-      errorChrMsg
-    } = this.state;
-    console.log("ForChecking", ForChecking)
+    const { value } = this.state;
     const { stateLoginValueAim } = this.props;
     if (
       stateLoginValueAim.user === 'undefined' ||
@@ -730,8 +705,9 @@ class Index extends Component {
                                       )}
                                   </Grid>
                                 </Grid>
-                                <Grid className="sickQuesSec">
-                                  <Grid className="fatiqueQues fatiqueQuess1">
+
+                                <Grid className="fillDiaAll">
+                                  <Grid className="fatiqueQues fatiqueQuess1 fatiqueQuesabc">
                                     <FatiqueQuestion
                                       updateEntryState1={(e) =>
                                         this.updateEntryState1(e, 'allergies_check')
@@ -739,18 +715,14 @@ class Index extends Component {
                                       label={allergies}
                                       value={this.state.updateEvaluate?.allergies_check}
                                     />
+                                    {this.state.error_section == 205 && <div className="err_message2">
+                                      {this.state.errorChrMsg}
+                                    </div>}
                                   </Grid>
-                                  {error_section == 55 && (
-                                    <div className="err_message2">{errorChrMsg}</div>
-                                  )}
-                                </Grid>
-                                {this.state.updateEvaluate?.allergies_check === "yes" && (<label>{'yes'}</label>)
-                                }
-                                {this.state.updateEvaluate?.allergies_check === "no" && (<label>{'no'}</label>)
-                                }
-                                {/* {this.state.updateEvaluate?.allergies_check === "yes" &&
-                                  <Grid className="fillDiaAll">
-                                    <label>{allergies}</label>
+
+
+                                  {/* <label>{allergies}</label> */}
+                                  {this.state.updateEvaluate?.allergies_check === "yes" && (<>
                                     <NotesEditor
                                       name="allergies"
                                       onChange={(e) =>
@@ -761,24 +733,24 @@ class Index extends Component {
                                     {this.state.error_section == 9 && <div className="err_message2">
                                       {this.state.errorChrMsg}
                                     </div>}
-                                  </Grid>} */}
-                                {/* <Grid className="sickQuesSec">
-                                  <Grid className="fatiqueQues fatiqueQuess1">
+                                  </>)}
+                                </Grid>
+                                <Grid className="fillDiaAll">
+                                  <Grid className="fatiqueQues fatiqueQuess1 fatiqueQuesabc">
                                     <FatiqueQuestion
-                                      updateAllEntrySec={(e) =>
-                                        this.updateAllEntrySec(e, 'family_check')
+                                      updateEntryState1={(e) =>
+                                        this.updateEntryState1(e, 'family_check')
                                       }
                                       label={family_history}
-                                      value={ForChecking?.family_check}
+                                      value={this.state.updateEvaluate?.family_check}
                                     />
+                                    {this.state.error_section == 202 && <div className="err_message2">
+                                      {this.state.errorChrMsg}
+                                    </div>}
                                   </Grid>
-                                  {error_section == 55 && (
-                                    <div className="err_message2">{errorChrMsg}</div>
-                                  )}
-                                </Grid> */}
-                                {/* {ForChecking?.family_check === "yes" &&
-                                  <Grid className="fillDiaAll">
-                                    <label>{family_history}</label>
+
+                                  {/* <label>{family_history}</label> */}
+                                  {this.state.updateEvaluate?.family_check === "yes" && (<>
                                     <NotesEditor
                                       name="family_history"
                                       onChange={(e) =>
@@ -794,25 +766,24 @@ class Index extends Component {
                                     {this.state.error_section == 10 && <div className="err_message2">
                                       {this.state.errorChrMsg}
                                     </div>}
-                                  </Grid>
-                                } */}
-                                {/* <Grid className="sickQuesSec">
-                                  <Grid className="fatiqueQues fatiqueQuess1">
+                                  </>)}
+                                </Grid>
+                                <Grid className="fillDiaAll">
+                                  <Grid className="fatiqueQues fatiqueQuess1 fatiqueQuesabc">
                                     <FatiqueQuestion
-                                      updateAllEntrySec={(e) =>
-                                        this.updateAllEntrySec(e, 'treatment_check')
+                                      updateEntryState1={(e) =>
+                                        this.updateEntryState1(e, 'treatment_check')
                                       }
                                       label={treatment_so_far}
-                                      value={ForChecking?.treatment_check}
+                                      value={this.state.updateEvaluate?.treatment_check}
                                     />
+                                    {this.state.error_section == 203 && <div className="err_message2">
+                                      {this.state.errorChrMsg}
+                                    </div>}
                                   </Grid>
-                                  {error_section == 55 && (
-                                    <div className="err_message2">{errorChrMsg}</div>
-                                  )}
-                                </Grid>
-                                {ForChecking?.treatment_check === "yes" &&
-                                  <Grid className="fillDiaAll">
-                                    <label>{treatment_so_far}</label>
+
+                                  {/* <label>{treatment_so_far}</label> */}
+                                  {this.state.updateEvaluate?.treatment_check === "yes" && (<>
                                     <NotesEditor
                                       name="treatment_so_far"
                                       onChange={(e) =>
@@ -829,7 +800,8 @@ class Index extends Component {
                                     {this.state.error_section == 11 && <div className="err_message2">
                                       {this.state.errorChrMsg}
                                     </div>}
-                                  </Grid>} */}
+                                  </>)}
+                                </Grid>
                                 <Grid container direction="row" spacing="1">
                                   <Grid item xs={6} md={6}>
                                     <label>{place_of_birth}</label>
@@ -1068,23 +1040,22 @@ class Index extends Component {
                                     {this.state.errorChrMsg}
                                   </div>}
                                 </Grid>
-                                <Grid className="sickQuesSec">
-                                  <Grid className="fatiqueQues fatiqueQuess1">
+                                <Grid className="textFieldArea1">
+                                  <Grid className="fatiqueQues fatiqueQuess1 fatiqueQuesabc">
                                     <FatiqueQuestion
-                                      updateAllEntrySec={(e) =>
-                                        this.updateAllEntrySec(e, 'body_temp_check')
+                                      updateEntryState1={(e) =>
+                                        this.updateEntryState1(e, 'body_temp_check')
                                       }
                                       label={fever_body_temp}
-                                      value={ForChecking?.body_temp_check}
+                                      value={this.state.updateEvaluate?.body_temp_check}
                                     />
+                                    {this.state.error_section == 201 && <div className="err_message2">
+                                      {this.state.errorChrMsg}
+                                    </div>}
                                   </Grid>
-                                  {error_section == 55 && (
-                                    <div className="err_message2">{errorChrMsg}</div>
-                                  )}
-                                </Grid>
-                                {ForChecking?.body_temp_check === "yes" &&
-                                  <Grid className="textFieldArea1">
-                                    {/* <label>{fever_body_temp}</label> */}
+
+                                  {/* <label>{fever_body_temp}</label> */}
+                                  {this.state.updateEvaluate?.body_temp_check === "yes" && (<>
                                     <input
                                       type="number"
                                       placeholder="36.6"
@@ -1098,7 +1069,8 @@ class Index extends Component {
                                     {this.state.error_section == 22 && <div className="err_message2">
                                       {this.state.errorChrMsg}
                                     </div>}
-                                  </Grid>}
+                                  </>)}
+                                </Grid>
                                 <Grid className="textFieldArea1">
                                   <label>{sun_before_how_long} </label>
                                   <input
@@ -1111,23 +1083,23 @@ class Index extends Component {
                                     }
                                   ></input>
                                 </Grid>
-                                <Grid className="sickQuesSec">
-                                  <Grid className="fatiqueQues fatiqueQuess1">
+                                <Grid className="textFieldArea1">
+                                  <Grid className="fatiqueQues fatiqueQuess1 fatiqueQuesabc">
                                     <FatiqueQuestion
-                                      updateAllEntrySec={(e) =>
-                                        this.updateAllEntrySec(e, 'cold_check')
+                                      updateEntryState1={(e) =>
+                                        this.updateEntryState1(e, 'cold_check')
                                       }
                                       label={how_cold_long}
-                                      value={ForChecking?.cold_check}
+                                      value={this.state.updateEvaluate?.cold_check}
                                     />
+                                    {this.state.error_section == 204 && <div className="err_message2">
+                                      {this.state.errorChrMsg}
+                                    </div>}
                                   </Grid>
-                                  {error_section == 55 && (
-                                    <div className="err_message2">{errorChrMsg}</div>
-                                  )}
-                                </Grid>
-                                {ForChecking?.cold_check === "yes" &&
-                                  <Grid className="textFieldArea1">
-                                    {/* <label>{how_cold_long}</label> */}
+
+
+                                  {/* <label>{how_cold_long}</label> */}
+                                  {this.state.updateEvaluate?.cold_check === "yes" && (<>
                                     <input
                                       type="number"
                                       placeholder="0"
@@ -1135,25 +1107,27 @@ class Index extends Component {
                                       onChange={(e) => this.updateEntryState2(e)}
                                       value={this.state.updateEvaluate?.cold}
                                     ></input>
-                                  </Grid>}
-
-                                <Grid className="sickQuesSec">
-                                  <Grid className="fatiqueQues fatiqueQuess1">
+                                    {this.state.error_section == 207 && <div className="err_message2">
+                                      {this.state.errorChrMsg}
+                                    </div>}
+                                  </>)}
+                                </Grid>
+                                <Grid className="fillDiaAll">
+                                  <Grid className="fatiqueQues fatiqueQuess1 fatiqueQuesabc">
                                     <FatiqueQuestion
-                                      updateAllEntrySec={(e) =>
-                                        this.updateAllEntrySec(e, 'sexual_act_check')
+                                      updateEntryState1={(e) =>
+                                        this.updateEntryState1(e, 'sexual_act_check')
                                       }
                                       label={sexual_activities}
-                                      value={ForChecking?.sexual_act_check}
+                                      value={this.state.updateEvaluate?.sexual_act_check}
                                     />
+                                    {this.state.error_section == 206 && <div className="err_message2">
+                                      {this.state.errorChrMsg}
+                                    </div>}
                                   </Grid>
-                                  {error_section == 55 && (
-                                    <div className="err_message2">{errorChrMsg}</div>
-                                  )}
-                                </Grid>
-                                {ForChecking?.sexual_act_check === "yes" &&
-                                  <Grid className="fillDiaAll">
-                                    {/* <label>{sexual_activities}</label> */}
+
+                                  {/* <label>{sexual_activities}</label> */}
+                                  {this.state.updateEvaluate?.sexual_act_check === "yes" && (<>
                                     <NotesEditor
                                       name="sexual_active"
                                       onChange={(e) =>
@@ -1165,8 +1139,8 @@ class Index extends Component {
                                     />
                                     {this.state.error_section == 23 && <div className="err_message2">
                                       {this.state.errorChrMsg}
-                                    </div>}
-                                  </Grid>}
+                                    </div>}</>)}
+                                </Grid>
                                 <Grid className="infoShwSave3">
                                   <input
                                     type="submit"
@@ -1258,3 +1232,6 @@ export default withRouter(
     OptionList,
   })(Index)
 );
+
+
+

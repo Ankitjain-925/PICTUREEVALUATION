@@ -413,7 +413,6 @@ class Index extends Component {
                                     />
                                   </Td>
                                   <Td>
-                                    {console.log("item.is_decline", item.is_decline)}
                                     {item.is_decline ? (
                                       <>
                                         <span className="err_message">
@@ -902,38 +901,41 @@ class Index extends Component {
                             <Grid>
                               <label>{allergies}</label>
                             </Grid>
-                            <p
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  this.state.showDetails &&
-                                  this.state.showDetails?.allergies,
-                              }}
-                            />
+                            {this.state.showDetails?.allergies_check === "yes" ?
+                              <p
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    this.state.showDetails &&
+                                    this.state.showDetails?.allergies,
+                                }}
+                              /> : <p>{no}</p>}
                           </Grid>
                           <Grid class="addStnd">
                             <Grid>
                               <label>{family_history}</label>
                             </Grid>
-                            <p
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  this.state.showDetails &&
-                                  this.state.showDetails?.family_history,
-                              }}
-                            />
+                            {this.state.showDetails?.family_check === "yes" ?
+                              <p
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    this.state.showDetails &&
+                                    this.state.showDetails?.family_history,
+                                }}
+                              /> : <p>{no}</p>}
                           </Grid>
 
                           <Grid class="addStnd">
                             <Grid>
                               <label>{treatment_so_far}</label>
                             </Grid>
-                            <p
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  this.state.showDetails &&
-                                  this.state.showDetails?.treatment_so_far,
-                              }}
-                            />
+                            {this.state.showDetails?.treatment_check === "yes" ?
+                              <p
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    this.state.showDetails &&
+                                    this.state.showDetails?.treatment_so_far,
+                                }}
+                              /> : <p>{no}</p>}
                           </Grid>
                           <Grid class="addStnd">
                             <Grid>
@@ -1098,10 +1100,11 @@ class Index extends Component {
                             <Grid>
                               <label>{body_temp}</label>
                             </Grid>
-                            <p>
-                              {this.state.showDetails &&
-                                this.state.showDetails?.body_temp}
-                            </p>
+                            {this.state.showDetails?.body_temp_check === "yes" ?
+                              <p>
+                                {this.state.showDetails &&
+                                  this.state.showDetails?.body_temp}
+                              </p> : <p>{no}</p>}
                           </Grid>
                           {this.state.showDetails &&
                             this.state.showDetails?.sun_before && (
@@ -1115,33 +1118,33 @@ class Index extends Component {
                                 </p>
                               </Grid>
                             )}
-                          {this.state.showDetails &&
-                            this.state.showDetails?.cold && (
-                              <Grid class="addStnd">
-                                <Grid>
-                                  <label>{cold}</label>
-                                </Grid>
-                                <p>
-                                  {this.state.showDetails &&
-                                    this.state.showDetails?.cold}
-                                </p>
-                              </Grid>
-                            )}
-                          {this.state.showDetails &&
-                            this.state.showDetails?.sexual_active && (
-                              <Grid class="addStnd">
-                                <Grid>
-                                  <label>{sexual_active}</label>
-                                </Grid>
-                                <p
-                                  dangerouslySetInnerHTML={{
-                                    __html:
-                                      this.state.showDetails &&
-                                      this.state.showDetails?.sexual_active,
-                                  }}
-                                />
-                              </Grid>
-                            )}
+
+                          <Grid class="addStnd">
+                            <Grid>
+                              <label>{cold}</label>
+                            </Grid>
+                            {this.state.showDetails?.cold_check === "yes" ?
+                              <p>
+                                {this.state.showDetails &&
+                                  this.state.showDetails?.cold}
+                              </p> : <p>{no}</p>}
+                          </Grid>
+
+
+                          <Grid class="addStnd">
+                            <Grid>
+                              <label>{sexual_active}</label>
+                            </Grid>
+                            {this.state.showDetails?.sexual_act_check === "yes" ?
+                              <p
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    this.state.showDetails &&
+                                    this.state.showDetails?.sexual_active,
+                                }}
+                              /> : <p>{no}</p>}
+                          </Grid>
+
                           <Grid class="addStnd">
                             <Grid>
                               <label>{payment_done}</label>

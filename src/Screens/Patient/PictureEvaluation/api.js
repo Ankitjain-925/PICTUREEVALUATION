@@ -38,64 +38,62 @@ export const handleEvalSubmit = (value, current) => {
                       current
                     )
                   ) {
-                    if (
-                      validateBpAndSugar(data.allergies, 'allergies', current)
-                    ) {
-                      if (
-                        validateBpAndSugar(
-                          data.family_history,
-                          'family_history',
-                          current
-                        )
+                    if (validateBpAndSugar1(data.allergies_check, 'allergies_check', current)) {
+                      if (data.allergies_check === "yes" ?
+                        validateBpAndSugar(data.allergies, 'allergies', current) : 1
                       ) {
-                        if (
-                          validateBpAndSugar(
-                            data.treatment_so_far,
-                            'treatment_so_far',
-                            current
-                          )
-                        ) {
-                          if (
-                            validateBpAndSugar(data.country, 'country', current)
+                        if (validateBpAndSugar1(data.family_check, 'family_check', current)) {
+                          if (data.family_check === "yes" ?
+                            validateBpAndSugar(data.family_history, 'family_history', current) : 1
                           ) {
-                            if (
-                              validateBpAndSugar(
-                                data.residenceCountry,
-                                'residenceCountry',
-                                current
-                              )
-                            ) {
-                              if (
-                                validateBpAndSugar(data.race, 'race', current)
+                            if (validateBpAndSugar1(data.treatment_check, 'treatment_check', current)) {
+                              if (data.treatment_check === "yes" ?
+                                validateBpAndSugar(data.treatment_so_far, 'treatment_so_far', current) : 1
                               ) {
-                                // if (validateBpAndSugar(data.history_month, 'history_month', current)) {
-                                // if (validateBpAndSugar(data.medical_precondition, 'medical_precondition', current)) {
-                                // if (validateBpAndSugar(data.premedication, 'premedication', current)) {
-                                current.setState({
-                                  mod1Open: true,
-                                  picEval: true,
-                                  error_section: 0,
-                                  errorChrMsg: '',
-                                });
-                                axios
-                                  .put(
-                                    sitedata.data.path +
-                                    '/UserProfile/Users/update',
-                                    {
-                                      birthday: data.dob,
-                                      sex: data.sex,
-                                      country: data.residenceCountry,
-                                      citizen_country: data.country,
-                                    },
-                                    commonHeader(
-                                      current.props.stateLoginValueAim.token
+                                if (
+                                  validateBpAndSugar(data.country, 'country', current)
+                                ) {
+                                  if (
+                                    validateBpAndSugar(
+                                      data.residenceCountry,
+                                      'residenceCountry',
+                                      current
                                     )
-                                  )
-                                  .then((res) => { })
-                                  .catch((e) => { });
-                                //     }
-                                //   }
-                                // }
+                                  ) {
+                                    if (
+                                      validateBpAndSugar(data.race, 'race', current)
+                                    ) {
+                                      // if (validateBpAndSugar(data.history_month, 'history_month', current)) {
+                                      // if (validateBpAndSugar(data.medical_precondition, 'medical_precondition', current)) {
+                                      // if (validateBpAndSugar(data.premedication, 'premedication', current)) {
+                                      current.setState({
+                                        mod1Open: true,
+                                        picEval: true,
+                                        error_section: 0,
+                                        errorChrMsg: '',
+                                      });
+                                      axios
+                                        .put(
+                                          sitedata.data.path +
+                                          '/UserProfile/Users/update',
+                                          {
+                                            birthday: data.dob,
+                                            sex: data.sex,
+                                            country: data.residenceCountry,
+                                            citizen_country: data.country,
+                                          },
+                                          commonHeader(
+                                            current.props.stateLoginValueAim.token
+                                          )
+                                        )
+                                        .then((res) => { })
+                                        .catch((e) => { });
+                                      //     }
+                                      //   }
+                                      // }
+                                    }
+                                  }
+                                }
                               }
                             }
                           }
@@ -138,110 +136,116 @@ export const handleEvalSubmit = (value, current) => {
           ) {
             if (validateBpAndSugar1(data.itch, 'itch', current)) {
               if (validateBpAndSugar1(data.pain, 'pain', current)) {
-                if (validateBpAndSugar1(data.body_temp, 'body_temp', current)) {
-                  // if (
-                  //   validateBpAndSugar1(
-                  //     data.sexual_active,
-                  //     'sexual_active',
-                  //     current
-                  //   )
-                  // ) {
-                  current.setState({ errorChrMsg: '' });
-                  if (data?._id) {
-                    if (data.is_decline) {
-                      data.is_decline = false;
-                      data.done_on = '';
-                      data.priority = 0;
-                      data.archived = false;
-                      data.status = 'open';
-                      data.created_at = new Date();
-                      var due_on = data?.due_on || {};
-                      due_on['date'] = new Date();
-                      data.due_on = due_on;
-                      due_on['time'] = new Date();
-                      data.due_on = due_on;
-                    }
-                    console.log("hello")
-                    axios
-                      .put(
-                        sitedata.data.path + '/vh/AddTask/' + data._id,
-                        data,
-                        commonHeader(current.props.stateLoginValueAim.token)
-                      )
-                      .then((responce) => {
-                        if (responce.data.hassuccessed) {
-                          current.setState({
-                            updateEvaluate: data,
-                          });
-                        }
-                      })
-                      .catch(function (error) {
-                        console.log(error);
-                      });
-                  } else {
-                    var patient = {
-                      first_name:
-                        current.props.stateLoginValueAim.user?.first_name,
-                      last_name:
-                        current.props.stateLoginValueAim.user?.last_name,
-                      alies_id: current.props.stateLoginValueAim.user?.alies_id,
-                      profile_id:
-                        current.props.stateLoginValueAim.user?.profile_id,
-                      user_id: current.props.stateLoginValueAim.user?._id,
-                      image: current.props.stateLoginValueAim.user?.image,
-                    };
-                    data.patient = patient;
-                    data.patient_id =
-                      current.props.stateLoginValueAim.user?._id;
-                    data.fileattach = current.state.fileattach;
-                    data.task_name = 'Picture evaluation from patient';
-                    data.task_type = 'picture_evaluation';
-                    data.is_payment = current.state.is_payment;
-                    data.done_on = '';
-                    data.priority = 0;
-                    data.archived = false;
-                    data.status = 'open';
-                    data.house_id = HouseID;
-                    data.created_at = new Date();
-                    if (!data?.due_on?.date) {
-                      let due_on = data?.due_on || {};
-                      due_on['date'] = new Date();
-                      data.due_on = due_on;
-                    }
-                    if (!data?.due_on?.time) {
-                      let due_on = data?.due_on || {};
-                      due_on['time'] = new Date();
-                      data.due_on = due_on;
-                    }
-                    axios
-                      .post(
-                        sitedata.data.path + '/vh/AddTask',
-                        data,
-                        commonHeader(current.props.stateLoginValueAim.token)
-                      )
-                      .then((responce) => {
-                        if (responce.data.hassuccessed) {
-                          current.setState({
-                            updateEvaluate: responce.data.data,
-                          });
-                        }
-                      })
-                      .catch(function (error) {
-                        console.log(error);
-                      });
-                  }
-                  if (current.state.is_payment) {
-                    console.log("hello1")
-                    current.setState({ mod1Open: false, show1: false });
-                    current.props.history.push('/patient/evaluation-list');
-                    getAllPictureEval(current)
+                if (validateBpAndSugar1(data.body_temp_check, 'body_temp_check', current)) {
+                  if (data.body_temp_check === "yes" ?
+                    validateBpAndSugar1(data.body_temp, 'body_temp', current) : 1) {
+                    if (validateBpAndSugar1(data.cold_check, 'cold_check', current)) {
+                      if (data.cold_check === "yes" ?
+                        validateBpAndSugar1(data.cold, 'cold', current) : 1
+                      ) {
+                        if (validateBpAndSugar1(data.sexual_act_check, 'sexual_act_check', current)) {
+                          if (data.sexual_act_check === "yes" ?
+                            validateBpAndSugar1(data.sexual_active, 'sexual_active', current) : 1
+                          ) {
+                            current.setState({ errorChrMsg: '' });
+                            if (data?._id) {
+                              if (data.is_decline) {
+                                data.is_decline = false;
+                                data.done_on = '';
+                                data.priority = 0;
+                                data.archived = false;
+                                data.status = 'open';
+                                data.created_at = new Date();
+                                var due_on = data?.due_on || {};
+                                due_on['date'] = new Date();
+                                data.due_on = due_on;
+                                due_on['time'] = new Date();
+                                data.due_on = due_on;
+                              }
+                              axios
+                                .put(
+                                  sitedata.data.path + '/vh/AddTask/' + data._id,
+                                  data,
+                                  commonHeader(current.props.stateLoginValueAim.token)
+                                )
+                                .then((responce) => {
+                                  if (responce.data.hassuccessed) {
+                                    current.setState({
+                                      updateEvaluate: data,
+                                    });
+                                  }
+                                })
+                                .catch(function (error) {
+                                  console.log(error);
+                                });
+                            } else {
+                              var patient = {
+                                first_name:
+                                  current.props.stateLoginValueAim.user?.first_name,
+                                last_name:
+                                  current.props.stateLoginValueAim.user?.last_name,
+                                alies_id: current.props.stateLoginValueAim.user?.alies_id,
+                                profile_id:
+                                  current.props.stateLoginValueAim.user?.profile_id,
+                                user_id: current.props.stateLoginValueAim.user?._id,
+                                image: current.props.stateLoginValueAim.user?.image,
+                              };
+                              data.patient = patient;
+                              data.patient_id =
+                                current.props.stateLoginValueAim.user?._id;
+                              data.fileattach = current.state.fileattach;
+                              data.task_name = 'Picture evaluation from patient';
+                              data.task_type = 'picture_evaluation';
+                              data.is_payment = current.state.is_payment;
+                              data.done_on = '';
+                              data.priority = 0;
+                              data.archived = false;
+                              data.status = 'open';
+                              data.house_id = HouseID;
+                              data.created_at = new Date();
+                              if (!data?.due_on?.date) {
+                                let due_on = data?.due_on || {};
+                                due_on['date'] = new Date();
+                                data.due_on = due_on;
+                              }
+                              if (!data?.due_on?.time) {
+                                let due_on = data?.due_on || {};
+                                due_on['time'] = new Date();
+                                data.due_on = due_on;
+                              }
+                              axios
+                                .post(
+                                  sitedata.data.path + '/vh/AddTask',
+                                  data,
+                                  commonHeader(current.props.stateLoginValueAim.token)
+                                )
+                                .then((responce) => {
+                                  if (responce.data.hassuccessed) {
+                                    current.setState({
+                                      updateEvaluate: responce.data.data,
+                                    });
+                                  }
+                                })
+                                .catch(function (error) {
+                                  console.log(error);
+                                });
+                            }
+                            if (current.state.is_payment) {
+                              current.setState({ mod1Open: false, show1: false });
+                              current.props.history.push('/patient/evaluation-list');
+                              getAllPictureEval(current)
 
-                  } else {
-                    current.setState({
-                      mod1Open: false,
-                      show2: true,
-                      show1: false,
-                    });
+                            } else {
+                              current.setState({
+                                mod1Open: false,
+                                show2: true,
+                                show1: false,
+                              });
+                            }
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -288,12 +292,25 @@ export const validateBpAndSugar1 = (value, item, current) => {
     valid_body_temp,
     enter_sexual_activities,
     Max_word_limit_exceeds,
+    enter_cold,
+    body_temp,
+    family_history,
+    treatment_so_far,
+    cold,
+    allergies,
+    sexual_act_check
   } = translate;
   if (
     item === 'warm' ||
     item === 'size_progress' ||
     item === 'itch' ||
-    item === 'pain'
+    item === 'pain' ||
+    item === "body_temp_check" ||
+    item === "allergies_check" ||
+    item === "family_check" ||
+    item === "treatment_check" ||
+    item === "cold_check" ||
+    item === "sexual_act_check"
   ) {
     var currentItem =
       item === 'warm'
@@ -302,11 +319,43 @@ export const validateBpAndSugar1 = (value, item, current) => {
           ? size_progress
           : item === 'itch'
             ? itch
-            : pain;
+            : item === "pain"
+              ? pain
+              : item === "body_temp_check"
+                ? body_temp
+                : item === "family_check"
+                  ? family_history
+                  : item === "treatment_check"
+                    ? treatment_so_far
+                    : item === "cold_check"
+                      ? cold
+                      : item === "allergies_check"
+                        ? allergies
+                        : sexual_act_check;
+
+    var section = item === 'warm'
+      ? 20
+      : item === 'size_progress'
+        ? 20
+        : item === 'itch'
+          ? 20
+          : item === "pain"
+            ? 20
+            : item === "body_temp_check"
+              ? 201
+              : item === "family_check"
+                ? 202
+                : item === "treatment_check"
+                  ? 203
+                  : item === "cold_check"
+                    ? 204
+                    : item === "allergies_check"
+                      ? 205
+                      : 206;
     if (!value) {
       current.setState({
         errorChrMsg: please_select + ' ' + currentItem + ' ' + with_yes_no,
-        error_section: 20,
+        error_section: section,
       });
       MoveTop(200);
       return false;
@@ -325,7 +374,23 @@ export const validateBpAndSugar1 = (value, item, current) => {
     } else {
       return true;
     }
-  } else if (item === 'sexual_active') {
+  }
+  else if (item === 'cold') {
+    if (!value) {
+      current.setState({ errorChrMsg: enter_cold, error_section: 207 });
+      MoveTop(250);
+      return false;
+    }
+    // else if (value < 36 || value > 41) {
+    //   current.setState({ errorChrMsg: valid_body_temp, error_section: 22 });
+    //   MoveTop(250);
+    //   return false;
+    // }
+    else {
+      return true;
+    }
+  }
+  else if (item === 'sexual_active') {
     if (!value) {
       current.setState({
         errorChrMsg: enter_sexual_activities,

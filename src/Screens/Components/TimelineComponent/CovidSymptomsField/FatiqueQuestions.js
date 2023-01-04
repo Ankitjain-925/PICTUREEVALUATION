@@ -19,7 +19,7 @@ class Index extends Component {
     if (
       prevProps.label !== this.props.label ||
       prevProps.loggedinUser !== this.props.loggedinUser ||
-      prevProps.value !== this.props.valuenotchangeble
+      prevProps.value !== this.props.value
     ) {
       this.setState({
         label: this.props.label,
@@ -32,7 +32,6 @@ class Index extends Component {
   updateEntryState1 = (value) => {
     if (!this.props.notchangeble) {
       this.props.updateEntryState1(value)
-      console.log('value update', value);
     }
   }
 
