@@ -732,7 +732,6 @@ class Index extends Component {
                                 </Grid>
                                 <Grid className="sickQuesSec">
                                   <Grid className="fatiqueQues fatiqueQuess1">
-                                    {console.log('this.state.updateEvaluate?.allergies_check', this.state.updateEvaluate?.allergies_check)}
                                     <FatiqueQuestion
                                       updateEntryState1={(e) =>
                                         this.updateEntryState1(e, 'allergies_check')
