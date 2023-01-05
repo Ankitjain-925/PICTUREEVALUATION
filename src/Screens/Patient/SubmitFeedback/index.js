@@ -497,7 +497,7 @@ getMetadata() {
                                           <li>
                                             <a
                                               onClick={() => {
-                                                DownloadBill(this, item?.payment_data?.id, item?.created_at);
+                                                DownloadBill(this, item?.payment_data?.id, item?.created_at, item?._id);
                                               }}
                                             >
                                               <img

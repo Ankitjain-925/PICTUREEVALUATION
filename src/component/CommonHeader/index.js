@@ -58,7 +58,7 @@ export const GetHouseID = () => {
     let url = "";
     if (typeof window !== "undefined") {
       let target = window.location.href;
-      env = target.match(/aidoc.io|localhost|virtualhospital.aimedis.io/) ? "DEV" : "PRD";
+      env = target.match(/aidoc.io|localhost|virtualhospital.aidoc.io/) ? "DEV" : "PRD";
     }
     if (env === "DEV") {
         HouseID = process.env.REACT_APP_LOCALHOUSE;

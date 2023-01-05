@@ -45,6 +45,7 @@ class Index extends Component {
       loggedIn: false,
       loginError2: false,
       loginError9: false,
+      onlyPaitent: false,
       mode:
         this.props.settings &&
           this.props.settings.setting &&
@@ -140,6 +141,11 @@ class Index extends Component {
         }
         this.setState({otherUser: false})
         this.props.LoginReducerAim(email, password,logintoken, () => {
+          if( this.props.stateLoginValueAim &&
+            this.props.stateLoginValueAim?.user &&
+            this.props.stateLoginValueAim?.user?.type !=='patient'){
+            this.setState({onlyPaitent: true})
+          }
           this.setState({ myLogin: true });
           this.setState({ loaderImage: false });
         if (
@@ -224,7 +230,7 @@ class Index extends Component {
     let {
       Log_into,
       Register_email,
-      login_Password,
+      login_Password, 
       login_Forgotpassword,
       DarkMode,
       login_LOGIN_btn,
@@ -396,6 +402,9 @@ class Index extends Component {
                 </Grid>
                 <Grid className="logFormMain">
                   <Grid className="logForm">
+                  <div className="err_message">
+                      {this.state.onlyPaitent ==true ? 'User is not able to login from here, Only patient have right to login' : ''}
+                    </div>
                     <div className="err_message">
                       {this.state.loginError1
                         ? code_not_verified
@@ -405,7 +414,7 @@ class Index extends Component {
                         ? password_cant_empty 
                         : stateLoginValueAim.isVerified == false 
                         ? verifyAccount
-                        : stateLoginValueAim.permission == false 
+                        : stateLoginValueAim?.permission == false 
                         ? 'User is not able to login from here, Only patient have right to login'
                         : stateLoginValueAim.isBlocked == true 
                         ? stateLoginValueAim.type === 'patient' ? user_is_blocked : needUnblock

@@ -71,14 +71,6 @@ export const LoginReducerAim = (email, password, logintoken, SendCallback = () =
             };
             dispatch({ type: GET_LOGIN_SUCCESS, payload: tmp });
             SendCallback();
-          } else if(response.data?.user?.type !=='patient'){
-            let tmp = {
-              token: response.data.token,
-              permission : false
-            };
-            dispatch({ type: GET_LOGIN_SUCCESS, payload: tmp });
-            SendCallback();
-            
           } 
           else {
             tmp = {
@@ -92,59 +84,59 @@ export const LoginReducerAim = (email, password, logintoken, SendCallback = () =
                 response.data.token
               )
             );
-            // dispatch({ type: GET_LOGIN_SUCCESS, payload: tmp });
-            // SendCallback();
-            CometChat.login(
-              response.data.user.profile_id,
-              COMETCHAT_CONSTANTS.AUTH_KEY
-            )
-              .then(
-                (user) => {
-                  updateCometUser(user);
-                  dispatch({ type: GET_LOGIN_SUCCESS, payload: tmp });
-                  SendCallback();
-                },
-                (error) => {
-                  if (error && error.code === "ERR_UID_NOT_FOUND") {
-                    createUser({
-                      uid: response.data.user.profile_id,
-                      name: `${response.data.user.first_name} ${response.data.user.last_name}`,
-                    }).then(
-                      (user) => {
-                        CometChat.login(
-                          response.data.user.profile_id,
-                          COMETCHAT_CONSTANTS.AUTH_KEY
-                        ).then(
-                          (user) => {
-                            updateCometUser(user);
-                            dispatch({ type: GET_LOGIN_SUCCESS, payload: tmp });
-                            SendCallback();
-                          },
-                          (error) => {
-                            let tmp = "error";
-                            dispatch({ type: GET_LOGIN_ERROR, payload: tmp });
-                            SendCallback();
-                          }
-                        );
-                      },
-                      (error) => {
-                        let tmp = "error";
-                        dispatch({ type: GET_LOGIN_ERROR, payload: tmp });
-                        SendCallback();
-                      }
-                    );
-                  } else {
-                    let tmp = "error";
-                    dispatch({ type: GET_LOGIN_ERROR, payload: tmp });
-                    SendCallback();
-                  }
-                }
-              )
-              .catch((error) => {
-                let tmp = "error";
-                dispatch({ type: GET_LOGIN_ERROR, payload: tmp });
-                SendCallback();
-              });
+            dispatch({ type: GET_LOGIN_SUCCESS, payload: tmp });
+            SendCallback();
+            // CometChat.login(
+            //   response.data.user.profile_id,
+            //   COMETCHAT_CONSTANTS.AUTH_KEY
+            // )
+            //   .then(
+            //     (user) => {
+            //       updateCometUser(user);
+            //       dispatch({ type: GET_LOGIN_SUCCESS, payload: tmp });
+            //       SendCallback();
+            //     },
+            //     (error) => {
+            //       if (error && error.code === "ERR_UID_NOT_FOUND") {
+            //         createUser({
+            //           uid: response.data.user.profile_id,
+            //           name: `${response.data.user.first_name} ${response.data.user.last_name}`,
+            //         }).then(
+            //           (user) => {
+            //             CometChat.login(
+            //               response.data.user.profile_id,
+            //               COMETCHAT_CONSTANTS.AUTH_KEY
+            //             ).then(
+            //               (user) => {
+            //                 updateCometUser(user);
+            //                 dispatch({ type: GET_LOGIN_SUCCESS, payload: tmp });
+            //                 SendCallback();
+            //               },
+            //               (error) => {
+            //                 let tmp = "error";
+            //                 dispatch({ type: GET_LOGIN_ERROR, payload: tmp });
+            //                 SendCallback();
+            //               }
+            //             );
+            //           },
+            //           (error) => {
+            //             let tmp = "error";
+            //             dispatch({ type: GET_LOGIN_ERROR, payload: tmp });
+            //             SendCallback();
+            //           }
+            //         );
+            //       } else {
+            //         let tmp = "error";
+            //         dispatch({ type: GET_LOGIN_ERROR, payload: tmp });
+            //         SendCallback();
+            //       }
+            //     }
+            //   )
+            //   .catch((error) => {
+            //     let tmp = "error";
+            //     dispatch({ type: GET_LOGIN_ERROR, payload: tmp });
+            //     SendCallback();
+            //   });
           }
         })
         .catch((error) => {

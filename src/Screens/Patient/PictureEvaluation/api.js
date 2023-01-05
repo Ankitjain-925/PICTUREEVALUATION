@@ -735,7 +735,7 @@ export const getUserData = (current) => {
     });
 };
 
-export const DownloadBill = (current, id, bill_date) => {
+export const DownloadBill = (current, id, bill_date, task_id) => {
  var data = {}, senddata = {};
   data.patient_id = current.props.stateLoginValueAim.user?._id;
   data.profile_id = current.props.stateLoginValueAim.user?.profile_id;
@@ -753,6 +753,7 @@ export const DownloadBill = (current, id, bill_date) => {
   senddata.invoice_id = id;
   senddata.bill_date = bill_date
   senddata.data = data;
+  senddata.task_id = task_id;
   current.setState({ loaderImage: true })
   axios
       .post(sitedata.data.dowload_link + "/vh/downloadPEBill", senddata,

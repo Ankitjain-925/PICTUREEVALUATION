@@ -3,7 +3,7 @@ export function getPriceId(type) {
   let url = "";
   if (typeof window !== "undefined") {
     let target = window.location.href;
-    env = target.match(/aidoc.io|localhost|aimedix.com|virtualhospital.aimedis.io/) ? "DEV" : "PRD";
+    env = target.match(/aidoc.io|localhost|aimedix.com|virtualhospital.aidoc.io/) ? "DEV" : "PRD";
   }
   if (env === "DEV") {
     let price = type == "Doc Around The Clock" ? "price_1IiFBiH4UyTD79BwHpJf72tD" : "price_1IiFEJH4UyTD79BwEEdzAZe1"
@@ -19,7 +19,7 @@ export function getPublishableKey() {
   let url = "";
   if (typeof window !== "undefined") {
     let target = window.location.href;
-    env = target.match(/aidoc.io|localhost|aimedix.com|virtualhospital.aimedis.io/) ? "DEV" : "PRD";
+    env = target.match(/aidoc.io|localhost|aimedix.com|virtualhospital.aidoc.io/) ? "DEV" : "PRD";
   }
   let STRIPE_PUBLISHABLE
   if (env === "DEV") {
