@@ -1,68 +1,105 @@
 import axios from 'axios';
 import sitedata from 'sitedata';
-import { commonHeader, commonCometHeader, GetHouseID } from 'component/CommonHeader/index';
+import {
+  commonHeader,
+  commonCometHeader,
+  GetHouseID,
+} from 'component/CommonHeader/index';
 import { getLanguage } from 'translations/index';
 import contry from "Screens/Components/countryBucket/countries.json";
 var HouseID = GetHouseID();
 
 export const handleEvalSubmit = (value, current) => {
-  
-  let translate = getLanguage(current.props.stateLanguageType)
+  let translate = getLanguage(current.props.stateLanguageType);
   let {
-    please_select_gender, 
+    please_select_gender,
     valid_age_between,
     valid_date,
-    atleast_one_picture
+    atleast_one_picture,
   } = translate;
   let data = {};
   data = current.state.updateEvaluate;
   if (value == 1) {
     // current.setState({ mod1Open: true, picEval: true })
-    if (data.dob && new Date(new Date() - new Date(data.dob)).getFullYear() - 1970 <= 130) {
+    if (
+      data.dob &&
+      new Date(new Date() - new Date(data.dob)).getFullYear() - 1970 <= 130
+    ) {
       if (data.sex) {
         if (validateBpAndSugar(data.rr_systolic, 'systolic', current)) {
           if (validateBpAndSugar(data.rr_diastolic, 'diastolic', current)) {
             if (validateBpAndSugar(data.blood_sugar, 'blood_sugar', current)) {
               if (validateBpAndSugar(data.Hba1c, 'Hba1c', current)) {
                 if (validateBpAndSugar(data.situation, 'situation', current)) {
-                  if (validateBpAndSugar(data.smoking_status, 'smoking_status', current)) {
-                    if (validateBpAndSugar(data.allergies, 'allergies', current)) {
-                      if (validateBpAndSugar(data.family_history, 'family_history', current)) {
-                        if (validateBpAndSugar(data.treatment_so_far, 'treatment_so_far', current)) {
-                          if (validateBpAndSugar(data.country, 'country', current)) {
-                            if (validateBpAndSugar(data.residenceCountry, 'residenceCountry', current)) {
-                              if (validateBpAndSugar(data.race, 'race', current)) {
-                                // if (validateBpAndSugar(data.history_month, 'history_month', current)) {
-                                  // if (validateBpAndSugar(data.medical_precondition, 'medical_precondition', current)) {
-                                    // if (validateBpAndSugar(data.premedication, 'premedication', current)) {
-                                      current.setState({ mod1Open: true, picEval: true, error_section: 0, errorChrMsg: '' })
-                                      var user = current.props.stateLoginValueAim?.user;
-                                        var tocheckWith = data.country
-                                        var getBucket =contry && contry.length > 0 && contry.filter((value, key) => value.code === tocheckWith?.value.toUpperCase());
-                                        user.citizen_country =  data.country;
-                                        user.bucket = getBucket[0].bucket;
-                                      axios.put(sitedata.data.path + '/UserProfile/Users/update', {
-                                        birthday: data.dob,
-                                        sex: data.sex,
-                                        country: data.residenceCountry,
-                                        citizen_country: data.country,
-                                        bucket : getBucket[0].bucket,
-                                      }, commonHeader(current.props.stateLoginValueAim.token)).then((res) => { 
-                                        var forUpdate = {value: true, token: current.props.stateLoginValueAim.token, user: user}
-                                        current.props.LoginReducerAim(user?.email, '', current.props.stateLoginValueAim.token, () => {}, forUpdate);
-                                       })
-                                        .catch((e) => { })
-                                //     }
-                                //   }
-                                // }
+                  if (
+                    validateBpAndSugar(
+                      data.smoking_status,
+                      'smoking_status',
+                      current
+                    )
+                  ) {
+                    if (validateBpAndSugar1(data.allergies_check, 'allergies_check', current)) {
+                      if (data.allergies_check === "yes" ?
+                        validateBpAndSugar(data.allergies, 'allergies', current) : 1
+                      ) {
+                        if (validateBpAndSugar1(data.family_check, 'family_check', current)) {
+                          if (data.family_check === "yes" ?
+                            validateBpAndSugar(data.family_history, 'family_history', current) : 1
+                          ) {
+                            if (validateBpAndSugar1(data.treatment_check, 'treatment_check', current)) {
+                              if (data.treatment_check === "yes" ?
+                                validateBpAndSugar(data.treatment_so_far, 'treatment_so_far', current) : 1
+                              ) {
+                                if (
+                                  validateBpAndSugar(data.country, 'country', current)
+                                ) {
+                                  if (
+                                    validateBpAndSugar(
+                                      data.residenceCountry,
+                                      'residenceCountry',
+                                      current
+                                    )
+                                  ) {
+                                    if (
+                                      validateBpAndSugar(data.race, 'race', current)
+                                    ) {
+                                      // if (validateBpAndSugar(data.history_month, 'history_month', current)) {
+                                      // if (validateBpAndSugar(data.medical_precondition, 'medical_precondition', current)) {
+                                      // if (validateBpAndSugar(data.premedication, 'premedication', current)) {
+                                      current.setState({
+                                        mod1Open: true,
+                                        picEval: true,
+                                        error_section: 0,
+                                        errorChrMsg: '',
+                                      });
+                                      axios
+                                        .put(
+                                          sitedata.data.path +
+                                          '/UserProfile/Users/update',
+                                          {
+                                            birthday: data.dob,
+                                            sex: data.sex,
+                                            country: data.residenceCountry,
+                                            citizen_country: data.country,
+                                          },
+                                          commonHeader(
+                                            current.props.stateLoginValueAim.token
+                                          )
+                                        )
+                                        .then((res) => { })
+                                        .catch((e) => { });
+                                      //     }
+                                      //   }
+                                      // }
+                                    }
+                                  }
+                                }
                               }
                             }
                           }
                         }
                       }
                     }
-
-
                   }
                 }
               }
@@ -70,12 +107,16 @@ export const handleEvalSubmit = (value, current) => {
           }
         }
       } else {
-        current.setState({ errorChrMsg: please_select_gender, error_section: 2 });
+        current.setState({
+          errorChrMsg: please_select_gender,
+          error_section: 2,
+        });
         MoveTop(0);
       }
     } else {
       current.setState({
-        errorChrMsg: valid_age_between,error_section: 1 
+        errorChrMsg: valid_age_between,
+        error_section: 1,
       });
       MoveTop(0);
     }
@@ -95,117 +136,122 @@ export const handleEvalSubmit = (value, current) => {
           ) {
             if (validateBpAndSugar1(data.itch, 'itch', current)) {
               if (validateBpAndSugar1(data.pain, 'pain', current)) {
-                if (validateBpAndSugar1(data.body_temp, 'body_temp', current)) {
-                  // if (
-                  //   validateBpAndSugar1(
-                  //     data.sexual_active,
-                  //     'sexual_active',
-                  //     current
-                  //   )
-                  // ) {
-                    current.setState({ errorChrMsg: '' });
-                    if (data?._id) {
-                      if(data.is_decline){
-                        data.is_decline = false;
-                        data.done_on = '';
-                        data.priority = 0;
-                        data.archived = false;
-                        data.status = 'open';
-                        data.created_at = new Date();
-                        var due_on = data?.due_on || {};
-                        due_on['date'] = new Date();
-                        data.due_on = due_on;
-                        due_on['time'] = new Date();
-                        data.due_on = due_on;
-                      }
-                     
-                      axios
-                        .put(
-                          sitedata.data.path + '/vh/AddTask/' + data._id,
-                          data,
-                          commonHeader(current.props.stateLoginValueAim.token)
-                        )
-                        .then((responce) => {
-                          if (responce.data.hassuccessed) {
-                            current.setState({
-                              updateEvaluate: data,
-                            });
+                if (validateBpAndSugar1(data.body_temp_check, 'body_temp_check', current)) {
+                  if (data.body_temp_check === "yes" ?
+                    validateBpAndSugar1(data.body_temp, 'body_temp', current) : 1) {
+                    if (validateBpAndSugar1(data.cold_check, 'cold_check', current)) {
+                      if (data.cold_check === "yes" ?
+                        validateBpAndSugar1(data.cold, 'cold', current) : 1
+                      ) {
+                        if (validateBpAndSugar1(data.sexual_act_check, 'sexual_act_check', current)) {
+                          if (data.sexual_act_check === "yes" ?
+                            validateBpAndSugar1(data.sexual_active, 'sexual_active', current) : 1
+                          ) {
+                            current.setState({ errorChrMsg: '' });
+                            if (data?._id) {
+                              if (data.is_decline) {
+                                data.is_decline = false;
+                                data.done_on = '';
+                                data.priority = 0;
+                                data.archived = false;
+                                data.status = 'open';
+                                data.created_at = new Date();
+                                var due_on = data?.due_on || {};
+                                due_on['date'] = new Date();
+                                data.due_on = due_on;
+                                due_on['time'] = new Date();
+                                data.due_on = due_on;
+                              }
+                              axios
+                                .put(
+                                  sitedata.data.path + '/vh/AddTask/' + data._id,
+                                  data,
+                                  commonHeader(current.props.stateLoginValueAim.token)
+                                )
+                                .then((responce) => {
+                                  if (responce.data.hassuccessed) {
+                                    current.setState({
+                                      updateEvaluate: data,
+                                    });
+                                  }
+                                })
+                                .catch(function (error) {
+                                  console.log(error);
+                                });
+                            } else {
+                              var patient = {
+                                first_name:
+                                  current.props.stateLoginValueAim.user?.first_name,
+                                last_name:
+                                  current.props.stateLoginValueAim.user?.last_name,
+                                alies_id: current.props.stateLoginValueAim.user?.alies_id,
+                                profile_id:
+                                  current.props.stateLoginValueAim.user?.profile_id,
+                                user_id: current.props.stateLoginValueAim.user?._id,
+                                image: current.props.stateLoginValueAim.user?.image,
+                              };
+                              data.patient = patient;
+                              data.patient_id =
+                                current.props.stateLoginValueAim.user?._id;
+                              data.fileattach = current.state.fileattach;
+                              data.task_name = 'Picture evaluation from patient';
+                              data.task_type = 'picture_evaluation';
+                              data.is_payment = current.state.is_payment;
+                              data.done_on = '';
+                              data.priority = 0;
+                              data.archived = false;
+                              data.status = 'open';
+                              data.house_id = HouseID;
+                              data.created_at = new Date();
+                              if (!data?.due_on?.date) {
+                                let due_on = data?.due_on || {};
+                                due_on['date'] = new Date();
+                                data.due_on = due_on;
+                              }
+                              if (!data?.due_on?.time) {
+                                let due_on = data?.due_on || {};
+                                due_on['time'] = new Date();
+                                data.due_on = due_on;
+                              }
+                              axios
+                                .post(
+                                  sitedata.data.path + '/vh/AddTask',
+                                  data,
+                                  commonHeader(current.props.stateLoginValueAim.token)
+                                )
+                                .then((responce) => {
+                                  if (responce.data.hassuccessed) {
+                                    current.setState({
+                                      updateEvaluate: responce.data.data,
+                                    });
+                                  }
+                                })
+                                .catch(function (error) {
+                                  console.log(error);
+                                });
+                            }
+                            if (current.state.is_payment) {
+                              current.setState({ mod1Open: false, show1: false });
+                              current.props.history.push('/patient/evaluation-list');
+                              getAllPictureEval(current)
+
+                            } else {
+                              current.setState({
+                                mod1Open: false,
+                                show2: true,
+                                show1: false,
+                              });
+                            }
                           }
-                        })
-                        .catch(function (error) {
-                          console.log(error);
-                        });
-                    } else {
-                      var patient = {
-                        first_name:
-                          current.props.stateLoginValueAim.user?.first_name,
-                        last_name:
-                          current.props.stateLoginValueAim.user?.last_name,
-                        alies_id:
-                          current.props.stateLoginValueAim.user?.alies_id,
-                        profile_id:
-                          current.props.stateLoginValueAim.user?.profile_id,
-                        user_id: current.props.stateLoginValueAim.user?._id,
-                        image: current.props.stateLoginValueAim.user?.image,
-                      };
-                      data.patient = patient;
-                      data.patient_id =
-                        current.props.stateLoginValueAim.user?._id;
-                      data.fileattach = current.state.fileattach;
-                      data.task_name = 'Online Diagnose from patient';
-                      data.task_type = 'picture_evaluation';
-                      data.is_payment = current.state.is_payment;
-                      data.done_on = '';
-                      data.priority = 0;
-                      data.archived = false;
-                      data.status = 'open';
-                      data.house_id = HouseID;
-                      data.created_at = new Date();
-                      if (!data?.due_on?.date) {
-                        let due_on = data?.due_on || {};
-                        due_on['date'] = new Date();
-                        data.due_on = due_on;
+                        }
                       }
-                      if (!data?.due_on?.time) {
-                        let due_on = data?.due_on || {};
-                        due_on['time'] = new Date();
-                        data.due_on = due_on;
-                      }
-                      axios
-                        .post(
-                          sitedata.data.path + '/vh/AddTask',
-                          data,
-                          commonHeader(current.props.stateLoginValueAim.token)
-                        )
-                        .then((responce) => {
-                          if (responce.data.hassuccessed) {
-                            current.setState({
-                              updateEvaluate: responce.data.data,
-                            });
-                          }
-                        })
-                        .catch(function (error) {
-                          console.log(error);
-                        });
-                    }
-                    if (current.state.is_payment) {
-                      current.setState({ mod1Open: false, show1: false });
-                      setTimeout(()=>{
-                        current.props.history.push('/patient/evaluation-list');
-                      }, 
-                      500)
-                    } else {
-                      current.setState({
-                        mod1Open: false,
-                        show2: true,
-                        show1: false,
-                      });
                     }
                   }
                 }
               }
             }
           }
+        }
         // }
       } else {
         current.setState({ errorChrMsg: valid_date, error_section: 19 });
@@ -218,7 +264,8 @@ export const handleEvalSubmit = (value, current) => {
       // }
     } else {
       current.setState({
-        errorChrMsg: atleast_one_picture,  error_section: 18
+        errorChrMsg: atleast_one_picture,
+        error_section: 18,
       });
       MoveTop(0);
     }
@@ -245,12 +292,25 @@ export const validateBpAndSugar1 = (value, item, current) => {
     valid_body_temp,
     enter_sexual_activities,
     Max_word_limit_exceeds,
+    enter_cold,
+    body_temp,
+    family_history,
+    treatment_so_far,
+    cold,
+    allergies,
+    sexual_act_check
   } = translate;
   if (
     item === 'warm' ||
     item === 'size_progress' ||
     item === 'itch' ||
-    item === 'pain'
+    item === 'pain' ||
+    item === "body_temp_check" ||
+    item === "allergies_check" ||
+    item === "family_check" ||
+    item === "treatment_check" ||
+    item === "cold_check" ||
+    item === "sexual_act_check"
   ) {
     var currentItem =
       item === 'warm'
@@ -259,10 +319,43 @@ export const validateBpAndSugar1 = (value, item, current) => {
           ? size_progress
           : item === 'itch'
             ? itch
-            : pain;
+            : item === "pain"
+              ? pain
+              : item === "body_temp_check"
+                ? body_temp
+                : item === "family_check"
+                  ? family_history
+                  : item === "treatment_check"
+                    ? treatment_so_far
+                    : item === "cold_check"
+                      ? cold
+                      : item === "allergies_check"
+                        ? allergies
+                        : sexual_act_check;
+
+    var section = item === 'warm'
+      ? 20
+      : item === 'size_progress'
+        ? 20
+        : item === 'itch'
+          ? 20
+          : item === "pain"
+            ? 20
+            : item === "body_temp_check"
+              ? 201
+              : item === "family_check"
+                ? 202
+                : item === "treatment_check"
+                  ? 203
+                  : item === "cold_check"
+                    ? 204
+                    : item === "allergies_check"
+                      ? 205
+                      : 206;
     if (!value) {
       current.setState({
-        errorChrMsg: please_select + ' ' + currentItem + ' ' + with_yes_no, error_section: 20
+        errorChrMsg: please_select + ' ' + currentItem + ' ' + with_yes_no,
+        error_section: section,
       });
       MoveTop(200);
       return false;
@@ -271,7 +364,7 @@ export const validateBpAndSugar1 = (value, item, current) => {
     }
   } else if (item === 'body_temp') {
     if (!value) {
-      current.setState({ errorChrMsg: enter_body_temp , error_section: 22});
+      current.setState({ errorChrMsg: enter_body_temp, error_section: 22 });
       MoveTop(250);
       return false;
     } else if (value < 36 || value > 41) {
@@ -281,15 +374,35 @@ export const validateBpAndSugar1 = (value, item, current) => {
     } else {
       return true;
     }
-  } else if (item === 'sexual_active') {
+  }
+  else if (item === 'cold') {
     if (!value) {
-      current.setState({ errorChrMsg: enter_sexual_activities , error_section: 23});
+      current.setState({ errorChrMsg: enter_cold, error_section: 207 });
+      MoveTop(250);
+      return false;
+    }
+    // else if (value < 36 || value > 41) {
+    //   current.setState({ errorChrMsg: valid_body_temp, error_section: 22 });
+    //   MoveTop(250);
+    //   return false;
+    // }
+    else {
+      return true;
+    }
+  }
+  else if (item === 'sexual_active') {
+    if (!value) {
+      current.setState({
+        errorChrMsg: enter_sexual_activities,
+        error_section: 23,
+      });
       MoveTop(400);
       return false;
     }
     if (value.length > 400) {
       current.setState({
-        errorChrMsg: Max_word_limit_exceeds, error_section: 23
+        errorChrMsg: Max_word_limit_exceeds,
+        error_section: 23,
       });
       MoveTop(400);
       return false;
@@ -330,80 +443,94 @@ export const validateBpAndSugar = (value, item, current) => {
   } = translate;
   var bpPattern = /^[0-9]+$/;
   var Valid = bpPattern.test(value);
-    if (item === 'systolic' && current.state.bp_avail) {
-      if (!value) {
-        current.setState({ errorChrMsg: enter_systolic_value, error_section: 3 });
-        MoveTop(0);
-        return false;
-      } else if (!Valid) {
-        current.setState({ errorChrMsg: systolic_bp_in_number, error_section: 3 });
-        MoveTop(0);
-        return false;
-      } else if (value < 120) {
-        current.setState({
-          errorChrMsg: systolic_value_between, error_section: 3
-        });
-        MoveTop(0);
-        return false;
-      } else if (value > 140) {
-        current.setState({
-          errorChrMsg: systolic_value_between, error_section: 3
-        });
-        MoveTop(0);
-        return false;
-      } else {
-        return true;
-      }
-    } else if (item === 'diastolic' && current.state.bp_avail) {
-      if (!value) {
-        current.setState({ errorChrMsg: enter_diastolic_value, error_section: 4 });
-        MoveTop(0);
-        return false;
-      } else if (!Valid) {
-        current.setState({ errorChrMsg: diastolic_in_number, error_section: 4 });
-        MoveTop(0);
-        return false;
-      } else if (value < 80) {
-        current.setState({
-          errorChrMsg: diastolic_value_between,error_section: 4
-        });
-        MoveTop(0);
-        return false;
-      } else if (value > 90) {
-        current.setState({
-          errorChrMsg: diastolic_value_between, error_section: 4
-        });
-        MoveTop(0);
-        return false;
-      } else {
-        return true;
-      }
-    }
-  else if (item === 'blood_sugar' && current.state.diab_avail) {
+  if (item === 'systolic' && current.state.bp_avail) {
     if (!value) {
-      current.setState({ errorChrMsg: enter_blood_sugar, error_section: 5 });
+      current.setState({ errorChrMsg: enter_systolic_value, error_section: 3 });
       MoveTop(0);
       return false;
     } else if (!Valid) {
-      current.setState({ errorChrMsg: blood_sugar_in_number, error_section: 5 });
-      MoveTop(0);
-      return false;
-    } else if (value < 160) {
       current.setState({
-        errorChrMsg: sugar_value_between, error_section: 5
+        errorChrMsg: systolic_bp_in_number,
+        error_section: 3,
       });
       MoveTop(0);
       return false;
-    } else if (value > 240) {
+    } else if (value < 120) {
       current.setState({
-        errorChrMsg: sugar_value_between, error_section: 5
+        errorChrMsg: systolic_value_between,
+        error_section: 3,
+      });
+      MoveTop(0);
+      return false;
+    } else if (value > 140) {
+      current.setState({
+        errorChrMsg: systolic_value_between,
+        error_section: 3,
       });
       MoveTop(0);
       return false;
     } else {
       return true;
     }
-  } else if (item === 'Hba1c'  && current.state.diab_avail) {
+  } else if (item === 'diastolic' && current.state.bp_avail) {
+    if (!value) {
+      current.setState({
+        errorChrMsg: enter_diastolic_value,
+        error_section: 4,
+      });
+      MoveTop(0);
+      return false;
+    } else if (!Valid) {
+      current.setState({ errorChrMsg: diastolic_in_number, error_section: 4 });
+      MoveTop(0);
+      return false;
+    } else if (value < 80) {
+      current.setState({
+        errorChrMsg: diastolic_value_between,
+        error_section: 4,
+      });
+      MoveTop(0);
+      return false;
+    } else if (value > 90) {
+      current.setState({
+        errorChrMsg: diastolic_value_between,
+        error_section: 4,
+      });
+      MoveTop(0);
+      return false;
+    } else {
+      return true;
+    }
+  } else if (item === 'blood_sugar' && current.state.diab_avail) {
+    if (!value) {
+      current.setState({ errorChrMsg: enter_blood_sugar, error_section: 5 });
+      MoveTop(0);
+      return false;
+    } else if (!Valid) {
+      current.setState({
+        errorChrMsg: blood_sugar_in_number,
+        error_section: 5,
+      });
+      MoveTop(0);
+      return false;
+    } else if (value < 160) {
+      current.setState({
+        errorChrMsg: sugar_value_between,
+        error_section: 5,
+      });
+      MoveTop(0);
+      return false;
+    } else if (value > 240) {
+      current.setState({
+        errorChrMsg: sugar_value_between,
+        error_section: 5,
+      });
+      MoveTop(0);
+      return false;
+    } else {
+      return true;
+    }
+  } else if (item === 'Hba1c' && current.state.diab_avail) {
     let calHba1c = value && value / 10;
     if (!value) {
       current.setState({ errorChrMsg: enter_hba1c, error_section: 6 });
@@ -411,20 +538,22 @@ export const validateBpAndSugar = (value, item, current) => {
       return false;
     } else if (calHba1c < 57 / 10) {
       current.setState({
-        errorChrMsg: homoglobin_levels_between, error_section: 6
+        errorChrMsg: homoglobin_levels_between,
+        error_section: 6,
       });
       MoveTop(0);
       return false;
     } else if (calHba1c > 64 / 10) {
       current.setState({
-        errorChrMsg: homoglobin_levels_between, error_section: 6
+        errorChrMsg: homoglobin_levels_between,
+        error_section: 6,
       });
       MoveTop(0);
       return false;
     } else {
       return true;
     }
-  } else if (item === 'situation'  && current.state.diab_avail) {
+  } else if (item === 'situation' && current.state.diab_avail) {
     if (!value) {
       current.setState({ errorChrMsg: enter_situation, error_section: 7 });
       MoveTop(0);
@@ -434,7 +563,7 @@ export const validateBpAndSugar = (value, item, current) => {
     }
   } else if (item === 'smoking_status') {
     if (!value) {
-      current.setState({ errorChrMsg: enter_smoking_status , error_section: 8});
+      current.setState({ errorChrMsg: enter_smoking_status, error_section: 8 });
       MoveTop(100);
       return false;
     } else {
@@ -445,8 +574,11 @@ export const validateBpAndSugar = (value, item, current) => {
       item === 'residenceCountry' ? country_of_residence : country_of_birth;
     var section = item === 'residenceCountry' ? 13 : 12;
     if (!value) {
-      current.setState({ errorChrMsg: please_select + ' ' + fillItem, error_section: section });
-      MoveTop(650); 
+      current.setState({
+        errorChrMsg: please_select + ' ' + fillItem,
+        error_section: section,
+      });
+      MoveTop(650);
       return false;
     } else {
       return true;
@@ -458,15 +590,16 @@ export const validateBpAndSugar = (value, item, current) => {
     item === 'medical_precondition' ||
     item === 'premedication'
   ) {
-    var section = item === 'allergies'
-    ? 9
-    : item === 'family_history'
-      ? 10
-      : item === 'treatment_so_far'
-        ? 11
-        : item === 'medical_precondition'
-          ? 16
-          : 17;
+    var section =
+      item === 'allergies'
+        ? 9
+        : item === 'family_history'
+          ? 10
+          : item === 'treatment_so_far'
+            ? 11
+            : item === 'medical_precondition'
+              ? 16
+              : 17;
     var currentItem =
       item === 'allergies'
         ? allergies
@@ -477,24 +610,32 @@ export const validateBpAndSugar = (value, item, current) => {
             : item === 'medical_precondition'
               ? medical_preconditions
               : premedication;
-    if (!value || value ===  '<p><br></p>' || value === '<p></p>') {
-      current.setState({ errorChrMsg: please_enter + ' ' + currentItem , error_section: section });
-      if(item === 'treatment_so_far') { MoveTop(650); }
-      else if(item === 'medical_precondition' || item === 'premedication'){
+    if (!value || value === '<p><br></p>' || value === '<p></p>') {
+      current.setState({
+        errorChrMsg: please_enter + ' ' + currentItem,
+        error_section: section,
+      });
+      if (item === 'treatment_so_far') {
+        MoveTop(650);
+      } else if (item === 'medical_precondition' || item === 'premedication') {
         MoveTop(850);
+      } else {
+        MoveTop(300);
       }
-      else{  MoveTop(300); }
       return false;
     }
     if (value.length > 400) {
       current.setState({
-        errorChrMsg: max_Words_limit_exceeds_in + ' ' + currentItem, error_section: section 
+        errorChrMsg: max_Words_limit_exceeds_in + ' ' + currentItem,
+        error_section: section,
       });
-      if(item === 'treatment_so_far') { MoveTop(650); }
-      else if(item === 'medical_precondition' || item === 'premedication'){
+      if (item === 'treatment_so_far') {
+        MoveTop(650);
+      } else if (item === 'medical_precondition' || item === 'premedication') {
         MoveTop(850);
+      } else {
+        MoveTop(300);
       }
-      else{  MoveTop(300); }
       return false;
     } else {
       return true;
@@ -502,14 +643,18 @@ export const validateBpAndSugar = (value, item, current) => {
   } else if (item === 'race' || item === 'history_month') {
     var section = item === 'race' ? 14 : 15;
     var currentItem = item === 'race' ? race : history_month;
-    if (!value || value ===  '<p><br></p>' || value === '<p></p>') {
-      current.setState({ errorChrMsg: please_enter + ' ' + currentItem , error_section: section});
+    if (!value || value === '<p><br></p>' || value === '<p></p>') {
+      current.setState({
+        errorChrMsg: please_enter + ' ' + currentItem,
+        error_section: section,
+      });
       MoveTop(600);
       return false;
     }
     if (value.length > 100) {
       current.setState({
-        errorChrMsg: max_Words_limit_exceeds_in + ' ' + currentItem, error_section: section
+        errorChrMsg: max_Words_limit_exceeds_in + ' ' + currentItem,
+        error_section: section,
       });
       MoveTop(600);
       return false;
@@ -594,21 +739,26 @@ export const saveOnDB = (payment, current) => {
 // Open See Details Form
 export const handleOpenDetail = (current, detail) => {
   current.setState({ openDetail: true, showDetails: detail }, () => {
-    if( current.state.showDetails?.status === 'done' || current.state.showDetails?.comments?.length>0 || current.state.showDetails?.attachments?.length>0){
+    if (
+      current.state.showDetails?.status === 'done' ||
+      current.state.showDetails?.comments?.length > 0 ||
+      current.state.showDetails?.attachments?.length > 0
+    ) {
       axios
-      .put(
-        sitedata.data.path + '/vh/AddTask/' + current.state.showDetails?._id,
-        {isviewed: true},
-        commonHeader(current.props.stateLoginValueAim.token)
-      )
-      .then((responce) => {
-        var showDetails = current.state.showDetails;
-        showDetails.isviewed = true;
-        current.setState({showDetails: showDetails})
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+        .put(
+          sitedata.data.path + '/vh/AddTask/' + current.state.showDetails?._id,
+          { isviewed: true },
+          commonHeader(current.props.stateLoginValueAim.token)
+        )
+        .then((responce) => {
+          var showDetails = current.state.showDetails;
+          showDetails.isviewed = true;
+          current.setState({ showDetails: showDetails });
+
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
   });
 };
@@ -619,7 +769,12 @@ export const handleCloseDetail = (current) => {
 
 // Open Feedback Form
 export const handleOpFeedback = (current, openData) => {
-  current.setState({ loaderImage: true, sendError: false, updateFeedback: {} , allcompulsary: false});
+  current.setState({
+    loaderImage: true,
+    sendError: false,
+    updateFeedback: {},
+    allcompulsary: false,
+  });
   let user_token = current.props.stateLoginValueAim.token;
   axios
     .get(
@@ -629,17 +784,28 @@ export const handleOpFeedback = (current, openData) => {
     .then((responce) => {
       current.setState({ loaderImage: false });
       if (responce.data.hassuccessed) {
-        current.setState({ openFeedback: true , forFeedback : openData, sendError: true, updateFeedback: responce.data.data});
-      }
-      else{
-        current.setState({ openFeedback: true , forFeedback : openData, sendError: false});
+        current.setState({
+          openFeedback: true,
+          forFeedback: openData,
+          sendError: true,
+          updateFeedback: responce.data.data,
+        });
+      } else {
+        current.setState({
+          openFeedback: true,
+          forFeedback: openData,
+          sendError: false,
+        });
       }
     });
-  
 };
 // Close Feedback Form
 export const handleCloseFeedback = (current) => {
-  current.setState({ openFeedback: false, updateFeedback: {} , forFeedback : {}});
+  current.setState({
+    openFeedback: false,
+    updateFeedback: {},
+    forFeedback: {},
+  });
 };
 
 // Set state for feedback form
@@ -661,57 +827,55 @@ export const updateRequestBeforePayment = (current, data) => {
 // Api call for feedback form
 export const handleSubmitFeed = (current) => {
   var data = current.state.updateFeedback;
-  if((data.fast_service || data.fast_service>-1) && (data.doctor_explaination || data.doctor_explaination>-1) && (data.satification || data.satification>-1)){
+  if (
+    (data.fast_service || data.fast_service > -1) &&
+    (data.doctor_explaination || data.doctor_explaination > -1) &&
+    (data.satification || data.satification > -1)
+  ) {
     current.setState({ loaderImage: true, allcompulsary: false });
     data.patient = {
-      first_name:
-          current.props.stateLoginValueAim.user?.first_name,
-        last_name:
-          current.props.stateLoginValueAim.user?.last_name,
-        alies_id:
-          current.props.stateLoginValueAim.user?.alies_id,
-        profile_id:
-          current.props.stateLoginValueAim.user?.profile_id,
-          patient_id: current.props.stateLoginValueAim.user?._id,
-          profile_image: current.props.stateLoginValueAim.user?.image,
-          birthday: current.props.stateLoginValueAim.user?.birthday,
-    }
-    if(current.state?.forFeedback?.assinged_to?.length>0){
-      data.doctor_id = current.state?.forFeedback?.assinged_to.map((item)=>{
+      first_name: current.props.stateLoginValueAim.user?.first_name,
+      last_name: current.props.stateLoginValueAim.user?.last_name,
+      alies_id: current.props.stateLoginValueAim.user?.alies_id,
+      profile_id: current.props.stateLoginValueAim.user?.profile_id,
+      patient_id: current.props.stateLoginValueAim.user?._id,
+      profile_image: current.props.stateLoginValueAim.user?.image,
+      birthday: current.props.stateLoginValueAim.user?.birthday,
+    };
+    if (current.state?.forFeedback?.assinged_to?.length > 0) {
+      data.doctor_id = current.state?.forFeedback?.assinged_to.map((item) => {
         return item.user_id;
-      })
-      current.setState({sendError : false, sendSuccess: false})
-      data.task_id = current.state?.forFeedback?._id
-        axios
-          .post(
-            sitedata.data.path + '/vh/pictureevaluationfeedback',
-            data,
-            commonHeader(current.props.stateLoginValueAim.token)
-          )
-          .then((response) => {
-            if (response.data.hassuccessed) {
-              current.setState({ loaderImage: false, sendSuccess: true });
-              setTimeout(() => {
-                current.setState({sendSuccess : false})
-                handleCloseFeedback(current);
-              }, 3000);
-            }
-            else{
-              current.setState({ loaderImage: false, sendError: true });
-              setTimeout(() => {
-                current.setState({sendError : false})
-                handleCloseFeedback(current);
-              }, 3000);
-            }
-            current.setState({ loaderImage: false });
-          })
-          .catch((err) => { });
+      });
+      current.setState({ sendError: false, sendSuccess: false });
+      data.task_id = current.state?.forFeedback?._id;
+      axios
+        .post(
+          sitedata.data.path + '/vh/pictureevaluationfeedback',
+          data,
+          commonHeader(current.props.stateLoginValueAim.token)
+        )
+        .then((response) => {
+          if (response.data.hassuccessed) {
+            current.setState({ loaderImage: false, sendSuccess: true });
+            setTimeout(() => {
+              current.setState({ sendSuccess: false });
+              handleCloseFeedback(current);
+            }, 3000);
+          } else {
+            current.setState({ loaderImage: false, sendError: true });
+            setTimeout(() => {
+              current.setState({ sendError: false });
+              handleCloseFeedback(current);
+            }, 3000);
+          }
+          current.setState({ loaderImage: false });
+        })
+        .catch((err) => { });
     }
+  } else {
+    current.setState({ allcompulsary: true });
   }
-  else{
-    current.setState({allcompulsary: true})
-  }
-}  
+};
 
 export const getUserData = (current) => {
   current.setState({ loaderImage: true });
@@ -725,24 +889,25 @@ export const getUserData = (current) => {
     .then((responce) => {
       current.setState({ loaderImage: false });
       if (responce.data.hassuccessed) {
-        var State = current.state.updateEvaluate
-        State['sex'] = responce.data.data?.sex
-        State['dob'] = responce.data.data?.birthday
-        State['country'] = responce.data.data?.citizen_country
-        State['residenceCountry'] = responce.data.data?.country
+        var State = current.state.updateEvaluate;
+        State['sex'] = responce.data.data?.sex;
+        State['dob'] = responce.data.data?.birthday;
+        State['country'] = responce.data.data?.citizen_country;
+        State['residenceCountry'] = responce.data.data?.country;
         current.setState({ updateEvaluate: State });
       }
     });
 };
 
-export const DownloadBill = (current, id, bill_date) => {
- var data = {}, senddata = {};
+export const DownloadBill = (current, id, bill_date, task_id) => {
+  var data = {},
+    senddata = {};
   data.patient_id = current.props.stateLoginValueAim.user?._id;
   data.profile_id = current.props.stateLoginValueAim.user?.profile_id;
   data.first_name = current.props.stateLoginValueAim.user?.first_name;
   data.last_name = current.props.stateLoginValueAim.user?.last_name;
   data.alies_id = current.props.stateLoginValueAim.user?.alies_id;
-  data.mobile =  current.props.stateLoginValueAim.user?.mobile;
+  data.mobile = current.props.stateLoginValueAim.user?.mobile;
   data.email = current.props.stateLoginValueAim.user?.email;
   data.profile_image = current.props.stateLoginValueAim.user?.image;
   data.address = current.props.stateLoginValueAim.user?.address;
@@ -750,36 +915,43 @@ export const DownloadBill = (current, id, bill_date) => {
   data.country = current.props.stateLoginValueAim.user?.country?.label;
   data.city = current.props.stateLoginValueAim.user?.city;
   data.birthday = current.props.stateLoginValueAim.user?.birthday;
+  data.task_id = task_id;
   senddata.invoice_id = id;
-  senddata.bill_date = bill_date
+  senddata.bill_date = bill_date;
   senddata.data = data;
-  current.setState({ loaderImage: true })
+  current.setState({ loaderImage: true });
   axios
-      .post(sitedata.data.dowload_link + "/vh/downloadPEBill", senddata,
-          { responseType: "blob" }
-      )
-      .then((res) => {
-          setTimeout(() => {
-              current.setState({ loaderImage: false });
-          }, 3000)
-          var data = new Blob([res.data]);
-          if (typeof window.navigator.msSaveBlob === "function") {
-              // If it is IE that support download blob directly.
-              window.navigator.msSaveBlob(data, "Bill.pdf");
-          } else {
-              var blob = data;
-              var link = document.createElement("a");
-              link.href = window.URL.createObjectURL(blob);
-              link.download = "Bill.pdf";
-              document.body.appendChild(link);
-              link.click(); // create an <a> element and simulate the click operation.
-          }
-
-      })
-      .catch((err) => {
-          current.setState({ loaderImage: false });
-      })
-      .catch((err) => {
-          current.setState({ loaderImage: false });
-      });
+    .post(sitedata.data.dowload_link + '/vh/downloadPEBill', senddata, {
+      responseType: 'blob',
+    })
+    .then((res) => {
+      setTimeout(() => {
+        current.setState({ loaderImage: false });
+      }, 3000);
+      var data = new Blob([res.data]);
+      if (typeof window.navigator.msSaveBlob === 'function') {
+        // If it is IE that support download blob directly.
+        window.navigator.msSaveBlob(data, 'Bill.pdf');
+      } else {
+        var blob = data;
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'Bill.pdf';
+        document.body.appendChild(link);
+        link.click(); // create an <a> element and simulate the click operation.
+      }
+    })
+    .catch((err) => {
+      current.setState({ loaderImage: false });
+    })
+    .catch((err) => {
+      current.setState({ loaderImage: false });
+    });
 };
+// Set the state of questions
+// export const updateAllEntrySec = (e, name, current) => {
+//   var updateQues = current.state.updateQues;
+//   updateQues[name] = e;
+//   current.setState({ updateQues: updateQues });
+// };
+
