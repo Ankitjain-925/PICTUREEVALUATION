@@ -53,7 +53,7 @@ class Index extends Component {
       currentPage: 1,
       Allsituation: [],
       Allsmoking_status: [],
-      allMetadata: []
+      allMetadata: [],
     };
     // new Timer(this.logOutClick.bind(this))
   }
@@ -63,40 +63,40 @@ class Index extends Component {
     this.getMetadata();
   };
 
-  componentDidUpdate = (prevProps, prevState)=>{
-    if(prevProps.stateLanguageType !== this.props.stateLanguageType){
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevProps.stateLanguageType !== this.props.stateLanguageType) {
       this.GetLanguageMetadata();
     }
-}
+  };
 
-GetLanguageMetadata = () => {
-  if (this.state.allMetadata) {
-    var Allsituation = GetLanguageDropdown(
-      this.state.allMetadata &&
+  GetLanguageMetadata = () => {
+    if (this.state.allMetadata) {
+      var Allsituation = GetLanguageDropdown(
+        this.state.allMetadata &&
         this.state.allMetadata.situation &&
         this.state.allMetadata.situation,
-      this.props.stateLanguageType
-    );
-    var Allsmoking_status = GetLanguageDropdown(
-      this.state.allMetadata &&
+        this.props.stateLanguageType
+      );
+      var Allsmoking_status = GetLanguageDropdown(
+        this.state.allMetadata &&
         this.state.allMetadata.smoking_status &&
         this.state.allMetadata.smoking_status,
-      this.props.stateLanguageType
-    );
+        this.props.stateLanguageType
+      );
 
-    this.setState({
-      Allsituation: Allsituation,
-      Allsmoking_status: Allsmoking_status,
+      this.setState({
+        Allsituation: Allsituation,
+        Allsmoking_status: Allsmoking_status,
+      });
+    }
+  };
+
+  //Get All information Related to Metadata
+  getMetadata() {
+    this.setState({ allMetadata: this.props.metadata }, () => {
+      this.GetLanguageMetadata();
     });
   }
-};
-
-//Get All information Related to Metadata
-getMetadata() {
-  this.setState({ allMetadata: this.props.metadata }, () => {
-    this.GetLanguageMetadata();
-  });
-}
 
   updateRequestBeforePayment = (data) => {
     this.props.history.push({
@@ -205,7 +205,7 @@ getMetadata() {
       .then((response) => {
         this.setState({ loaderImage: false });
         if (response.data.hassuccessed) {
-          getAllPictureEval(this)
+          getAllPictureEval(this);
         }
       })
       .catch((error) => { });
@@ -236,9 +236,6 @@ getMetadata() {
     }
     return '-';
   };
-
-  
-
 
   render() {
     let translate = getLanguage(this.props.stateLanguageType);
@@ -367,30 +364,31 @@ getMetadata() {
                               this.state.AllData.map((item, index) => (
                                 <Tr>
                                   <Td>
-                                  <p>
-                              {item &&
-                                !item?.due_on?.date ? (
-                                '-'
-                              ) : (
-                                <>
-                                  {getDate(
-                                    item?.due_on?.date,
-                                    this.props.settings &&
-                                    this.props.settings?.setting &&
-                                    this.props.settings?.setting?.date_format
-                                  )}
-                                </>
-                              )}
-                            </p>
-                            <p>
-                            {item?.due_on?.time &&
-                              getTime(
-                                new Date(item?.due_on?.time),
-                                this.props.settings &&
-                                this.props.settings?.setting &&
-                                this.props.settings?.setting?.time_format
-                              )}
-                          </p>
+                                    <p>
+                                      {item && !item?.due_on?.date ? (
+                                        '-'
+                                      ) : (
+                                        <>
+                                          {getDate(
+                                            item?.due_on?.date,
+                                            this.props.settings &&
+                                            this.props.settings?.setting &&
+                                            this.props.settings?.setting
+                                              ?.date_format
+                                          )}
+                                        </>
+                                      )}
+                                    </p>
+                                    <p>
+                                      {item?.due_on?.time &&
+                                        getTime(
+                                          new Date(item?.due_on?.time),
+                                          this.props.settings &&
+                                          this.props.settings?.setting &&
+                                          this.props.settings?.setting
+                                            ?.time_format
+                                        )}
+                                    </p>
                                     {/* {getDate(
                                       item && item?.created_at,
                                       this.props.settings &&
@@ -415,24 +413,31 @@ getMetadata() {
                                     />
                                   </Td>
                                   <Td>
-                                    {item.is_decline ? <>
-                                      <span className="err_message">
-                                      {Your_request_is_Declined}
-                                      </span>
-                                    </> :
+                                    {item.is_decline ? (
+                                      <>
+                                        <span className="err_message">
+                                          {Your_request_is_Declined}
+                                        </span>
+                                      </>
+                                    ) : (
                                       <>
                                         {!item.is_payment && (
                                           <span className="err_message">
                                             {Your_Payment_is_pending}
                                           </span>
                                         )}
-                                        {((item.status === 'done' ||
-                                          item?.comments?.length > 0 || item?.attachments?.length > 0) && !item.isviewed) && (
+                                        {(item.status === 'done' ||
+                                          item?.comments?.length > 0 ||
+                                          item?.attachments?.length > 0) &&
+                                          !item.isviewed && (
                                             <span className="success_message">
-                                              {Check_the_reply_from_the_doctor_on_detail}
+                                              {
+                                                Check_the_reply_from_the_doctor_on_detail
+                                              }
                                             </span>
                                           )}
-                                      </>}
+                                      </>
+                                    )}
                                   </Td>
                                   <Td className="presEditDot scndOptionIner">
                                     <a className="openScndhrf">
@@ -457,9 +462,9 @@ getMetadata() {
                                             {see_details}
                                           </a>
                                         </li>
-                                        {(!item.is_payment || item.is_decline)
-                                           &&
-                                            (<li>
+                                        {(!item.is_payment ||
+                                          item.is_decline) && (
+                                            <li>
                                               <a
                                                 onClick={() => {
                                                   updateRequestBeforePayment(
@@ -475,7 +480,8 @@ getMetadata() {
                                                 />
                                                 {edit_request}
                                               </a>
-                                            </li>)}
+                                            </li>
+                                          )}
                                         {!item.is_payment && (
                                           <li>
                                             <a
@@ -497,7 +503,12 @@ getMetadata() {
                                           <li>
                                             <a
                                               onClick={() => {
-                                                DownloadBill(this, item?.payment_data?.id, item?.created_at, item?._id);
+                                                DownloadBill(
+                                                  this,
+                                                  item?.payment_data?.id,
+                                                  item?.created_at,
+                                                  item?._id
+                                                );
                                               }}
                                             >
                                               <img
@@ -511,7 +522,7 @@ getMetadata() {
                                         )}
 
                                         {(item.status === 'done' ||
-                                          item?.comments?.length > 0 || 
+                                          item?.comments?.length > 0 ||
                                           item?.attachments?.length > 0) && (
                                             <>
                                               <li>
@@ -554,7 +565,9 @@ getMetadata() {
                                     totalPage={this.state.totalPage}
                                     currentPage={this.state.currentPage}
                                     pages={this.state.pages}
-                                    onChangePage={(page) => { this.onChangePage(page) }}
+                                    onChangePage={(page) => {
+                                      this.onChangePage(page);
+                                    }}
                                   />
                                 </Grid>
                               )}
@@ -597,16 +610,21 @@ getMetadata() {
                         <p>{submit_Feedback}</p>
                       </div>
                     </Grid>
-                    {this.state.allcompulsary && <div className="err_message">
-                      {All_fields_are_compulsary_please_fill_all}
-                    </div>}
-                    {this.state.sendError && <div className="err_message">
-                      {Feedback_already_given_by_you}
-                    </div>}
-                    {this.state.sendSuccess &&
+                    {this.state.allcompulsary && (
+                      <div className="err_message">
+                        {All_fields_are_compulsary_please_fill_all}
+                      </div>
+                    )}
+                    {this.state.sendError && (
+                      <div className="err_message">
+                        {Feedback_already_given_by_you}
+                      </div>
+                    )}
+                    {this.state.sendSuccess && (
                       <div className="success_message">
                         {Feedback_submit_successfully}
-                      </div>}
+                      </div>
+                    )}
                     <Grid className="symptomSec symptomSec1">
                       <h3></h3>
                       <SymptomQuestions
@@ -633,13 +651,15 @@ getMetadata() {
                         label={satisfied_service}
                         value={this.state.updateFeedback?.satification}
                       />
-                      {!this.state.sendError && <Grid className="infoShwSave3">
-                        <input
-                          type="submit"
-                          value={Submit}
-                          onClick={() => handleSubmitFeed(this)}
-                        />
-                      </Grid>}
+                      {!this.state.sendError && (
+                        <Grid className="infoShwSave3">
+                          <input
+                            type="submit"
+                            value={Submit}
+                            onClick={() => handleSubmitFeed(this)}
+                          />
+                        </Grid>
+                      )}
                     </Grid>
                   </Grid>
                 </Grid>
@@ -657,7 +677,8 @@ getMetadata() {
                     this.props.settings.setting.mode === 'dark'
                     ? 'darkTheme'
                     : ''
-                }>
+                }
+              >
                 <Grid className="creatTaskModel">
                   <Grid className="creatTaskCntnt">
                     <Grid container direction="row">
@@ -665,7 +686,11 @@ getMetadata() {
                         <Grid className="creatLbl">
                           <Grid className="creatLblClose createLSet">
                             <a onClick={() => handleCloseDetail(this)}>
-                              <img src={require('assets/images/close-search.svg')} alt="" title="" />
+                              <img
+                                src={require('assets/images/close-search.svg')}
+                                alt=""
+                                title=""
+                              />
                             </a>
                           </Grid>
                           <label>{details}</label>
@@ -676,7 +701,9 @@ getMetadata() {
                       <Grid item xs={12} md={12} className="taskDescp">
                         <Grid className="stndQues stndQues1">
                           <Grid class="addStnd">
-                            <Grid><label>{added_on}</label></Grid>
+                            <Grid>
+                              <label>{added_on}</label>
+                            </Grid>
                             <p>
                               {this.state.showDetails &&
                                 !this.state.showDetails?.due_on?.date ? (
@@ -688,23 +715,27 @@ getMetadata() {
                                     this.props.settings &&
                                     this.props.settings?.setting &&
                                     this.props.settings?.setting?.date_format
-                                  )} ({this.state.showDetails?.due_on?.time &&
-                              getTime(
-                                new Date(this.state.showDetails?.due_on?.time),
-                                this.props.settings &&
-                                this.props.settings?.setting &&
-                                this.props.settings?.setting?.time_format
-                              )})
+                                  )}{' '}
+                                  (
+                                  {this.state.showDetails?.due_on?.time &&
+                                    getTime(
+                                      new Date(
+                                        this.state.showDetails?.due_on?.time
+                                      ),
+                                      this.props.settings &&
+                                      this.props.settings?.setting &&
+                                      this.props.settings?.setting
+                                        ?.time_format
+                                    )}
+                                  )
                                 </>
-
-
                               )}
-
-                            
-                          </p>
+                            </p>
                           </Grid>
                           <Grid class="addStnd">
-                            <Grid><label>{age}</label></Grid>
+                            <Grid>
+                              <label>{age}</label>
+                            </Grid>
                             <p>
                               {this.state.showDetails &&
                                 !this.state.showDetails?.dob ? (
@@ -716,83 +747,102 @@ getMetadata() {
                                     this.props.settings &&
                                     this.props.settings?.setting &&
                                     this.props.settings?.setting?.date_format
-                                  )} {` (${this.calculateAge(this.state.showDetails?.dob)} years)`}
-
+                                  )}{' '}
+                                  {` (${this.calculateAge(
+                                    this.state.showDetails?.dob
+                                  )} years)`}
                                 </>
                               )}
                             </p>
                           </Grid>
                           <Grid class="addStnd">
-                            <Grid><label>{gender}</label></Grid>
+                            <Grid>
+                              <label>{gender}</label>
+                            </Grid>
                             <p className="setFirstCapGender">
                               {this.state.showDetails &&
                                 this.state.showDetails?.sex}
                             </p>
                           </Grid>
-                          <Grid><h2>{blood_pressure}</h2></Grid>
-                          <Grid container xs={12} md={12}>
-                            <Grid xs={4} md={4}>
-                              <label>{rr_systolic}</label>
-                              <p>
-                                {this.state.showDetails &&
-                                  this.state.showDetails?.rr_systolic}
-                              </p>
-                            </Grid>
-                            <Grid xs={4} md={4}>
-                              <label>{RR_diastolic}</label>
-                              <p>
-                                {this.state.showDetails &&
-                                  this.state.showDetails?.rr_diastolic}
-                              </p>
-                            </Grid>
-                          </Grid>
+                          {this.state.showDetails &&
+                            this.state.showDetails?.rr_systolic &&
+                            this.state.showDetails?.rr_diastolic && (
+                              <>
+                                <Grid>
+                                  <h2>{blood_pressure}</h2>
+                                </Grid>
+                                <Grid container xs={12} md={12}>
+                                  <Grid xs={4} md={4}>
+                                    <label>{rr_systolic}</label>
+                                    <p>
+                                      {this.state.showDetails &&
+                                        this.state.showDetails?.rr_systolic}
+                                    </p>
+                                  </Grid>
+                                  <Grid xs={4} md={4}>
+                                    <label>{RR_diastolic}</label>
+                                    <p>
+                                      {this.state.showDetails &&
+                                        this.state.showDetails?.rr_diastolic}
+                                    </p>
+                                  </Grid>
+                                </Grid>
+                              </>
+                            )}
+                          {this.state.showDetails &&
+                            this.state.showDetails?.blood_sugar &&
+                            this.state.showDetails?.Hba1c &&
+                            this.state.showDetails?.situation?.value && (
+                              <>
+                                <Grid>
+                                  <h2>{diabetes}</h2>
+                                </Grid>
+                                <Grid container xs={12} md={12}>
+                                  <Grid xs={4} md={4}>
+                                    <label>{blood_sugar}</label>
+                                    <p>
+                                      {this.state.showDetails &&
+                                        this.state.showDetails?.blood_sugar}
+                                    </p>
+                                  </Grid>
+                                  <Grid xs={4} md={4}>
+                                    <label>{Hba1c}</label>
+                                    <p>
+                                      {this.state.showDetails &&
+                                        this.state.showDetails?.Hba1c}
+                                    </p>
+                                  </Grid>
+                                  <Grid xs={4} md={4}>
+                                    <label>{situation}</label>
+                                    <p>
+                                      {GetShowLabel1(
+                                        this.state.Allsituation,
+                                        this.state.showDetails?.situation
+                                          ?.value,
+                                        this.props.stateLanguageType,
+                                        true,
+                                        'anamnesis'
+                                      )}
+                                    </p>
+                                  </Grid>
+                                </Grid>
+                              </>
+                            )}
                           <Grid>
-                            <h2>{diabetes}</h2>
+                            <h2>{smoking_status}</h2>
                           </Grid>
-                          <Grid container xs={12} md={12}>
-                            <Grid xs={4} md={4}>
-                              <label>{blood_sugar}</label>
-                              <p>
-                                {this.state.showDetails &&
-                                  this.state.showDetails?.blood_sugar}
-                              </p>
-                            </Grid>
-                            <Grid xs={4} md={4}>
-                              <label>{Hba1c}</label>
-                              <p>
-                                {this.state.showDetails &&
-                                  this.state.showDetails?.Hba1c}
-                              </p>
-                            </Grid>
-                            <Grid xs={4} md={4}>
-                              <label>{situation}</label>
-                              <p>
-                              {GetShowLabel1(
-                                  this.state.Allsituation,
-                                  this.state.showDetails?.situation?.value,
-                                  this.props.stateLanguageType,
-                                  true,
-                                  'anamnesis'
-                              )}
-                                {/* {this.state.showDetails &&
-                                  this.state.showDetails?.situation &&
-                                  this.state.showDetails?.situation?.label} */}
-                              </p>
-                            </Grid>
-                          </Grid>
-                          <Grid><h2>{smoking_status}</h2></Grid>
                           <Grid container xs={12} md={12}>
                             <Grid xs={4} md={4}>
                               <label>{status}</label>
                               <p>
-                              {GetShowLabel1(
-                                      this.state.Allsmoking_status,
+                                {GetShowLabel1(
+                                  this.state.Allsmoking_status,
                                   this.state.showDetails?.smoking_status?.value,
-                                      this.props.stateLanguageType,
-                                      true,
-                                      'anamnesis'
-                                    )}
-                                {}
+                                  this.props.stateLanguageType,
+                                  true,
+                                  'anamnesis'
+                                )}
+                                { }
                               </p>
                             </Grid>
                             {!this.state.showDetails?.smoking_status ||
@@ -848,37 +898,49 @@ getMetadata() {
                                 ))}
                           </Grid>
                           <Grid class="addStnd">
-                            <Grid><label>{allergies}</label></Grid>
-                            <p
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  this.state.showDetails &&
-                                  this.state.showDetails?.allergies,
-                              }} />
+                            <Grid>
+                              <label>{allergies}</label>
+                            </Grid>
+                            {this.state.showDetails?.allergies_check === "yes" ?
+                              <p
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    this.state.showDetails &&
+                                    this.state.showDetails?.allergies,
+                                }}
+                              /> : <p>{no}</p>}
                           </Grid>
                           <Grid class="addStnd">
-                            <Grid><label>{family_history}</label></Grid>
-                            <p
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  this.state.showDetails &&
-                                  this.state.showDetails?.family_history,
-                              }}
-                            />
+                            <Grid>
+                              <label>{family_history}</label>
+                            </Grid>
+                            {this.state.showDetails?.family_check === "yes" ?
+                              <p
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    this.state.showDetails &&
+                                    this.state.showDetails?.family_history,
+                                }}
+                              /> : <p>{no}</p>}
                           </Grid>
 
                           <Grid class="addStnd">
-                            <Grid><label>{treatment_so_far}</label></Grid>
-                            <p
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  this.state.showDetails &&
-                                  this.state.showDetails?.treatment_so_far,
-                              }}
-                            />
+                            <Grid>
+                              <label>{treatment_so_far}</label>
+                            </Grid>
+                            {this.state.showDetails?.treatment_check === "yes" ?
+                              <p
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    this.state.showDetails &&
+                                    this.state.showDetails?.treatment_so_far,
+                                }}
+                              /> : <p>{no}</p>}
                           </Grid>
                           <Grid class="addStnd">
-                            <Grid><label>{place_of_residence}</label></Grid>
+                            <Grid>
+                              <label>{place_of_residence}</label>
+                            </Grid>
                             <p>
                               {this.state.showDetails &&
                                 this.state.showDetails?.residenceCountry &&
@@ -886,7 +948,9 @@ getMetadata() {
                             </p>
                           </Grid>
                           <Grid class="addStnd">
-                            <Grid><label>{place_of_birth}</label></Grid>
+                            <Grid>
+                              <label>{place_of_birth}</label>
+                            </Grid>
                             <p>
                               {this.state.showDetails &&
                                 this.state.showDetails?.country &&
@@ -894,7 +958,9 @@ getMetadata() {
                             </p>
                           </Grid>
                           <Grid class="addStnd">
-                            <Grid><label>{phenotyp_race}</label></Grid>
+                            <Grid>
+                              <label>{phenotyp_race}</label>
+                            </Grid>
                             <p
                               dangerouslySetInnerHTML={{
                                 __html:
@@ -903,38 +969,56 @@ getMetadata() {
                               }}
                             />
                           </Grid>
-                          <Grid class="addStnd">
-                            <Grid><label>{travel_history_last_month}</label></Grid>
-                            <p
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  this.state.showDetails &&
-                                  this.state.showDetails?.history_month,
-                              }}
-                            />
-                          </Grid>
-                          <Grid class="addStnd">
-                            <Grid><label>{medical_preconditions}</label></Grid>
-                            <p
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  this.state.showDetails &&
-                                  this.state.showDetails?.medical_precondition,
-                              }}
-                            />
-                          </Grid>
-                          <Grid class="addStnd">
-                            <Grid><label>{premedication}</label></Grid>
-                            <p
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  this.state.showDetails &&
-                                  this.state.showDetails?.premedication,
-                              }}
-                            />
-                          </Grid>
+                          {this.state.showDetails &&
+                            this.state.showDetails?.history_month && (
+                              <Grid class="addStnd">
+                                <Grid>
+                                  <label>{travel_history_last_month}</label>
+                                </Grid>
+                                <p
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      this.state.showDetails &&
+                                      this.state.showDetails?.history_month,
+                                  }}
+                                />
+                              </Grid>
+                            )}
+                          {this.state.showDetails &&
+                            this.state.showDetails?.medical_precondition && (
+                              <Grid class="addStnd">
+                                <Grid>
+                                  <label>{medical_preconditions}</label>
+                                </Grid>
+                                <p
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      this.state.showDetails &&
+                                      this.state.showDetails
+                                        ?.medical_precondition,
+                                  }}
+                                />
+                              </Grid>
+                            )}
+                          {this.state.showDetails &&
+                            this.state.showDetails?.premedication && (
+                              <Grid class="addStnd">
+                                <Grid>
+                                  <label>{premedication}</label>
+                                </Grid>
+                                <p
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      this.state.showDetails &&
+                                      this.state.showDetails?.premedication,
+                                  }}
+                                />
+                              </Grid>
+                            )}
                           <Grid class="addStnd addStndCstm">
-                            <Grid><label>{image_evaluation}</label></Grid>
+                            <Grid>
+                              <label>{image_evaluation}</label>
+                            </Grid>
                             <div className="imageEvalSize">
                               <FileViews
                                 comesFrom="Picture_Task"
@@ -944,7 +1028,9 @@ getMetadata() {
                             </div>
                           </Grid>
                           <Grid class="addStnd">
-                            <Grid><label>Start From</label></Grid>
+                            <Grid>
+                              <label>Start From</label>
+                            </Grid>
                             <p>
                               {getDate(
                                 this.state.showDetails &&
@@ -956,7 +1042,9 @@ getMetadata() {
                             </p>
                           </Grid>
 
-                          <Grid><h2> </h2></Grid>
+                          <Grid>
+                            <h2> </h2>
+                          </Grid>
                           <Grid container xs={12} md={12}>
                             <Grid xs={3} md={3}>
                               <label>{warm}</label>
@@ -971,7 +1059,8 @@ getMetadata() {
                               <label>{size_progress}</label>
 
                               {this.state.showDetails &&
-                                this.state.showDetails?.size_progress === 'yes' ? (
+                                this.state.showDetails?.size_progress ===
+                                'yes' ? (
                                 <p>{yes}</p>
                               ) : (
                                 <p>{no}</p>
@@ -999,45 +1088,67 @@ getMetadata() {
                             </Grid>
                           </Grid>
                           <Grid class="addStnd">
-                            <Grid><label>{pain_level}</label></Grid>
+                            <Grid>
+                              <label>{pain_level}</label>
+                            </Grid>
                             <p>
                               {this.state.showDetails &&
                                 this.state.showDetails?.pain_intensity}
                             </p>
                           </Grid>
                           <Grid class="addStnd">
-                            <Grid><label>{body_temp}</label></Grid>
-                            <p>
-                              {this.state.showDetails &&
-                                this.state.showDetails?.body_temp}
-                            </p>
+                            <Grid>
+                              <label>{body_temp}</label>
+                            </Grid>
+                            {this.state.showDetails?.body_temp_check === "yes" ?
+                              <p>
+                                {this.state.showDetails &&
+                                  this.state.showDetails?.body_temp}
+                              </p> : <p>{no}</p>}
                           </Grid>
+                          {this.state.showDetails &&
+                            this.state.showDetails?.sun_before && (
+                              <Grid class="addStnd">
+                                <Grid>
+                                  <label>{sun_before}</label>
+                                </Grid>
+                                <p>
+                                  {this.state.showDetails &&
+                                    this.state.showDetails?.sun_before}
+                                </p>
+                              </Grid>
+                            )}
+
                           <Grid class="addStnd">
-                            <Grid><label>{sun_before}</label></Grid>
-                            <p>
-                              {this.state.showDetails &&
-                                this.state.showDetails?.sun_before}
-                            </p>
+                            <Grid>
+                              <label>{cold}</label>
+                            </Grid>
+                            {this.state.showDetails?.cold_check === "yes" ?
+                              <p>
+                                {this.state.showDetails &&
+                                  this.state.showDetails?.cold}
+                              </p> : <p>{no}</p>}
                           </Grid>
+
+
                           <Grid class="addStnd">
-                            <Grid><label>{cold}</label></Grid>
-                            <p>
-                              {this.state.showDetails &&
-                                this.state.showDetails?.cold}
-                            </p>
+                            <Grid>
+                              <label>{sexual_active}</label>
+                            </Grid>
+                            {this.state.showDetails?.sexual_act_check === "yes" ?
+                              <p
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    this.state.showDetails &&
+                                    this.state.showDetails?.sexual_active,
+                                }}
+                              /> : <p>{no}</p>}
                           </Grid>
+
                           <Grid class="addStnd">
-                            <Grid><label>{sexual_active}</label></Grid>
-                            <p
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  this.state.showDetails &&
-                                  this.state.showDetails?.sexual_active,
-                              }}
-                            />
-                          </Grid>
-                          <Grid class="addStnd">
-                            <Grid><label>{payment_done}</label></Grid>
+                            <Grid>
+                              <label>{payment_done}</label>
+                            </Grid>
                             {this.state.showDetails &&
                               this.state.showDetails?.is_payment === true ? (
                               <p>{yes}</p>
@@ -1065,9 +1176,11 @@ getMetadata() {
                           </Grid>
 
                           <Grid class="addStnd1">
-                            <Grid><label>{Comments}</label></Grid>
+                            <Grid>
+                              <label>{Comments}</label>
+                            </Grid>
                             <p>
-                              {this.state.showDetails && 
+                              {this.state.showDetails &&
                                 this.state.showDetails?.comments &&
                                 this.state.showDetails?.comments?.length > 0 ? (
                                 this.state.showDetails?.comments.map(
@@ -1082,7 +1195,6 @@ getMetadata() {
                               )}
                             </p>
                           </Grid>
-
                         </Grid>
                       </Grid>
                     </Grid>
@@ -1108,11 +1220,14 @@ const mapStateToProps = (state) => {
     stateLoginValueAim,
     loadingaIndicatoranswerdetail,
     settings,
-    metadata
+    metadata,
   };
 };
 export default withRouter(
-  connect(mapStateToProps, { LoginReducerAim, LanguageFetchReducer, Settings,OptionList })(
-    Index
-  )
+  connect(mapStateToProps, {
+    LoginReducerAim,
+    LanguageFetchReducer,
+    Settings,
+    OptionList,
+  })(Index)
 );

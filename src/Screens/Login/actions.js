@@ -20,25 +20,25 @@ export const createUser = ({ uid, name }) => {
 export const cometLogin = async (uid) => {
   return CometChat.login(uid, COMETCHAT_CONSTANTS.AUTH_KEY);
 };
-export const updateCometUser = async (data)=>{
+export const updateCometUser = async (data) => {
   axios
-  .post(sitedata.data.path + "/cometUserList",
-  {
-    "uid": data.uid,
-    "name": data.name,
-    "avatar": data.avatar,
-    "status": data.status,
-    "role": data.role,
-    "lastActiveAt": data.lastActiveAt,
-    "conversationId": data.conversationId
-   })
-  .then((response) => {})
-  .catch((err)=>{})
+    .post(sitedata.data.path + "/cometUserList",
+      {
+        "uid": data.uid,
+        "name": data.name,
+        "avatar": data.avatar,
+        "status": data.status,
+        "role": data.role,
+        "lastActiveAt": data.lastActiveAt,
+        "conversationId": data.conversationId
+      })
+    .then((response) => { })
+    .catch((err) => { })
 }
 
-export const LoginReducerAim = (email, password, logintoken, SendCallback = () => {}, forUpdate) => {
+export const LoginReducerAim = (email, password, logintoken, SendCallback = () => { }, forUpdate) => {
   return (dispatch) => {
-    if(forUpdate?.value){
+    if (forUpdate?.value) {
       let tmp = {
         token: forUpdate.token,
         user: forUpdate.user,
@@ -46,11 +46,11 @@ export const LoginReducerAim = (email, password, logintoken, SendCallback = () =
       dispatch({ type: GET_LOGIN_SUCCESS, payload: tmp });
       SendCallback();
     }
-    else{
+    else {
       dispatch({ type: GET_LOGIN_REQUEST });
       axios
         .post(path + "/UserLogin", { email, password, logintoken },
-        commonNoTokentHeader()
+          commonNoTokentHeader()
         )
         .then((response) => {
           let tmp;
@@ -146,6 +146,6 @@ export const LoginReducerAim = (email, password, logintoken, SendCallback = () =
         });
     }
 
-   
+
   };
 };

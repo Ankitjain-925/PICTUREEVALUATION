@@ -18,7 +18,7 @@ class Index extends Component {
   componentDidUpdate = (prevProps) => {
     if (
       prevProps.label !== this.props.label ||
-      prevProps.loggedinUser !== this.props.loggedinUser || 
+      prevProps.loggedinUser !== this.props.loggedinUser ||
       prevProps.value !== this.props.value
     ) {
       this.setState({
@@ -29,27 +29,27 @@ class Index extends Component {
     }
   };
 
-  updateEntryState1=(value)=>{
-    if(!this.props.notchangeble) {
+  updateEntryState1 = (value) => {
+    if (!this.props.notchangeble) {
       this.props.updateEntryState1(value)
     }
   }
 
   render() {
     let translate = getLanguage(this.props.stateLanguageType)
-    let {Yes , No } = translate;
+    let { Yes, No } = translate;
     return (
-     <>
+      <>
         <Grid container direction="row" alignItems="center">
-            <Grid item xs={8} md={8}>
+          <Grid item xs={8} md={8}>
             <label>{this.state.label}</label>
-            </Grid>
-            <Grid item xs={4} md={4}>
-            <a className={(this.state.value ==='yes' || this.state.value === true)  && "activeButton"} onClick={()=>this.updateEntryState1('yes')}>{Yes}</a>
-            <a className={(this.state.value ==='no'  || this.state.value === false) && "activeButton"} onClick={()=>this.updateEntryState1('no')}>{No}</a>
-            </Grid>
+          </Grid>
+          <Grid item xs={4} md={4}>
+            <a className={(this.state.value === 'yes' || this.state.value === true) && "activeButton"} onClick={() => this.updateEntryState1('yes')}>{Yes}</a>
+            <a className={(this.state.value === 'no' || this.state.value === false) && "activeButton"} onClick={() => this.updateEntryState1('no')}>{No}</a>
+          </Grid>
         </Grid>
-     </>
+      </>
     );
   }
 }
