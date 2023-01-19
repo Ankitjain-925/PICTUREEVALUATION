@@ -1736,6 +1736,8 @@
     "change_citizenship": "Do you want to change the Citizenship country according your new mobile country code?",
     "fill_citizenship":"Please fill the Citizenship country",
     "sexual_act_check":"Sexual Activities",
-    "enter_cold":"Enter Cold value"
+    "enter_cold":"Enter Cold value",
+    "enter_from_when":"Please enter from when date",
+    "enter_until_when":"Please enter until when date"
   }
 }

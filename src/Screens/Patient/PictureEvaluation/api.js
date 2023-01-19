@@ -9,6 +9,32 @@ import { getLanguage } from 'translations/index';
 import contry from "Screens/Components/countryBucket/countries.json";
 var HouseID = GetHouseID();
 
+// For checking Smoking status dates
+export const compareFromUntil = (data, current) => {
+  let translate = getLanguage(current.props.stateLanguageType);
+  let {
+    enter_from_when,
+    enter_until_when
+  } = translate;
+  var fromWhen = data?.from_when;
+  var untilWhen = data?.until_when;
+  if (!fromWhen) {
+    current.setState({ errorChrMsg: enter_from_when, error_section: 150 });
+    MoveTop(0);
+    return false;
+  } else if (!untilWhen) {
+    current.setState({ errorChrMsg: enter_until_when, error_section: 151 });
+    MoveTop(0);
+    return false;
+  } else if (fromWhen > untilWhen) {
+    current.setState({ errorChrMsg: "Please enter valid date", error_section: 151 });
+    MoveTop(0);
+    return false;
+  } else {
+    return true;
+  }
+}
+
 export const handleEvalSubmit = (value, current) => {
   let translate = getLanguage(current.props.stateLanguageType);
   let {
@@ -23,7 +49,7 @@ export const handleEvalSubmit = (value, current) => {
     // current.setState({ mod1Open: true, picEval: true })
     if (
       data.dob &&
-      new Date(new Date() - new Date(data.dob)).getFullYear() - 1970 <= 130
+        new Date(new Date() - new Date(data.dob)).getFullYear() ? new Date(new Date() - new Date(data.dob)).getFullYear() : new Date().getFullYear() - 1970 <= 130
     ) {
       if (data.sex) {
         if (validateBpAndSugar(data.rr_systolic, 'systolic', current)) {
@@ -38,59 +64,63 @@ export const handleEvalSubmit = (value, current) => {
                       current
                     )
                   ) {
-                    if (validateBpAndSugar1(data.allergies_check, 'allergies_check', current)) {
-                      if (data.allergies_check === "yes" ?
-                        validateBpAndSugar(data.allergies, 'allergies', current) : 1
-                      ) {
-                        if (validateBpAndSugar1(data.family_check, 'family_check', current)) {
-                          if (data.family_check === "yes" ?
-                            validateBpAndSugar(data.family_history, 'family_history', current) : 1
-                          ) {
-                            if (validateBpAndSugar1(data.treatment_check, 'treatment_check', current)) {
-                              if (data.treatment_check === "yes" ?
-                                validateBpAndSugar(data.treatment_so_far, 'treatment_so_far', current) : 1
-                              ) {
-                                if (
-                                  validateBpAndSugar(data.country, 'country', current)
+                    if (
+                      data.smoking_status.value !== "Never_smoked" ? compareFromUntil(data, current) : 1
+                    ) {
+                      if (validateBpAndSugar1(data.allergies_check, 'allergies_check', current)) {
+                        if (data.allergies_check === "yes" ?
+                          validateBpAndSugar(data.allergies, 'allergies', current) : 1
+                        ) {
+                          if (validateBpAndSugar1(data.family_check, 'family_check', current)) {
+                            if (data.family_check === "yes" ?
+                              validateBpAndSugar(data.family_history, 'family_history', current) : 1
+                            ) {
+                              if (validateBpAndSugar1(data.treatment_check, 'treatment_check', current)) {
+                                if (data.treatment_check === "yes" ?
+                                  validateBpAndSugar(data.treatment_so_far, 'treatment_so_far', current) : 1
                                 ) {
                                   if (
-                                    validateBpAndSugar(
-                                      data.residenceCountry,
-                                      'residenceCountry',
-                                      current
-                                    )
+                                    validateBpAndSugar(data.country, 'country', current)
                                   ) {
                                     if (
-                                      validateBpAndSugar(data.race, 'race', current)
+                                      validateBpAndSugar(
+                                        data.residenceCountry,
+                                        'residenceCountry',
+                                        current
+                                      )
                                     ) {
-                                      // if (validateBpAndSugar(data.history_month, 'history_month', current)) {
-                                      // if (validateBpAndSugar(data.medical_precondition, 'medical_precondition', current)) {
-                                      // if (validateBpAndSugar(data.premedication, 'premedication', current)) {
-                                      current.setState({
-                                        mod1Open: true,
-                                        picEval: true,
-                                        error_section: 0,
-                                        errorChrMsg: '',
-                                      });
-                                      axios
-                                        .put(
-                                          sitedata.data.path +
-                                          '/UserProfile/Users/update',
-                                          {
-                                            birthday: data.dob,
-                                            sex: data.sex,
-                                            country: data.residenceCountry,
-                                            citizen_country: data.country,
-                                          },
-                                          commonHeader(
-                                            current.props.stateLoginValueAim.token
+                                      if (
+                                        validateBpAndSugar(data.race, 'race', current)
+                                      ) {
+                                        // if (validateBpAndSugar(data.history_month, 'history_month', current)) {
+                                        // if (validateBpAndSugar(data.medical_precondition, 'medical_precondition', current)) {
+                                        // if (validateBpAndSugar(data.premedication, 'premedication', current)) {
+                                        current.setState({
+                                          mod1Open: true,
+                                          picEval: true,
+                                          error_section: 0,
+                                          errorChrMsg: '',
+                                        });
+                                        axios
+                                          .put(
+                                            sitedata.data.path +
+                                            '/UserProfile/Users/update',
+                                            {
+                                              birthday: data.dob,
+                                              sex: data.sex,
+                                              country: data.residenceCountry,
+                                              citizen_country: data.country,
+                                            },
+                                            commonHeader(
+                                              current.props.stateLoginValueAim.token
+                                            )
                                           )
-                                        )
-                                        .then((res) => { })
-                                        .catch((e) => { });
-                                      //     }
-                                      //   }
-                                      // }
+                                          .then((res) => { })
+                                          .catch((e) => { });
+                                        //     }
+                                        //   }
+                                        // }
+                                      }
                                     }
                                   }
                                 }
@@ -113,7 +143,8 @@ export const handleEvalSubmit = (value, current) => {
         });
         MoveTop(0);
       }
-    } else {
+    }
+    else {
       current.setState({
         errorChrMsg: valid_age_between,
         error_section: 1,

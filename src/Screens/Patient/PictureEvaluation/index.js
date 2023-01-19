@@ -627,7 +627,7 @@ class Index extends Component {
                                           ?.smoking_status?.value !==
                                         'Never_smoked')) && (
                                         <Grid className="fillDia">
-                                          <Grid className="rrSysto">
+                                          <Grid className="rrSysto rrSysto123">
                                             <Grid>
                                               <label>
                                                 {from} {when}
@@ -657,7 +657,11 @@ class Index extends Component {
                                               }
                                               NotFutureDate={true}
                                             />
+
                                           </Grid>
+                                          {this.state.error_section == 150 && <div className="err_message2">
+                                            {this.state.errorChrMsg}
+                                          </div>}
                                         </Grid>
                                       )}
                                   </Grid>
@@ -670,7 +674,7 @@ class Index extends Component {
                                           ?.smoking_status?.value !==
                                         'Never_smoked')) && (
                                         <Grid className="fillDia">
-                                          <Grid className="rrSysto">
+                                          <Grid className="rrSysto rrSysto123">
                                             <Grid>
                                               <label>
                                                 {until} {when}
@@ -700,6 +704,9 @@ class Index extends Component {
                                               }
                                               NotFutureDate={true}
                                             />
+                                            {this.state.error_section == 151 && <div className="err_message2">
+                                              {this.state.errorChrMsg}
+                                            </div>}
                                           </Grid>
                                         </Grid>
                                       )}
