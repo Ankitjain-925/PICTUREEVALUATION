@@ -14,7 +14,8 @@ export const compareFromUntil = (data, current) => {
   let translate = getLanguage(current.props.stateLanguageType);
   let {
     enter_from_when,
-    enter_until_when
+    enter_until_when,
+    please_enter_valid_date
   } = translate;
   var fromWhen = data?.from_when;
   var untilWhen = data?.until_when;
@@ -27,7 +28,7 @@ export const compareFromUntil = (data, current) => {
     MoveTop(0);
     return false;
   } else if (fromWhen > untilWhen) {
-    current.setState({ errorChrMsg: "Please enter valid date", error_section: 151 });
+    current.setState({ errorChrMsg: please_enter_valid_date, error_section: 151 });
     MoveTop(0);
     return false;
   } else {

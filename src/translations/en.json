@@ -1738,6 +1738,7 @@
     "sexual_act_check":"Sexual Activities",
     "enter_cold":"Enter Cold value",
     "enter_from_when":"Please enter from when date",
-    "enter_until_when":"Please enter until when date"
+    "enter_until_when":"Please enter until when date",
+    "please_enter_valid_date":"Please enter valid date"
   }
 }
